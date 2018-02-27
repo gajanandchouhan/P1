@@ -1,0 +1,34 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="EdiTextStyle" parent="Base.V7.Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_30sdp</item>
+        <item name="android:background">@drawable/white_rounded_corner</item>
+        <item name="android:paddingLeft">@dimen/_12sdp</item>
+        <item name="android:paddingRight">@dimen/_12sdp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:alpha">0.3</item>
+        <item name="android:textColor">@color/colorPurple</item>
+        <item name="android:textColorHint">@color/colorLightPurple</item>
+        <item name="android:textSize">@dimen/_13sdp</item>
+    </style>
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+</resources>

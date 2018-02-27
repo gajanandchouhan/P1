@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightPurple"
+    android:fillViewport="true"
+    tools:context="com.superlifesecretcode.app.ui.register.RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textView_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView_icon"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/_5sdp"
+            android:text="Sign Up"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16sdp" />
+
+        <RelativeLayout
+            android:id="@+id/layout_profile_img"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_below="@+id/textView_label"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <com.superlifesecretcode.app.custom.CircleImageView
+                android:id="@+id/imageView_profile"
+                android:layout_width="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:civ_border_width="0.5dp"
+                app:civ_border_color="@color/colorOrange"
+                android:layout_height="match_parent"
+                android:src="@color/colorWhite" />
+
+            <ImageView
+                android:id="@+id/imageView_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@android:drawable/ic_menu_camera" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_profile_img"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edi_text_name"
+                style="@style/EdiTextStyle"
+                android:hint="@string/name"
+                android:inputType="textPersonName|textCapSentences" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:alpha="0.3"
+                android:background="@drawable/white_rounded_corner"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layoout_dial_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_dial_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:text="+1"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <ImageView
+                        android:id="@+id/imageView_flag"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/country_code" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edi_text_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:digits="0123456789"
+                    android:hint="@string/mobile_number"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned"
+                    android:maxLength="12"
+                    android:textColor="@color/colorPurple"
+                    android:textColorHint="@color/colorLightPurple"
+                    android:textSize="@dimen/_13sdp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView_gender"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:alpha="0.3"
+                android:background="@drawable/white_rounded_corner"
+                android:gravity="center_vertical"
+                android:hint="@string/gender"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorLightPurple"
+                android:textSize="@dimen/_13sdp" />
+
+            <TextView
+                android:id="@+id/textView_country"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:alpha="0.3"
+                android:background="@drawable/white_rounded_corner"
+                android:gravity="center_vertical"
+                android:hint="@string/country"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorLightPurple"
+                android:textSize="@dimen/_13sdp" />
+
+            <TextView
+                android:id="@+id/textView_state"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:alpha="0.3"
+                android:background="@drawable/white_rounded_corner"
+                android:gravity="center_vertical"
+                android:hint="@string/state"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorLightPurple"
+                android:textSize="@dimen/_13sdp" />
+
+            <EditText
+                android:id="@+id/edit_text_password"
+                style="@style/EdiTextStyle"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/button_register"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:background="@drawable/button_purple"
+                android:text="@string/register"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_13sdp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/layout_signup"
+            android:gravity="bottom">
+
+            <LinearLayout
+                android:id="@+id/ll_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingTop="@dimen/_20sdp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:text="Already have an account?"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:id="@+id/textView_siginin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:letterSpacing="0.01"
+                    android:text=" Sign In to Continue"
+                    android:textColor="@color/colorGold"
+                    android:textSize="@dimen/_11sdp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

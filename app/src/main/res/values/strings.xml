@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Super Life Secret Code</string>
+    <string name="no_internet">Network error, please check your internet connection.</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="country_activities">Country Activities</string>
+    <string name="free_downloads">Free Downloads</string>
+    <string name="daily_activities">Daily Activities</string>
+    <string name="sharing">Sharing</string>
+    <string name="annoucement">Announcement</string>
+    <string name="learing">Learning</string>
+    <string name="product_shopping">Product Shopping</string>
+    <string name="abourt">About</string>
+    <string name="home">Home</string>
+    <string name="accept">Accept</string>
+    <string name="name">Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="state">State</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="language">Language</string>
+    <string name="richestlife">RichestLife</string>
+</resources>
