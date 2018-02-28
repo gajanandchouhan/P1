@@ -20,7 +20,7 @@ public class SuperLifeSecretPreferences {
 
     public static final String DEVICE_TOKEN = "device_token";
     public static final String IS_LOGGED_IN = "logged_in";
-    public static final String DISCLOSE_ACCEPTED="disclosure_accepted";
+    public static final String DISCLOSE_ACCEPTED = "disclosure_accepted";
 
     public SuperLifeSecretPreferences() {
         Context context = SuperLifeSecretCodeApp.getInstance().getApplicationContext();
@@ -45,7 +45,6 @@ public class SuperLifeSecretPreferences {
     }
 
 
-
     public void clearAll() {
         editer.clear().commit();
     }
@@ -58,4 +57,11 @@ public class SuperLifeSecretPreferences {
         return preferences.getBoolean(key, false);
     }
 
+    public void setLanguageId(String languageId) {
+        editer.putString("languageId", languageId).commit();
+    }
+
+    public String getLanguageId() {
+        return preferences.getString("languageId", "3");
+    }
 }

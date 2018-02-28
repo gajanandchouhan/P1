@@ -2,6 +2,8 @@ package com.superlifesecretcode.app.data.netcomm;
 
 
 
+import com.superlifesecretcode.app.BuildConfig;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -28,7 +30,7 @@ public class ApiClient {
                     .writeTimeout(60, TimeUnit.SECONDS);
             httpClient.addInterceptor(logging);  // <-- this is the important line!
             retrofit = new Retrofit.Builder()
-                    .baseUrl("")
+                    .baseUrl(BuildConfig.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(httpClient.build())

@@ -15,7 +15,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
 
     private SplashPresenter presenter;
-    String TAG="SplashActivity";
+    String TAG = "SplashActivity";
 
     @Override
     protected int getContentView() {
@@ -37,6 +37,12 @@ public class SplashActivity extends BaseActivity implements SplashView {
     public void navigateToNextScreen() {
         CommonUtils.startActivity(this, LanguageActivity.class);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 
     @Override

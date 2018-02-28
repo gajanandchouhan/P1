@@ -17,28 +17,34 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.login.LoginActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
+import com.superlifesecretcode.app.util.ImagePickerUtils;
 import com.superlifesecretcode.app.util.PermissionConstant;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
-    private String countryCode;
+    private String countryCode = "us";
     TextView textViewDialCode;
     TextView textViewCountry;
-    EditText editTextName;
+    TextView textViewLabel;
     TextView textViewGender;
     TextView textState;
+    EditText editTextName;
+    EditText editTextMobileNumber;
     EditText editTextPassword;
     Button buttonRegister;
-
     ImageView imageViewFlag;
     private CountryPicker countryPicker;
     private TextView textViewSiginCotinue;
     private ImageView imageViewprofile;
+    private String imagePath;
+
 
     @Override
     protected int getContentView() {
+        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_register;
     }
 
@@ -52,17 +58,28 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         editTextPassword = findViewById(R.id.edit_text_password);
         textViewGender = findViewById(R.id.textView_gender);
         textState = findViewById(R.id.textView_state);
+        textViewLabel = findViewById(R.id.textView_label);
         buttonRegister = findViewById(R.id.button_register);
+        editTextMobileNumber = findViewById(R.id.edi_text_phone);
         textViewSiginCotinue = findViewById(R.id.textView_siginin);
         textViewSiginCotinue.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
-        imageViewprofile=findViewById(R.id.imageView_profile);
+        imageViewprofile = findViewById(R.id.imageView_profile);
         imageViewprofile.setOnClickListener(this);
+        textViewGender.setOnClickListener(this);
+        textState.setOnClickListener(this);
+        textViewCountry.setOnClickListener(this);
     }
 
     @Override
     protected void initializePresenter() {
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 
     @Override
@@ -84,12 +101,49 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
                 }
                 break;
+            case R.id.textView_country:
+                break;
+            case R.id.textView_gender:
+                break;
+            case R.id.textView_state:
+                break;
+
         }
 
     }
 
     private void validateAndRegister() {
-
+        String name = editTextName.getText().toString().trim();
+        String dialCode = textViewDialCode.getText().toString();
+        String mobileNumber = editTextMobileNumber.getText().toString().trim();
+        String gender = textViewGender.getText().toString().trim();
+        String country = textViewCountry.getText().toString().trim();
+        String state = textState.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        if (name.isEmpty()) {
+            editTextName.setError("");
+            return;
+        }
+        if (mobileNumber.isEmpty()) {
+            editTextMobileNumber.setError("");
+            return;
+        }
+        if (gender.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "");
+            return;
+        }
+        if (country.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "");
+            return;
+        }
+        if (state.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "");
+            return;
+        }
+        if (password.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "");
+            return;
+        }
     }
 
     private void showDialCodePicker() {
@@ -98,7 +152,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onPick(Country country) {
                 textViewDialCode.setText(country.getDialCode());
                 imageViewFlag.setImageResource(country.getFlag());
-                textViewCountry.setText(country.getName());
+//                textViewCountry.setText(country.getName());
                 countryCode = country.getCode().toLowerCase();
                 countryPicker.dismiss();
             }
@@ -131,6 +185,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 imageViewprofile.setImageURI(result.getUri());
+                imagePath=ImagePickerUtils.getPath(this,result.getUri());
+                if (imagePath!=null){
+                    ImageLoadUtils.loadImage(imagePath,imageViewprofile);
+                }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
             }

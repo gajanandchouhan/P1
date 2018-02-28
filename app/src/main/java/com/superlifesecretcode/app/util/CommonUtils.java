@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.superlifesecretcode.app.BuildConfig;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.splash.SplashActivity;
@@ -27,20 +28,20 @@ import java.util.List;
  */
 
 public class CommonUtils {
-    static boolean showLog = true;
 
     public static void showSnakeBar(Context mContext, String message) {
         Snackbar.make(((AppCompatActivity) mContext).findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
     public static void showLog(String tag, String message) {
-        if (showLog)
+        if (BuildConfig.showLog)
             Log.v(tag, message);
     }
 
     public static void startActivity(Activity activity, Class clazz) {
         activity.startActivity(new Intent(activity, clazz));
     }
+
     public static void startActivity(AppCompatActivity activity, Class c, Bundle bundle, boolean clearTop) {
         Intent intent = new Intent(activity, c);
         if (bundle != null)

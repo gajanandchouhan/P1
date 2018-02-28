@@ -21,8 +21,7 @@ import java.util.List;
 
 public class DropDownWindow {
 
-
-    public static void show(Context context, View parentView, List<String> list) {
+    public static void show(Context context, View parentView, List<String> list,SelectedListner listner) {
         // Inflate the popup_layout.xml
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.layout_popup_window, null);
@@ -40,10 +39,14 @@ public class DropDownWindow {
         // Displaying the popup at the specified location, + offsets.
         RecyclerView recyclerView=layout.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new PoupupWindowListAdapter(list));
+        recyclerView.setAdapter(new PoupupWindowListAdapter(list,listner,popupWindow));
         popupWindow.showAsDropDown(parentView);
         // Getting a reference to Close button, and close the popup when clicked.
 
 
+    }
+
+    public interface SelectedListner{
+        void onSelected(String value);
     }
 }

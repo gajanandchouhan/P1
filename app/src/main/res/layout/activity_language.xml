@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPurple"
+    android:background="@color/colorOrange"
     android:orientation="vertical"
     tools:context="com.superlifesecretcode.app.ui.language.LanguageActivity">
 
@@ -65,16 +65,22 @@
             android:src="@android:drawable/arrow_down_float" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginRight="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
         android:layout_alignParentBottom="true"
-        android:padding="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:background="@drawable/button_white"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
         android:text="Next"
+        android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_13sdp" />
-
 
 </RelativeLayout>

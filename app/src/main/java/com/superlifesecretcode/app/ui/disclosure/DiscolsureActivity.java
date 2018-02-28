@@ -16,6 +16,7 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected int getContentView() {
+        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_discolsure;
     }
 
@@ -34,7 +35,9 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_accept:
-                accept();
+                SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.DISCLOSE_ACCEPTED, true);
+                CommonUtils.startActivity(DiscolsureActivity.this, RegisterActivity.class);
+                finish();
                 break;
             case R.id.button_reject:
                 SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.DISCLOSE_ACCEPTED, false);
@@ -74,5 +77,11 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
                 });
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 }
