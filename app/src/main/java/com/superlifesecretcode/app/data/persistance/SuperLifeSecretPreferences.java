@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -75,6 +76,18 @@ public class SuperLifeSecretPreferences {
         String masterData = preferences.getString("conversion_data", "");
         if (masterData.length() > 0) {
             return new Gson().fromJson(masterData, LanguageResponseData.class);
+        }
+        return null;
+    }
+
+    public void setUserDetails(UserDetailResponseData data) {
+        editer.putString("user_data", new Gson().toJson(data)).commit();
+    }
+
+    public UserDetailResponseData getUserData() {
+        String masterData = preferences.getString("user_data", "");
+        if (masterData.length() > 0) {
+            return new Gson().fromJson(masterData, UserDetailResponseData.class);
         }
         return null;
     }

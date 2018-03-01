@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
@@ -12,6 +13,7 @@ import com.superlifesecretcode.app.ui.base.BasePresenter;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -92,5 +94,38 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
 
             }
         }, requestBody);
+    }
+
+
+    public void registerUser(HashMap<String,String> params, HashMap<String,File> files) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callMultipart(mContext, RequestType.REQ_REGISTER_USER, new ResponseHandler<UserDetailResponseModel>() {
+            @Override
+            public void onResponse(UserDetailResponseModel userDetailResponseModel) {
+                view.hideProgress();
+                if (userDetailResponseModel != null) {
+                    if (userDetailResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setUserData(userDetailResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, userDetailResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params,files);
     }
 }

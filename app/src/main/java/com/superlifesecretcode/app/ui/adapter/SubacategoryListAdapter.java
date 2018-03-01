@@ -63,6 +63,7 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
         public void onClick(View v) {
             Bundle bundle = new Bundle();
             bundle.putString("title", list.get(getAdapterPosition()).getTitle());
+            bundle.putString("url", list.get(getAdapterPosition()).getUrl());
             CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
         }
     }

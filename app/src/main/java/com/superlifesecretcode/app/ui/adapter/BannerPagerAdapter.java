@@ -38,7 +38,7 @@ public class BannerPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -54,5 +54,7 @@ public class BannerPagerAdapter extends PagerAdapter {
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
+
+
 
 }

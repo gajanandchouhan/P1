@@ -30,11 +30,11 @@ public class WebViewActivity extends BaseActivity {
     protected void initializeView() {
         String title = getIntent().getBundleExtra("bundle").getString("title");
         setUpToolbar(title);
-        webView=findViewById(R.id.webview);
-        progressBar=findViewById(R.id.progress_bar);
+        webView = findViewById(R.id.webview);
+        progressBar = findViewById(R.id.progress_bar);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl("https://www.richestlife.com/product-category/publishing-books/");
+        webView.loadUrl(getIntent().getBundleExtra("bundle").getString("url"));
         webView.setWebViewClient(new MyWebViewClient());
     }
 
@@ -71,7 +71,7 @@ public class WebViewActivity extends BaseActivity {
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-           return super.shouldOverrideUrlLoading(view,url);
+            return super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.DrawerItem;
+import com.superlifesecretcode.app.util.ItemClickListner;
 
 import java.util.List;
 
@@ -17,6 +18,11 @@ import java.util.List;
  */
 
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ItemViewHolder> {
+private ItemClickListner listner;
+
+    public void setListner(ItemClickListner listner) {
+        this.listner = listner;
+    }
 
     private final List<DrawerItem> list;
 
@@ -41,7 +47,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ItemViewHo
         return list.size();
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textViewTitle;
         ImageView imageViewIcon;
 
@@ -49,6 +55,12 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ItemViewHo
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.textView_title);
             imageViewIcon = itemView.findViewById(R.id.imageView_icon);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listner.onItemClick(list.get(getAdapterPosition()),getAdapterPosition());
         }
     }
 }

@@ -17,6 +17,7 @@ import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -50,7 +51,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         recyclerView = findViewById(R.id.recycler_view);
         autoScrollViewPager = findViewById(R.id.pager_banner);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new DrawerAdapter(getDrawerList()));
+        DrawerAdapter drawerAdapter = new DrawerAdapter(getDrawerList());
+        drawerAdapter.setListner(new ItemClickListner() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                mDrawerLayout.openDrawer(layoutDrawer);
+                switch (position) {
+                    case 1:
+                        openNextScreen(1, getString(R.string.abourt));
+                        break;
+                    case 3:
+                        openNextScreen(3, getString(R.string.learing));
+                        break;
+                }
+
+            }
+        });
+        recyclerView.setAdapter(drawerAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(2));
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -77,6 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
         setUpBanner();
         findViewById(R.id.cardview_about).setOnClickListener(this);
+        findViewById(R.id.cardview_learning).setOnClickListener(this);
     }
 
     private void setUpBanner() {
@@ -127,14 +145,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String title="";
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cardview_about:
-                title=getString(R.string.abourt);
+                openNextScreen(1, getString(R.string.abourt));
+                break;
+            case R.id.cardview_learning:
+                openNextScreen(3, getString(R.string.learing));
                 break;
         }
-        Bundle bundle=new Bundle();
-        bundle.putString("title",title);
-        CommonUtils.startActivity(this, SubCategoryActivity.class,bundle,false);
+
+    }
+
+    private void openNextScreen(int position, String title) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putInt("pos", position);
+        CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
     }
 }

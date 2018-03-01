@@ -16,8 +16,11 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.login.LoginActivity;
+import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
@@ -28,6 +31,7 @@ import com.superlifesecretcode.app.util.PermissionConstant;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +60,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private CountryStatePicker countryStatePicker;
     private String countryId;
+    private String stateId;
 
     @Override
     protected int getContentView() {
@@ -86,6 +91,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         textState.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         setUpConversion();
+        UserDetailResponseData userData = SuperLifeSecretPreferences.getInstance().getUserData();
+
 
     }
 
@@ -209,6 +216,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             editTextPassword.setError(passLength);
             return;
         }
+        HashMap<String, String> body = new HashMap<>();
+        body.put("name", name);
+        body.put("gender", gender);
+        body.put("mobile", mobileNumber);
+        body.put("country_id", countryId);
+        body.put("state_id", stateId);
+        body.put("password", password);
+        body.put("phone_code", dialCode);
+        body.put("country_code", countryCode.toLowerCase());
+        body.put("email", "");
+        HashMap<String, File> fileParams = null;
+        if (imagePath != null) {
+            File file = new File(imagePath);
+            fileParams = new HashMap<>();
+            fileParams.put("image", file);
+        }
+        presenter.registerUser(body, fileParams);
     }
 
     private void showDialCodePicker() {
@@ -217,7 +241,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onPick(Country country) {
                 textViewDialCode.setText(country.getDialCode());
                 imageViewFlag.setImageResource(country.getFlag());
-//                textViewCountry.setText(country.getName());
                 countryCode = country.getCode().toLowerCase();
                 countryPicker.dismiss();
             }
@@ -280,9 +303,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onPick(CountryResponseData country) {
                 textState.setText(country.getName());
                 countryStatePicker.dismiss();
+                stateId = country.getId();
             }
         }, data);
         countryStatePicker.show();
+    }
+
+    @Override
+    public void setUserData(UserDetailResponseData data) {
+        if (data != null) {
+            SuperLifeSecretPreferences.getInstance().setUserDetails(data);
+            CommonUtils.startActivity(this, MainActivity.class, null, true);
+        }
     }
 
     private void getState() {

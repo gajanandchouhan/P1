@@ -6,11 +6,13 @@ package com.superlifesecretcode.app.data.model;
 
 public class SubcategoryModel {
     private int icon;
-    private  String title;
+    private String title;
+    private String url;
 
-    public SubcategoryModel(int icon, String title) {
+    public SubcategoryModel(int icon, String title, String url) {
         this.icon = icon;
         this.title = title;
+        this.url = url;
     }
 
     public int getIcon() {
@@ -19,5 +21,9 @@ public class SubcategoryModel {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }
