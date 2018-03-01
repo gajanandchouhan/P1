@@ -130,6 +130,7 @@
 
 
                 <TextView
+                    android:id="@+id/textView_dont_have"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -139,6 +140,7 @@
                     android:textSize="@dimen/_11sdp" />
 
                 <TextView
+                    android:id="@+id/textView_signup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

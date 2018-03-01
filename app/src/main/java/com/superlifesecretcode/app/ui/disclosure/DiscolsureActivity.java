@@ -2,8 +2,12 @@ package com.superlifesecretcode.app.ui.disclosure;
 
 import android.location.Location;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.language.LanguageActivity;
@@ -13,6 +17,8 @@ import com.superlifesecretcode.app.util.GeoCoderUtils;
 
 public class DiscolsureActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "DiscolsureActivity";
+    private Button buttonAccept, buttonReject;
+    private TextView textViewDisclosureText;
 
     @Override
     protected int getContentView() {
@@ -22,8 +28,21 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initializeView() {
-        findViewById(R.id.button_accept).setOnClickListener(this);
-        findViewById(R.id.button_reject).setOnClickListener(this);
+        buttonAccept = findViewById(R.id.button_accept);
+        buttonReject = findViewById(R.id.button_reject);
+        textViewDisclosureText = findViewById(R.id.textView_disclosure_text);
+        buttonAccept.setOnClickListener(this);
+        buttonReject.setOnClickListener(this);
+        setUpConersion();
+    }
+
+    private void setUpConersion() {
+        LanguageResponseData conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
+        if (conversionData != null) {
+            buttonReject.setText(conversionData.getReject());
+            buttonAccept.setText(conversionData.getAccept());
+            textViewDisclosureText.setText(conversionData.getDisclosure_text());
+        }
     }
 
     @Override
@@ -58,7 +77,7 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-    private void accept(){
+    private void accept() {
         getCurrentLocation(new LocationCallBack() {
             @Override
             public void onLocationSuccess(Location location) {
@@ -70,7 +89,7 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
                             SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.DISCLOSE_ACCEPTED, true);
                             CommonUtils.startActivity(DiscolsureActivity.this, RegisterActivity.class);
                             finish();
-                        }else {
+                        } else {
                             showInternetAlert();
                         }
                     }

@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.base;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     private static final int REQUEST_CHECK_SETTINGS = 102;
     private LocationCallBack callback;
     private MyLocationManager locationManager;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,12 +68,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showProgress() {
-
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+        }
+        progressDialog.show();
     }
 
     @Override
     public void hideProgress() {
-
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override

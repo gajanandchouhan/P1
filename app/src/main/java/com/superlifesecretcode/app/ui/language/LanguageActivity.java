@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.LanguagePagerAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -15,13 +16,15 @@ import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class LanguageActivity extends BaseActivity implements View.OnClickListener {
+public class LanguageActivity extends BaseActivity implements View.OnClickListener, LanguageView {
     ViewPager pager;
     Button buttonNext;
     TextView textViewLable;
     String languageId = "3";
+    private LanguagePresenter presenter;
 
     @Override
     protected int getContentView() {
@@ -130,12 +133,12 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
             case 1:
                 languageId = ConstantLib.LANGUAGE_SIMPLIFIED;
                 // simplified
-                buttonNext.setText("下一个");
+                buttonNext.setText("下一步");
                 textViewLable.setText("选择语言");
                 break;
             case 2:
                 languageId = ConstantLib.LANGUAGE_TRADITIONAL;
-                buttonNext.setText("下一個");
+                buttonNext.setText("下一步");
                 textViewLable.setText("選擇語言");
                 break;
         }
@@ -145,17 +148,33 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new LanguagePresenter(this);
+        presenter.setView(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_next:
-                CommonUtils.startActivity(LanguageActivity.this, DiscolsureActivity.class);
-                finish();
+                getConversionData();
                 break;
 
+        }
+    }
+
+    private void getConversionData() {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("language_id", languageId);
+        presenter.getConversion(body);
+
+    }
+
+    @Override
+    public void setConversionContent(LanguageResponseData data) {
+        if (data != null) {
+            SuperLifeSecretPreferences.getInstance().setConversionData(data);
+            CommonUtils.startActivity(LanguageActivity.this, DiscolsureActivity.class);
+            finish();
         }
     }
 }

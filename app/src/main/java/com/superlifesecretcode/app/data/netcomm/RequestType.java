@@ -5,5 +5,5 @@ package com.superlifesecretcode.app.data.netcomm;
  */
 
 public interface RequestType {
-    byte REQ_TYPE_REGISTER = 1;
+    byte REQ_CONVERSION = 1;
 }

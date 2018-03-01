@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.dining.countrypicker.Country;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.login.LoginActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
@@ -31,6 +33,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     TextView textViewLabel;
     TextView textViewGender;
     TextView textState;
+    TextView textViewAlreadyAccount;
     EditText editTextName;
     EditText editTextMobileNumber;
     EditText editTextPassword;
@@ -40,6 +43,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private TextView textViewSiginCotinue;
     private ImageView imageViewprofile;
     private String imagePath;
+    private String enterName,selectGender,selecrCountry,selectState,eneterMobileNo,passLength;
 
 
     @Override
@@ -62,6 +66,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         buttonRegister = findViewById(R.id.button_register);
         editTextMobileNumber = findViewById(R.id.edi_text_phone);
         textViewSiginCotinue = findViewById(R.id.textView_siginin);
+        textViewAlreadyAccount = findViewById(R.id.textview_allready_account);
         textViewSiginCotinue.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
         imageViewprofile = findViewById(R.id.imageView_profile);
@@ -69,6 +74,29 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         textViewGender.setOnClickListener(this);
         textState.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
+        setUpConversion();
+    }
+
+    private void setUpConversion() {
+        LanguageResponseData conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
+        if (conversionData != null) {
+            textViewLabel.setText(conversionData.getSignup());
+            editTextName.setHint(conversionData.getName());
+            editTextMobileNumber.setHint(conversionData.getMobile_no());
+            textViewGender.setHint(conversionData.getGender());
+            textViewCountry.setHint(conversionData.getCountry());
+            textState.setHint(conversionData.getState());
+            editTextPassword.setHint(conversionData.getPassword());
+            buttonRegister.setText(conversionData.getRegister());
+            textViewAlreadyAccount.setText(String.format("%s ", conversionData.getAlready_account()));
+            textViewSiginCotinue.setText(conversionData.getSigin_in_cotinue());
+            enterName = conversionData.getEnter_name();
+            passLength = conversionData.getPassword_length();
+            eneterMobileNo = conversionData.getEnter_mobile_number();
+            selectGender = conversionData.getSelect_gender();
+            selecrCountry = conversionData.getSelect_country();
+            selectState = conversionData.getSelect_state();
+        }
     }
 
     @Override
@@ -121,27 +149,27 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String state = textState.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         if (name.isEmpty()) {
-            editTextName.setError("");
+            editTextName.setError(enterName);
             return;
         }
         if (mobileNumber.isEmpty()) {
-            editTextMobileNumber.setError("");
+            editTextMobileNumber.setError(eneterMobileNo);
             return;
         }
         if (gender.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "");
+            CommonUtils.showSnakeBar(this, selectGender);
             return;
         }
         if (country.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "");
+            CommonUtils.showSnakeBar(this, selecrCountry);
             return;
         }
         if (state.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "");
+            CommonUtils.showSnakeBar(this, selectState);
             return;
         }
         if (password.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "");
+            editTextPassword.setError(passLength);
             return;
         }
     }
@@ -185,9 +213,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 imageViewprofile.setImageURI(result.getUri());
-                imagePath=ImagePickerUtils.getPath(this,result.getUri());
-                if (imagePath!=null){
-                    ImageLoadUtils.loadImage(imagePath,imageViewprofile);
+                imagePath = ImagePickerUtils.getPath(this, result.getUri());
+                if (imagePath != null) {
+                    ImageLoadUtils.loadImage(imagePath, imageViewprofile);
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();

@@ -3,7 +3,9 @@ package com.superlifesecretcode.app.data.persistance;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -63,5 +65,17 @@ public class SuperLifeSecretPreferences {
 
     public String getLanguageId() {
         return preferences.getString("languageId", "3");
+    }
+
+    public void setConversionData(LanguageResponseData data) {
+        editer.putString("conversion_data", new Gson().toJson(data)).commit();
+    }
+
+    public LanguageResponseData getConversionData() {
+        String masterData = preferences.getString("conversion_data", "");
+        if (masterData.length() > 0) {
+            return new Gson().fromJson(masterData, LanguageResponseData.class);
+        }
+        return null;
     }
 }
