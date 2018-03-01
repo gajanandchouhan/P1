@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -46,10 +47,32 @@ public class ApiController implements RequestType {
         HashMap requestParams = getRequestParams(body);
         switch (reqTyoe) {
             case REQ_CONVERSION:
-                Observable<LanguageResponseModel> register = apiInterface.getConversion(requestParams);
-                register.subscribeOn(Schedulers.io())
+                Observable<LanguageResponseModel> langObservable = apiInterface.getConversion(requestParams);
+                langObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<LanguageResponseModel>(handler));
+                break;
+            case REQ_GET_STATE:
+                Observable<CountryResponseModel> stateObservable = apiInterface.getState(requestParams);
+                stateObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
+                break;
+        }
+
+    }
+
+    public void callGet(Context mContext, byte reqTyoe, ResponseHandler handler) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        switch (reqTyoe) {
+            case REQ_GET_COUNTRY:
+                Observable<CountryResponseModel> countryObservable = apiInterface.getCountry();
+                countryObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
         }
 

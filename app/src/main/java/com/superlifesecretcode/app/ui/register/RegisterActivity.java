@@ -14,10 +14,13 @@ import android.widget.Toast;
 import com.dining.countrypicker.Country;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.login.LoginActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
+import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
+import com.superlifesecretcode.app.ui.picker.DropDownWindow;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ImagePickerUtils;
@@ -25,7 +28,11 @@ import com.superlifesecretcode.app.util.PermissionConstant;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterView {
 
     private String countryCode = "us";
     TextView textViewDialCode;
@@ -43,8 +50,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private TextView textViewSiginCotinue;
     private ImageView imageViewprofile;
     private String imagePath;
-    private String enterName,selectGender,selecrCountry,selectState,eneterMobileNo,passLength;
+    private String enterName, selectGender, selecrCountry, selectState, eneterMobileNo, passLength;
+    private List<String> genderList;
+    private RegisterPresenter presenter;
 
+    private CountryStatePicker countryStatePicker;
+    private String countryId;
 
     @Override
     protected int getContentView() {
@@ -75,6 +86,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         textState.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         setUpConversion();
+
     }
 
     private void setUpConversion() {
@@ -96,12 +108,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             selectGender = conversionData.getSelect_gender();
             selecrCountry = conversionData.getSelect_country();
             selectState = conversionData.getSelect_state();
+            genderList = new ArrayList<>();
+            genderList.add(conversionData.getMale());
+            genderList.add(conversionData.getFemale());
         }
     }
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new RegisterPresenter(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -130,14 +146,35 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.textView_country:
+                getCountry();
                 break;
             case R.id.textView_gender:
+                showgGenderSelection();
                 break;
             case R.id.textView_state:
+                if (countryId == null) {
+                    CommonUtils.showSnakeBar(this, selecrCountry);
+                    return;
+                }
+                getState();
                 break;
 
         }
 
+    }
+
+    private void getCountry() {
+        presenter.getCountry();
+    }
+
+    private void showgGenderSelection() {
+
+        DropDownWindow.show(this, textViewGender, genderList, new DropDownWindow.SelectedListner() {
+            @Override
+            public void onSelected(String value) {
+                textViewGender.setText(value);
+            }
+        });
     }
 
     private void validateAndRegister() {
@@ -222,4 +259,37 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
+
+    @Override
+    public void setCountryData(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewCountry.setText(country.getName());
+                countryId = country.getId();
+                countryStatePicker.dismiss();
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    @Override
+    public void setStateData(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textState.setText(country.getName());
+                countryStatePicker.dismiss();
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    private void getState() {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("country_id", countryId);
+        presenter.getStates(body);
+    }
+
+
 }
