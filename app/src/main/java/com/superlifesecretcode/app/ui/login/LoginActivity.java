@@ -9,6 +9,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -72,7 +73,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.button_login:
                 validateAndLogin();
-                CommonUtils.startActivity(this, MainActivity.class, null, true);
+//                CommonUtils.startActivity(this, MainActivity.class, null, true);
                 break;
             case R.id.textView_signup:
                 onBackPressed();
@@ -91,11 +92,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             editTextPassword.setError(enterPassword);
             return;
         }
+        HashMap<String,String> body=new HashMap<>();
+        body.put("mobile",mobileNumber);
+        body.put("password",password);
+        presenter.loginUser(body);
 
     }
 
     @Override
     public void setUserData(UserDetailResponseData data) {
-
+        if (data != null) {
+            SuperLifeSecretPreferences.getInstance().setUserDetails(data);
+            CommonUtils.startActivity(this, MainActivity.class, null, true);
+        }
     }
 }

@@ -70,6 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     public void showProgress() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
         }
         progressDialog.show();
     }

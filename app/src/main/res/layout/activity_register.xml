@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightPurple"
+    android:background="@color/colorOrange"
     android:fillViewport="true"
     tools:context="com.superlifesecretcode.app.ui.register.RegisterActivity">
 
@@ -175,6 +175,7 @@
             <EditText
                 android:id="@+id/edit_text_password"
                 style="@style/EdiTextStyle"
+                android:imeOptions="actionDone"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
@@ -184,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_40sdp"
-                android:background="@drawable/button_purple"
+                android:background="@drawable/button_white"
                 android:text="@string/register"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"

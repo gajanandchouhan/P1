@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Platform calls Class.forName on types which do not exist on Android to determine platform.
+# Platform calls Class.forName on types which do not exist bon Android to determine platform.
 
 # OkHttp
 -keepattributes Signature
@@ -41,3 +41,4 @@
 }
 
 -dontwarn okio.**
+-keep class com.superlifesecretcode.app.** { *; }

@@ -140,7 +140,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 showDialCodePicker();
                 break;
             case R.id.button_register:
-                validateAndRegister();
+                CommonUtils.startActivity(this, MainActivity.class, null, true);
+//                validateAndRegister();
                 break;
             case R.id.textView_siginin:
                 CommonUtils.startActivity(this, LoginActivity.class);

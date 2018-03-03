@@ -8,17 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.DrawerItem;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +37,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
     private AutoScrollViewPager autoScrollViewPager;
     private BannerPagerAdapter bannerPagerAdapter;
+    private TextView textViewName;
+    private TextView textViewEditProfile;
+    private ImageView imageViewUser;
+    private UserDetailResponseData userDetailResponseData;
 
     @Override
     protected void onPause() {
@@ -45,18 +57,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initializeView() {
         setUpToolbar();
+        userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         mDrawerLayout = findViewById(R.id.drawer);
         layoutDrawer = findViewById(R.id.layout_drawer);
         mainLayout = findViewById(R.id.main_layout);
         recyclerView = findViewById(R.id.recycler_view);
+        textViewName = findViewById(R.id.textView_name);
+        textViewEditProfile = findViewById(R.id.textView_edit);
+        imageViewUser = findViewById(R.id.imageView_user);
+        textViewEditProfile.setOnClickListener(this);
         autoScrollViewPager = findViewById(R.id.pager_banner);
+        findViewById(R.id.imageView_profile).setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DrawerAdapter drawerAdapter = new DrawerAdapter(getDrawerList());
         drawerAdapter.setListner(new ItemClickListner() {
             @Override
             public void onItemClick(Object object, int position) {
-                mDrawerLayout.openDrawer(layoutDrawer);
                 switch (position) {
+                    case 0:
+                        mDrawerLayout.closeDrawer(layoutDrawer);
+                        break;
                     case 1:
                         openNextScreen(1, getString(R.string.abourt));
                         break;
@@ -95,6 +115,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setUpBanner();
         findViewById(R.id.cardview_about).setOnClickListener(this);
         findViewById(R.id.cardview_learning).setOnClickListener(this);
+        setUpUserdetails();
+    }
+
+    private void setUpUserdetails() {
+        if (userDetailResponseData != null) {
+            textViewName.setText(userDetailResponseData.getUsername());
+            ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
+        }
     }
 
     private void setUpBanner() {
@@ -151,6 +179,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.cardview_learning:
                 openNextScreen(3, getString(R.string.learing));
+                break;
+            case R.id.imageView_profile:
+                CommonUtils.startActivity(this, ProfileActivity.class);
                 break;
         }
 
