@@ -180,6 +180,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.cardview_learning:
                 openNextScreen(3, getString(R.string.learing));
                 break;
+            case R.id.textView_edit:
             case R.id.imageView_profile:
                 CommonUtils.startActivity(this, ProfileActivity.class);
                 break;

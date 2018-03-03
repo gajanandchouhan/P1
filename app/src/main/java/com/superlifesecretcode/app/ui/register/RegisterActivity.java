@@ -91,8 +91,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         textState.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         setUpConversion();
-        UserDetailResponseData userData = SuperLifeSecretPreferences.getInstance().getUserData();
-
 
     }
 
@@ -140,8 +138,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 showDialCodePicker();
                 break;
             case R.id.button_register:
-                CommonUtils.startActivity(this, MainActivity.class, null, true);
-//                validateAndRegister();
+//                CommonUtils.startActivity(this, MainActivity.class, null, true);
+                validateAndRegister();
                 break;
             case R.id.textView_siginin:
                 CommonUtils.startActivity(this, LoginActivity.class);
