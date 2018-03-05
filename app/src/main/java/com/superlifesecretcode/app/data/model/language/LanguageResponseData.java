@@ -29,6 +29,15 @@ public class LanguageResponseData {
     private String select_country;
     private String select_state;
     private String dont_have_acnt;
+    private String select_language;
+
+    public String getSelect_language() {
+        return select_language;
+    }
+
+    public void setSelect_language(String select_language) {
+        this.select_language = select_language;
+    }
 
     public String getDont_have_acnt() {
         return dont_have_acnt;

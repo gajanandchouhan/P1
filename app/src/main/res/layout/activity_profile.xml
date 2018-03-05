@@ -50,6 +50,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView_name_label"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -90,6 +91,7 @@
                 android:src="@drawable/flag_us" />
 
             <TextView
+                android:id="@+id/textView_mobile_label"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
@@ -119,6 +121,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView_gender_label"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -150,6 +153,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView_country_label"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -181,6 +185,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView_state_label"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -212,6 +217,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView_language_label"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

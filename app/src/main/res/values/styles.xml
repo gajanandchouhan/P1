@@ -16,11 +16,10 @@
     <style name="EdiTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_30sdp</item>
-        <item name="android:background">@drawable/white_rounded_corner</item>
+        <item name="android:background">@drawable/text_box_bg</item>
         <item name="android:paddingLeft">@dimen/_12sdp</item>
         <item name="android:paddingRight">@dimen/_12sdp</item>
         <item name="android:maxLines">1</item>
-        <item name="android:alpha">0.3</item>
         <item name="android:textColor">@color/colorPurple</item>
         <item name="android:textColorHint">@color/colorLightPurple</item>
         <item name="android:textSize">@dimen/_13sdp</item>

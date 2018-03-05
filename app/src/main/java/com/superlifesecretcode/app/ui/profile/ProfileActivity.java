@@ -18,8 +18,10 @@ import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class ProfileActivity extends BaseActivity implements View.OnClickListener {
+public class ProfileActivity extends BaseActivity implements View.OnClickListener, ProfileView {
 
 
     private ImageView imageViewProfile;
@@ -30,6 +32,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     ImageView imageViewUser, imageViewFlag;
     private LanguageResponseData conversionData;
     private ArrayList<String> genderList;
+    private List<String> langauageList;
+    private String currentLanguag;
+    private String languageId;
+    private ProfilePresenter presenter;
+    private TextView textViewNameLabel, textViewGenderLabel, textViewMobileLabel,
+            textViewCountryLabel, textViewStateLabel, textViewLanguageLabel;
 
     @Override
     protected int getContentView() {
@@ -51,13 +59,41 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewName = findViewById(R.id.textView_name);
         imageViewUser = findViewById(R.id.imageView_user);
         imageViewFlag = findViewById(R.id.imageView_flag);
+
+        textViewNameLabel = findViewById(R.id.textView_name_label);
+        textViewMobileLabel = findViewById(R.id.textView_mobile_label);
+        textViewGenderLabel = findViewById(R.id.textView_gender_label);
+        textViewCountryLabel = findViewById(R.id.textView_country_label);
+        textViewStateLabel = findViewById(R.id.textView_state_label);
+        textViewLanguageLabel = findViewById(R.id.textView_language_label);
         textViewGender.setOnClickListener(this);
+        textViewLanguage.setOnClickListener(this);
         if (conversionData != null) {
             genderList = new ArrayList<>();
             genderList.add(conversionData.getMale());
             genderList.add(conversionData.getFemale());
         }
+        langauageList = new ArrayList<>();
+        langauageList.add(ConstantLib.STRING_ENGLISH);
+        langauageList.add(ConstantLib.STRING_TRADITIONAL);
+        langauageList.add(ConstantLib.STRING_SIMPLIFIED);
+        setUpLocalConversion();
         setUpUi();
+    }
+
+    private void setUpLocalConversion() {
+        textViewNameLabel.setText(conversionData.getName());
+        editTextName.setHint(conversionData.getName());
+        textViewMobileLabel.setText(conversionData.getMobile_no());
+        editTextMobileNumber.setHint(conversionData.getMobile_no());
+        textViewGenderLabel.setText(conversionData.getGender());
+        textViewGender.setHint(conversionData.getGender());
+        textViewCountryLabel.setText(conversionData.getCountry());
+        textViewCountry.setHint(conversionData.getCountry());
+        textViewStateLabel.setText(conversionData.getState());
+        textViewState.setHint(conversionData.getState());
+        textViewLanguageLabel.setText(conversionData.getSelect_language());
+        textViewLanguage.setHint(conversionData.getSelect_language());
     }
 
     private void setUpUi() {
@@ -73,7 +109,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             textViewCountry.setText(userDetailResponseData.getCountryName());
             textViewState.setText(userDetailResponseData.getStateName());
             textViewGender.setText(userDetailResponseData.getGender());
-            textViewLanguage.setText(getLanguage(SuperLifeSecretPreferences.getInstance().getLanguageId()));
+            currentLanguag = getLanguage(SuperLifeSecretPreferences.getInstance().getLanguageId());
+            textViewLanguage.setText(currentLanguag);
             ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
         }
 
@@ -106,7 +143,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new ProfilePresenter(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -132,12 +170,54 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         });
     }
 
+    private void showLanguageSelection() {
+        DropDownWindow.show(this, textViewGender, langauageList, new DropDownWindow.SelectedListner() {
+            @Override
+            public void onSelected(String value) {
+                if (!value.equalsIgnoreCase(currentLanguag)) {
+                    textViewLanguage.setText(value);
+                    currentLanguag = value;
+                    switch (value) {
+                        case ConstantLib.STRING_ENGLISH:
+                            languageId = ConstantLib.LANGUAGE_ENGLISH;
+                            break;
+                        case ConstantLib.STRING_SIMPLIFIED:
+                            languageId = ConstantLib.LANGUAGE_SIMPLIFIED;
+                            break;
+                        case ConstantLib.STRING_TRADITIONAL:
+                            languageId = ConstantLib.LANGUAGE_TRADITIONAL;
+                            break;
+                    }
+                    HashMap<String, String> body = new HashMap<>();
+                    body.put("language_id", languageId);
+                    presenter.getConversion(body);
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.textView_gender:
                 showgGenderSelection();
                 break;
+            case R.id.textView_language:
+                showLanguageSelection();
+                break;
         }
+    }
+
+    @Override
+    public void onProfileUpdated(UserDetailResponseData data) {
+
+    }
+
+
+    @Override
+    public void setConversionContent(LanguageResponseData data) {
+        conversionData = data;
+        SuperLifeSecretPreferences.getInstance().setConversionData(data);
+        setUpLocalConversion();
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorOrange"
+    android:background="@drawable/bg"
     android:fillViewport="true"
     tools:context="com.superlifesecretcode.app.ui.register.RegisterActivity">
 
@@ -44,8 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:alpha="0.3"
-                android:background="@drawable/white_rounded_corner"
+                android:background="@drawable/text_box_bg"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -103,10 +102,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_40sdp"
-                android:background="@drawable/button_white"
+                android:background="@drawable/button_white_elipse"
                 android:text="Sign in to Continue"
                 android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorOrange"
                 android:textSize="@dimen/_13sdp" />
         </LinearLayout>
 

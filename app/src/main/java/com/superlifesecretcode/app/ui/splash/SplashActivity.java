@@ -1,14 +1,8 @@
 package com.superlifesecretcode.app.ui.splash;
 
-import android.content.Context;
-import android.telephony.TelephonyManager;
-import android.util.Log;
-
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.disclosure.DiscolsureActivity;
 import com.superlifesecretcode.app.ui.language.LanguageActivity;
-import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 public class SplashActivity extends BaseActivity implements SplashView {
