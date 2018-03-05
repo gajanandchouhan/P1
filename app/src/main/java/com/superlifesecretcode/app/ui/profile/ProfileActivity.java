@@ -218,6 +218,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     public void setConversionContent(LanguageResponseData data) {
         conversionData = data;
         SuperLifeSecretPreferences.getInstance().setConversionData(data);
+        SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
         setUpLocalConversion();
     }
 }
