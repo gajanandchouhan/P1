@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_40sdp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/logo2" />
 
 
     <TextView
@@ -25,6 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:padding="@dimen/_5sdp"
+        android:fontFamily="@font/reguler"
         android:text="Select Language"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_16sdp" />
@@ -44,8 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="@dimen/_10sdp"
-            android:rotation="90"
-            android:src="@android:drawable/arrow_down_float" />
+            android:src="@drawable/left_arrow" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
@@ -61,14 +61,14 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/_10sdp"
-            android:rotation="-90"
-            android:src="@android:drawable/arrow_down_float" />
+            android:src="@drawable/right_arrow"/>
     </RelativeLayout>
 
     <Button
         android:id="@+id/button_next"
         android:layout_width="match_parent"
         android:layout_height="36dp"
+        android:fontFamily="@font/reguler"
         android:layout_marginRight="@dimen/_40sdp"
         android:layout_marginLeft="@dimen/_40sdp"
         android:layout_marginEnd="@dimen/_40sdp"

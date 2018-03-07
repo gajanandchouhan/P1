@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginView {
     private EditText editTextMobileNumber, editTextPassword;
-    TextView textViewLabel, textViewDontHaveAnAccount, textViewSignup;
+    TextView  textViewDontHaveAnAccount, textViewSignup;
     Button buttonLogin;
     private String eneterMobileNo, enterPassword;
     private LoginPresenter presenter;
@@ -41,7 +41,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         editTextPassword = findViewById(R.id.edit_text_password);
         buttonLogin = findViewById(R.id.button_login);
         buttonLogin.setOnClickListener(this);
-        textViewLabel = findViewById(R.id.textView_label);
         textViewDontHaveAnAccount = findViewById(R.id.textView_dont_have);
         textViewSignup = findViewById(R.id.textView_signup);
         textViewSignup.setOnClickListener(this);
@@ -51,7 +50,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void setUpConversion() {
         LanguageResponseData conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
-            textViewLabel.setText(conversionData.getSigin_in());
             editTextMobileNumber.setHint(conversionData.getMobile_no());
             editTextPassword.setHint(conversionData.getPassword());
             buttonLogin.setText(conversionData.getSigin_in_cotinue());

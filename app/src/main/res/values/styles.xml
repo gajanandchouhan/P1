@@ -14,14 +14,15 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="EdiTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/reguler</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/_30sdp</item>
+        <item name="android:layout_height">@dimen/_34sdp</item>
         <item name="android:background">@drawable/text_box_bg</item>
         <item name="android:paddingLeft">@dimen/_12sdp</item>
         <item name="android:paddingRight">@dimen/_12sdp</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/colorPurple</item>
-        <item name="android:textColorHint">@color/colorLightPurple</item>
+        <item name="android:textColor">@color/colorOrange</item>
+        <item name="android:textColorHint">@color/colorOrange</item>
         <item name="android:textSize">@dimen/_13sdp</item>
     </style>
     <declare-styleable name="CircleImageView">

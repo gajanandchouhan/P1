@@ -30,6 +30,15 @@ public class LanguageResponseData {
     private String select_state;
     private String dont_have_acnt;
     private String select_language;
+    private String forgot_password;
+
+    public String getForgot_password() {
+        return forgot_password;
+    }
+
+    public void setForgot_password(String forgot_password) {
+        this.forgot_password = forgot_password;
+    }
 
     public String getSelect_language() {
         return select_language;

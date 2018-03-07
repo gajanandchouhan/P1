@@ -17,9 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/_26sdp"
+        android:fontFamily="@font/reguler"
         android:layout_toEndOf="@+id/imageView_flag"
         android:layout_toRightOf="@+id/imageView_flag"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorOrange"
         android:textSize="@dimen/_13sdp" />
 
 

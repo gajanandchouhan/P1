@@ -11,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+       <ImageView
             android:id="@+id/imageView_icon"
+           android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -21,6 +22,7 @@
 
         <TextView
             android:id="@+id/textView_label"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView_icon"
@@ -36,16 +38,15 @@
             android:layout_height="@dimen/_75sdp"
             android:layout_below="@+id/textView_label"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_marginTop="@dimen/_20sdp">
 
-            <com.superlifesecretcode.app.custom.CircleImageView
+            <com.superlifesecretcode.app.custom.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/imageView_profile"
                 android:layout_width="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                app:civ_border_width="0.5dp"
-                app:civ_border_color="@color/colorOrange"
                 android:layout_height="match_parent"
-                android:src="@color/colorWhite" />
+                android:src="@color/colorWhite"
+                app:civ_border_color="@color/colorOrange"
+                app:civ_border_width="0.5dp" />
 
             <ImageView
                 android:id="@+id/imageView_camera"
@@ -64,7 +65,7 @@
             android:layout_below="@+id/layout_profile_img"
             android:layout_marginLeft="@dimen/_30sdp"
             android:layout_marginRight="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:orientation="vertical">
 
             <EditText
@@ -75,7 +76,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/text_box_bg"
                 android:orientation="horizontal">
@@ -91,10 +92,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:fontFamily="@font/reguler"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
                         android:text="+1"
-                        android:textColor="@color/colorPurple"
+                        android:textColor="@color/colorOrange"
                         android:textSize="@dimen/_13sdp" />
 
                     <ImageView
@@ -108,6 +110,7 @@
                 <EditText
                     android:id="@+id/edi_text_phone"
                     android:layout_width="0dp"
+                    android:fontFamily="@font/reguler"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -118,69 +121,73 @@
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
                     android:maxLength="12"
-                    android:textColor="@color/colorPurple"
-                    android:textColorHint="@color/colorLightPurple"
+                    android:textColor="@color/colorOrange"
+                    android:textColorHint="@color/colorOrange"
                     android:textSize="@dimen/_13sdp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textView_gender"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:layout_height="@dimen/_34sdp"
+                android:fontFamily="@font/reguler"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/text_box_bg"
+                android:drawableRight="@android:drawable/arrow_down_float"
                 android:gravity="center_vertical"
                 android:hint="@string/gender"
                 android:paddingLeft="@dimen/_15sdp"
                 android:paddingRight="@dimen/_15sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
+                android:textColor="@color/colorOrange"
+                android:textColorHint="@color/colorOrange"
                 android:textSize="@dimen/_13sdp" />
 
             <TextView
                 android:id="@+id/textView_country"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:fontFamily="@font/reguler"
                 android:background="@drawable/text_box_bg"
+                android:drawableRight="@android:drawable/arrow_down_float"
                 android:gravity="center_vertical"
                 android:hint="@string/country"
                 android:paddingLeft="@dimen/_15sdp"
                 android:paddingRight="@dimen/_15sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
+                android:textColor="@color/colorOrange"
+                android:textColorHint="@color/colorOrange"
                 android:textSize="@dimen/_13sdp" />
 
             <TextView
                 android:id="@+id/textView_state"
                 android:layout_width="match_parent"
-                android:drawableRight="@android:drawable/arrow_down_float"
-                android:layout_height="@dimen/_30sdp"
+                android:fontFamily="@font/reguler"
+                android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/text_box_bg"
+                android:drawableRight="@android:drawable/arrow_down_float"
                 android:gravity="center_vertical"
                 android:hint="@string/state"
                 android:paddingLeft="@dimen/_15sdp"
                 android:paddingRight="@dimen/_15sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
+                android:textColor="@color/colorOrange"
+                android:textColorHint="@color/colorOrange"
                 android:textSize="@dimen/_13sdp" />
 
             <EditText
                 android:id="@+id/edit_text_password"
                 style="@style/EdiTextStyle"
-                android:imeOptions="actionDone"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:hint="@string/password"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/button_register"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_40sdp"
+                android:fontFamily="@font/reguler"
                 android:background="@drawable/button_white_elipse"
                 android:text="@string/register"
                 android:textAllCaps="false"
@@ -213,19 +220,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center_horizontal"
+                    android:fontFamily="@font/reguler"
                     android:text="Already have an account?"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_11sdp" />
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/_13sdp" />
 
                 <TextView
                     android:id="@+id/textView_siginin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/reguler"
                     android:letterSpacing="0.01"
                     android:text=" Sign In to Continue"
-                    android:textColor="@color/colorGold"
-                    android:textSize="@dimen/_11sdp" />
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/_13sdp" />
 
             </LinearLayout>
         </RelativeLayout>

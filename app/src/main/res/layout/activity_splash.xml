@@ -6,13 +6,11 @@
     android:background="@drawable/bg"
     tools:context="com.superlifesecretcode.app.ui.splash.SplashActivity">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_100sdp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/bold"
-        android:text="SPLASH"
-        android:textColor="@color/colorPurple"
-        android:textSize="@dimen/_20sdp" />
+        android:src="@drawable/logo" />
 
 </RelativeLayout>

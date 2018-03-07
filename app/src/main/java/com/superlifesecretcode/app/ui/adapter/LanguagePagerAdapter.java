@@ -9,6 +9,9 @@ import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by hp on 17-08-2017.
@@ -16,15 +19,22 @@ import com.superlifesecretcode.app.R;
 
 public class LanguagePagerAdapter extends PagerAdapter {
     private Context mContext;
+    List<Integer> list;
+
     public LanguagePagerAdapter(Context context) {
         mContext = context;
+        list = new ArrayList<>();
+        list.add(R.drawable.english);
+        list.add(R.drawable.simplify_chinese);
+        list.add(R.drawable.traditional_chinese);
     }
 
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_language, collection, false);
-        ImageView imageView=layout.findViewById(R.id.imageView_language);
+        ImageView imageView = layout.findViewById(R.id.imageView_language);
+        imageView.setImageResource(list.get(position));
        /* GlideApp.with(imageView).load(banners.get(position).getInsideImage())
                 .placeholder(R.drawable.default_placeholder).into(imageView);*/
         collection.addView(layout);
@@ -38,7 +48,7 @@ public class LanguagePagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return list.size();
     }
 
     @Override

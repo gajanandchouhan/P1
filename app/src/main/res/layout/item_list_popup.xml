@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Item"
-        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/reguler"
+        android:textColor="@color/colorOrange"
         android:textSize="@dimen/_13sdp" />
 </RelativeLayout>
