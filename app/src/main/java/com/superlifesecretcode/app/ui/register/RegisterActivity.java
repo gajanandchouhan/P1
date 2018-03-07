@@ -48,13 +48,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     EditText editTextName;
     EditText editTextMobileNumber;
     EditText editTextPassword;
+    EditText editTextEmail;
     Button buttonRegister;
     ImageView imageViewFlag;
     private CountryPicker countryPicker;
     private TextView textViewSiginCotinue;
     private ImageView imageViewprofile;
     private String imagePath;
-    private String enterName, selectGender, selecrCountry, selectState, eneterMobileNo, passLength;
+    private String enterName, selectGender, selecrCountry,
+            selectState, eneterMobileNo, passLength, enterEmail, enterValidEmail;
     private List<String> genderList;
     private RegisterPresenter presenter;
 
@@ -83,6 +85,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         editTextMobileNumber = findViewById(R.id.edi_text_phone);
         textViewSiginCotinue = findViewById(R.id.textView_siginin);
         textViewAlreadyAccount = findViewById(R.id.textview_allready_account);
+        editTextEmail = findViewById(R.id.edit_text_email);
         textViewSiginCotinue.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
         imageViewprofile = findViewById(R.id.imageView_profile);
@@ -107,12 +110,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             buttonRegister.setText(conversionData.getRegister());
             textViewAlreadyAccount.setText(String.format("%s ", conversionData.getAlready_account()));
             textViewSiginCotinue.setText(conversionData.getSigin_in_cotinue());
+            editTextEmail.setHint(conversionData.getEmail());
             enterName = conversionData.getEnter_name();
             passLength = conversionData.getPassword_length();
             eneterMobileNo = conversionData.getEnter_mobile_number();
             selectGender = conversionData.getSelect_gender();
             selecrCountry = conversionData.getSelect_country();
             selectState = conversionData.getSelect_state();
+            enterEmail = conversionData.getEnter_email();
+            enterValidEmail = conversionData.getEnter_valid_email();
             genderList = new ArrayList<>();
             genderList.add(conversionData.getMale());
             genderList.add(conversionData.getFemale());
@@ -190,6 +196,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String gender = textViewGender.getText().toString().trim();
         String country = textViewCountry.getText().toString().trim();
         String state = textState.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         if (name.isEmpty()) {
             editTextName.setError(enterName);
@@ -211,6 +218,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             CommonUtils.showSnakeBar(this, selectState);
             return;
         }
+        if (email.isEmpty()) {
+            editTextEmail.setError(enterEmail);
+            return;
+        }
+        if (!CommonUtils.isValidEmail(email)) {
+            editTextEmail.setError(enterValidEmail);
+            return;
+        }
         if (password.isEmpty()) {
             editTextPassword.setError(passLength);
             return;
@@ -224,7 +239,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         body.put("password", password);
         body.put("phone_code", dialCode);
         body.put("country_code", countryCode.toLowerCase());
-        body.put("email", "");
+        body.put("email", email);
         HashMap<String, File> fileParams = null;
         if (imagePath != null) {
             File file = new File(imagePath);

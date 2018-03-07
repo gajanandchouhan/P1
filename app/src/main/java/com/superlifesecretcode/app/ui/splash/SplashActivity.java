@@ -18,6 +18,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     protected void initializeView() {
+        CommonUtils.printHashKey(this);
         presenter.delaySplash();
     }
 

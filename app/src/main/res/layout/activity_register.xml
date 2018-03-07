@@ -11,18 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-       <ImageView
+        <ImageView
             android:id="@+id/imageView_icon"
-           android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_40sdp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textView_label"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView_icon"
@@ -30,7 +29,8 @@
             android:padding="@dimen/_5sdp"
             android:text="Sign Up"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="@dimen/_16sdp"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/layout_profile_img"
@@ -91,8 +91,8 @@
                         android:id="@+id/textView_dial_code"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:fontFamily="@font/reguler"
+                        android:gravity="center"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
                         android:text="+1"
@@ -110,13 +110,13 @@
                 <EditText
                     android:id="@+id/edi_text_phone"
                     android:layout_width="0dp"
-                    android:fontFamily="@font/reguler"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:digits="0123456789"
+                    android:fontFamily="@font/reguler"
                     android:hint="@string/mobile_number"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
@@ -130,10 +130,10 @@
                 android:id="@+id/textView_gender"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_34sdp"
-                android:fontFamily="@font/reguler"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/text_box_bg"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:hint="@string/gender"
                 android:paddingLeft="@dimen/_15sdp"
@@ -147,9 +147,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/reguler"
                 android:background="@drawable/text_box_bg"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:hint="@string/country"
                 android:paddingLeft="@dimen/_15sdp"
@@ -161,11 +161,11 @@
             <TextView
                 android:id="@+id/textView_state"
                 android:layout_width="match_parent"
-                android:fontFamily="@font/reguler"
                 android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/text_box_bg"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:hint="@string/state"
                 android:paddingLeft="@dimen/_15sdp"
@@ -173,6 +173,13 @@
                 android:textColor="@color/colorOrange"
                 android:textColorHint="@color/colorOrange"
                 android:textSize="@dimen/_13sdp" />
+
+            <EditText
+                android:id="@+id/edit_text_email"
+                style="@style/EdiTextStyle"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/edit_text_password"
@@ -187,8 +194,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_34sdp"
                 android:layout_marginTop="@dimen/_40sdp"
-                android:fontFamily="@font/reguler"
                 android:background="@drawable/button_white_elipse"
+                android:fontFamily="@font/reguler"
                 android:text="@string/register"
                 android:textAllCaps="false"
                 android:textColor="@color/colorOrange"
@@ -219,8 +226,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center_horizontal"
                     android:fontFamily="@font/reguler"
+                    android:gravity="center_horizontal"
                     android:text="Already have an account?"
                     android:textColor="@color/colorLightBlack"
                     android:textSize="@dimen/_13sdp" />

@@ -31,6 +31,33 @@ public class LanguageResponseData {
     private String dont_have_acnt;
     private String select_language;
     private String forgot_password;
+    private String email;
+    private String enter_email;
+    private String enter_valid_email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEnter_email() {
+        return enter_email;
+    }
+
+    public void setEnter_email(String enter_email) {
+        this.enter_email = enter_email;
+    }
+
+    public String getEnter_valid_email() {
+        return enter_valid_email;
+    }
+
+    public void setEnter_valid_email(String enter_valid_email) {
+        this.enter_valid_email = enter_valid_email;
+    }
 
     public String getForgot_password() {
         return forgot_password;
