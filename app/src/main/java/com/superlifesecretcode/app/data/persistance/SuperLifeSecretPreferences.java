@@ -17,6 +17,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class SuperLifeSecretPreferences {
 
     private static final String PREF_NAME = "superLifeScreenPrefrerence";
+    public static final String LANGUAGE_SETTED = "language_setted";
     private static SuperLifeSecretPreferences superLifeScreenPrefrerence;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editer;

@@ -2,11 +2,13 @@ package com.superlifesecretcode.app.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -15,6 +17,12 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
@@ -23,6 +31,14 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,13 +46,16 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginView {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginView, GoogleApiClient.OnConnectionFailedListener {
     private EditText editTextMobileNumber, editTextPassword;
     TextView textViewDontHaveAnAccount, textViewSignup, textViewForgot;
     Button buttonLogin;
     private String eneterMobileNo, enterPassword;
     private LoginPresenter presenter;
     private CallbackManager callbackManager;
+    private int RC_SIGN_IN = 114;
+    private GoogleApiClient mGoogleApiClient;
+    private TwitterAuthClient client;
 
     @Override
     protected int getContentView() {
@@ -60,9 +79,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         textViewForgot = findViewById(R.id.textView_forgot);
         textViewSignup = findViewById(R.id.textView_signup);
         findViewById(R.id.imageView_f).setOnClickListener(this);
+        findViewById(R.id.imageView_g).setOnClickListener(this);
+        findViewById(R.id.imageView_t).setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
         textViewForgot.setOnClickListener(this);
         setUpConversion();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                //    .requestIdToken("625831639845-2v4uc03o9d98k9bld9m6rdhefoepa4gj.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
     }
 
     private void setUpConversion() {
@@ -98,6 +127,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.imageView_f:
                 loginWithFb();
                 break;
+            case R.id.imageView_g:
+                signInWithGoogle();
+                break;
+            case R.id.imageView_t:
+                signinWithTwitter();
+                break;
         }
     }
 
@@ -130,7 +165,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void loginWithFb() {
         callbackManager = CallbackManager.Factory.create();
-
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -156,6 +190,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void setFacebookData(final LoginResult loginResult) {
+        showProgress();
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -163,33 +198,108 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         // Application code
+                        hideProgress();
                         try {
                             Log.i("Response", response.toString());
-
-                            String email = response.getJSONObject().getString("email");
-                            String firstName = response.getJSONObject().getString("first_name");
-                            String lastName = response.getJSONObject().getString("last_name");
+                            String email = "";
+                            if (response.getJSONObject().has("email")) {
+                                email = response.getJSONObject().getString("email");
+                            }
+                            String name = response.getJSONObject().getString("name");
                             String id = response.getJSONObject().getString("id");
-
+                            registerSocialUser(name, email, id);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            CommonUtils.showSnakeBar(LoginActivity.this, getString(R.string.server_error));
                         }
                     }
                 });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,email,name,gender");
+        parameters.putString("fields", "id,email,name");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private void signInWithGoogle() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            GoogleSignInAccount acct = result.getSignInAccount();
+            Log.v("Google", acct.getDisplayName());
+            String fullame = acct.getDisplayName();
+            String email = acct.getEmail();
+            String id = acct.getId();
+            registerSocialUser(fullame, email, id);
+        } else {
+            CommonUtils.showSnakeBar(LoginActivity.this, getString(R.string.server_error));
+        }
+
+    }
+
+
+    private void signinWithTwitter() {
+        client = new TwitterAuthClient();
+        client.authorize(LoginActivity.this, new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> twitterSessionResult) {
+                TwitterSession user = twitterSessionResult.data;
+                getUserDetails(user);
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                CommonUtils.showSnakeBar(LoginActivity.this, getString(R.string.server_error));
+            }
+        });
+    }
+
+    private void getUserDetails(TwitterSession user) {
+        showProgress();
+        TwitterCore.getInstance().getApiClient(user).getAccountService().verifyCredentials(true, false, true).enqueue(new Callback<User>() {
+            @Override
+            public void success(Result<User> result) {
+                hideProgress();
+                registerSocialUser(result.data.name, result.data.email, String.valueOf(result.data.getId()));
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                hideProgress();
+                CommonUtils.showSnakeBar(LoginActivity.this, getString(R.string.server_error));
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      /*  if (requestCode == RC_SIGN_IN) {
+        if (client != null) {
+            client.onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        } else {*/
+        }
+        if (callbackManager != null) {
             callbackManager.onActivityResult(requestCode, resultCode, data);
-//        }
+        }
+    }
+
+
+    private void registerSocialUser(String name, String email, String socialId) {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("social_id", socialId);
+        body.put("name", name);
+        body.put("email", email!=null?email:"");
+        presenter.loginSocialUser(body);
     }
 }

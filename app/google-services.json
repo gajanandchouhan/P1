@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "688887616752",
+    "firebase_url": "https://richestlife-cc9e3.firebaseio.com",
+    "project_id": "richestlife-cc9e3",
+    "storage_bucket": "richestlife-cc9e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688887616752:android:4d39ade5929a459e",
+        "android_client_info": {
+          "package_name": "com.superlifesecretcode.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688887616752-v0ud31tukadg6qsm8q0s25egtq2mqt3j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.superlifesecretcode.app",
+            "certificate_hash": "07eb5a07d1219446a7fc4e51d77583036410ca7d"
+          }
+        },
+        {
+          "client_id": "688887616752-n4qbihg1sou1r10prih4ds1ter2u3140.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALFgUrdpNgTeM1pxqEY_T9pGyITjM0F8k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688887616752-n4qbihg1sou1r10prih4ds1ter2u3140.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

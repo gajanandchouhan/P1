@@ -1,9 +1,19 @@
 package com.superlifesecretcode.app.ui.splash;
 
+import android.util.Log;
+
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.disclosure.DiscolsureActivity;
 import com.superlifesecretcode.app.ui.language.LanguageActivity;
+import com.superlifesecretcode.app.ui.language.LanguageView;
+import com.superlifesecretcode.app.ui.login.LoginActivity;
+import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+
+import java.util.Map;
 
 public class SplashActivity extends BaseActivity implements SplashView {
 
@@ -30,8 +40,18 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void navigateToNextScreen() {
-        CommonUtils.startActivity(this, LanguageActivity.class);
+        UserDetailResponseData userData = SuperLifeSecretPreferences.getInstance().getUserData();
+        if (userData != null) {
+            CommonUtils.startActivity(this, MainActivity.class);
+        } else if (SuperLifeSecretPreferences.getInstance().getBoolean(SuperLifeSecretPreferences.LANGUAGE_SETTED) && SuperLifeSecretPreferences.getInstance().getBoolean(SuperLifeSecretPreferences.DISCLOSE_ACCEPTED)) {
+            CommonUtils.startActivity(this, LoginActivity.class);
+        } else if (SuperLifeSecretPreferences.getInstance().getBoolean(SuperLifeSecretPreferences.LANGUAGE_SETTED)) {
+            CommonUtils.startActivity(this, DiscolsureActivity.class);
+        } else {
+            CommonUtils.startActivity(this, LanguageActivity.class);
+        }
         finish();
+
     }
 
     @Override

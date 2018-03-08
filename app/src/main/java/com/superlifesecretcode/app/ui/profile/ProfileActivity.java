@@ -98,10 +98,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     private void setUpUi() {
         if (userDetailResponseData != null) {
-            String countrCode = userDetailResponseData.getCountry_code().toLowerCase();
-            if (!countrCode.isEmpty()) {
-                int id = getResources().getIdentifier("flag_" + countrCode, "drawable", getPackageName());
-                imageViewFlag.setImageResource(id);
+            if (userDetailResponseData.getCountry_code() != null) {
+                String countrCode = userDetailResponseData.getCountry_code().toLowerCase();
+                if (!countrCode.isEmpty()) {
+                    int id = getResources().getIdentifier("flag_" + countrCode, "drawable", getPackageName());
+                    imageViewFlag.setImageResource(id);
+                }
             }
             editTextName.setText(userDetailResponseData.getUsername());
             textViewName.setText(userDetailResponseData.getUsername());

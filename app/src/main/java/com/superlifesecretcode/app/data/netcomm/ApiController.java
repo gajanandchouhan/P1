@@ -71,11 +71,17 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<UserDetailResponseModel>(handler));
                 break;
+            case REQ_SOCIAL_LOGIN:
+                Observable<UserDetailResponseModel> socialLoginObservable = apiInterface.socialLogin(requestParams);
+                socialLoginObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<UserDetailResponseModel>(handler));
+                break;
         }
 
 
-
     }
+
     public void callMultipart(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, File> files) {
         try {
             if (!CheckNetworkState.isOnline(mContext)) {

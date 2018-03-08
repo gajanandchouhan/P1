@@ -45,4 +45,9 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("login")
     Observable<UserDetailResponseModel> loginUser(@PartMap() Map<String, RequestBody> params);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("socialLogin")
+    Observable<UserDetailResponseModel> socialLogin(@PartMap() Map<String, RequestBody> params);
 }

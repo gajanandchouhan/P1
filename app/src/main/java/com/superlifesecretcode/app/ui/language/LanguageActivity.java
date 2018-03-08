@@ -108,6 +108,7 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
         }
 
         SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
+
     }
 
     @Override
@@ -136,6 +137,7 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void setConversionContent(LanguageResponseData data) {
         if (data != null) {
+            SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.LANGUAGE_SETTED,true);
             SuperLifeSecretPreferences.getInstance().setConversionData(data);
             CommonUtils.startActivity(LanguageActivity.this, DiscolsureActivity.class);
             finish();

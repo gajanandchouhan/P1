@@ -63,5 +63,35 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         }, requestBody);
     }
 
+    public void loginSocialUser(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_SOCIAL_LOGIN, new ResponseHandler<UserDetailResponseModel>() {
+            @Override
+            public void onResponse(UserDetailResponseModel userDetailResponseModel) {
+                view.hideProgress();
+                if (userDetailResponseModel != null) {
+                    if (userDetailResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setUserData(userDetailResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, userDetailResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
 
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
+    }
 }
