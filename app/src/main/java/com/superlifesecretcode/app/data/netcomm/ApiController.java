@@ -106,6 +106,29 @@ public class ApiController implements RequestType {
 
     }
 
+    public void callMultiparWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, File> files, Map<String, String> header) {
+        try {
+            if (!CheckNetworkState.isOnline(mContext)) {
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+                return;
+            }
+            Map<String, RequestBody> stringMultipartParamsParams = getRequestParams(params);
+            List<MultipartBody.Part> filesMultipart = getFilesMultipart(files);
+            switch (reqTyoe) {
+                case REQ_UPDATE_PROFILE:
+                    Observable<UserDetailResponseModel> updateProfileObservable = apiInterface.updateProfile(stringMultipartParamsParams,
+                            filesMultipart.size() > 0 ? filesMultipart.get(0) : null, header);
+                    updateProfileObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<UserDetailResponseModel>(handler));
+                    break;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void callGet(Context mContext, byte reqTyoe, ResponseHandler handler) {
         if (!CheckNetworkState.isOnline(mContext)) {

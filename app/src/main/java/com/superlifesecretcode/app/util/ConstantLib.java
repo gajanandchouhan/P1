@@ -12,4 +12,5 @@ public interface ConstantLib {
     String STRING_ENGLISH = "English";
     String STRING_SIMPLIFIED = "繁体中文";
     String STRING_TRADITIONAL = "繁體中文";
+    String TC_URL="https://www.richestlife.com/terms-of-service/";
 }

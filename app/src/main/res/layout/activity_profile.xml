@@ -21,9 +21,9 @@
 
             <com.superlifesecretcode.app.custom.CircleImageView
                 android:id="@+id/imageView_user"
-                android:layout_gravity="center"
                 android:layout_width="@dimen/_65sdp"
                 android:layout_height="@dimen/_65sdp"
+                android:layout_gravity="center"
                 android:src="@drawable/default_placeholder" />
 
             <TextView
@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/reguler"
                 android:text="Name"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_14sdp" />
@@ -56,6 +57,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_weight="1"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:text="@string/name"
                 android:textColor="@color/colorPurple"
@@ -67,7 +69,45 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_transparent"
+                android:fontFamily="@font/reguler"
                 android:hint="@string/name"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorLightPurple"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_email_label"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:fontFamily="@font/reguler"
+                android:gravity="center_vertical"
+                android:text="Email"
+                android:textColor="@color/colorPurple"
+                android:textSize="@dimen/_12sdp" />
+
+            <EditText
+                android:id="@+id/edit_text_email"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@drawable/button_transparent"
+                android:fontFamily="@font/reguler"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
                 android:textColor="@color/colorPurple"
@@ -84,11 +124,11 @@
             <ImageView
                 android:id="@+id/imageView_flag"
                 android:layout_width="0dp"
-                android:scaleType="fitStart"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
                 android:paddingBottom="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
+                android:scaleType="fitStart"
                 android:src="@drawable/flag_us" />
 
             <TextView
@@ -96,6 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:text="@string/mobile_number"
                 android:textColor="@color/colorPurple"
@@ -107,7 +148,11 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_transparent"
+                android:fontFamily="@font/reguler"
                 android:hint="@string/mobile_number"
+                android:inputType="phone"
+                android:maxLength="12"
+                android:maxLines="1"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
                 android:textColor="@color/colorPurple"
@@ -126,6 +171,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:text="@string/gender"
                 android:textColor="@color/colorPurple"
@@ -137,7 +183,8 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_transparent"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:hint="@string/gender"
                 android:paddingLeft="@dimen/_5sdp"
@@ -158,6 +205,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:text="@string/country"
                 android:textColor="@color/colorPurple"
@@ -169,7 +217,8 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_transparent"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:hint="@string/country"
                 android:paddingLeft="@dimen/_5sdp"
@@ -190,6 +239,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:text="@string/state"
                 android:textColor="@color/colorPurple"
@@ -201,7 +251,8 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_transparent"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:hint="@string/state"
                 android:paddingLeft="@dimen/_5sdp"
@@ -222,6 +273,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:text="Select Language"
                 android:textColor="@color/colorPurple"
@@ -233,7 +285,8 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_transparent"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:hint="@string/language"
                 android:paddingLeft="@dimen/_5sdp"

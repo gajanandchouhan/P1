@@ -30,6 +30,7 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.ui.register.RegisterActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -122,7 +123,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //                CommonUtils.startActivity(this, MainActivity.class, null, true);
                 break;
             case R.id.textView_signup:
-                onBackPressed();
+                CommonUtils.startActivity(this, RegisterActivity.class);
                 break;
             case R.id.imageView_f:
                 loginWithFb();
@@ -299,7 +300,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         HashMap<String, String> body = new HashMap<>();
         body.put("social_id", socialId);
         body.put("name", name);
-        body.put("email", email!=null?email:"");
+        body.put("email", email != null ? email : "");
         presenter.loginSocialUser(body);
     }
 }

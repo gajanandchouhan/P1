@@ -1,32 +1,49 @@
 package com.superlifesecretcode.app.ui.profile;
 
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dining.countrypicker.Country;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.ui.picker.CountryPicker;
+import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
+import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
+import com.superlifesecretcode.app.util.ImagePickerUtils;
+import com.superlifesecretcode.app.util.PermissionConstant;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProfileActivity extends BaseActivity implements View.OnClickListener, ProfileView {
 
 
     private ImageView imageViewProfile;
     private EditText editTextName;
-    private EditText editTextMobileNumber;
+    private EditText editTextMobileNumber, editTextEmail;
     private TextView textViewGender, textViewCountry, textViewState, textViewLanguage, textViewName;
     UserDetailResponseData userDetailResponseData;
     ImageView imageViewUser, imageViewFlag;
@@ -37,7 +54,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private String languageId;
     private ProfilePresenter presenter;
     private TextView textViewNameLabel, textViewGenderLabel, textViewMobileLabel,
-            textViewCountryLabel, textViewStateLabel, textViewLanguageLabel;
+            textViewCountryLabel, textViewStateLabel, textViewLanguageLabel, textViewEmailLabel;
+    private boolean isEnabled;
+    String countryId, stateId, dialCode, countryCode;
+    private String imagePath;
+    private CountryPicker countryPicker;
+    private CountryStatePicker countryStatePicker;
 
     @Override
     protected int getContentView() {
@@ -66,8 +88,15 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewCountryLabel = findViewById(R.id.textView_country_label);
         textViewStateLabel = findViewById(R.id.textView_state_label);
         textViewLanguageLabel = findViewById(R.id.textView_language_label);
+        editTextEmail = findViewById(R.id.edit_text_email);
+        textViewEmailLabel = findViewById(R.id.textView_email_label);
         textViewGender.setOnClickListener(this);
         textViewLanguage.setOnClickListener(this);
+        imageViewUser.setOnClickListener(this);
+        imageViewFlag.setOnClickListener(this);
+        textViewCountry.setOnClickListener(this);
+        textViewState.setOnClickListener(this);
+
         if (conversionData != null) {
             genderList = new ArrayList<>();
             genderList.add(conversionData.getMale());
@@ -79,6 +108,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         langauageList.add(ConstantLib.STRING_SIMPLIFIED);
         setUpLocalConversion();
         setUpUi();
+        enableDisableView(false);
     }
 
     private void setUpLocalConversion() {
@@ -94,6 +124,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewState.setHint(conversionData.getState());
         textViewLanguageLabel.setText(conversionData.getSelect_language());
         textViewLanguage.setHint(conversionData.getSelect_language());
+        textViewEmailLabel.setText(conversionData.getEmail());
+        editTextEmail.setHint(conversionData.getEmail());
     }
 
     private void setUpUi() {
@@ -103,6 +135,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 if (!countrCode.isEmpty()) {
                     int id = getResources().getIdentifier("flag_" + countrCode, "drawable", getPackageName());
                     imageViewFlag.setImageResource(id);
+                    dialCode = userDetailResponseData.getPhone_code();
+                    countryCode = userDetailResponseData.getCountry_code();
                 }
             }
             editTextName.setText(userDetailResponseData.getUsername());
@@ -111,6 +145,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             textViewCountry.setText(userDetailResponseData.getCountryName());
             textViewState.setText(userDetailResponseData.getStateName());
             textViewGender.setText(userDetailResponseData.getGender());
+            countryId = userDetailResponseData.getCountry();
+            stateId = userDetailResponseData.getState();
+            editTextEmail.setText(userDetailResponseData.getEmail());
             currentLanguag = getLanguage(SuperLifeSecretPreferences.getInstance().getLanguageId());
             textViewLanguage.setText(currentLanguag);
             ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
@@ -138,7 +175,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
         imageViewProfile = findViewById(R.id.imageView_profile);
-        imageViewProfile.setImageResource(android.R.drawable.ic_menu_edit);
+        imageViewProfile.setImageResource(R.drawable.edit);
         imageViewProfile.setOnClickListener(this);
         textViewTitle.setText(title);
     }
@@ -204,15 +241,118 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             case R.id.textView_gender:
                 showgGenderSelection();
                 break;
+            case R.id.imageView_flag:
+                showDialCodePicker();
+                break;
             case R.id.textView_language:
                 showLanguageSelection();
+                break;
+            case R.id.imageView_profile:
+                if (isEnabled) {
+                    updateProfile();
+                } else {
+                    enableDisableView(true);
+                }
+
+                break;
+            case R.id.textView_country:
+                getCountry();
+                break;
+            case R.id.textView_state:
+                if (countryId == null) {
+                    CommonUtils.showSnakeBar(this, conversionData.getSelect_country());
+                    return;
+                }
+                getState();
+                break;
+
+            case R.id.imageView_user:
+                if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+                    pickImage();
+                } else {
+                    ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+                }
                 break;
         }
     }
 
-    @Override
-    public void onProfileUpdated(UserDetailResponseData data) {
+    private void updateProfile() {
+        String name = editTextName.getText().toString().trim();
+        String mobileNumber = editTextMobileNumber.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String gender = textViewGender.getText().toString().trim();
+        String country = textViewCountry.getText().toString().trim();
+        String state = textViewState.getText().toString().trim();
 
+        if (name.isEmpty()) {
+            editTextName.setError(conversionData.getEnter_name());
+            return;
+        }
+        if (dialCode == null || countryCode == null) {
+            CommonUtils.showSnakeBar(this, "Please select dial code.");
+            return;
+        }
+
+        if (mobileNumber.isEmpty()) {
+            editTextName.setError(conversionData.getEnter_mobile_number());
+            return;
+        }
+        if (email.isEmpty()) {
+            editTextEmail.setError(conversionData.getEnter_email());
+            return;
+        }
+        if (!CommonUtils.isValidEmail(email)) {
+            editTextEmail.setError(conversionData.getEnter_valid_email());
+            return;
+        }
+        if (gender.isEmpty()) {
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_gender());
+            return;
+        }
+        if (countryId == null) {
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_country());
+            return;
+        }
+        if (stateId == null) {
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_state());
+            return;
+        }
+        HashMap<String, String> body = new HashMap<>();
+        body.put("name", name);
+        body.put("gender", gender);
+        body.put("mobile", mobileNumber);
+        body.put("country_id", countryId);
+        body.put("state_id", stateId);
+        body.put("phone_code", dialCode);
+        body.put("email", email);
+        body.put("country_code", countryCode.toLowerCase());
+        body.put("user_id", userDetailResponseData.getUser_id());
+        HashMap<String, File> fileParams = null;
+        if (imagePath != null) {
+            File file = new File(imagePath);
+            fileParams = new HashMap<>();
+            fileParams.put("image", file);
+        }
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
+        presenter.updateUser(body, fileParams, headers);
+    }
+
+    private void enableDisableView(boolean enbale) {
+        isEnabled = enbale;
+        if (enbale) {
+            imageViewProfile.setImageResource(R.drawable.right);
+        } else {
+            imageViewProfile.setImageResource(R.drawable.edit);
+        }
+        editTextName.setEnabled(enbale);
+        imageViewUser.setEnabled(enbale);
+        editTextMobileNumber.setEnabled(enbale && editTextMobileNumber.getText().toString().isEmpty());
+        editTextEmail.setEnabled(enbale && editTextEmail.getText().toString().isEmpty());
+        textViewGender.setEnabled(enbale);
+        textViewCountry.setEnabled(enbale);
+        textViewState.setEnabled(enbale);
+        textViewLanguage.setEnabled(enbale);
     }
 
 
@@ -223,4 +363,100 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
         setUpLocalConversion();
     }
+
+
+    private void showDialCodePicker() {
+        countryPicker = new CountryPicker(this, new CountryPicker.PickerListner() {
+            @Override
+            public void onPick(Country country) {
+                imageViewFlag.setImageResource(country.getFlag());
+                dialCode = country.getDialCode();
+                countryCode = country.getCode().toLowerCase();
+                countryPicker.dismiss();
+            }
+        });
+        countryPicker.show();
+    }
+
+    private void getCountry() {
+        presenter.getCountry();
+    }
+
+    private void getState() {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("country_id", countryId);
+        presenter.getStates(body);
+    }
+
+
+    private void pickImage() {
+        CropImage.activity()
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .start(this);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imageViewUser.setImageURI(result.getUri());
+                imagePath = ImagePickerUtils.getPath(this, result.getUri());
+                if (imagePath != null) {
+                    ImageLoadUtils.loadImage(imagePath, imageViewUser);
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void setCountryData(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewCountry.setText(country.getName());
+                countryId = country.getId();
+                countryStatePicker.dismiss();
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    @Override
+    public void setStateData(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewState.setText(country.getName());
+                countryStatePicker.dismiss();
+                stateId = country.getId();
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    @Override
+    public void setUserData(UserDetailResponseData data) {
+        if (data != null) {
+            this.userDetailResponseData = data;
+            SuperLifeSecretPreferences.getInstance().setUserDetails(data);
+            enableDisableView(false);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionConstant.CODE_PROFILE) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
+            pickImage();
+        }
+    }
+
 }

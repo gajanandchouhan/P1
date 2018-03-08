@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorPurple"
     android:layout_height="wrap_content"
+    android:background="@color/colorPurple"
     android:padding="@dimen/_10sdp">
 
     <ImageView
@@ -20,6 +20,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_toEndOf="@+id/imageView_icon"
         android:layout_toRightOf="@+id/imageView_icon"
+        android:fontFamily="@font/reguler"
         android:text="Title"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_13sdp" />

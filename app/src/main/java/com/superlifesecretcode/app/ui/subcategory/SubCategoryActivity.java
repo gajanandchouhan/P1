@@ -74,12 +74,17 @@ public class SubCategoryActivity extends BaseActivity {
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Disclosure","http://www.google.com"));
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Service Provided","http://www.google.com"));
                 return list;
-
+            case 2:
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Books","http://www.google.com"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Talks + Classes","http://www.google.com"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Online Courses","http://www.google.com"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Cards","http://www.google.com"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Accessories","http://www.google.com"));
+                return list;
             case 3:
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Join Online Course"," https://zoom.us/join"));
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Facebook","https://m.facebook.com/SuperLifeCode/?refid=46"));
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Sun Youtube Video","https://www.youtube.com/watch?v=PKNSIpl1aYQ&feature=youtu.be%20Inbox%20x"));
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Learning Administrative Module","http://www.google.com"));
                 return list;
         }
         return list;

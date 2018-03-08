@@ -11,4 +11,5 @@ public interface RequestType {
     byte REQ_REGISTER_USER = 4;
     byte REQ_LOGIN = 5;
     byte REQ_SOCIAL_LOGIN = 6;
+    byte REQ_UPDATE_PROFILE = 7;
 }

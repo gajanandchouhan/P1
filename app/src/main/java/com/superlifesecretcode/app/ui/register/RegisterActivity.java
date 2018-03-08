@@ -2,10 +2,15 @@ package com.superlifesecretcode.app.ui.register;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +29,10 @@ import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
+import com.superlifesecretcode.app.ui.webview.TcWebViewActivity;
+import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ImagePickerUtils;
 import com.superlifesecretcode.app.util.PermissionConstant;
@@ -50,6 +58,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     EditText editTextPassword;
     EditText editTextEmail;
     Button buttonRegister;
+    CheckBox checkBoxTOS;
+    TextView textViewTermsOfServices;
     ImageView imageViewFlag;
     private CountryPicker countryPicker;
     private TextView textViewSiginCotinue;
@@ -84,6 +94,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         buttonRegister = findViewById(R.id.button_register);
         editTextMobileNumber = findViewById(R.id.edi_text_phone);
         textViewSiginCotinue = findViewById(R.id.textView_siginin);
+        checkBoxTOS = findViewById(R.id.checkbox_tc);
+        textViewTermsOfServices = findViewById(R.id.textView_tc);
         textViewAlreadyAccount = findViewById(R.id.textview_allready_account);
         editTextEmail = findViewById(R.id.edit_text_email);
         textViewSiginCotinue.setOnClickListener(this);
@@ -93,7 +105,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         textViewGender.setOnClickListener(this);
         textState.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
+        textViewTermsOfServices.setOnClickListener(this);
         setUpConversion();
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.reguler);
+        checkBoxTOS.setTypeface(typeface);
 
     }
 
@@ -148,7 +163,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 validateAndRegister();
                 break;
             case R.id.textView_siginin:
-                CommonUtils.startActivity(this, LoginActivity.class);
+                onBackPressed();
                 break;
             case R.id.imageView_profile:
                 if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
@@ -169,6 +184,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     return;
                 }
                 getState();
+                break;
+            case R.id.textView_tc:
+                Bundle bundle = new Bundle();
+                bundle.putString("title", "Terms Of Services");
+                bundle.putString("url", ConstantLib.TC_URL);
+                CommonUtils.startActivity(this, TcWebViewActivity.class, bundle, false);
                 break;
 
         }
@@ -228,6 +249,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
         if (password.isEmpty()) {
             editTextPassword.setError(passLength);
+            return;
+        }
+        if (!checkBoxTOS.isChecked()) {
+            CommonUtils.showSnakeBar(this, "Please agree to terms of services.");
             return;
         }
         HashMap<String, String> body = new HashMap<>();

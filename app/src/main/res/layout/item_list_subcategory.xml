@@ -11,6 +11,7 @@
         android:id="@+id/textView_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/reguler"
         android:layout_gravity="center_vertical"
         android:drawableLeft="@android:drawable/ic_menu_camera"
         android:drawablePadding="@dimen/_5sdp"
