@@ -86,6 +86,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     case 3:
                         openNextScreen(3, getString(R.string.learing));
                         break;
+                    case 7:
+                        openNextScreen(7, getString(R.string.free_downloads));
+                        break;
                 }
 
             }
@@ -119,6 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.cardview_about).setOnClickListener(this);
         findViewById(R.id.cardview_learning).setOnClickListener(this);
         findViewById(R.id.cardview_product_shoping).setOnClickListener(this);
+        findViewById(R.id.cardvview_freedownloads).setOnClickListener(this);
         setUpUserdetails();
     }
 
@@ -186,6 +190,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.cardview_learning:
                 openNextScreen(3, getString(R.string.learing));
+                break;
+            case R.id.cardvview_freedownloads:
+                openNextScreen(7, getString(R.string.free_downloads));
                 break;
             case R.id.textView_edit:
             case R.id.imageView_profile:

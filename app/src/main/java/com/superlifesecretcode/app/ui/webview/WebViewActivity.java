@@ -34,7 +34,11 @@ public class WebViewActivity extends BaseActivity {
         progressBar = findViewById(R.id.progress_bar);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl(getIntent().getBundleExtra("bundle").getString("url"));
+        if (title.equalsIgnoreCase("Service Provided")) {
+            webView.loadData(getIntent().getBundleExtra("bundle").getString("url"), "text/html", "utf-8");
+        } else {
+            webView.loadUrl(getIntent().getBundleExtra("bundle").getString("url"));
+        }
         webView.setWebViewClient(new MyWebViewClient());
     }
 

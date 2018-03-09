@@ -11,6 +11,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.ui.adapter.SubacategoryListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -72,19 +73,25 @@ public class SubCategoryActivity extends BaseActivity {
         switch (position) {
             case 1:
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Disclosure","http://www.google.com"));
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Service Provided","http://www.google.com"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Service Provided", ConstantLib.SERVICE_PROVIDED_SIMPLY));
                 return list;
             case 2:
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Books","http://www.google.com"));
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Talks + Classes","http://www.google.com"));
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Online Courses","http://www.google.com"));
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Cards","http://www.google.com"));
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Accessories","http://www.google.com"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Books"," https://www.richestlife.com/product-category/publishing-books/"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Talks + Classes","https://www.richestlife.com/product-category/%E8%AC%9B%E5%BA%A7%E8%AA%B2%E7%A8%8B/"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Online Courses"," https://www.richestlife.com/product-category/%25e4%25b8%25bb%25e9%25a1%258c%25e8%25aa%25b2%25e7%25a8%258b/"));
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Cards","https://www.richestlife.com/product-category/%E7%89%8C%E5%8D%A1/"));
+//                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Accessories","http://www.google.com"));
                 return list;
             case 3:
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Join Online Course"," https://zoom.us/join"));
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Facebook","https://m.facebook.com/SuperLifeCode/?refid=46"));
                 list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Sun Youtube Video","https://www.youtube.com/watch?v=PKNSIpl1aYQ&feature=youtu.be%20Inbox%20x"));
+                return list;
+
+            case 7:
+                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Songs"," https://www.richestlife.com/music-downloads/"));
+//                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Wallpapers","https://m.facebook.com/SuperLifeCode/?refid=46"));
+//                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Sun Emoji","https://www.youtube.com/watch?v=PKNSIpl1aYQ&feature=youtu.be%20Inbox%20x"));
                 return list;
         }
         return list;

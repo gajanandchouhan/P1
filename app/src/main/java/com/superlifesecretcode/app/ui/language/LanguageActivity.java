@@ -79,6 +79,7 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
 
         pager.setPageTransformer(true,new MyTransformer());
 
+
     }
 
     @Override
@@ -123,7 +124,12 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
             case R.id.button_next:
                 getConversionData();
                 break;
-
+            case R.id.imageView_next:
+                pager.setCurrentItem(pager.getCurrentItem()+1, true);
+                break;
+            case R.id.imageView_previous:
+                pager.setCurrentItem(pager.getCurrentItem()-1, true);
+                break;
         }
     }
 

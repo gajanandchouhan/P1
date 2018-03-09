@@ -35,6 +35,8 @@
                 android:id="@+id/edi_text_phone"
                 style="@style/EdiTextStyle"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:drawableLeft="@drawable/user"
+                android:drawablePadding="@dimen/_5sdp"
                 android:hint="@string/mobile_number"
                 android:inputType="text" />
 
@@ -42,6 +44,8 @@
                 android:id="@+id/edit_text_password"
                 style="@style/EdiTextStyle"
                 android:layout_marginTop="@dimen/_20sdp"
+                android:drawableLeft="@drawable/password"
+                android:drawablePadding="@dimen/_5sdp"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 
