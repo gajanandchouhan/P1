@@ -44,7 +44,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private ImageView imageViewProfile;
     private EditText editTextName;
     private EditText editTextMobileNumber, editTextEmail;
-    private TextView textViewGender, textViewCountry, textViewState, textViewLanguage, textViewName;
+    private TextView textViewGender, textViewCountry, textViewDialCode,
+            textViewState, textViewLanguage, textViewName;
     UserDetailResponseData userDetailResponseData;
     ImageView imageViewUser, imageViewFlag;
     private LanguageResponseData conversionData;
@@ -79,9 +80,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewState = findViewById(R.id.textView_state);
         textViewLanguage = findViewById(R.id.textView_language);
         textViewName = findViewById(R.id.textView_name);
+        textViewDialCode = findViewById(R.id.textView_phonecode);
         imageViewUser = findViewById(R.id.imageView_user);
         imageViewFlag = findViewById(R.id.imageView_flag);
-
         textViewNameLabel = findViewById(R.id.textView_name_label);
         textViewMobileLabel = findViewById(R.id.textView_mobile_label);
         textViewGenderLabel = findViewById(R.id.textView_gender_label);
@@ -137,6 +138,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     imageViewFlag.setImageResource(id);
                     dialCode = userDetailResponseData.getPhone_code();
                     countryCode = userDetailResponseData.getCountry_code();
+                    textViewDialCode.setText(dialCode);
                 }
             }
             editTextName.setText(userDetailResponseData.getUsername());
@@ -210,7 +212,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showLanguageSelection() {
-        DropDownWindow.show(this, textViewGender, langauageList, new DropDownWindow.SelectedListner() {
+        DropDownWindow.show(this, textViewLanguage, langauageList, new DropDownWindow.SelectedListner() {
             @Override
             public void onSelected(String value) {
                 if (!value.equalsIgnoreCase(currentLanguag)) {
@@ -347,6 +349,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
         editTextName.setEnabled(enbale);
         imageViewUser.setEnabled(enbale);
+        imageViewFlag.setEnabled(enbale);
         editTextMobileNumber.setEnabled(enbale && editTextMobileNumber.getText().toString().isEmpty());
         editTextEmail.setEnabled(enbale && editTextEmail.getText().toString().isEmpty());
         textViewGender.setEnabled(enbale);

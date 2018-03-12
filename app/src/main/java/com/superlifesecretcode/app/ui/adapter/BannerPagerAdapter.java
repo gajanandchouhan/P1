@@ -1,13 +1,17 @@
 package com.superlifesecretcode.app.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.ui.webview.WebViewActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 
 
 /**
@@ -28,6 +32,15 @@ public class BannerPagerAdapter extends PagerAdapter {
        /* GlideApp.with(imageView).load(banners.get(position).getInsideImage())
                 .placeholder(R.drawable.default_placeholder).into(imageView);*/
         collection.addView(layout);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", "Banner");
+                bundle.putString("url", "https://www.richestlife.com/product-category/%E8%AC%9B%E5%BA%A7%E8%AA%B2%E7%A8%8B/");
+                CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
+            }
+        });
         return layout;
     }
 

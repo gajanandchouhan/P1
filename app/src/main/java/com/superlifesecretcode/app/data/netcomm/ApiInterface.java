@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.data.netcomm;
 
 
+import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -59,4 +60,9 @@ public interface ApiInterface {
     @POST("updateUser")
     Observable<UserDetailResponseModel> updateProfile(@PartMap() Map<String, RequestBody> partMap,
                                                       @Part MultipartBody.Part file, @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getHomeCategories")
+    Observable<CategoryResponseModel> getHomeCategories(@PartMap() Map<String, RequestBody> params);
 }

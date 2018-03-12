@@ -4,6 +4,8 @@ package com.superlifesecretcode.app.data.netcomm;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
+import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -76,6 +78,13 @@ public class ApiController implements RequestType {
                 socialLoginObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<UserDetailResponseModel>(handler));
+                break;
+
+            case REQ_GET_CATEGORY:
+                Observable<CategoryResponseModel> getCatObservable = apiInterface.getHomeCategories(requestParams);
+                getCatObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CategoryResponseModel>(handler));
                 break;
         }
 

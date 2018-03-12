@@ -9,46 +9,46 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.DrawerItem;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
-import com.superlifesecretcode.app.ui.picker.DropDownWindow;
-import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
+import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
  * Created by Divya on 26-02-2018.
  */
 
-public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryListAdapter.ItemViewHolder> {
-    private final List<SubcategoryModel> list;
+public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemViewHolder> {
+    private final List<DrawerItem> list;
     private Context mContext;
 
-    public SubacategoryListAdapter(List<SubcategoryModel> list, Context mContext) {
+    public MainListAdapter(List<DrawerItem> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
     }
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_subcategory, parent, false));
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        SubcategoryModel s = list.get(position);
-        holder.textView.setText(s.getTitle());
+        holder.textView.setText(list.get(position).getTitle());
+        holder.imageView.setImageResource(list.get(position).getIcon());
         GradientDrawable drawable = (GradientDrawable) holder.itemView.getBackground();
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         drawable.setColor(color);
-//        holder.textView.setCompoundDrawablesWithIntrinsicBounds(s.getIcon(), 0, 0, 0);
     }
 
     @Override
@@ -58,23 +58,19 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final TextView textView;
+        ImageView imageView;
+        TextView textView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textView_item);
+            imageView = itemView.findViewById(R.id.imageView);
+            textView = itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (list.get(getAdapterPosition()).getUrl() != null && !list.get(getAdapterPosition()).getUrl().isEmpty()) {
-                Bundle bundle = new Bundle();
-                bundle.putString("title", list.get(getAdapterPosition()).getTitle());
-                bundle.putString("url", list.get(getAdapterPosition()).getUrl());
-                CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
-            }
-
+            ((MainActivity) mContext).openNextScreen(getAdapterPosition() + 1, list.get(getAdapterPosition()).getTitle());
         }
     }
 }

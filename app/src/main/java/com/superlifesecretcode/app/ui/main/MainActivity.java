@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.main;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.DrawerItem;
+import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
+import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
@@ -25,6 +28,7 @@ import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
+import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 
 import org.w3c.dom.Text;
 
@@ -41,6 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView textViewEditProfile;
     private ImageView imageViewUser;
     private UserDetailResponseData userDetailResponseData;
+    private RecyclerView recyclerViewMain;
 
     @Override
     protected void onPause() {
@@ -62,6 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         layoutDrawer = findViewById(R.id.layout_drawer);
         mainLayout = findViewById(R.id.main_layout);
         recyclerView = findViewById(R.id.recycler_view);
+        recyclerViewMain = findViewById(R.id.recycler_view_main);
         textViewName = findViewById(R.id.textView_name);
         textViewEditProfile = findViewById(R.id.textView_edit);
         imageViewUser = findViewById(R.id.imageView_user);
@@ -86,8 +92,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     case 3:
                         openNextScreen(3, getString(R.string.learing));
                         break;
+                    case 4:
+                        openNextScreen(4, getString(R.string.annoucement));
+                        break;
+
+                    case 5:
+                        openNextScreen(5, getString(R.string.sharing));
+                        break;
+
+                    case 6:
+                        openNextScreen(6, getString(R.string.daily_activities));
+                        break;
                     case 7:
                         openNextScreen(7, getString(R.string.free_downloads));
+                        break;
+                    case 8:
+                        openNextScreen(8, getString(R.string.country_activities));
                         break;
                 }
 
@@ -119,11 +139,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         setUpBanner();
-        findViewById(R.id.cardview_about).setOnClickListener(this);
+      /*  findViewById(R.id.cardview_about).setOnClickListener(this);
         findViewById(R.id.cardview_learning).setOnClickListener(this);
         findViewById(R.id.cardview_product_shoping).setOnClickListener(this);
-        findViewById(R.id.cardvview_freedownloads).setOnClickListener(this);
+        findViewById(R.id.cardvview_freedownloads).setOnClickListener(this);*/
         setUpUserdetails();
+        recyclerViewMain.setLayoutManager(new GridLayoutManager(this, 3));
+        List<DrawerItem> drawerItems = getDrawerList();
+        drawerItems.remove(0);
+        recyclerViewMain.setAdapter(new MainListAdapter(drawerItems, this));
+        recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 30, true));
     }
 
     private void setUpUserdetails() {
@@ -138,7 +163,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         autoScrollViewPager.setInterval(3000);
         autoScrollViewPager.setCycle(true);
         autoScrollViewPager.setStopScrollWhenTouch(true);
-        autoScrollViewPager.setAutoScrollDurationFactor(10);
+//        autoScrollViewPager.setAutoScrollDurationFactor(10);
         bannerPagerAdapter = new BannerPagerAdapter(this);
         autoScrollViewPager.setAdapter(bannerPagerAdapter);
     }
@@ -182,7 +207,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cardview_about:
+         /*   case R.id.cardview_about:
                 openNextScreen(1, getString(R.string.abourt));
                 break;
             case R.id.cardview_product_shoping:
@@ -193,7 +218,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.cardvview_freedownloads:
                 openNextScreen(7, getString(R.string.free_downloads));
-                break;
+                break;*/
             case R.id.textView_edit:
             case R.id.imageView_profile:
                 CommonUtils.startActivity(this, ProfileActivity.class);
@@ -202,7 +227,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    private void openNextScreen(int position, String title) {
+    public void openNextScreen(int position, String title) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putInt("pos", position);
