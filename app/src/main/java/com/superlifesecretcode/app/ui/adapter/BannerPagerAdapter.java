@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
+
+import java.util.List;
 
 
 /**
@@ -19,25 +23,27 @@ import com.superlifesecretcode.app.util.CommonUtils;
  */
 
 public class BannerPagerAdapter extends PagerAdapter {
+    private final List<BannerModel> bannerList;
     private Context mContext;
-    public BannerPagerAdapter(Context context) {
+
+    public BannerPagerAdapter(Context context, List<BannerModel> bannerList) {
         mContext = context;
+        this.bannerList = bannerList;
     }
 
     @Override
-    public Object instantiateItem(ViewGroup collection, int position) {
+    public Object instantiateItem(ViewGroup collection, final int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_banner, collection, false);
-        ImageView imageView=layout.findViewById(R.id.imageView);
-       /* GlideApp.with(imageView).load(banners.get(position).getInsideImage())
-                .placeholder(R.drawable.default_placeholder).into(imageView);*/
+        ImageView imageView = layout.findViewById(R.id.imageView);
+        ImageLoadUtils.loadImage(bannerList.get(position).getImage(), imageView);
         collection.addView(layout);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("title", "Banner");
-                bundle.putString("url", "https://www.richestlife.com/product-category/%E8%AC%9B%E5%BA%A7%E8%AA%B2%E7%A8%8B/");
+                bundle.putString("title", bannerList.get(position).getTitle());
+                bundle.putString("url", bannerList.get(position).getLink());
                 CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
             }
         });
@@ -51,7 +57,7 @@ public class BannerPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return bannerList.size();
     }
 
     @Override
@@ -67,7 +73,6 @@ public class BannerPagerAdapter extends PagerAdapter {
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
-
 
 
 }

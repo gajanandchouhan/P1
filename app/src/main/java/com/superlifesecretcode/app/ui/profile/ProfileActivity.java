@@ -61,6 +61,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private String imagePath;
     private CountryPicker countryPicker;
     private CountryStatePicker countryStatePicker;
+    private boolean isUpdate;
+    private boolean lanuguageChanged;
 
     @Override
     protected int getContentView() {
@@ -73,6 +75,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar("Profile");
+        isUpdate = getIntent().getBundleExtra("bundle").getBoolean("update");
         editTextName = findViewById(R.id.edi_text_name);
         editTextMobileNumber = findViewById(R.id.edi_text_phone);
         textViewGender = findViewById(R.id.textView_gender);
@@ -113,6 +116,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setUpLocalConversion() {
+        if (conversionData != null) {
+            genderList = new ArrayList<>();
+            genderList.add(conversionData.getMale());
+            genderList.add(conversionData.getFemale());
+        }
         textViewNameLabel.setText(conversionData.getName());
         editTextName.setHint(conversionData.getName());
         textViewMobileLabel.setText(conversionData.getMobile_no());
@@ -232,6 +240,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     HashMap<String, String> body = new HashMap<>();
                     body.put("language_id", languageId);
                     presenter.getConversion(body);
+                    lanuguageChanged=true;
                 }
             }
         });
@@ -362,8 +371,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void setConversionContent(LanguageResponseData data) {
         conversionData = data;
-        SuperLifeSecretPreferences.getInstance().setConversionData(data);
-        SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
         setUpLocalConversion();
     }
 
@@ -447,6 +454,13 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             this.userDetailResponseData = data;
             SuperLifeSecretPreferences.getInstance().setUserDetails(data);
             enableDisableView(false);
+            SuperLifeSecretPreferences.getInstance().setConversionData(conversionData);
+            SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
+            MainActivity.LANGAUE_CHANGED=lanuguageChanged;
+            if (isUpdate) {
+                CommonUtils.startActivity(this, MainActivity.class);
+            }
+            finish();
         }
     }
 

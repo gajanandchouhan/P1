@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.BuildConfig;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -126,6 +127,10 @@ public class CommonUtils {
         } catch (Exception e) {
             Log.e("FACEBOOK", "printHashKey()", e);
         }
+    }
+
+    public static void showToast(Context mContext, String message) {
+        Toast.makeText(mContext,message,Toast.LENGTH_LONG).show();
     }
 
     public interface ClickListner {

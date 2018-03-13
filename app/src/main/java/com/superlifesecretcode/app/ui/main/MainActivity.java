@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.ui.main;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +18,10 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.DrawerItem;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.data.model.category.BannerModel;
+import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
+import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
@@ -33,9 +38,11 @@ import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
+    public static boolean LANGAUE_CHANGED;
     DrawerLayout mDrawerLayout;
     private LinearLayout layoutDrawer, mainLayout;
     private RecyclerView recyclerView;
@@ -46,6 +53,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView imageViewUser;
     private UserDetailResponseData userDetailResponseData;
     private RecyclerView recyclerViewMain;
+    private List<CategoryResponseData> list;
+    private DrawerAdapter drawerAdapter;
+    private MainListAdapter mainAdapter;
+    private MainPresenter presenter;
+    private LanguageResponseData conversionData;
+    private List<BannerModel> bannerList;
 
     @Override
     protected void onPause() {
@@ -63,6 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void initializeView() {
         setUpToolbar();
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
+        conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         mDrawerLayout = findViewById(R.id.drawer);
         layoutDrawer = findViewById(R.id.layout_drawer);
         mainLayout = findViewById(R.id.main_layout);
@@ -75,12 +89,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         autoScrollViewPager = findViewById(R.id.pager_banner);
         findViewById(R.id.imageView_profile).setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DrawerAdapter drawerAdapter = new DrawerAdapter(getDrawerList());
+        list = new ArrayList<>();
+        drawerAdapter = new DrawerAdapter(list);
         drawerAdapter.setListner(new ItemClickListner() {
             @Override
             public void onItemClick(Object object, int position) {
-                switch (position) {
-                    case 0:
+                openNextScreen(list.get(position).getPosition(), list.get(position).getTitle(), list.get(position).getId());
+                  /*  case 0:
                         mDrawerLayout.closeDrawer(layoutDrawer);
                         break;
                     case 2:
@@ -108,10 +123,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         break;
                     case 8:
                         openNextScreen(8, getString(R.string.country_activities));
-                        break;
-                }
-
+                        break;*/
             }
+
         });
         recyclerView.setAdapter(drawerAdapter);
         recyclerView.addItemDecoration(new SpacesItemDecoration(2));
@@ -147,8 +161,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         recyclerViewMain.setLayoutManager(new GridLayoutManager(this, 3));
         List<DrawerItem> drawerItems = getDrawerList();
         drawerItems.remove(0);
-        recyclerViewMain.setAdapter(new MainListAdapter(drawerItems, this));
+        mainAdapter = new MainListAdapter(list, this);
+        recyclerViewMain.setAdapter(mainAdapter);
         recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 30, true));
+        getMainCategories();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LANGAUE_CHANGED) {
+            getMainCategories();
+            LANGAUE_CHANGED = false;
+            conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+
+        }
+    }
+
+    private void getMainCategories() {
+
+        if (userDetailResponseData.getCountry() != null) {
+            HashMap<String, String> body = new HashMap<>();
+            body.put("country_id", userDetailResponseData.getCountry());
+            body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
+            presenter.getHomeCategories(body);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("update", true);
+            CommonUtils.startActivity(this, ProfileActivity.class, bundle, false);
+            finish();
+        }
+
     }
 
     private void setUpUserdetails() {
@@ -164,8 +207,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         autoScrollViewPager.setCycle(true);
         autoScrollViewPager.setStopScrollWhenTouch(true);
 //        autoScrollViewPager.setAutoScrollDurationFactor(10);
-        bannerPagerAdapter = new BannerPagerAdapter(this);
+        bannerList = new ArrayList<>();
+        bannerPagerAdapter = new BannerPagerAdapter(this, bannerList);
         autoScrollViewPager.setAdapter(bannerPagerAdapter);
+        autoScrollViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                autoScrollViewPager.setInterval(Long.parseLong(bannerList.get(position).getTransition_time()));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private List<DrawerItem> getDrawerList() {
@@ -193,7 +253,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new MainPresenter(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -221,16 +282,66 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;*/
             case R.id.textView_edit:
             case R.id.imageView_profile:
-                CommonUtils.startActivity(this, ProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("update", false);
+                CommonUtils.startActivity(this, ProfileActivity.class, bundle, false);
                 break;
         }
 
     }
 
-    public void openNextScreen(int position, String title) {
+    public void openNextScreen(int position, String title, String parentId) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putInt("pos", position);
+        bundle.putString("parent_id", parentId);
         CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
     }
+
+    @Override
+    public void setHomeData(CategoryResponseModel categoryResponseModel) {
+        if (categoryResponseModel.getData() != null) {
+            list.clear();
+            list.addAll(categoryResponseModel.getData());
+        }
+        if (categoryResponseModel.getBanners() != null) {
+            if (bannerList.size() > 0) {
+                autoScrollViewPager.setInterval(Long.parseLong(bannerList.get(0).getTransition_time()));
+            }
+            bannerList.clear();
+            bannerList.addAll(categoryResponseModel.getBanners());
+            bannerPagerAdapter.notifyDataSetChanged();
+        }
+        if (conversionData != null) {
+            CategoryResponseData categoryResponseData = new CategoryResponseData();
+            categoryResponseData.setTitle(conversionData.getAnnouncement());
+            categoryResponseData.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData.setPosition(5);
+            list.add(categoryResponseData);
+
+            CategoryResponseData categoryResponseData2 = new CategoryResponseData();
+            categoryResponseData2.setTitle(conversionData.getSharing());
+            categoryResponseData2.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData2.setPosition(6);
+            list.add(categoryResponseData2);
+
+
+            CategoryResponseData categoryResponseData3 = new CategoryResponseData();
+            categoryResponseData3.setTitle(conversionData.getDaily_activities());
+            categoryResponseData3.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData3.setPosition(7);
+            list.add(categoryResponseData3);
+
+            CategoryResponseData categoryResponseData4 = new CategoryResponseData();
+            categoryResponseData4.setTitle(conversionData.getCountry_activities());
+            categoryResponseData4.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData4.setPosition(8);
+            list.add(categoryResponseData4);
+            textViewEditProfile.setText(conversionData.getEdit_profile());
+        }
+        drawerAdapter.notifyDataSetChanged();
+        mainAdapter.notifyDataSetChanged();
+    }
+
+
 }

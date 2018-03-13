@@ -137,6 +137,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             genderList = new ArrayList<>();
             genderList.add(conversionData.getMale());
             genderList.add(conversionData.getFemale());
+            checkBoxTOS.setText(conversionData.getI_agree());
+            textViewTermsOfServices.setText(conversionData.getTerms_of_service());
         }
     }
 

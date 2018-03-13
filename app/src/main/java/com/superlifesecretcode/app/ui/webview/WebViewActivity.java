@@ -29,15 +29,17 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initializeView() {
         String title = getIntent().getBundleExtra("bundle").getString("title");
+        boolean isLink = getIntent().getBundleExtra("bundle").getBoolean("is_link");
+
         setUpToolbar(title);
         webView = findViewById(R.id.webview);
         progressBar = findViewById(R.id.progress_bar);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        if (title.equalsIgnoreCase("Service Provided")) {
-            webView.loadData(getIntent().getBundleExtra("bundle").getString("url"), "text/html", "utf-8");
-        } else {
+        if (isLink) {
             webView.loadUrl(getIntent().getBundleExtra("bundle").getString("url"));
+        } else {
+            webView.loadData(getIntent().getBundleExtra("bundle").getString("content"), "text/html", "utf-8");
         }
         webView.setWebViewClient(new MyWebViewClient());
     }

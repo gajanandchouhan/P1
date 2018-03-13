@@ -86,6 +86,12 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CategoryResponseModel>(handler));
                 break;
+            case REQ_GET_SUB_CATEGORY:
+                Observable<CategoryResponseModel> getSubCategoryResponseModelObservable = apiInterface.getSubCategories(requestParams);
+                getSubCategoryResponseModelObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CategoryResponseModel>(handler));
+                break;
         }
 
 

@@ -16,6 +16,34 @@ public class CategoryResponseData {
     private String color;
     private String country_name;
     private String country;
+    private int icon;
+    private int position;
+    private String alert;
+    private String alert_text;
+
+    public String getAlert() {
+        return alert;
+    }
+
+    public void setAlert(String alert) {
+        this.alert = alert;
+    }
+
+    public String getAlert_text() {
+        return alert_text;
+    }
+
+    public void setAlert_text(String alert_text) {
+        this.alert_text = alert_text;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public String getId() {
         return id;
@@ -103,5 +131,13 @@ public class CategoryResponseData {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public int getIcon() {
+        return icon;
     }
 }

@@ -8,10 +8,15 @@
 
     <include layout="@layout/toolbar" />
 
+    <com.superlifesecretcode.app.custom.AutoScrollViewPager
+        android:id="@+id/pager_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        android:background="@color/colorPrimary" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:padding="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       />
+        android:padding="15dp" />
 </LinearLayout>

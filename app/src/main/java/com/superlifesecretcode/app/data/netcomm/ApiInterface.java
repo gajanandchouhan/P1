@@ -65,4 +65,10 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getHomeCategories")
     Observable<CategoryResponseModel> getHomeCategories(@PartMap() Map<String, RequestBody> params);
+
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getSubCategories")
+    Observable<CategoryResponseModel> getSubCategories(@PartMap() Map<String, RequestBody> params);
 }

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -34,7 +33,6 @@ import com.superlifesecretcode.app.ui.register.RegisterActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -57,6 +55,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private int RC_SIGN_IN = 114;
     private GoogleApiClient mGoogleApiClient;
     private TwitterAuthClient client;
+    private TextView textViewLoginWith;
 
     @Override
     protected int getContentView() {
@@ -79,10 +78,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         textViewDontHaveAnAccount = findViewById(R.id.textView_dont_have);
         textViewForgot = findViewById(R.id.textView_forgot);
         textViewSignup = findViewById(R.id.textView_signup);
+        textViewLoginWith = findViewById(R.id.textView_login_with);
         findViewById(R.id.imageView_f).setOnClickListener(this);
         findViewById(R.id.imageView_g).setOnClickListener(this);
         findViewById(R.id.imageView_t).setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
+        textViewDontHaveAnAccount.setOnClickListener(this);
         textViewForgot.setOnClickListener(this);
         setUpConversion();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -102,10 +103,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             editTextPassword.setHint(conversionData.getPassword());
             buttonLogin.setText(conversionData.getSigin_in_cotinue());
             textViewSignup.setText(conversionData.getSignup());
-            textViewDontHaveAnAccount.setText(String.format("%s ", conversionData.getDont_have_acnt()));
+            textViewDontHaveAnAccount.setText(String.format("%s ", conversionData.getNo_account_signup()));
             eneterMobileNo = conversionData.getEnter_mobile_number();
             enterPassword = conversionData.getEnter_password();
             textViewForgot.setText(conversionData.getForgot_password());
+            textViewLoginWith.setText(conversionData.getLogin_with());
         }
     }
 
@@ -122,6 +124,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 validateAndLogin();
 //                CommonUtils.startActivity(this, MainActivity.class, null, true);
                 break;
+            case R.id.textView_dont_have:
             case R.id.textView_signup:
                 CommonUtils.startActivity(this, RegisterActivity.class);
                 break;

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.DrawerItem;
+import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ItemClickListner;
 
 import java.util.List;
@@ -24,9 +26,9 @@ private ItemClickListner listner;
         this.listner = listner;
     }
 
-    private final List<DrawerItem> list;
+    private final List<CategoryResponseData> list;
 
-    public DrawerAdapter(List<DrawerItem> drawerList) {
+    public DrawerAdapter(List<CategoryResponseData> drawerList) {
         this.list = drawerList;
     }
 
@@ -39,7 +41,7 @@ private ItemClickListner listner;
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.textViewTitle.setText(list.get(position).getTitle());
-        holder.imageViewIcon.setImageResource(list.get(position).getIcon());
+        ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageViewIcon);
     }
 
     @Override

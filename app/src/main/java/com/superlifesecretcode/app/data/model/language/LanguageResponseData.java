@@ -34,6 +34,339 @@ public class LanguageResponseData {
     private String email;
     private String enter_email;
     private String enter_valid_email;
+    private String i_agree;
+    private String login_with;
+    private String terms_of_service;
+    private String home;
+    private String about;
+    private String store;
+    private String learning;
+    private String announcement;
+    private String sharing;
+    private String daily_activities;
+    private String free_downloads;
+    private String country_activities;
+    private String edit_profile;
+    private String profile;
+    private String disclosure;
+    private String service_provided;
+    private String books;
+    private String talks_classes;
+    private String online_courses;
+    private String cards;
+    private String join_course;
+    private String facebook;
+    private String sun_video;
+    private String news_update;
+    private String event_activity;
+    private String latest;
+    private String submit;
+    private String personal_calendar;
+    private String songs;
+    private String wallpapers;
+    private String sun_emoji;
+    private String study_group;
+    private String onsite;
+    private String no_account_signup;
+    private String remember_me;
+    private String username;
+    private String forgot_password_2;
+
+    public String getI_agree() {
+        return i_agree;
+    }
+
+    public void setI_agree(String i_agree) {
+        this.i_agree = i_agree;
+    }
+
+    public String getLogin_with() {
+        return login_with;
+    }
+
+    public void setLogin_with(String login_with) {
+        this.login_with = login_with;
+    }
+
+    public String getTerms_of_service() {
+        return terms_of_service;
+    }
+
+    public void setTerms_of_service(String terms_of_service) {
+        this.terms_of_service = terms_of_service;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getStore() {
+        return store;
+    }
+
+    public void setStore(String store) {
+        this.store = store;
+    }
+
+    public String getLearning() {
+        return learning;
+    }
+
+    public void setLearning(String learning) {
+        this.learning = learning;
+    }
+
+    public String getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(String announcement) {
+        this.announcement = announcement;
+    }
+
+    public String getSharing() {
+        return sharing;
+    }
+
+    public void setSharing(String sharing) {
+        this.sharing = sharing;
+    }
+
+    public String getDaily_activities() {
+        return daily_activities;
+    }
+
+    public void setDaily_activities(String daily_activities) {
+        this.daily_activities = daily_activities;
+    }
+
+    public String getFree_downloads() {
+        return free_downloads;
+    }
+
+    public void setFree_downloads(String free_downloads) {
+        this.free_downloads = free_downloads;
+    }
+
+    public String getCountry_activities() {
+        return country_activities;
+    }
+
+    public void setCountry_activities(String country_activities) {
+        this.country_activities = country_activities;
+    }
+
+    public String getEdit_profile() {
+        return edit_profile;
+    }
+
+    public void setEdit_profile(String edit_profile) {
+        this.edit_profile = edit_profile;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public String getDisclosure() {
+        return disclosure;
+    }
+
+    public void setDisclosure(String disclosure) {
+        this.disclosure = disclosure;
+    }
+
+    public String getService_provided() {
+        return service_provided;
+    }
+
+    public void setService_provided(String service_provided) {
+        this.service_provided = service_provided;
+    }
+
+    public String getBooks() {
+        return books;
+    }
+
+    public void setBooks(String books) {
+        this.books = books;
+    }
+
+    public String getTalks_classes() {
+        return talks_classes;
+    }
+
+    public void setTalks_classes(String talks_classes) {
+        this.talks_classes = talks_classes;
+    }
+
+    public String getOnline_courses() {
+        return online_courses;
+    }
+
+    public void setOnline_courses(String online_courses) {
+        this.online_courses = online_courses;
+    }
+
+    public String getCards() {
+        return cards;
+    }
+
+    public void setCards(String cards) {
+        this.cards = cards;
+    }
+
+    public String getJoin_course() {
+        return join_course;
+    }
+
+    public void setJoin_course(String join_course) {
+        this.join_course = join_course;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getSun_video() {
+        return sun_video;
+    }
+
+    public void setSun_video(String sun_video) {
+        this.sun_video = sun_video;
+    }
+
+    public String getNews_update() {
+        return news_update;
+    }
+
+    public void setNews_update(String news_update) {
+        this.news_update = news_update;
+    }
+
+    public String getEvent_activity() {
+        return event_activity;
+    }
+
+    public void setEvent_activity(String event_activity) {
+        this.event_activity = event_activity;
+    }
+
+    public String getLatest() {
+        return latest;
+    }
+
+    public void setLatest(String latest) {
+        this.latest = latest;
+    }
+
+    public String getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(String submit) {
+        this.submit = submit;
+    }
+
+    public String getPersonal_calendar() {
+        return personal_calendar;
+    }
+
+    public void setPersonal_calendar(String personal_calendar) {
+        this.personal_calendar = personal_calendar;
+    }
+
+    public String getSongs() {
+        return songs;
+    }
+
+    public void setSongs(String songs) {
+        this.songs = songs;
+    }
+
+    public String getWallpapers() {
+        return wallpapers;
+    }
+
+    public void setWallpapers(String wallpapers) {
+        this.wallpapers = wallpapers;
+    }
+
+    public String getSun_emoji() {
+        return sun_emoji;
+    }
+
+    public void setSun_emoji(String sun_emoji) {
+        this.sun_emoji = sun_emoji;
+    }
+
+    public String getStudy_group() {
+        return study_group;
+    }
+
+    public void setStudy_group(String study_group) {
+        this.study_group = study_group;
+    }
+
+    public String getOnsite() {
+        return onsite;
+    }
+
+    public void setOnsite(String onsite) {
+        this.onsite = onsite;
+    }
+
+    public String getNo_account_signup() {
+        return no_account_signup;
+    }
+
+    public void setNo_account_signup(String no_account_signup) {
+        this.no_account_signup = no_account_signup;
+    }
+
+    public String getRemember_me() {
+        return remember_me;
+    }
+
+    public void setRemember_me(String remember_me) {
+        this.remember_me = remember_me;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getForgot_password_2() {
+        return forgot_password_2;
+    }
+
+    public void setForgot_password_2(String forgot_password_2) {
+        this.forgot_password_2 = forgot_password_2;
+    }
 
     public String getEmail() {
         return email;
