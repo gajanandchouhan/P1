@@ -3,21 +3,19 @@ package com.superlifesecretcode.app.ui.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
-import com.superlifesecretcode.app.ui.picker.DropDownWindow;
+import com.superlifesecretcode.app.ui.events.EventActivity;
+import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
-import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.List;
 import java.util.Random;
@@ -68,13 +66,22 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
 
         @Override
         public void onClick(View v) {
-            if (list.get(getAdapterPosition()).getUrl() != null && !list.get(getAdapterPosition()).getUrl().isEmpty()) {
-                Bundle bundle = new Bundle();
-                bundle.putString("title", list.get(getAdapterPosition()).getTitle());
-                bundle.putString("url", list.get(getAdapterPosition()).getUrl());
-                CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
-            }
+            int type = list.get(getAdapterPosition()).getType();
+            moveToNext(getAdapterPosition(), type);
+        }
+    }
 
+    private void moveToNext(int position, int type) {
+        switch (type) {
+            case ConstantLib.TYPE_ANNOUNCEMENT:
+                if (position == 0) {
+                    CommonUtils.startActivity(((SubCategoryActivity) mContext), NewsActivity.class);
+                } else if (position == 1) {
+                    CommonUtils.startActivity(((SubCategoryActivity) mContext), EventActivity.class);
+                }
+                break;
+            case ConstantLib.TYPE_SHARING:
+                break;
         }
     }
 }

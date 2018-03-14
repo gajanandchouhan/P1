@@ -62,6 +62,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.addItemDecoration(new SpacesItemDecorationGridLayout(3, 30, true));
         if (parentId == null) {
+            bannerList = (ArrayList<BannerModel>) getIntent().getBundleExtra("bundle").getSerializable("banner");
             recyclerView.setAdapter(new SubacategoryListAdapter(getList(positon), this));
         } else {
             getSubCategory();
@@ -114,29 +115,29 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         switch (position) {
             case 5:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getNews_update(), ""));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getNews_update(), ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getNews_update(), "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getEvent_activity(), "",position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "News Update", ""));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Event+Activities", ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "News Update", "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Event+Activities", "",position));
 
                 }
                 return list;
 
             case 6:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getLatest(), ""));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getSubmit(), ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getLatest(), "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getSubmit(), "",position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Latest", ""));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Submit", ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Latest", "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Submit", "",position));
                 }
                 return list;
             case 7:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getPersonal_calendar(), ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getPersonal_calendar(), "",position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Personal+Event Calendar", ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Personal+Event Calendar", "",position));
                 }
                 return list;
            /* case 7:
@@ -147,11 +148,11 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
 
             case 8:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getStudy_group(), ""));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getOnsite(), ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getStudy_group(), "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getOnsite(), "",position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Study Group", ""));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "On-site sharing", ""));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Study Group", "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "On-site sharing", "",position));
                 }
                 return list;
         }
@@ -179,11 +180,13 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     }
 
     private void setUpBanner() {
+        if (bannerList == null) {
+            bannerList = new ArrayList<>();
+        }
         autoScrollViewPager.startAutoScroll();
         autoScrollViewPager.setCycle(true);
         autoScrollViewPager.setStopScrollWhenTouch(true);
 //        autoScrollViewPager.setAutoScrollDurationFactor(10);
-        bannerList = new ArrayList<>();
         bannerPagerAdapter = new BannerPagerAdapter(this, bannerList);
         autoScrollViewPager.setAdapter(bannerPagerAdapter);
         autoScrollViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

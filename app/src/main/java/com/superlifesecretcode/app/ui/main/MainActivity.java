@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.ui.main;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -8,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +39,7 @@ import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +61,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private MainListAdapter mainAdapter;
     private MainPresenter presenter;
     private LanguageResponseData conversionData;
-    private List<BannerModel> bannerList;
+    private ArrayList<BannerModel> bannerList;
 
     @Override
     protected void onPause() {
@@ -166,6 +169,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 30, true));
         getMainCategories();
     }
+
+
 
     @Override
     protected void onResume() {
@@ -295,6 +300,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         bundle.putString("title", title);
         bundle.putInt("pos", position);
         bundle.putString("parent_id", parentId);
+        bundle.putSerializable("banner", bannerList);
         CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
     }
 

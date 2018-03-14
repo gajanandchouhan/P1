@@ -1,10 +1,12 @@
 package com.superlifesecretcode.app.data.model.category;
 
+import java.io.Serializable;
+
 /**
  * Created by Divya on 12-03-2018.
  */
 
-public class BannerModel {
+public class BannerModel implements Serializable {
     private String title;
     private String link;
     private String image;
