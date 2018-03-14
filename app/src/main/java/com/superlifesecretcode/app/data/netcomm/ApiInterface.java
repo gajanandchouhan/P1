@@ -4,6 +4,7 @@ package com.superlifesecretcode.app.data.netcomm;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
+import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 
 import java.util.Map;
@@ -71,4 +72,11 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getSubCategories")
     Observable<CategoryResponseModel> getSubCategories(@PartMap() Map<String, RequestBody> params);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("announcements")
+    Observable<NewsResponseModel> getNews(@PartMap() Map<String, RequestBody> partMap,
+                                          @HeaderMap Map<String, String> headers);
+
 }

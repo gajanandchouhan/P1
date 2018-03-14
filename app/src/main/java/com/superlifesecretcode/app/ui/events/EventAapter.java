@@ -9,9 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.ui.news.NewsActivity;
-import com.superlifesecretcode.app.ui.news.NewsDetailsActivity;
-import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.List;
 

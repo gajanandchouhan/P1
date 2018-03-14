@@ -44,7 +44,7 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
         holder.textView.setText(s.getTitle());
         GradientDrawable drawable = (GradientDrawable) holder.itemView.getBackground();
         Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        int color = Color.argb(255, rnd.nextInt(100), rnd.nextInt(100), rnd.nextInt(100));
         drawable.setColor(color);
 //        holder.textView.setCompoundDrawablesWithIntrinsicBounds(s.getIcon(), 0, 0, 0);
     }

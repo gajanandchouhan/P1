@@ -8,17 +8,26 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.news.NewsResponseData;
+import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class NewsActivity extends BaseActivity {
-
+public class NewsActivity extends BaseActivity implements NewsView {
 
     private RecyclerView recyclerView;
     private NewsAapter newsAapter;
     private LanguageResponseData conversionData;
+    private NewsPresenter presenter;
+    private UserDetailResponseData userDetailResponseData;
+    private List<NewsResponseData> newsList;
+    private TextView textViewUnread;
 
     @Override
     protected int getContentView() {
@@ -28,18 +37,30 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     protected void initializeView() {
+        textViewUnread=findViewById(R.id.textView_unread_count);
+        userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsAapter = new NewsAapter(new ArrayList(), this);
+        newsList = new ArrayList<>();
+        newsAapter = new NewsAapter(newsList, this);
         recyclerView.setAdapter(newsAapter);
+        getNews();
+    }
 
+    private void getNews() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("announcement_type", "2");
+        presenter.getNews(params, headers);
     }
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new NewsPresenter(this);
+        presenter.setView(this);
     }
 
     private void setUpToolbar() {
@@ -65,5 +86,15 @@ public class NewsActivity extends BaseActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setNewsData(NewsResponseModel newsResponseModel) {
+        if (newsResponseModel.getData() != null) {
+            newsList.clear();
+            newsList.addAll(newsResponseModel.getData());
+            newsAapter.notifyDataSetChanged();
+            textViewUnread.setText(String.valueOf(newsResponseModel.getUnread()));
+        }
     }
 }

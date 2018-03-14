@@ -58,8 +58,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
             holder.imageView.setImageResource(list.get(position).getIcon());
             GradientDrawable drawable = (GradientDrawable) holder.itemView.getBackground();
             Random rnd = new Random();
-            int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256),
-                    rnd.nextInt(256));
+            int color = Color.argb(255, rnd.nextInt(100), rnd.nextInt(100),
+                    rnd.nextInt(100));
             drawable.setColor(color);
         }
     }

@@ -8,6 +8,7 @@ import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
+import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -136,6 +137,28 @@ public class ApiController implements RequestType {
                     updateProfileObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<UserDetailResponseModel>(handler));
+                    break;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void callWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, String> header) {
+        try {
+            if (!CheckNetworkState.isOnline(mContext)) {
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+                return;
+            }
+            Map<String, RequestBody> stringMultipartParamsParams = getRequestParams(params);
+            switch (reqTyoe) {
+                case REQ_GET_NEWS_UPDATES:
+                    Observable<NewsResponseModel> updateProfileObservable = apiInterface.getNews(stringMultipartParamsParams, header);
+                    updateProfileObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<NewsResponseModel>(handler));
                     break;
 
             }

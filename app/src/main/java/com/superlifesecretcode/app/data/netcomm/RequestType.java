@@ -14,4 +14,5 @@ public interface RequestType {
     byte REQ_UPDATE_PROFILE = 7;
     byte REQ_GET_CATEGORY = 7;
     byte REQ_GET_SUB_CATEGORY = 8;
+    byte REQ_GET_NEWS_UPDATES = 9;
 }

@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.news;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +10,12 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.news.NewsResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsDetailsActivity extends BaseActivity {
 
@@ -20,6 +23,7 @@ public class NewsDetailsActivity extends BaseActivity {
     private ViewPager pager;
     private NewsPagerAdapter newsAapter;
     private LanguageResponseData conversionData;
+    private List<NewsResponseData> list;
 
     @Override
     protected int getContentView() {
@@ -30,10 +34,16 @@ public class NewsDetailsActivity extends BaseActivity {
     @Override
     protected void initializeView() {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        int postion = bundle.getInt("position");
+        list = (List<NewsResponseData>) bundle.getSerializable("news");
         setUpToolbar();
         pager = findViewById(R.id.pager);
-        newsAapter = new NewsPagerAdapter(this,new ArrayList());
-        pager.setAdapter(newsAapter);
+        if (list != null) {
+            newsAapter = new NewsPagerAdapter(this, list);
+            pager.setAdapter(newsAapter);
+            pager.setCurrentItem(postion);
+        }
     }
 
     @Override

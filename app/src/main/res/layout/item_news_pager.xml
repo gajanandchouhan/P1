@@ -55,6 +55,7 @@
                 android:src="@android:drawable/ic_menu_gallery" />
 
             <TextView
+                android:id="@+id/textView_like_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -66,6 +67,7 @@
                 android:textSize="@dimen/_13sdp" />
 
             <ImageView
+                android:id="@+id/imageView_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
