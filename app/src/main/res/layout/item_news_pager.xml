@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_5sdp"
-                android:src="@android:drawable/ic_menu_gallery" />
+                android:src="@drawable/like_selector" />
 
             <TextView
                 android:id="@+id/textView_like_count"
@@ -74,7 +74,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_5sdp"
-                android:src="@android:drawable/ic_menu_share" />
+                android:src="@drawable/share_red" />
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

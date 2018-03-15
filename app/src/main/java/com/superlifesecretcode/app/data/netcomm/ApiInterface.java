@@ -1,11 +1,13 @@
 package com.superlifesecretcode.app.data.netcomm;
 
 
+import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
+import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 
 import java.util.Map;
@@ -84,4 +86,16 @@ public interface ApiInterface {
     @POST("announcements")
     Observable<EventResponseModel> getEvents(@PartMap() Map<String, RequestBody> partMap,
                                            @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getSingleAnnouncements")
+    Observable<SingleNewsResponseModel> readMark(@PartMap() Map<String, RequestBody> partMap,
+                                                 @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("attendance")
+    Observable<BaseResponseModel> makeInterested(@PartMap() Map<String, RequestBody> partMap,
+                                                 @HeaderMap Map<String, String> headers);
 }

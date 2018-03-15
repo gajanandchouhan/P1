@@ -29,6 +29,15 @@ public class EventsInfoModel implements Serializable {
     private String liked_by_user;
     private String shared_by_user;
     private String readed_by_user;
+    String userIntrested;
+
+    public String getUserIntrested() {
+        return userIntrested;
+    }
+
+    public void setUserIntrested(String userIntrested) {
+        this.userIntrested = userIntrested;
+    }
 
     public String getAnnouncement_id() {
         return announcement_id;

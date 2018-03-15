@@ -34,6 +34,8 @@ public class EventActivity extends BaseActivity implements EventView {
     private List<EventsInfoModel> todayList;
     private List<EventsInfoModel> upcomingList;
     private UserDetailResponseData userData;
+    private int position;
+    private String interested;
 
     @Override
     protected int getContentView() {
@@ -135,6 +137,12 @@ public class EventActivity extends BaseActivity implements EventView {
         }
     }
 
+    @Override
+    public void onUpdateInteresed() {
+        list.get(position).setUserIntrested(interested);
+        newsAapter.notifyDataSetChanged();
+    }
+
     private void getEvents() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
@@ -143,4 +151,15 @@ public class EventActivity extends BaseActivity implements EventView {
         presenter.getEvents(params, headers);
     }
 
+    public void updateEventInterest(int position, String interested, String id) {
+        this.position = position;
+        this.interested = interested;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("announcement_id", id);
+        params.put("interest", interested);
+        params.put("user_id", userData.getUser_id());
+        presenter.makeInterested(params, headers);
+    }
 }

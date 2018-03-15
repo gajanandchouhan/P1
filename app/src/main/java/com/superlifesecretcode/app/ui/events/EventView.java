@@ -11,4 +11,6 @@ import com.superlifesecretcode.app.ui.base.BaseView;
 interface EventView extends BaseView{
 
     void setEventData(EventResponseModel newsResponseModel);
+
+    void onUpdateInteresed();
 }

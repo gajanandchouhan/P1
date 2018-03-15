@@ -4,12 +4,14 @@ package com.superlifesecretcode.app.data.netcomm;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
+import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -166,6 +168,19 @@ public class ApiController implements RequestType {
                     getEventObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<EventResponseModel>(handler));
+                    break;
+
+                case REQ_MARK_READ:
+                    Observable<SingleNewsResponseModel> readMarkObservable = apiInterface.readMark(stringMultipartParamsParams, header);
+                    readMarkObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<SingleNewsResponseModel>(handler));
+                    break;
+                case REQ_INTERESTED_EVENT:
+                    Observable<BaseResponseModel> interestedObservable = apiInterface.makeInterested(stringMultipartParamsParams, header);
+                    interestedObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

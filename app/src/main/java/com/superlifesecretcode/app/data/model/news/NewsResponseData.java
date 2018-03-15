@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Divya on 14-03-2018.
  */
 
-public class NewsResponseData implements Serializable{
+public class NewsResponseData implements Serializable {
     private String announcement_id;
     private String user_id;
     private String announcement_type;
@@ -29,6 +29,15 @@ public class NewsResponseData implements Serializable{
     private String liked_by_user;
     private String shared_by_user;
     private String readed_by_user;
+    private String created_at;
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
 
     public String getAnnouncement_id() {
         return announcement_id;

@@ -1,8 +1,10 @@
 package com.superlifesecretcode.app.ui.news;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -15,7 +17,9 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
+import com.twitter.sdk.android.core.models.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +44,14 @@ public class NewsAapter extends RecyclerView.Adapter<NewsAapter.ItemViewHolder> 
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
+        if (list.get(position).getReaded_by_user().equalsIgnoreCase("1")) {
+            holder.cardView.setCardBackgroundColor(Color.WHITE);
+        } else {
+            holder.cardView.setCardBackgroundColor(Color.LTGRAY);
+        }
         holder.textViewTitle.setText(list.get(position).getAnnouncement_name());
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
-        holder.textViewDateTime.setText(String.format("%s, %s", list.get(position).getAnnouncement_date(), list.get(position).getAnnouncement_time()));
+        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, list.get(position).getCreated_at()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(list.get(position).getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);
@@ -64,6 +73,7 @@ public class NewsAapter extends RecyclerView.Adapter<NewsAapter.ItemViewHolder> 
         TextView textViewTitle;
         TextView textViewDateTime;
         TextView textViewDesc;
+        CardView cardView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -71,15 +81,17 @@ public class NewsAapter extends RecyclerView.Adapter<NewsAapter.ItemViewHolder> 
             textViewTitle = itemView.findViewById(R.id.textView_title);
             textViewDateTime = itemView.findViewById(R.id.textView_time);
             textViewDesc = itemView.findViewById(R.id.textView_desc);
+            cardView = itemView.findViewById(R.id.card_view);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            Bundle bundle=new Bundle();
-            bundle.putSerializable("news",(ArrayList)list);
-            bundle.putInt("position",getAdapterPosition());
-            CommonUtils.startActivity((NewsActivity) mContext, NewsDetailsActivity.class,bundle,false);
+            notifyItemChanged(getAdapterPosition());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("news", (ArrayList) list);
+            bundle.putInt("position", getAdapterPosition());
+            CommonUtils.startActivity((NewsActivity) mContext, NewsDetailsActivity.class, bundle, false);
         }
     }
 }

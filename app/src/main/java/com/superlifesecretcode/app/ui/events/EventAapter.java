@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
@@ -73,6 +74,7 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
         TextView textViewTitme;
         TextView textViewDesc;
         TextView textAddress;
+        RelativeLayout layoutInterested;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -82,15 +84,23 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
             textViewTitme = itemView.findViewById(R.id.textView_time);
             textViewDesc = itemView.findViewById(R.id.textView_desc);
             textAddress = itemView.findViewById(R.id.textView_addr);
+            layoutInterested=itemView.findViewById(R.id.button_interested);
+            layoutInterested.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            Bundle bundle=new Bundle();
-            bundle.putSerializable("events",(ArrayList)list);
-            bundle.putInt("position",getAdapterPosition());
-            CommonUtils.startActivity((EventActivity) mContext, EventDetailsActivity.class,bundle,false);
+            if (v.getId()==R.id.button_interested){
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("events",(ArrayList)list);
+                bundle.putInt("position",getAdapterPosition());
+                CommonUtils.startActivity((EventActivity) mContext, EventDetailsActivity.class,bundle,false);
+            }
+            else{
+
+            }
+
         }
     }
 }
