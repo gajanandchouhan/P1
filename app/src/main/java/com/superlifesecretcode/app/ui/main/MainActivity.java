@@ -29,6 +29,8 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.events.EventActivity;
+import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -80,6 +82,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         setUpToolbar();
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        findViewById(R.id.tab_home);
+        findViewById(R.id.tab_news).setOnClickListener(this);
+        findViewById(R.id.tab_share).setOnClickListener(this);
+        findViewById(R.id.tab_events).setOnClickListener(this);
         mDrawerLayout = findViewById(R.id.drawer);
         layoutDrawer = findViewById(R.id.layout_drawer);
         mainLayout = findViewById(R.id.main_layout);
@@ -171,7 +177,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -253,7 +258,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_agenda);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_menu);
     }
 
     @Override
@@ -291,6 +296,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 bundle.putBoolean("update", false);
                 CommonUtils.startActivity(this, ProfileActivity.class, bundle, false);
                 break;
+            case R.id.tab_events:
+                CommonUtils.startActivity(this, EventActivity.class);
+                break;
+            case R.id.tab_news:
+                CommonUtils.startActivity(this, NewsActivity.class);
+                break;
+            case R.id.tab_share:
+                break;
         }
 
     }
@@ -321,26 +334,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (conversionData != null) {
             CategoryResponseData categoryResponseData = new CategoryResponseData();
             categoryResponseData.setTitle(conversionData.getAnnouncement());
-            categoryResponseData.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData.setIcon(R.drawable.announcement);
             categoryResponseData.setPosition(5);
             list.add(categoryResponseData);
 
             CategoryResponseData categoryResponseData2 = new CategoryResponseData();
             categoryResponseData2.setTitle(conversionData.getSharing());
-            categoryResponseData2.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData2.setIcon(R.drawable.sharing);
             categoryResponseData2.setPosition(6);
             list.add(categoryResponseData2);
 
 
             CategoryResponseData categoryResponseData3 = new CategoryResponseData();
             categoryResponseData3.setTitle(conversionData.getDaily_activities());
-            categoryResponseData3.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData3.setIcon(R.drawable.activities);
             categoryResponseData3.setPosition(7);
             list.add(categoryResponseData3);
 
             CategoryResponseData categoryResponseData4 = new CategoryResponseData();
             categoryResponseData4.setTitle(conversionData.getCountry_activities());
-            categoryResponseData4.setIcon(android.R.drawable.ic_menu_camera);
+            categoryResponseData4.setIcon(R.drawable.country);
             categoryResponseData4.setPosition(8);
             list.add(categoryResponseData4);
             textViewEditProfile.setText(conversionData.getEdit_profile());

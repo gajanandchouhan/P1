@@ -41,7 +41,11 @@ private ItemClickListner listner;
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.textViewTitle.setText(list.get(position).getTitle());
-        ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageViewIcon);
+        if (list.get(position).getId() != null) {
+            ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageViewIcon);
+        }else{
+            holder.imageViewIcon.setImageResource(list.get(position).getIcon());
+        }
     }
 
     @Override

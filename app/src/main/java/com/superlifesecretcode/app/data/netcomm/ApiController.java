@@ -7,6 +7,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
+import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -160,7 +161,12 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<NewsResponseModel>(handler));
                     break;
-
+                case REQ_GET_EVENTS:
+                    Observable<EventResponseModel> getEventObservable = apiInterface.getEvents(stringMultipartParamsParams, header);
+                    getEventObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<EventResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

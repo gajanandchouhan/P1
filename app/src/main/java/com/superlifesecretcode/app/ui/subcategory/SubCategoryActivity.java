@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
@@ -22,6 +23,9 @@ import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.SubListAdapter;
 import com.superlifesecretcode.app.ui.adapter.SubacategoryListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.events.EventActivity;
+import com.superlifesecretcode.app.ui.news.NewsActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
@@ -30,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView {
+public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView, View.OnClickListener {
 
     private int positon;
     private LanguageResponseData conversionData;
@@ -52,6 +56,10 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     @Override
     protected void initializeView() {
         autoScrollViewPager = findViewById(R.id.pager_banner);
+        findViewById(R.id.tab_home).setOnClickListener(this);
+        findViewById(R.id.tab_news).setOnClickListener(this);
+        findViewById(R.id.tab_share).setOnClickListener(this);
+        findViewById(R.id.tab_events).setOnClickListener(this);
         String title = getIntent().getBundleExtra("bundle").getString("title");
         positon = getIntent().getBundleExtra("bundle").getInt("pos");
         parentId = getIntent().getBundleExtra("bundle").getString("parent_id");
@@ -115,29 +123,29 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         switch (position) {
             case 5:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getNews_update(), "",position));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getEvent_activity(), "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getNews_update(), "", position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getEvent_activity(), "", position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "News Update", "",position));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Event+Activities", "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "News Update", "", position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Event+Activities", "", position));
 
                 }
                 return list;
 
             case 6:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getLatest(), "",position));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getSubmit(), "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getLatest(), "", position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getSubmit(), "", position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Latest", "",position));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Submit", "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Latest", "", position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Submit", "", position));
                 }
                 return list;
             case 7:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getPersonal_calendar(), "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getPersonal_calendar(), "", position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Personal+Event Calendar", "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Personal+Event Calendar", "", position));
                 }
                 return list;
            /* case 7:
@@ -148,11 +156,11 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
 
             case 8:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getStudy_group(), "",position));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getOnsite(), "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getStudy_group(), "", position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getOnsite(), "", position));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Study Group", "",position));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "On-site sharing", "",position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Study Group", "", position));
+                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "On-site sharing", "", position));
                 }
                 return list;
         }
@@ -207,4 +215,20 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tab_home:
+                onBackPressed();
+                break;
+            case R.id.tab_events:
+                CommonUtils.startActivity(this, EventActivity.class);
+                break;
+            case R.id.tab_news:
+                CommonUtils.startActivity(this, NewsActivity.class);
+                break;
+            case R.id.tab_share:
+                break;
+        }
+    }
 }

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,8 +27,14 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
 /**
  * Created by Divya on 21-02-2018.
@@ -128,7 +135,49 @@ public class CommonUtils {
             Log.e("FACEBOOK", "printHashKey()", e);
         }
     }
+    public static String getformattedDateFromString(String inputFormat, String outputFormat, String inputDate) {
+        if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
+            inputFormat = "yyyy-MM-dd hh:mm:ss";
+        }
+        if (outputFormat.equals("")) {
+            outputFormat = "EEEE d 'de' MMMM 'del' yyyy"; // if inputFormat = "", set a default output format.
+        }
+        Date parsed = null;
+        String outputDate = "";
 
+        SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, java.util.Locale.getDefault());
+        SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, java.util.Locale.getDefault());
+
+        // You can set a different Locale, This example set a locale of Country Mexico.
+        //SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, new Locale("es", "MX"));
+        //SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, new Locale("es", "MX"));
+
+        try {
+            parsed = df_input.parse(inputDate);
+            outputDate = df_output.format(parsed);
+        } catch (Exception e) {
+            Log.e("formattedDateFromString", "Exception in formateDateFromstring(): " + e.getMessage());
+        }
+        return outputDate;
+
+    }
+
+
+    public static String getTimeLineDifference(String stringDate) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = null;
+        try {
+            date = df.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long epoch = 0;
+        if (date != null) {
+            epoch = date.getTime();
+        }
+
+        return (String) getRelativeTimeSpanString(epoch, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+    }
     public static void showToast(Context mContext, String message) {
         Toast.makeText(mContext,message,Toast.LENGTH_LONG).show();
     }

@@ -8,6 +8,7 @@
     <include layout="@layout/toolbar" />
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_20sdp"
         android:layout_margin="@dimen/_5sdp"

@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.data.netcomm;
 
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
+import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -78,5 +79,9 @@ public interface ApiInterface {
     @POST("announcements")
     Observable<NewsResponseModel> getNews(@PartMap() Map<String, RequestBody> partMap,
                                           @HeaderMap Map<String, String> headers);
-
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("announcements")
+    Observable<EventResponseModel> getEvents(@PartMap() Map<String, RequestBody> partMap,
+                                           @HeaderMap Map<String, String> headers);
 }
