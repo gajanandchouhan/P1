@@ -64,6 +64,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private MainPresenter presenter;
     private LanguageResponseData conversionData;
     private ArrayList<BannerModel> bannerList;
+    private TextView textViewHome, textViewNewds, textViewEvent, textViewSharing;
+
 
     @Override
     protected void onPause() {
@@ -86,6 +88,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.tab_news).setOnClickListener(this);
         findViewById(R.id.tab_share).setOnClickListener(this);
         findViewById(R.id.tab_events).setOnClickListener(this);
+
+        textViewHome = findViewById(R.id.textView_home);
+        textViewSharing = findViewById(R.id.textView_share);
+        textViewNewds = findViewById(R.id.textView_news);
+        textViewEvent = findViewById(R.id.textView_event);
         mDrawerLayout = findViewById(R.id.drawer);
         layoutDrawer = findViewById(R.id.layout_drawer);
         mainLayout = findViewById(R.id.main_layout);
@@ -103,7 +110,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         drawerAdapter.setListner(new ItemClickListner() {
             @Override
             public void onItemClick(Object object, int position) {
-                openNextScreen(list.get(position).getPosition(), list.get(position).getTitle(), list.get(position).getId());
+                openNextScreen(position, list.get(position).getPosition(), list.get(position).getTitle(), list.get(position).getId());
                   /*  case 0:
                         mDrawerLayout.closeDrawer(layoutDrawer);
                         break;
@@ -172,7 +179,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         drawerItems.remove(0);
         mainAdapter = new MainListAdapter(list, this);
         recyclerViewMain.setAdapter(mainAdapter);
-        recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 30, true));
+        recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
         getMainCategories();
     }
 
@@ -184,7 +191,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             getMainCategories();
             LANGAUE_CHANGED = false;
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
-
         }
     }
 
@@ -308,13 +314,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
-    public void openNextScreen(int position, String title, String parentId) {
-        Bundle bundle = new Bundle();
-        bundle.putString("title", title);
-        bundle.putInt("pos", position);
-        bundle.putString("parent_id", parentId);
-        bundle.putSerializable("banner", bannerList);
-        CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+    public void openNextScreen(int clickedPostion, int position, String title, String parentId) {
+        if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
+            if (!SuperLifeSecretPreferences.getInstance().alertAccepted()) {
+                showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", title);
+                bundle.putInt("pos", position);
+                bundle.putString("parent_id", parentId);
+                bundle.putSerializable("banner", bannerList);
+                CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+            }
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", title);
+            bundle.putInt("pos", position);
+            bundle.putString("parent_id", parentId);
+            bundle.putSerializable("banner", bannerList);
+            CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+        }
+
     }
 
     @Override
@@ -332,35 +352,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             bannerPagerAdapter.notifyDataSetChanged();
         }
         if (conversionData != null) {
-            CategoryResponseData categoryResponseData = new CategoryResponseData();
-            categoryResponseData.setTitle(conversionData.getAnnouncement());
-            categoryResponseData.setIcon(R.drawable.announcement);
-            categoryResponseData.setPosition(5);
-            list.add(categoryResponseData);
-
-            CategoryResponseData categoryResponseData2 = new CategoryResponseData();
-            categoryResponseData2.setTitle(conversionData.getSharing());
-            categoryResponseData2.setIcon(R.drawable.sharing);
-            categoryResponseData2.setPosition(6);
-            list.add(categoryResponseData2);
-
-
-            CategoryResponseData categoryResponseData3 = new CategoryResponseData();
-            categoryResponseData3.setTitle(conversionData.getDaily_activities());
-            categoryResponseData3.setIcon(R.drawable.activities);
-            categoryResponseData3.setPosition(7);
-            list.add(categoryResponseData3);
-
-            CategoryResponseData categoryResponseData4 = new CategoryResponseData();
-            categoryResponseData4.setTitle(conversionData.getCountry_activities());
-            categoryResponseData4.setIcon(R.drawable.country);
-            categoryResponseData4.setPosition(8);
-            list.add(categoryResponseData4);
+            textViewHome.setText(conversionData.getHome());
+            textViewSharing.setText(conversionData.getSharing());
+            textViewEvent.setText(conversionData.getEvent_activity());
+            textViewNewds.setText(conversionData.getNews_update());
             textViewEditProfile.setText(conversionData.getEdit_profile());
         }
         drawerAdapter.notifyDataSetChanged();
         mainAdapter.notifyDataSetChanged();
     }
 
+    private void showAlert(String alert_text, final int clikedPostion) {
+        CommonUtils.showAlert(this, alert_text, "YES", "NO", new CommonUtils.ClickListner() {
+            @Override
+            public void onPositiveClick() {
+                SuperLifeSecretPreferences.getInstance().setAlertAccepted();
+                openNextScreen(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId());
+            }
 
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
+    }
 }

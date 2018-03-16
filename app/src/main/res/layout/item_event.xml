@@ -21,7 +21,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_toLeftOf="@+id/imageView_share"
@@ -95,12 +94,13 @@
             android:layout_toRightOf="@+id/layout_event_image"
             android:ellipsize="end"
             android:fontFamily="@font/reguler"
-            android:maxLines="4"
+            android:maxLines="3"
             android:text="Sed pellentesque dolor in ligula scelerisque, ut vehicula metus dignissim. Duis nec interdum lorem. Quisque eleifend arcu ac risus faucibus, eget sollicitudin nibh vestibulum. Integer ultrices tortor mauris, quis viverra ipsum rutrum tempus. Aliquam sit amet nisi ante. Aenean diam erat, faucibus quis dui et, elementum eleifend arcu. Nullam rhoncus tellus ex, vitae viverra ex lacinia id."
             android:textSize="@dimen/_13sdp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/layout_event_image"
             android:layout_toEndOf="@+id/layout_event_image"
@@ -135,6 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/red_selecer"
                 android:paddingLeft="@dimen/_5sdp"

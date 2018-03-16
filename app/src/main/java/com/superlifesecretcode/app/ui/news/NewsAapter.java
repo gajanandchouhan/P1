@@ -82,16 +82,20 @@ public class NewsAapter extends RecyclerView.Adapter<NewsAapter.ItemViewHolder> 
             textViewDateTime = itemView.findViewById(R.id.textView_time);
             textViewDesc = itemView.findViewById(R.id.textView_desc);
             cardView = itemView.findViewById(R.id.card_view);
+            itemView.findViewById(R.id.imageView_share).setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            notifyItemChanged(getAdapterPosition());
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("news", (ArrayList) list);
-            bundle.putInt("position", getAdapterPosition());
-            CommonUtils.startActivity((NewsActivity) mContext, NewsDetailsActivity.class, bundle, false);
+            if (v.getId() == R.id.imageView_share) {
+                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString(), list.get(getAdapterPosition()).getImage());
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("news", (ArrayList) list);
+                bundle.putInt("position", getAdapterPosition());
+                CommonUtils.startActivity((NewsActivity) mContext, NewsDetailsActivity.class, bundle, false);
+            }
         }
     }
 }

@@ -182,6 +182,12 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                     break;
+                case REQ_LIKE_NEWS:
+                    Observable<BaseResponseModel> likeNewsObservable = apiInterface.makeLike(stringMultipartParamsParams, header);
+                    likeNewsObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

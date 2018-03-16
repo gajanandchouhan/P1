@@ -1,12 +1,16 @@
 package com.superlifesecretcode.app.ui.events;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
@@ -37,6 +41,7 @@ public class EventPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_event_pager, collection, false);
         ImageView imageView = layout.findViewById(R.id.imageView);
+        RelativeLayout relativeLayout = layout.findViewById(R.id.button_interested);
         TextView textViewTitle = layout.findViewById(R.id.textView_title);
         TextView textViewTime = layout.findViewById(R.id.textView_time);
         TextView textViewAddr = layout.findViewById(R.id.textView_addr);
@@ -46,7 +51,32 @@ public class EventPagerAdapter extends PagerAdapter {
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         TextView textViewDesc = layout.findViewById(R.id.textView_desc);
         textViewAddr.setText(newsList.get(position).getVenue());
-        textViewDesc.setText(newsList.get(position).getAnnouncement_description());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Spanned spanned = Html.fromHtml(newsList.get(position).getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
+            textViewDesc.setText(spanned);
+        } else {
+            Spanned spanned = Html.fromHtml(newsList.get(position).getAnnouncement_description());
+            textViewDesc.setText(spanned);
+        }
+        relativeLayout.setSelected(newsList.get(position).getUserIntrested() != null && newsList.get(position).getUserIntrested().equalsIgnoreCase("1"));
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userIntrested = newsList.get(position).getUserIntrested();
+                if (userIntrested != null && userIntrested.equalsIgnoreCase("1")) {
+                    ((EventDetailsActivity) mContext).updateEventInterest(position, "0", newsList.get(position).getAnnouncement_id());
+                } else {
+                    ((EventDetailsActivity) mContext).updateEventInterest(position, "1", newsList.get(position).getAnnouncement_id());
+                }
+            }
+        });
+
+        imageViewShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommonUtils.shareContent(mContext, Html.fromHtml(newsList.get(position).getAnnouncement_description()).toString(), newsList.get(position).getImage());
+            }
+        });
         collection.addView(layout);
         return layout;
     }

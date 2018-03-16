@@ -42,6 +42,7 @@ public class BannerPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
+                bundle.putBoolean("is_link", true);
                 bundle.putString("title", bannerList.get(position).getTitle());
                 bundle.putString("url", bannerList.get(position).getLink());
                 CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);

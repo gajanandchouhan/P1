@@ -33,7 +33,7 @@
             android:background="@drawable/circle_count_bg"
             android:fontFamily="@font/reguler"
             android:gravity="center"
-            android:text="10"
+            android:text="0"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_13sdp" />
 

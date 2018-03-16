@@ -42,10 +42,7 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         SubcategoryModel s = list.get(position);
         holder.textView.setText(s.getTitle());
-        GradientDrawable drawable = (GradientDrawable) holder.itemView.getBackground();
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(100), rnd.nextInt(100), rnd.nextInt(100));
-        drawable.setColor(color);
+        holder.textViewChar.setText(s.getTitle().substring(0,1));
 //        holder.textView.setCompoundDrawablesWithIntrinsicBounds(s.getIcon(), 0, 0, 0);
     }
 
@@ -57,10 +54,14 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView textView;
+        private TextView textViewChar;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView_item);
+            textViewChar = itemView.findViewById(R.id.textView_char);
+            GradientDrawable gradientDrawable= (GradientDrawable) textViewChar.getBackground();
+            gradientDrawable.setColor(Color.parseColor("#94B74B"));
             itemView.setOnClickListener(this);
         }
 

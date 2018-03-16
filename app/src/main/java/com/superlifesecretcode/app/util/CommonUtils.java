@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,11 +21,15 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.superlifesecretcode.app.BuildConfig;
+import com.superlifesecretcode.app.GlideApp;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.splash.SplashActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.security.MessageDigest;
@@ -33,6 +40,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
@@ -135,6 +143,7 @@ public class CommonUtils {
             Log.e("FACEBOOK", "printHashKey()", e);
         }
     }
+
     public static String getformattedDateFromString(String inputFormat, String outputFormat, String inputDate) {
         if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
             inputFormat = "yyyy-MM-dd hh:mm:ss";
@@ -178,13 +187,51 @@ public class CommonUtils {
 
         return (String) getRelativeTimeSpanString(epoch, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
     }
+
     public static void showToast(Context mContext, String message) {
-        Toast.makeText(mContext,message,Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 
     public interface ClickListner {
         void onPositiveClick();
 
         void onNegativeClick();
+    }
+
+    public static void shareContent(final Context mContext, final String text, final String image) {
+            final Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            if (image != null) {
+                i.putExtra(Intent.EXTRA_TEXT, image + "\n" + text);
+            } else {
+                i.putExtra(Intent.EXTRA_TEXT, text);
+            }
+
+           /* if (image != null) {
+                GlideApp.with(mContext).asBitmap().load(image).into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        Uri imageUri = getImageUri(mContext, resource);
+                        if (imageUri != null)
+                            i.putExtra(Intent.EXTRA_STREAM, imageUri);
+                        if (text != null) {
+                            i.putExtra(Intent.EXTRA_TEXT, text);
+                        }
+                    }
+                });
+            }*/
+
+
+            mContext.startActivity(i);
+    }
+
+    private static Uri getImageUri(Context inContext, Bitmap inImage) {
+        if (inImage != null) {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, UUID.randomUUID().toString() + ".png", "drawing");
+            return Uri.parse(path);
+        }
+        return null;
     }
 }

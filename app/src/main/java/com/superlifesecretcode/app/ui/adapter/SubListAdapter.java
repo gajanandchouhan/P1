@@ -37,16 +37,19 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false));
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_subcategory, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.textView.setText(list.get(position).getTitle());
-        ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
-        GradientDrawable drawable = (GradientDrawable) holder.itemView.getBackground();
-        drawable.setColor(Color.parseColor(list.get(position).getColor()));
-
+        holder.textViewChar.setText(list.get(position).getTitle().substring(0, 1));
+        if (list.get(position).getImage() != null) {
+            holder.imageView.setVisibility(View.VISIBLE);
+            ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
+        } else {
+            holder.imageView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -58,17 +61,20 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
 
         ImageView imageView;
         TextView textView;
+        TextView textViewChar;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-            textView = itemView.findViewById(R.id.textView);
+            textView = itemView.findViewById(R.id.textView_item);
+            textViewChar = itemView.findViewById(R.id.textView_char);
+            GradientDrawable gradientDrawable = (GradientDrawable) textViewChar.getBackground();
+            gradientDrawable.setColor(Color.parseColor("#94B74B"));
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
             Bundle bundle = new Bundle();
             bundle.putString("title", list.get(getAdapterPosition()).getTitle());
             bundle.putBoolean("is_link", list.get(getAdapterPosition()).getType().equalsIgnoreCase("1"));

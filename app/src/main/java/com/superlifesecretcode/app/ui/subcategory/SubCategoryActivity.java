@@ -46,6 +46,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     private List<BannerModel> bannerList;
     private AutoScrollViewPager autoScrollViewPager;
     private BannerPagerAdapter bannerPagerAdapter;
+    private TextView textViewHome, textViewNewds, textViewEvent, textViewSharing;
 
     @Override
     protected int getContentView() {
@@ -56,6 +57,10 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     @Override
     protected void initializeView() {
         autoScrollViewPager = findViewById(R.id.pager_banner);
+        textViewHome = findViewById(R.id.textView_home);
+        textViewSharing = findViewById(R.id.textView_share);
+        textViewNewds = findViewById(R.id.textView_news);
+        textViewEvent = findViewById(R.id.textView_event);
         findViewById(R.id.tab_home).setOnClickListener(this);
         findViewById(R.id.tab_news).setOnClickListener(this);
         findViewById(R.id.tab_share).setOnClickListener(this);
@@ -67,9 +72,9 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         setUpToolbar(title);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerView.addItemDecoration(new SpacesItemDecorationGridLayout(3, 30, true));
-        if (parentId == null) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
+        if (positon == 5 || positon == 6 || positon == 7 || positon == 8) {
             bannerList = (ArrayList<BannerModel>) getIntent().getBundleExtra("bundle").getSerializable("banner");
             recyclerView.setAdapter(new SubacategoryListAdapter(getList(positon), this));
         } else {
@@ -77,6 +82,12 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             subList = new ArrayList<>();
             subListAdapter = new SubListAdapter(subList, this);
             recyclerView.setAdapter(subListAdapter);
+        }
+        if (conversionData != null) {
+            textViewHome.setText(conversionData.getHome());
+            textViewSharing.setText(conversionData.getSharing());
+            textViewEvent.setText(conversionData.getEvent_activity());
+            textViewNewds.setText(conversionData.getNews_update());
         }
         setUpBanner();
     }

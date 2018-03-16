@@ -191,6 +191,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 Bundle bundle = new Bundle();
                 bundle.putString("title", "Terms Of Services");
                 bundle.putString("url", ConstantLib.TC_URL);
+                bundle.putBoolean("is_link", true);
                 CommonUtils.startActivity(this, TcWebViewActivity.class, bundle, false);
                 break;
 

@@ -16,6 +16,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.DrawerItem;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -78,12 +79,16 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             textView = itemView.findViewById(R.id.textView);
+            textView.setSelected(true);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            ((MainActivity) mContext).openNextScreen(list.get(getAdapterPosition()).getPosition(), list.get(getAdapterPosition()).getTitle(), list.get(getAdapterPosition()).getId());
+
+            ((MainActivity) mContext).openNextScreen(getAdapterPosition(),list.get(getAdapterPosition()).getPosition(), list.get(getAdapterPosition()).getTitle(), list.get(getAdapterPosition()).getId());
         }
     }
+
+
 }

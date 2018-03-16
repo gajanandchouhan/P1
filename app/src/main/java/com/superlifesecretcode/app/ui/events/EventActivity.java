@@ -55,6 +55,11 @@ public class EventActivity extends BaseActivity implements EventView {
         newsAapter = new EventAapter(list, this);
         recyclerView.setAdapter(newsAapter);
         tabLayout.addOnTabSelectedListener(listener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getEvents();
     }
 
@@ -129,10 +134,18 @@ public class EventActivity extends BaseActivity implements EventView {
             todayList = newsResponseModel.getData().getToday();
             upcomingList = newsResponseModel.getData().getUpcoming();
             list.clear();
-            if (todayList != null) {
-                list.addAll(todayList);
-                newsAapter.setToday(true);
-                newsAapter.notifyDataSetChanged();
+            if (tabLayout.getSelectedTabPosition() == 0) {
+                if (todayList != null) {
+                    list.addAll(todayList);
+                    newsAapter.setToday(true);
+                    newsAapter.notifyDataSetChanged();
+                }
+            } else {
+                if (upcomingList != null) {
+                    list.addAll(upcomingList);
+                    newsAapter.setToday(true);
+                    newsAapter.notifyDataSetChanged();
+                }
             }
         }
     }

@@ -8,4 +8,6 @@ import com.superlifesecretcode.app.ui.base.BaseView;
 
 public interface NewsDetailsView extends BaseView {
     void onNewsReaded();
+
+    void onLiked();
 }

@@ -7,22 +7,30 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.news.NewsPagerAdapter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class EventDetailsActivity extends BaseActivity {
+public class EventDetailsActivity extends BaseActivity implements EventView{
 
 
     private ViewPager pager;
     private EventPagerAdapter newsAapter;
     private LanguageResponseData conversionData;
     private List<EventsInfoModel> list;
+    private UserDetailResponseData userData;
+    private int position;
+    private String interested;
+    private EventPresenter presenter;
 
     @Override
     protected int getContentView() {
@@ -33,6 +41,7 @@ public class EventDetailsActivity extends BaseActivity {
     @Override
     protected void initializeView() {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        userData=SuperLifeSecretPreferences.getInstance().getUserData();
         Bundle bundle = getIntent().getBundleExtra("bundle");
         int postion = bundle.getInt("position");
         list = (List<EventsInfoModel>) bundle.getSerializable("events");
@@ -47,7 +56,8 @@ public class EventDetailsActivity extends BaseActivity {
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new EventPresenter(this);
+        presenter.setView(this);
     }
 
     private void setUpToolbar() {
@@ -73,5 +83,28 @@ public class EventDetailsActivity extends BaseActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateEventInterest(int position, String interested, String id) {
+        this.position = position;
+        this.interested = interested;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("announcement_id", id);
+        params.put("interest", interested);
+        params.put("user_id", userData.getUser_id());
+        presenter.makeInterested(params, headers);
+    }
+
+    @Override
+    public void setEventData(EventResponseModel newsResponseModel) {
+
+    }
+
+    @Override
+    public void onUpdateInteresed() {
+        list.get(position).setUserIntrested(interested);
+        newsAapter.notifyDataSetChanged();
     }
 }

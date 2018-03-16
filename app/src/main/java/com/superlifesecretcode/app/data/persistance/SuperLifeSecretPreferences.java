@@ -92,4 +92,12 @@ public class SuperLifeSecretPreferences {
         }
         return null;
     }
+
+    public boolean alertAccepted() {
+        return  preferences.getBoolean("alert_accepted", false);
+    }
+
+    public void setAlertAccepted(){
+        editer.putBoolean("alert_accepted", true).commit();
+    }
 }

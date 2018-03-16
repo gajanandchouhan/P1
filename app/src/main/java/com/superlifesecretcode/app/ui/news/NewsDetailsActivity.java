@@ -30,6 +30,8 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
     private UserDetailResponseData userDetailsResponseData;
     private int postion;
     private NewsDetailsPresenter presenter;
+    private int position;
+    private String like;
 
     @Override
     protected int getContentView() {
@@ -86,6 +88,18 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
         presenter.readMark(params, headers);
     }
 
+    public void likeNews(int position, String like, String id) {
+        this.position = position;
+        this.like = like;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userDetailsResponseData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("announcement_id", id);
+        params.put("liked_by", userDetailsResponseData.getUser_id());
+        params.put("like", like);
+        presenter.likeMark(params, headers);
+    }
+
     @Override
     protected void initializePresenter() {
         presenter = new NewsDetailsPresenter(this);
@@ -120,6 +134,25 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
     @Override
     public void onNewsReaded() {
         list.get(postion).setReaded_by_user("1");
+        newsAapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLiked() {
+        if (like != null && like.equalsIgnoreCase("1")) {
+            String liked_by = list.get(position).getLiked_by();
+            if (liked_by != null) {
+                int likedBy = (Integer.parseInt(liked_by)) + 1;
+                list.get(position).setLiked_by(String.valueOf(likedBy));
+            }
+        } else {
+            String liked_by = list.get(position).getLiked_by();
+            if (liked_by != null) {
+                int likedBy = (Integer.parseInt(liked_by)) - 1;
+                list.get(position).setLiked_by(String.valueOf(likedBy));
+            }
+        }
+        list.get(postion).setLiked_by_user(like);
         newsAapter.notifyDataSetChanged();
     }
 }

@@ -2,6 +2,7 @@ package com.superlifesecretcode.app.ui.news;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
+import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -49,6 +51,25 @@ public class NewsPagerAdapter extends PagerAdapter {
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         WebView webView = layout.findViewById(R.id.webview);
         webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html", "utf-8");
+
+        imageViewShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommonUtils.shareContent(mContext, Html.fromHtml(newsList.get(position).getAnnouncement_description()).toString(), newsList.get(position).getImage());
+            }
+        });
+
+        imageViewLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String liked_by_user = newsList.get(position).getLiked_by_user();
+                if (liked_by_user != null && liked_by_user.equalsIgnoreCase("1")) {
+                    ((NewsDetailsActivity) mContext).likeNews(position, "0", newsList.get(position).getAnnouncement_id());
+                } else {
+                    ((NewsDetailsActivity) mContext).likeNews(position, "1", newsList.get(position).getAnnouncement_id());
+                }
+            }
+        });
         collection.addView(layout);
         return layout;
     }

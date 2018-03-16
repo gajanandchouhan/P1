@@ -98,4 +98,10 @@ public interface ApiInterface {
     @POST("attendance")
     Observable<BaseResponseModel> makeInterested(@PartMap() Map<String, RequestBody> partMap,
                                                  @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("like")
+    Observable<BaseResponseModel> makeLike(@PartMap() Map<String, RequestBody> partMap,
+                                                 @HeaderMap Map<String, String> headers);
 }
