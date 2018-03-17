@@ -89,6 +89,10 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             textViewEvent.setText(conversionData.getEvent_activity());
             textViewNewds.setText(conversionData.getNews_update());
         }
+        int screenWidth = CommonUtils.getScreenWidth(this);
+        int height = screenWidth * 6 / 16;
+        autoScrollViewPager.getLayoutParams().width = screenWidth;
+        autoScrollViewPager.getLayoutParams().height = height;
         setUpBanner();
     }
 

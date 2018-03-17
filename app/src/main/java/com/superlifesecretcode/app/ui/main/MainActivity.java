@@ -48,6 +48,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
+    public static boolean PROFILE_UPDATED;
     DrawerLayout mDrawerLayout;
     private LinearLayout layoutDrawer, mainLayout;
     private RecyclerView recyclerView;
@@ -88,7 +89,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.tab_news).setOnClickListener(this);
         findViewById(R.id.tab_share).setOnClickListener(this);
         findViewById(R.id.tab_events).setOnClickListener(this);
-
         textViewHome = findViewById(R.id.textView_home);
         textViewSharing = findViewById(R.id.textView_share);
         textViewNewds = findViewById(R.id.textView_news);
@@ -103,6 +103,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         imageViewUser = findViewById(R.id.imageView_user);
         textViewEditProfile.setOnClickListener(this);
         autoScrollViewPager = findViewById(R.id.pager_banner);
+        int screenWidth = CommonUtils.getScreenWidth(this);
+        int height = screenWidth * 6 / 16;
+        autoScrollViewPager.getLayoutParams().width = screenWidth;
+        autoScrollViewPager.getLayoutParams().height = height;
         findViewById(R.id.imageView_profile).setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
@@ -191,6 +195,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             getMainCategories();
             LANGAUE_CHANGED = false;
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        }
+        if (PROFILE_UPDATED) {
+            userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
+            setUpUserdetails();
         }
     }
 

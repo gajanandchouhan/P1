@@ -457,6 +457,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             SuperLifeSecretPreferences.getInstance().setConversionData(conversionData);
             SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
             MainActivity.LANGAUE_CHANGED=lanuguageChanged;
+            MainActivity.PROFILE_UPDATED=true;
             if (isUpdate) {
                 CommonUtils.startActivity(this, MainActivity.class);
             }

@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -233,5 +234,13 @@ public class CommonUtils {
             return Uri.parse(path);
         }
         return null;
+    }
+
+    public static int getScreenWidth(Context mContext) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        return width;
     }
 }

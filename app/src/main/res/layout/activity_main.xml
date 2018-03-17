@@ -32,11 +32,18 @@
                     android:layout_height="@dimen/_120sdp"
                     android:background="@color/colorPrimary" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_main"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_15sdp" />
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:padding="@dimen/_15sdp" />
+                </RelativeLayout>
+
                 <!--    <LinearLayout
                         android:layout_width="match_parent"
 
