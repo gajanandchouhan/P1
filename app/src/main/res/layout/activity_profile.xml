@@ -118,47 +118,53 @@
                 android:textColorHint="@color/colorLightPurple"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/colorLightBlack" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView_phonecode"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="+1"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-            <ImageView
-                android:id="@+id/imageView_flag"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:paddingBottom="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:scaleType="fitStart"
-                android:src="@drawable/flag_us" />
 
             <TextView
                 android:id="@+id/textView_mobile_label"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6"
+                android:layout_weight="1"
                 android:fontFamily="@font/reguler"
                 android:gravity="center_vertical"
                 android:text="@string/mobile_number"
                 android:textColor="@color/colorPurple"
                 android:textSize="@dimen/_12sdp" />
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView_phonecode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:fontFamily="@font/reguler"
+                    android:gravity="center_vertical"
+                    android:text="+1"
+                    android:textColor="@color/colorPurple"
+                    android:textSize="@dimen/_12sdp" />
+            <ImageView
+                android:id="@+id/imageView_flag"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_gravity="center"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/flag_us" />
 
             <EditText
                 android:id="@+id/edi_text_phone"
@@ -176,11 +182,14 @@
                 android:textColor="@color/colorPurple"
                 android:textColorHint="@color/colorLightPurple"
                 android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/colorLightBlack" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -214,10 +223,12 @@
                 android:textColorHint="@color/colorLightPurple"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/colorLightBlack" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -251,10 +262,12 @@
                 android:textColorHint="@color/colorLightPurple"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/colorLightBlack" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -288,10 +301,12 @@
                 android:textColorHint="@color/colorLightPurple"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/colorLightBlack" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -325,6 +340,7 @@
                 android:textColorHint="@color/colorLightPurple"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

@@ -13,12 +13,13 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
+import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
+import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Divya on 26-02-2018.
@@ -82,6 +83,11 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
                 }
                 break;
             case ConstantLib.TYPE_SHARING:
+                if (position == 0) {
+                    CommonUtils.startActivity(((SubCategoryActivity) mContext), LatestActivity.class);
+                } else if (position == 1) {
+                    CommonUtils.startActivity(((SubCategoryActivity) mContext), SubmitListActivity.class);
+                }
                 break;
         }
     }

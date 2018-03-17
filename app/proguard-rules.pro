@@ -23,12 +23,13 @@
 # Platform calls Class.forName on types which do not exist bon Android to determine platform.
 
 # OkHttp
+-ignorewarnings
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
-
+-dontwarn com.bumptech.glide.**
 # Retrofit 2.X
 ## https://square.github.io/retrofit/ ##
 -dontwarn retrofit2.**

@@ -98,6 +98,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewLanguage.setOnClickListener(this);
         imageViewUser.setOnClickListener(this);
         imageViewFlag.setOnClickListener(this);
+        textViewDialCode.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         textViewState.setOnClickListener(this);
 
@@ -240,7 +241,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     HashMap<String, String> body = new HashMap<>();
                     body.put("language_id", languageId);
                     presenter.getConversion(body);
-                    lanuguageChanged=true;
+                    lanuguageChanged = true;
                 }
             }
         });
@@ -252,6 +253,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             case R.id.textView_gender:
                 showgGenderSelection();
                 break;
+            case R.id.textView_phonecode:
             case R.id.imageView_flag:
                 showDialCodePicker();
                 break;
@@ -359,6 +361,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         editTextName.setEnabled(enbale);
         imageViewUser.setEnabled(enbale);
         imageViewFlag.setEnabled(enbale);
+        textViewDialCode.setEnabled(enbale);
         editTextMobileNumber.setEnabled(enbale && editTextMobileNumber.getText().toString().isEmpty());
         editTextEmail.setEnabled(enbale && editTextEmail.getText().toString().isEmpty());
         textViewGender.setEnabled(enbale);
@@ -383,6 +386,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 dialCode = country.getDialCode();
                 countryCode = country.getCode().toLowerCase();
                 countryPicker.dismiss();
+                textViewDialCode.setText(dialCode);
             }
         });
         countryPicker.show();
@@ -456,8 +460,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             enableDisableView(false);
             SuperLifeSecretPreferences.getInstance().setConversionData(conversionData);
             SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
-            MainActivity.LANGAUE_CHANGED=lanuguageChanged;
-            MainActivity.PROFILE_UPDATED=true;
+            MainActivity.LANGAUE_CHANGED = lanuguageChanged;
+            MainActivity.PROFILE_UPDATED = true;
             if (isUpdate) {
                 CommonUtils.startActivity(this, MainActivity.class);
             }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/imageView_upload"
+        android:layout_toStartOf="@+id/imageView_upload"
+        android:background="@drawable/red_transparent"
+        android:fontFamily="@font/reguler"
+        android:gravity="start"
+        android:hint="What is in your mind"
+        android:maxLines="2"
+        android:minLines="2"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textColorHint="@android:color/holo_red_dark" />
+
+    <ImageView
+        android:id="@+id/imageView_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/add_videos" />
+</RelativeLayout>

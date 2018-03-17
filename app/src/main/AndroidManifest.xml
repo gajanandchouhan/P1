@@ -99,6 +99,18 @@
         <activity
             android:name=".ui.events.EventDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.sharing_latest.LatestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.sharing_latest.LatestDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.sharing_submit.SubmitListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.sharing_submit.SubmitActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
