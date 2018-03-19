@@ -1,8 +1,6 @@
 package com.superlifesecretcode.app.ui.sharing_submit;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.ui.sharing_latest.LatestDetailsActivity;
-import com.superlifesecretcode.app.ui.sharing_latest.LatestPagerAdapter;
-import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +19,6 @@ import java.util.List;
 public class ImageAapter extends RecyclerView.Adapter<ImageAapter.ItemViewHolder> {
     private final List<String> list;
     private Context mContext;
-
 
 
     public ImageAapter(List list, Context mContext) {
@@ -56,11 +49,15 @@ public class ImageAapter extends RecyclerView.Adapter<ImageAapter.ItemViewHolder
             super(itemView);
             itemView.setOnClickListener(this);
             imageView = itemView.findViewById(R.id.imageView);
+            itemView.findViewById(R.id.imageView_remove).setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            CommonUtils.startActivity((Activity) mContext, LatestDetailsActivity.class);
+            if (v.getId() == R.id.imageView_remove) {
+                list.remove(getAdapterPosition());
+                notifyDataSetChanged();
+            }
         }
     }
 }

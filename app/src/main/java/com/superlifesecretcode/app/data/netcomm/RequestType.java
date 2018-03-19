@@ -19,4 +19,6 @@ public interface RequestType {
     byte REQ_MARK_READ = 11;
     byte REQ_INTERESTED_EVENT=12;
     byte REQ_LIKE_NEWS=13;
+    byte REQ_ADD_SHARE=14;
+    byte REQ_GET_USER_SHARE=15;
 }

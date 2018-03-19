@@ -8,6 +8,7 @@ import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
+import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
@@ -22,6 +24,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 
 /**
  * Created by JAIN COMPUTERS on 11/18/2017.
@@ -81,11 +84,12 @@ public interface ApiInterface {
     @POST("announcements")
     Observable<NewsResponseModel> getNews(@PartMap() Map<String, RequestBody> partMap,
                                           @HeaderMap Map<String, String> headers);
+
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("announcements")
     Observable<EventResponseModel> getEvents(@PartMap() Map<String, RequestBody> partMap,
-                                           @HeaderMap Map<String, String> headers);
+                                             @HeaderMap Map<String, String> headers);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
@@ -103,5 +107,15 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("like")
     Observable<BaseResponseModel> makeLike(@PartMap() Map<String, RequestBody> partMap,
-                                                 @HeaderMap Map<String, String> headers);
+                                           @HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("addSharing")
+    Observable<BaseResponseModel> addShare(@Body RequestBody file, @HeaderMap() Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("usersSharing")
+    Observable<ShareListResponseModel> getUserShare(@PartMap() Map<String, RequestBody> partMap,
+                                                    @HeaderMap Map<String, String> headers);
 }

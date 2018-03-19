@@ -12,6 +12,7 @@ import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
+import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -188,6 +189,12 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                     break;
+                case REQ_GET_USER_SHARE:
+                    Observable<ShareListResponseModel> getShareObservable = apiInterface.getUserShare(stringMultipartParamsParams, header);
+                    getShareObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<ShareListResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,6 +243,17 @@ public class ApiController implements RequestType {
 
         }
         return files;
+    }
+
+    public void callMultpleFileUpload(byte reqType, ResponseHandler responseHandler, RequestBody fileParams,Map<String,String> headers) {
+        switch (reqType) {
+            case REQ_ADD_SHARE:
+                Observable<BaseResponseModel> addShareObservable = apiInterface.addShare(fileParams,headers);
+                addShareObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
+                break;
+        }
     }
 
 }

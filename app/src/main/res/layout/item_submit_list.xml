@@ -22,6 +22,7 @@
                 android:id="@+id/imageView_user"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
+                android:layout_centerVertical="true"
                 android:src="@color/colorPrimary" />
 
             <LinearLayout
@@ -50,6 +51,15 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/reguler"
                     android:text="12 march, 2018 6:00 pm"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/textView_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/reguler"
+                    android:text="United State of America"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -86,16 +96,6 @@
             android:layout_below="@id/layout_user"
             android:layout_marginTop="@dimen/_5sdp" />
 
-        <TextView
-            android:id="@+id/textView_expecteddate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@android:color/holo_red_dark"
-            android:fontFamily="@font/reguler"
-            android:padding="@dimen/_5sdp"
-            android:text="Expectd publish Date:20 march, 2018"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_13sdp" />
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
