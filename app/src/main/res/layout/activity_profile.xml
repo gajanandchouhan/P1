@@ -6,344 +6,374 @@
 
     <include layout="@layout/toolbar" />
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:paddingBottom="@dimen/_15sdp"
-        android:paddingTop="@dimen/_15sdp">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
-            <com.superlifesecretcode.app.custom.CircleImageView
-                android:id="@+id/imageView_user"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="@dimen/_65sdp"
-                android:layout_gravity="center"
-                android:src="@drawable/default_placeholder" />
-
-            <TextView
-                android:id="@+id/textView_name"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/reguler"
-                android:text="Name"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_14sdp" />
+                android:background="@color/colorPrimary"
+                android:paddingBottom="@dimen/_15sdp"
+                android:paddingTop="@dimen/_15sdp">
 
-        </LinearLayout>
-    </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+                    <com.superlifesecretcode.app.custom.CircleImageView
+                        android:id="@+id/imageView_user"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_65sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/default_placeholder" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/reguler"
+                        android:text="Name"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14sdp" />
 
-            <TextView
-                android:id="@+id/textView_name_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="@string/name"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-            <EditText
-                android:id="@+id/edi_text_name"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/reguler"
-                android:hint="@string/name"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
-                android:textSize="@dimen/_12sdp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightBlack" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView_email_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="Email"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-            <EditText
-                android:id="@+id/edit_text_email"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/reguler"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
-                android:textSize="@dimen/_12sdp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightBlack" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/textView_mobile_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="@string/mobile_number"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-
+                </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/textView_phonecode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:fontFamily="@font/reguler"
-                    android:gravity="center_vertical"
-                    android:text="+1"
-                    android:textColor="@color/colorPurple"
-                    android:textSize="@dimen/_12sdp" />
-            <ImageView
-                android:id="@+id/imageView_flag"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_gravity="center"
-                android:layout_height="@dimen/_15sdp"
-                android:src="@drawable/flag_us" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
 
-            <EditText
-                android:id="@+id/edi_text_phone"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/reguler"
-                android:hint="@string/mobile_number"
-                android:inputType="phone"
-                android:maxLength="12"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
-                android:textSize="@dimen/_12sdp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_name_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:text="@string/name"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <EditText
+                        android:id="@+id/edi_text_name"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/reguler"
+                        android:hint="@string/name"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:textColor="@color/colorPurple"
+                        android:textColorHint="@color/colorLightPurple"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLightBlack" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_email_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:text="Email"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <EditText
+                        android:id="@+id/edit_text_email"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/reguler"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:textColor="@color/colorPurple"
+                        android:textColorHint="@color/colorLightPurple"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLightBlack" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/textView_mobile_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:text="@string/mobile_number"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView_phonecode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/reguler"
+                            android:gravity="center_vertical"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:text="+1"
+                            android:textColor="@color/colorPurple"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <ImageView
+                            android:id="@+id/imageView_flag"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/flag_us" />
+
+                        <EditText
+                            android:id="@+id/edi_text_phone"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/reguler"
+                            android:hint="@string/mobile_number"
+                            android:inputType="phone"
+                            android:maxLength="12"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:textColor="@color/colorPurple"
+                            android:textColorHint="@color/colorLightPurple"
+                            android:textSize="@dimen/_12sdp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLightBlack" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_gender_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:text="@string/gender"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/textView_gender"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/arrow_drop_down"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:hint="@string/gender"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:textColor="@color/colorPurple"
+                        android:textColorHint="@color/colorLightPurple"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLightBlack" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_country_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:text="@string/country"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/textView_country"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/arrow_drop_down"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:hint="@string/country"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:textColor="@color/colorPurple"
+                        android:textColorHint="@color/colorLightPurple"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLightBlack" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_state_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:text="@string/state"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/textView_state"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/arrow_drop_down"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:hint="@string/state"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:textColor="@color/colorPurple"
+                        android:textColorHint="@color/colorLightPurple"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLightBlack" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView_language_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:text="Select Language"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/textView_language"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/arrow_drop_down"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
+                        android:hint="@string/language"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:textColor="@color/colorPurple"
+                        android:textColorHint="@color/colorLightPurple"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLightBlack" />
             </LinearLayout>
-        </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightBlack" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView_gender_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="@string/gender"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-            <TextView
-                android:id="@+id/textView_gender"
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/customize_bar"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:drawableRight="@drawable/arrow_drop_down"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/green_filled"
                 android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:hint="@string/gender"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
-                android:textSize="@dimen/_12sdp" />
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:text="Customize Bottom Bar"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_13sdp" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightBlack" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView_country_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="@string/country"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-            <TextView
-                android:id="@+id/textView_country"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:drawableRight="@drawable/arrow_drop_down"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:hint="@string/country"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
-                android:textSize="@dimen/_12sdp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightBlack" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView_state_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="@string/state"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-            <TextView
-                android:id="@+id/textView_state"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:drawableRight="@drawable/arrow_drop_down"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:hint="@string/state"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
-                android:textSize="@dimen/_12sdp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightBlack" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView_language_label"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:text="Select Language"
-                android:textColor="@color/colorPurple"
-                android:textSize="@dimen/_12sdp" />
-
-            <TextView
-                android:id="@+id/textView_language"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:drawableRight="@drawable/arrow_drop_down"
-                android:fontFamily="@font/reguler"
-                android:gravity="center_vertical"
-                android:hint="@string/language"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:textColor="@color/colorPurple"
-                android:textColorHint="@color/colorLightPurple"
-                android:textSize="@dimen/_12sdp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightBlack" />
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

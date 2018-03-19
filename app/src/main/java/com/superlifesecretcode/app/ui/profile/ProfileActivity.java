@@ -20,6 +20,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.customizebar.CustomizeBarActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
@@ -101,6 +102,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewDialCode.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         textViewState.setOnClickListener(this);
+        findViewById(R.id.customize_bar).setOnClickListener(this);
 
         if (conversionData != null) {
             genderList = new ArrayList<>();
@@ -114,6 +116,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         setUpLocalConversion();
         setUpUi();
         enableDisableView(false);
+
     }
 
     private void setUpLocalConversion() {
@@ -259,6 +262,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.textView_language:
                 showLanguageSelection();
+                break;
+            case R.id.customize_bar:
+                CommonUtils.startActivity(this, CustomizeBarActivity.class);
                 break;
             case R.id.imageView_profile:
                 if (isEnabled) {

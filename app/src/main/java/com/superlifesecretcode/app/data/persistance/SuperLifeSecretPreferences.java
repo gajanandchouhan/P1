@@ -4,9 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -93,11 +99,38 @@ public class SuperLifeSecretPreferences {
         return null;
     }
 
-    public boolean alertAccepted() {
-        return  preferences.getBoolean("alert_accepted", false);
+
+    public void setAlertAccepted(String id) {
+        List<String> acceptedIds = getAcceptedIds();
+        acceptedIds.add(id);
+        editer.putString("accepted_id", new Gson().toJson(acceptedIds)).commit();
     }
 
-    public void setAlertAccepted(){
-        editer.putBoolean("alert_accepted", true).commit();
+    public List<String> getAcceptedIds() {
+        String accepted_id = preferences.getString("accepted_id", "");
+        if (accepted_id.length() > 0) {
+            Type type = new TypeToken<List<String>>() {
+            }.getType();
+            List<String> list = new Gson().fromJson(accepted_id, type);
+            return list;
+        }
+        List<String> list=new ArrayList<>();
+        return list;
     }
+
+    public void setSubMenuList(List<SubcategoryModel> list) {
+        editer.putString("sub_menu", new Gson().toJson(list)).commit();
+    }
+
+    public List<SubcategoryModel> getSubMenuList() {
+        String subMneus = preferences.getString("sub_menu", "");
+        if (subMneus.length() > 0) {
+            Type type = new TypeToken<List<SubcategoryModel>>() {
+            }.getType();
+            List<SubcategoryModel> list = new Gson().fromJson(subMneus, type);
+            return list;
+        }
+        return null;
+    }
+
 }

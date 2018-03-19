@@ -28,11 +28,13 @@ import java.util.Random;
 
 public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemViewHolder> {
     private final List<CategoryResponseData> list;
+    private final String colorCode;
     private Context mContext;
 
-    public SubListAdapter(List<CategoryResponseData> list, Context mContext) {
+    public SubListAdapter(List<CategoryResponseData> list, Context mContext, String colorCode) {
         this.list = list;
         this.mContext = mContext;
+        this.colorCode=colorCode;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
             textView = itemView.findViewById(R.id.textView_item);
             textViewChar = itemView.findViewById(R.id.textView_char);
             GradientDrawable gradientDrawable = (GradientDrawable) textViewChar.getBackground();
-            gradientDrawable.setColor(Color.parseColor("#94B74B"));
+            gradientDrawable.setColor(Color.parseColor(colorCode));
             itemView.setOnClickListener(this);
         }
 

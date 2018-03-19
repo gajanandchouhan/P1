@@ -86,7 +86,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
         @Override
         public void onClick(View v) {
 
-            ((MainActivity) mContext).openNextScreen(getAdapterPosition(),list.get(getAdapterPosition()).getPosition(), list.get(getAdapterPosition()).getTitle(), list.get(getAdapterPosition()).getId());
+            ((MainActivity) mContext).openNextScreen(getAdapterPosition(),list.get(getAdapterPosition()).getPosition(), list.get(getAdapterPosition()).getTitle(), list.get(getAdapterPosition()).getId(),list.get(getAdapterPosition()).getColor());
         }
     }
 

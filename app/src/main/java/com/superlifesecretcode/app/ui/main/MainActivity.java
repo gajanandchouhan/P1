@@ -1,7 +1,6 @@
 package com.superlifesecretcode.app.ui.main;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -9,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +30,8 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
+import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
+import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -39,9 +39,6 @@ import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +46,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
     public static boolean PROFILE_UPDATED;
+    public static boolean BOTTOM_BAR_CHANGED;
     DrawerLayout mDrawerLayout;
     private LinearLayout layoutDrawer, mainLayout;
     private RecyclerView recyclerView;
@@ -65,7 +63,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private MainPresenter presenter;
     private LanguageResponseData conversionData;
     private ArrayList<BannerModel> bannerList;
-    private TextView textViewHome, textViewNewds, textViewEvent, textViewSharing;
+    private TextView textView1, textView2, textView3, textView4;
+    LinearLayout tab1, tab2, tab3, tab4;
+    ImageView imageView1, imageView2, imageView3, imageView4;
 
 
     @Override
@@ -85,14 +85,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         setUpToolbar();
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
-        findViewById(R.id.tab_home);
-        findViewById(R.id.tab_news).setOnClickListener(this);
-        findViewById(R.id.tab_share).setOnClickListener(this);
-        findViewById(R.id.tab_events).setOnClickListener(this);
-        textViewHome = findViewById(R.id.textView_home);
-        textViewSharing = findViewById(R.id.textView_share);
-        textViewNewds = findViewById(R.id.textView_news);
-        textViewEvent = findViewById(R.id.textView_event);
+        tab1 = findViewById(R.id.tab_1);
+        tab2 = findViewById(R.id.tab_2);
+        tab3 = findViewById(R.id.tab_3);
+        tab4 = findViewById(R.id.tab_4);
+        imageView1 = findViewById(R.id.imageView1);
+        imageView2 = findViewById(R.id.imageView2);
+        imageView3 = findViewById(R.id.imageView3);
+        imageView4 = findViewById(R.id.imageView4);
+        tab1.setOnClickListener(this);
+        tab2.setOnClickListener(this);
+        tab3.setOnClickListener(this);
+        tab4.setOnClickListener(this);
+        textView1 = findViewById(R.id.textView_1);
+        textView2 = findViewById(R.id.textView_2);
+        textView3 = findViewById(R.id.textView_3);
+        textView4 = findViewById(R.id.textView_4);
         mDrawerLayout = findViewById(R.id.drawer);
         layoutDrawer = findViewById(R.id.layout_drawer);
         mainLayout = findViewById(R.id.main_layout);
@@ -114,7 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         drawerAdapter.setListner(new ItemClickListner() {
             @Override
             public void onItemClick(Object object, int position) {
-                openNextScreen(position, list.get(position).getPosition(), list.get(position).getTitle(), list.get(position).getId());
+                openNextScreen(position, list.get(position).getPosition(), list.get(position).getTitle(), list.get(position).getId(), list.get(position).getColor());
                   /*  case 0:
                         mDrawerLayout.closeDrawer(layoutDrawer);
                         break;
@@ -184,7 +192,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mainAdapter = new MainListAdapter(list, this);
         recyclerViewMain.setAdapter(mainAdapter);
         recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
+        setUpBottomBar();
         getMainCategories();
+    }
+
+    private void setUpBottomBar() {
+        List<SubcategoryModel> bottomList = new ArrayList<>();
+        List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
+        if (subMenuList != null && subMenuList.size() > 0) {
+            for (SubcategoryModel subcategoryModel : subMenuList) {
+                if (subcategoryModel.isSelected()) {
+                    bottomList.add(subcategoryModel);
+                }
+            }
+        } else {
+            List<SubcategoryModel> list = getList();
+            SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
+            for (SubcategoryModel subcategoryModel : list) {
+                if (subcategoryModel.isSelected()) {
+                    bottomList.add(subcategoryModel);
+                }
+            }
+
+        }
+        if (bottomList.size() > 3) {
+            tab1.setTag(bottomList.get(0).getType());
+            textView1.setText(bottomList.get(0).getTitle());
+            tab2.setTag(bottomList.get(1).getType());
+            textView2.setText(bottomList.get(1).getTitle());
+            tab3.setTag(bottomList.get(2).getType());
+            textView3.setText(bottomList.get(2).getTitle());
+            tab4.setTag(bottomList.get(3).getType());
+            textView4.setText(bottomList.get(3).getTitle());
+            imageView1.setImageResource(bottomList.get(0).getIcon());
+            imageView2.setImageResource(bottomList.get(1).getIcon());
+            imageView3.setImageResource(bottomList.get(2).getIcon());
+            imageView4.setImageResource(bottomList.get(3).getIcon());
+        }
     }
 
 
@@ -199,6 +243,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (PROFILE_UPDATED) {
             userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
             setUpUserdetails();
+        }
+        if (BOTTOM_BAR_CHANGED) {
+            setUpBottomBar();
+            BOTTOM_BAR_CHANGED = false;
         }
     }
 
@@ -310,27 +358,51 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 bundle.putBoolean("update", false);
                 CommonUtils.startActivity(this, ProfileActivity.class, bundle, false);
                 break;
-            case R.id.tab_events:
-                CommonUtils.startActivity(this, EventActivity.class);
-                break;
-            case R.id.tab_news:
-                CommonUtils.startActivity(this, NewsActivity.class);
-                break;
-            case R.id.tab_share:
+            case R.id.tab_1:
+            case R.id.tab_2:
+            case R.id.tab_3:
+            case R.id.tab_4:
+                handleBottomClick((Integer) v.getTag());
                 break;
         }
 
     }
 
-    public void openNextScreen(int clickedPostion, int position, String title, String parentId) {
+    private void handleBottomClick(int tag) {
+        switch (tag) {
+            case 0:
+                break;
+            case 1:
+                CommonUtils.startActivity(this, NewsActivity.class);
+                break;
+            case 2:
+                CommonUtils.startActivity(this, EventActivity.class);
+                break;
+            case 3:
+                CommonUtils.startActivity(this, LatestActivity.class);
+                break;
+            case 4:
+                CommonUtils.startActivity(this, SubmitActivity.class);
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+        }
+    }
+
+    public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
-            if (!SuperLifeSecretPreferences.getInstance().alertAccepted()) {
+            if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(list.get(clickedPostion).getId())) {
                 showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion);
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putString("title", title);
                 bundle.putInt("pos", position);
                 bundle.putString("parent_id", parentId);
+                bundle.putString("color", color);
                 bundle.putSerializable("banner", bannerList);
                 CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
             }
@@ -339,6 +411,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             bundle.putString("title", title);
             bundle.putInt("pos", position);
             bundle.putString("parent_id", parentId);
+            bundle.putString("color", color);
             bundle.putSerializable("banner", bannerList);
             CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
         }
@@ -360,10 +433,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             bannerPagerAdapter.notifyDataSetChanged();
         }
         if (conversionData != null) {
-            textViewHome.setText(conversionData.getHome());
-            textViewSharing.setText(conversionData.getSharing());
-            textViewEvent.setText(conversionData.getEvent_activity());
-            textViewNewds.setText(conversionData.getNews_update());
             textViewEditProfile.setText(conversionData.getEdit_profile());
         }
         drawerAdapter.notifyDataSetChanged();
@@ -374,8 +443,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         CommonUtils.showAlert(this, alert_text, "YES", "NO", new CommonUtils.ClickListner() {
             @Override
             public void onPositiveClick() {
-                SuperLifeSecretPreferences.getInstance().setAlertAccepted();
-                openNextScreen(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId());
+                SuperLifeSecretPreferences.getInstance().setAlertAccepted( list.get(clikedPostion).getId());
+                openNextScreen(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
             }
 
             @Override
@@ -383,5 +452,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             }
         });
+    }
+
+    public List<SubcategoryModel> getList() {
+        List<SubcategoryModel> list = new ArrayList<>();
+        if (conversionData != null) {
+            list.add(new SubcategoryModel(R.drawable.home, conversionData.getHome(), "", 0, true));
+            list.add(new SubcategoryModel(R.drawable.announcement, conversionData.getNews_update(), "", 1, true));
+            list.add(new SubcategoryModel(R.drawable.announcement, conversionData.getEvent_activity(), "", 2, true));
+            list.add(new SubcategoryModel(R.drawable.sharing, conversionData.getLatest(), "", 3, true));
+            list.add(new SubcategoryModel(R.drawable.sharing, conversionData.getSubmit(), "", 4, false));
+            list.add(new SubcategoryModel(R.drawable.activities, conversionData.getPersonal_calendar(), "", 5, false));
+            list.add(new SubcategoryModel(R.drawable.country, conversionData.getStudy_group(), "", 6, false));
+            list.add(new SubcategoryModel(R.drawable.country, conversionData.getOnsite(), "", 7, false));
+        } else {
+            list.add(new SubcategoryModel(R.drawable.home, "Home", "", 0, true));
+            list.add(new SubcategoryModel(R.drawable.announcement, "News Update", "", 1, true));
+            list.add(new SubcategoryModel(R.drawable.announcement, "Event+Activities", "", 2, true));
+            list.add(new SubcategoryModel(R.drawable.sharing, "Latest", "", 3, true));
+            list.add(new SubcategoryModel(R.drawable.sharing, "Submit", "", 4, false));
+            list.add(new SubcategoryModel(R.drawable.activities, "Personal+Event Calendar", "", 5, false));
+            list.add(new SubcategoryModel(R.drawable.country, "Study Group", "", 6, false));
+            list.add(new SubcategoryModel(R.drawable.country, "On-site sharing", "", 7, false));
+        }
+        return list;
     }
 }
