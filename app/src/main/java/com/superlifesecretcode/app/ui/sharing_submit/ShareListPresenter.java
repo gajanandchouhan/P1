@@ -29,7 +29,7 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
 
     @Override
     protected void setView(ShareListView shareListView) {
-        this.view = view;
+        this.view = shareListView;
     }
 
     public void getShare(HashMap<String, String> params, Map<String, String> headers) {

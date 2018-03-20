@@ -36,6 +36,18 @@
                         android:layout_height="@dimen/_50sdp"
                         android:src="@color/colorPrimary" />
 
+                    <TextView
+                        android:id="@+id/textView_status"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/reguler"
+                        android:text="Submitted"
+                        android:textColor="@color/colorLightBlack"
+                        android:textSize="@dimen/_13sdp" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -60,6 +72,15 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/reguler"
                             android:text="12 march, 2018 6:00 pm"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/textView_country"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/reguler"
+                            android:text="India"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_12sdp" />
                     </LinearLayout>
@@ -92,6 +113,7 @@
                     android:background="@color/colorLightBlack" />
 
                 <RelativeLayout
+                    android:id="@+id/like_share_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_5sdp">

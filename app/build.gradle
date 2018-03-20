@@ -61,6 +61,6 @@ dependencies {
 
     compile 'com.facebook.android:facebook-login:4.29.0'
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
-    compile 'com.zhihu.android:matisse:0.4.3'
+    compile 'com.kbeanie:multipicker:1.1.31@aar'
 }
 apply plugin: 'com.google.gms.google-services'

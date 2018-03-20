@@ -8,29 +8,37 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class SubmitListActivity extends BaseActivity {
+public class SubmitListActivity extends BaseActivity implements ShareListView {
 
 
     private SubmitListAapter submitAapter;
     private UserDetailResponseData userData;
     private LanguageResponseData conversionData;
+    private List<ShareListResponseData> shareList;
+    private ShareListPresenter presenter;
 
     @Override
     protected int getContentView() {
         overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_submit_list;
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
+
     @Override
     protected void initializeView() {
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
@@ -38,8 +46,23 @@ public class SubmitListActivity extends BaseActivity {
         setUpToolbar();
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        submitAapter = new SubmitListAapter(new ArrayList(), this);
+        shareList = new ArrayList<>();
+        submitAapter = new SubmitListAapter(shareList, this);
         recyclerView.setAdapter(submitAapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSubmitionList();
+    }
+
+    private void getSubmitionList() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("user_id", userData.getUser_id());
+        presenter.getShare(params, headers);
     }
 
     private void setUpToolbar() {
@@ -54,7 +77,8 @@ public class SubmitListActivity extends BaseActivity {
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new ShareListPresenter(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -63,5 +87,14 @@ public class SubmitListActivity extends BaseActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setShareListData(List<ShareListResponseData> listData) {
+        if (listData != null) {
+            shareList.clear();
+            shareList.addAll(listData);
+            submitAapter.notifyDataSetChanged();
+        }
     }
 }

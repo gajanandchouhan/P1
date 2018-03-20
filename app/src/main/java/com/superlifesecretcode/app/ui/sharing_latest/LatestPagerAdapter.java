@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.shares.FileResponseData;
+import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ import java.util.List;
  */
 
 public class LatestPagerAdapter extends PagerAdapter {
-    private final List bannerList;
+    private final List<FileResponseData> bannerList;
     private Context mContext;
 
     public LatestPagerAdapter(Context context, List bannerList) {
@@ -30,7 +33,7 @@ public class LatestPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_latest_pager, collection, false);
         ImageView imageView = layout.findViewById(R.id.imageView);
-//        ImageLoadUtils.loadImage(bannerList.get(position).getImage(), imageView);
+        ImageLoadUtils.loadImage(bannerList.get(position).getFile(), imageView);
         collection.addView(layout);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +50,7 @@ public class LatestPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return bannerList.size();
     }
 
     @Override

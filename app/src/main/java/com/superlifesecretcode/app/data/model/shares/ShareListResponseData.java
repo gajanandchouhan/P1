@@ -1,12 +1,15 @@
 package com.superlifesecretcode.app.data.model.shares;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Divya on 19-03-2018.
  */
 
-public class ShareListResponseData {
+public class ShareListResponseData implements Serializable {
+    private String created_at;
+    private String user_image;
     private String sharing_id;
     private String user_id;
     private String content;
@@ -19,6 +22,22 @@ public class ShareListResponseData {
     private String liked_by;
     private String liked_by_user;
     private List<FileResponseData> sharing_files;
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
 
     public String getSharing_id() {
         return sharing_id;

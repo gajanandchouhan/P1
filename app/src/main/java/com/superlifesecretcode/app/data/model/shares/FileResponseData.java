@@ -1,10 +1,12 @@
 package com.superlifesecretcode.app.data.model.shares;
 
+import java.io.Serializable;
+
 /**
  * Created by Divya on 19-03-2018.
  */
 
-public class FileResponseData {
+public class FileResponseData implements Serializable{
     private String type;
     private String file;
 

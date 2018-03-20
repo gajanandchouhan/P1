@@ -1,23 +1,26 @@
 package com.superlifesecretcode.app.ui.sharing_submit;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.kbeanie.multipicker.api.ImagePicker;
+import com.kbeanie.multipicker.api.Picker;
+import com.kbeanie.multipicker.api.VideoPicker;
+import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
+import com.kbeanie.multipicker.api.callbacks.VideoPickerCallback;
+import com.kbeanie.multipicker.api.entity.ChosenImage;
+import com.kbeanie.multipicker.api.entity.ChosenVideo;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -25,14 +28,8 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImagePickerUtils;
-import com.superlifesecretcode.app.util.MyGldieEngine;
 import com.superlifesecretcode.app.util.PermissionConstant;
-import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.filter.Filter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,6 +51,8 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
     private List<String> imageList;
     EditText editTextDesc;
     private SubmitPresenter presenter;
+    private ImagePicker imagePicker;
+    private VideoPicker videoPicker;
 
     @Override
     protected int getContentView() {
@@ -76,6 +75,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
         buttonSubmit.setOnClickListener(this);
         setUpToolbar();
         findViewById(R.id.imageView_upload).setOnClickListener(this);
+        findViewById(R.id.imageView_upload_image).setOnClickListener(this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         imageList = new ArrayList<>();
@@ -102,15 +102,45 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void pickImage() {
-        Matisse.from(this)
-                .choose(MimeType.allOf())
-                .countable(true)
-                .maxSelectable(9)
-                .gridExpectedSize((int) getResources().getDimension(R.dimen._100sdp))
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .thumbnailScale(0.85f)
-                .imageEngine(new MyGldieEngine())
-                .forResult(REQUEST_CODE_CHOOSE);
+        if (imagePicker == null) {
+            imagePicker = new ImagePicker(this);
+        }
+        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
+            @Override
+            public void onImagesChosen(List<ChosenImage> list) {
+                setPathArray(list);
+            }
+
+            @Override
+            public void onError(String s) {
+
+            }
+        });
+        imagePicker.allowMultiple(); // Default is false
+// imagePicker.shouldGenerateMetadata(false); // Default is true
+// imagePicker.shouldGenerateThumbnails(false); // Default is true
+        imagePicker.pickImage();
+    }
+
+    private void pickVideo() {
+        if (videoPicker == null) {
+            videoPicker = new VideoPicker(this);
+        }
+        videoPicker.setVideoPickerCallback(new VideoPickerCallback() {
+            @Override
+            public void onVideosChosen(List<ChosenVideo> list) {
+                setVideoPathArray(list);
+            }
+
+            @Override
+            public void onError(String s) {
+
+            }
+        });
+        videoPicker.allowMultiple(); // Default is false
+        videoPicker.shouldGenerateMetadata(false); // Default is true
+        videoPicker.shouldGeneratePreviewImages(false); // Default is true
+        videoPicker.pickVideo();
     }
 
     @Override
@@ -124,9 +154,16 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageView_upload:
+            case R.id.imageView_upload_image:
                 if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
                     pickImage();
+                } else {
+                    ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+                }
+                break;
+            case R.id.imageView_upload:
+                if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+                    pickVideo();
                 } else {
                     ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
                 }
@@ -168,17 +205,30 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
-            List<Uri> uris = Matisse.obtainResult(data);
-            setPathArray(uris);
-            Log.d("Matisse", "mSelected: " + uris);
+        if (requestCode == Picker.PICK_IMAGE_DEVICE) {
+            imagePicker.submit(data);
+        }
+        if (requestCode == Picker.PICK_VIDEO_DEVICE) {
+            videoPicker.submit(data);
         }
     }
 
-    private void setPathArray(List<Uri> uris) {
-        for (Uri uri : uris) {
+    private void setPathArray(List<ChosenImage> uris) {
+        for (ChosenImage uri : uris) {
             if (uri != null) {
-                String path = ImagePickerUtils.getPath(this, uri);
+                String path = uri.getOriginalPath();
+                if (path != null) {
+                    imageList.add(path);
+                }
+            }
+        }
+        submitAapter.notifyDataSetChanged();
+    }
+
+    private void setVideoPathArray(List<ChosenVideo> uris) {
+        for (ChosenVideo uri : uris) {
+            if (uri != null) {
+                String path = uri.getOriginalPath();
                 if (path != null) {
                     imageList.add(path);
                 }
