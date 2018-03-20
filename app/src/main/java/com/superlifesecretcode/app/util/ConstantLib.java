@@ -24,6 +24,8 @@ public interface ConstantLib {
     String STATUS_SUBMITED = "0";
     String STATUS_PUBLISHED = "1";
     String STATUS_REJECTED = "2";
+    String TYPE_IMAGE = "2";
+    String TYPE_VIDEO = "1";
   /*  String SERVICE_PROVIDED_TRADTIONAL = "天圓文化是一所無任何宗教背景的身心靈諮詢教育機構，本機構服務範圍包括人生顧問、情緒治療、關係疏導、心靈輔導、靈性探索、催眠治療、教育推廣、興趣培養、團體培訓和社交訓練等。\n" +
             "創始人：太陽盛德導師(TED SUN)\n" +
             "《超級生命密碼》作者、身心靈諮詢導師、美國超級生命密碼協會精神導師、美國催眠師協會認證催眠諮詢師。\n" +

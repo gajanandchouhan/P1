@@ -59,6 +59,7 @@ public class CustomizeBarActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
         ImageView imageViewProfile = findViewById(R.id.imageView_profile);
+        imageViewProfile.setVisibility(View.VISIBLE);
         imageViewProfile.setImageResource(R.drawable.right);
         imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override

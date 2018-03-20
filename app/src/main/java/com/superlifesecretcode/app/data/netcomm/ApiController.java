@@ -195,6 +195,13 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<ShareListResponseModel>(handler));
                     break;
+
+                case REQ_LIKE_SHARING:
+                    Observable<BaseResponseModel> likeSharingObservable = apiInterface.likeSharing(stringMultipartParamsParams, header);
+                    likeSharingObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -217,7 +224,21 @@ public class ApiController implements RequestType {
         }
 
     }
+    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler,Map<String,String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        switch (reqTyoe) {
+            case REQ_GET_ALL_LATEST:
+                Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers);
+                countryObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<ShareListResponseModel>(handler));
+                break;
+        }
 
+    }
     public HashMap<String, RequestBody> getRequestParams(Map<String, String> stringParams) {
         HashMap<String, RequestBody> params = new HashMap<>();
         for (Map.Entry<String, String> entry : stringParams.entrySet()) {

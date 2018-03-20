@@ -1,15 +1,22 @@
 package com.superlifesecretcode.app.ui.sharing_latest;
 
-import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
+import com.superlifesecretcode.app.ui.sharing_submit.SubmitListAapter;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +26,7 @@ import java.util.List;
  */
 
 public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHolder> {
-    private final List list;
+    private final List<ShareListResponseData> list;
     private Context mContext;
     private int screenWidth;
     private int pagerHeight;
@@ -39,28 +46,73 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.pager.setAdapter(new LatestPagerAdapter(mContext, new ArrayList<>()));
+        ShareListResponseData shareListResponseData = list.get(position);
+        holder.textViewName.setText(shareListResponseData.getUsername());
+        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at()));
+        holder.textViewDesc.setText(shareListResponseData.getContent());
+        holder.textViewCountryName.setText(shareListResponseData.getCountryName());
+        holder.imageViewLike.setSelected(shareListResponseData.getLiked_by_user().equalsIgnoreCase("1"));
+        holder.textViewLike.setText(String.format("%s Likes", shareListResponseData.getLiked_by()));
+        ImageLoadUtils.loadImage(shareListResponseData.getUser_image(), holder.imageView);
+        if (shareListResponseData.getSharing_files() != null) {
+            holder.pager.setVisibility(View.VISIBLE);
+            holder.pager.setAdapter(new LatestPagerAdapter(mContext, shareListResponseData.getSharing_files()));
+        } else {
+            holder.pager.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView textViewShare;
         ViewPager pager;
+        TextView textViewName;
+        TextView textViewDateTime;
+        TextView textViewCountryName;
+        TextView textViewDesc;
+        ImageView imageView;
+        ImageView imageViewLike;
+        TextView textViewLike;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
             pager = itemView.findViewById(R.id.pager);
+            textViewName = itemView.findViewById(R.id.textView_name);
+            textViewCountryName = itemView.findViewById(R.id.textView_country);
+            textViewDateTime = itemView.findViewById(R.id.textView_date_time);
+            textViewDesc = itemView.findViewById(R.id.textView_desc);
+            textViewName = itemView.findViewById(R.id.textView_name);
+            imageViewLike = itemView.findViewById(R.id.imageView_like);
+            textViewLike = itemView.findViewById(R.id.textView_like_count);
+            imageView = itemView.findViewById(R.id.imageView_user);
+            textViewShare = itemView.findViewById(R.id.textView_share);
             pager.getLayoutParams().height = pagerHeight;
             pager.getLayoutParams().width = screenWidth;
+            textViewShare.setOnClickListener(this);
+            imageViewLike.setOnClickListener(this);
+            itemView.findViewById(R.id.imageView_share).setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            CommonUtils.startActivity((Activity) mContext, LatestDetailsActivity.class);
+            if (v.getId() == R.id.imageView_share || v.getId() == R.id.textView_share) {
+
+            } else if (v.getId() == R.id.imageView_like) {
+                String liked_by_user = list.get(getAdapterPosition()).getLiked_by_user();
+                ((LatestActivity) mContext).likeShare(getAdapterPosition(), liked_by_user != null && liked_by_user.equalsIgnoreCase("1") ? "0" : "1",
+                        list.get(getAdapterPosition()).getSharing_id());
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("share", list.get(getAdapterPosition()));
+                bundle.putBoolean("from_submit", false);
+                CommonUtils.startActivity((AppCompatActivity) mContext, LatestDetailsActivity.class, bundle, false);
+            }
         }
     }
 }

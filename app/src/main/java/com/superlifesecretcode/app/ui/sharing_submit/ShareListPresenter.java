@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.sharing_submit;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
@@ -28,7 +29,7 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
     }
 
     @Override
-    protected void setView(ShareListView shareListView) {
+    public void setView(ShareListView shareListView) {
         this.view = shareListView;
     }
 
@@ -63,4 +64,65 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
         }, params, headers);
     }
 
+    public void getAllLatestShare(Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_ALL_LATEST, new ResponseHandler<ShareListResponseModel>() {
+            @Override
+            public void onResponse(ShareListResponseModel shareListResponseModel) {
+                view.hideProgress();
+                if (shareListResponseModel != null) {
+                    if (shareListResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setShareListData(shareListResponseModel.getData());
+                    } else
+                        CommonUtils.showToast(mContext, shareListResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, headers);
+    }
+
+    public void likeShare(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_LIKE_SHARING, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel baseResponseModel) {
+                view.hideProgress();
+                if (baseResponseModel != null) {
+                    if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.onLiked();
+                    } else
+                        CommonUtils.showToast(mContext, baseResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
 }

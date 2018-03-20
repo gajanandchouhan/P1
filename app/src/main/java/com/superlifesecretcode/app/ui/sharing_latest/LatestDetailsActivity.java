@@ -15,13 +15,18 @@ import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.sharing_submit.ShareListPresenter;
+import com.superlifesecretcode.app.ui.sharing_submit.ShareListView;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class LatestDetailsActivity extends BaseActivity {
+public class LatestDetailsActivity extends BaseActivity implements View.OnClickListener, ShareListView {
 
 
     private UserDetailResponseData userData;
@@ -36,6 +41,11 @@ public class LatestDetailsActivity extends BaseActivity {
     RelativeLayout layoutLikeShare;
     private ShareListResponseData data;
     private boolean from_submit;
+    private ImageView imageViewLike;
+    private TextView textViewLike;
+    private TextView textViewShare;
+    private ShareListPresenter presenter;
+    private String like;
 
     @Override
     protected int getContentView() {
@@ -61,11 +71,15 @@ public class LatestDetailsActivity extends BaseActivity {
         textViewDateTime = findViewById(R.id.textView_date_time);
         textViewDesc = findViewById(R.id.textView_desc);
         textViewName = findViewById(R.id.textView_name);
+        imageViewLike = findViewById(R.id.imageView_like);
+        textViewLike = findViewById(R.id.textView_like_count);
+        textViewShare = findViewById(R.id.textView_share);
         imageView = findViewById(R.id.imageView_user);
+        textViewShare.setOnClickListener(this);
+        imageViewLike.setOnClickListener(this);
+        findViewById(R.id.imageView_share).setOnClickListener(this);
         pager.getLayoutParams().width = CommonUtils.getScreenWidth(this);
         pager.getLayoutParams().height = CommonUtils.getScreenWidth(this) * 9 / 16;
-
-
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar();
@@ -81,10 +95,12 @@ public class LatestDetailsActivity extends BaseActivity {
         }
         if (from_submit) {
             textViewStatus.setVisibility(View.VISIBLE);
+            findViewById(R.id.devider).setVisibility(View.GONE);
             layoutLikeShare.setVisibility(View.GONE);
             textViewStatus.setText(data.getStatus().equals("2") ? "Rejected" : "Published");
         } else {
             textViewStatus.setVisibility(View.GONE);
+            findViewById(R.id.devider).setVisibility(View.VISIBLE);
             layoutLikeShare.setVisibility(View.VISIBLE);
         }
 
@@ -92,6 +108,8 @@ public class LatestDetailsActivity extends BaseActivity {
         textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, data.getCreated_at()));
         textViewDesc.setText(data.getContent());
         textViewCountryName.setText(data.getCountryName());
+        textViewLike.setText(String.format("%s Likes", data.getLiked_by()));
+        imageViewLike.setSelected(data.getLiked_by_user().equalsIgnoreCase("1"));
         ImageLoadUtils.loadImage(data.getUser_image(), imageView);
     }
 
@@ -107,7 +125,8 @@ public class LatestDetailsActivity extends BaseActivity {
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new ShareListPresenter(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -116,5 +135,56 @@ public class LatestDetailsActivity extends BaseActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imageView_like:
+                likeShare();
+                break;
+        }
+    }
+
+    public void likeShare() {
+        String liked_by_user = data.getLiked_by_user();
+        if (liked_by_user != null && liked_by_user.equalsIgnoreCase("1")) {
+            like = "0";
+        } else {
+            like = "1";
+
+        }
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("sharing_id", data.getSharing_id());
+        params.put("liked_by", userData.getUser_id());
+        params.put("like", like);
+        presenter.likeShare(params, headers);
+    }
+
+    @Override
+    public void setShareListData(List<ShareListResponseData> listData) {
+
+    }
+
+    @Override
+    public void onLiked() {
+        if (like != null && like.equalsIgnoreCase("1")) {
+            String liked_by = data.getLiked_by();
+            if (liked_by != null) {
+                int likedBy = (Integer.parseInt(liked_by)) + 1;
+                data.setLiked_by(String.valueOf(likedBy));
+            }
+        } else {
+            String liked_by = data.getLiked_by();
+            if (liked_by != null) {
+                int likedBy = (Integer.parseInt(liked_by)) - 1;
+                data.setLiked_by(String.valueOf(likedBy));
+            }
+        }
+        data.setLiked_by_user(like);
+        textViewLike.setText(String.format("%s Likes", data.getLiked_by()));
+        imageViewLike.setSelected(data.getLiked_by_user().equalsIgnoreCase("1"));
     }
 }

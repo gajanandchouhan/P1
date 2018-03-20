@@ -62,5 +62,8 @@ dependencies {
     compile 'com.facebook.android:facebook-login:4.29.0'
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
     compile 'com.kbeanie:multipicker:1.1.31@aar'
+//    compile 'com.linsea:universalvideoview:1.1.0@aar'
+    compile 'com.afollestad:easyvideoplayer:0.3.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

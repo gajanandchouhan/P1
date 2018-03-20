@@ -200,13 +200,13 @@ public class CommonUtils {
     }
 
     public static void shareContent(final Context mContext, final String text, final String image) {
-            final Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");
-            if (image != null) {
-                i.putExtra(Intent.EXTRA_TEXT, image + "\n" + text);
-            } else {
-                i.putExtra(Intent.EXTRA_TEXT, text);
-            }
+        final Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        if (image != null) {
+            i.putExtra(Intent.EXTRA_TEXT, image + "\n" + text);
+        } else {
+            i.putExtra(Intent.EXTRA_TEXT, text);
+        }
 
            /* if (image != null) {
                 GlideApp.with(mContext).asBitmap().load(image).into(new SimpleTarget<Bitmap>() {
@@ -223,7 +223,11 @@ public class CommonUtils {
             }*/
 
 
-            mContext.startActivity(i);
+        mContext.startActivity(i);
+    }
+
+    public static int getResurceId(Context mContext, String stringId) {
+        return mContext.getResources().getIdentifier(stringId, "drawable", mContext.getPackageName());
     }
 
     private static Uri getImageUri(Context inContext, Bitmap inImage) {

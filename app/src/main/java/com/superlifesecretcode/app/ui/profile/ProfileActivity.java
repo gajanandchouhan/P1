@@ -189,6 +189,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
         imageViewProfile = findViewById(R.id.imageView_profile);
+        imageViewProfile.setVisibility(View.VISIBLE);
         imageViewProfile.setImageResource(R.drawable.edit);
         imageViewProfile.setOnClickListener(this);
         textViewTitle.setText(title);

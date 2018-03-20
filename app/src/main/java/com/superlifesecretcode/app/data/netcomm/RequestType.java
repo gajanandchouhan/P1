@@ -17,8 +17,10 @@ public interface RequestType {
     byte REQ_GET_NEWS_UPDATES = 9;
     byte REQ_GET_EVENTS = 10;
     byte REQ_MARK_READ = 11;
-    byte REQ_INTERESTED_EVENT=12;
-    byte REQ_LIKE_NEWS=13;
-    byte REQ_ADD_SHARE=14;
-    byte REQ_GET_USER_SHARE=15;
+    byte REQ_INTERESTED_EVENT = 12;
+    byte REQ_LIKE_NEWS = 13;
+    byte REQ_ADD_SHARE = 14;
+    byte REQ_GET_USER_SHARE = 15;
+    byte REQ_GET_ALL_LATEST = 16;
+    byte REQ_LIKE_SHARING = 17;
 }

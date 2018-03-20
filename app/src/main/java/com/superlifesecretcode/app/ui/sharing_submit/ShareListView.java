@@ -9,6 +9,8 @@ import java.util.List;
  * Created by Divya on 19-03-2018.
  */
 
-interface ShareListView extends BaseView {
+public interface ShareListView extends BaseView {
     void setShareListData(List<ShareListResponseData> listData);
+
+    void onLiked();
 }

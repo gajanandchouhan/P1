@@ -97,4 +97,9 @@ public class SubmitListActivity extends BaseActivity implements ShareListView {
             submitAapter.notifyDataSetChanged();
         }
     }
+
+    @Override
+    public void onLiked() {
+
+    }
 }

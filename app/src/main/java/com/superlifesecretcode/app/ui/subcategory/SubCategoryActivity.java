@@ -29,6 +29,7 @@ import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
+import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
@@ -141,10 +142,10 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             textView3.setText(bottomList.get(2).getTitle());
             tab4.setTag(bottomList.get(3).getType());
             textView4.setText(bottomList.get(3).getTitle());
-            imageView1.setImageResource(bottomList.get(0).getIcon());
-            imageView2.setImageResource(bottomList.get(1).getIcon());
-            imageView3.setImageResource(bottomList.get(2).getIcon());
-            imageView4.setImageResource(bottomList.get(3).getIcon());
+            imageView1.setImageResource(CommonUtils.getResurceId(this,bottomList.get(0).getIcon()));
+            imageView2.setImageResource(CommonUtils.getResurceId(this,bottomList.get(1).getIcon()));
+            imageView3.setImageResource(CommonUtils.getResurceId(this,bottomList.get(2).getIcon()));
+            imageView4.setImageResource(CommonUtils.getResurceId(this,bottomList.get(3).getIcon()));
         }
     }
 
@@ -191,44 +192,44 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         switch (position) {
             case 5:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getNews_update(), "", position, true));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getEvent_activity(), "", position, true));
+                    list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", position, true));
+                    list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", position, true));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "News Update", "", position, true));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Event+Activities", "", position, true));
+                    list.add(new SubcategoryModel("announcement", "News Update", "", position, true));
+                    list.add(new SubcategoryModel("announcement", "Event+Activities", "", position, true));
 
                 }
                 return list;
 
             case 6:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getLatest(), "", position, true));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getSubmit(), "", position, true));
+                    list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", position, true));
+                    list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", position, true));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Latest", "", position, true));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Submit", "", position, true));
+                    list.add(new SubcategoryModel("sharing", "Latest", "", position, true));
+                    list.add(new SubcategoryModel("sharing", "Submit", "", position, true));
                 }
                 return list;
             case 7:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getPersonal_calendar(), "", position, false));
+                    list.add(new SubcategoryModel("activities", conversionData.getPersonal_calendar(), "", position, false));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Personal+Event Calendar", "", position, false));
+                    list.add(new SubcategoryModel("activities", "Personal+Event Calendar", "", position, false));
                 }
                 return list;
            /* case 7:
-                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Songs", " https://www.richestlife.com/music-downloads/"));
-//                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Wallpapers","https://m.facebook.com/SuperLifeCode/?refid=46"));
-//                list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Sun Emoji","https://www.youtube.com/watch?v=PKNSIpl1aYQ&feature=youtu.be%20Inbox%20x"));
+                list.add(new SubcategoryModel(android.ic_menu_camera, "Songs", " https://www.richestlife.com/music-downloads/"));
+//                list.add(new SubcategoryModel(android.ic_menu_camera, "Wallpapers","https://m.facebook.com/SuperLifeCode/?refid=46"));
+//                list.add(new SubcategoryModel(android.ic_menu_camera, "Sun Emoji","https://www.youtube.com/watch?v=PKNSIpl1aYQ&feature=youtu.be%20Inbox%20x"));
                 return list;*/
 
             case 8:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getStudy_group(), "", position, false));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, conversionData.getOnsite(), "", position, false));
+                    list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", position, false));
+                    list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", position, false));
                 } else {
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "Study Group", "", position, false));
-                    list.add(new SubcategoryModel(android.R.drawable.ic_menu_camera, "On-site sharing", "", position, false));
+                    list.add(new SubcategoryModel("country", "Study Group", "", position, false));
+                    list.add(new SubcategoryModel("country", "On-site sharing", "", position, false));
                 }
                 return list;
         }
@@ -311,7 +312,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
                 CommonUtils.startActivity(this, LatestActivity.class);
                 break;
             case 4:
-                CommonUtils.startActivity(this, SubmitActivity.class);
+                CommonUtils.startActivity(this, SubmitListActivity.class);
                 break;
             case 5:
                 break;
@@ -325,23 +326,23 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     public List<SubcategoryModel> getList() {
         List<SubcategoryModel> list = new ArrayList<>();
         if (conversionData != null) {
-            list.add(new SubcategoryModel(R.drawable.home, conversionData.getHome(), "", 0, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, conversionData.getNews_update(), "", 1, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, conversionData.getEvent_activity(), "", 2, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, conversionData.getLatest(), "", 3, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, conversionData.getSubmit(), "", 4, false));
-            list.add(new SubcategoryModel(R.drawable.activities, conversionData.getPersonal_calendar(), "", 5, false));
-            list.add(new SubcategoryModel(R.drawable.country, conversionData.getStudy_group(), "", 6, false));
-            list.add(new SubcategoryModel(R.drawable.country, conversionData.getOnsite(), "", 7, false));
+            list.add(new SubcategoryModel("home", conversionData.getHome(), "", 0, true));
+            list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", 1, true));
+            list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", 2, true));
+            list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", 3, true));
+            list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", 4, false));
+            list.add(new SubcategoryModel("activities", conversionData.getPersonal_calendar(), "", 5, false));
+            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 6, false));
+            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 7, false));
         } else {
-            list.add(new SubcategoryModel(R.drawable.home, "Home", "", 0, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, "News Update", "", 1, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, "Event+Activities", "", 2, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, "Latest", "", 3, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, "Submit", "", 4, false));
-            list.add(new SubcategoryModel(R.drawable.activities, "Personal+Event Calendar", "", 5, false));
-            list.add(new SubcategoryModel(R.drawable.country, "Study Group", "", 6, false));
-            list.add(new SubcategoryModel(R.drawable.country, "On-site sharing", "", 7, false));
+            list.add(new SubcategoryModel("home", "Home", "", 0, true));
+            list.add(new SubcategoryModel("announcement", "News Update", "", 1, true));
+            list.add(new SubcategoryModel("announcement", "Event+Activities", "", 2, true));
+            list.add(new SubcategoryModel("sharing", "Latest", "", 3, true));
+            list.add(new SubcategoryModel("sharing", "Submit", "", 4, false));
+            list.add(new SubcategoryModel("activities", "Personal+Event Calendar", "", 5, false));
+            list.add(new SubcategoryModel("country", "Study Group", "", 6, false));
+            list.add(new SubcategoryModel("country", "On-site sharing", "", 7, false));
         }
         return list;
     }

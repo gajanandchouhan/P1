@@ -32,6 +32,7 @@ import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
+import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -115,7 +116,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         int height = screenWidth * 6 / 16;
         autoScrollViewPager.getLayoutParams().width = screenWidth;
         autoScrollViewPager.getLayoutParams().height = height;
-        findViewById(R.id.imageView_profile).setOnClickListener(this);
+        View viewById = findViewById(R.id.imageView_profile);
+        viewById.setVisibility(View.VISIBLE);
+        viewById.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
         drawerAdapter = new DrawerAdapter(list);
@@ -224,10 +227,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             textView3.setText(bottomList.get(2).getTitle());
             tab4.setTag(bottomList.get(3).getType());
             textView4.setText(bottomList.get(3).getTitle());
-            imageView1.setImageResource(bottomList.get(0).getIcon());
-            imageView2.setImageResource(bottomList.get(1).getIcon());
-            imageView3.setImageResource(bottomList.get(2).getIcon());
-            imageView4.setImageResource(bottomList.get(3).getIcon());
+            imageView1.setImageResource(CommonUtils.getResurceId(this,bottomList.get(0).getIcon()));
+            imageView2.setImageResource(CommonUtils.getResurceId(this,bottomList.get(1).getIcon()));
+            imageView3.setImageResource(CommonUtils.getResurceId(this,bottomList.get(2).getIcon()));
+            imageView4.setImageResource(CommonUtils.getResurceId(this,bottomList.get(3).getIcon()));
         }
     }
 
@@ -382,7 +385,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 CommonUtils.startActivity(this, LatestActivity.class);
                 break;
             case 4:
-                CommonUtils.startActivity(this, SubmitActivity.class);
+                CommonUtils.startActivity(this, SubmitListActivity.class);
                 break;
             case 5:
                 break;
@@ -443,7 +446,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         CommonUtils.showAlert(this, alert_text, "YES", "NO", new CommonUtils.ClickListner() {
             @Override
             public void onPositiveClick() {
-                SuperLifeSecretPreferences.getInstance().setAlertAccepted( list.get(clikedPostion).getId());
+                SuperLifeSecretPreferences.getInstance().setAlertAccepted(list.get(clikedPostion).getId());
                 openNextScreen(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
             }
 
@@ -457,23 +460,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public List<SubcategoryModel> getList() {
         List<SubcategoryModel> list = new ArrayList<>();
         if (conversionData != null) {
-            list.add(new SubcategoryModel(R.drawable.home, conversionData.getHome(), "", 0, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, conversionData.getNews_update(), "", 1, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, conversionData.getEvent_activity(), "", 2, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, conversionData.getLatest(), "", 3, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, conversionData.getSubmit(), "", 4, false));
-            list.add(new SubcategoryModel(R.drawable.activities, conversionData.getPersonal_calendar(), "", 5, false));
-            list.add(new SubcategoryModel(R.drawable.country, conversionData.getStudy_group(), "", 6, false));
-            list.add(new SubcategoryModel(R.drawable.country, conversionData.getOnsite(), "", 7, false));
+            list.add(new SubcategoryModel("home", conversionData.getHome(), "", 0, true));
+            list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", 1, true));
+            list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", 2, true));
+            list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", 3, true));
+            list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", 4, false));
+            list.add(new SubcategoryModel("activities", conversionData.getPersonal_calendar(), "", 5, false));
+            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 6, false));
+            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 7, false));
         } else {
-            list.add(new SubcategoryModel(R.drawable.home, "Home", "", 0, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, "News Update", "", 1, true));
-            list.add(new SubcategoryModel(R.drawable.announcement, "Event+Activities", "", 2, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, "Latest", "", 3, true));
-            list.add(new SubcategoryModel(R.drawable.sharing, "Submit", "", 4, false));
-            list.add(new SubcategoryModel(R.drawable.activities, "Personal+Event Calendar", "", 5, false));
-            list.add(new SubcategoryModel(R.drawable.country, "Study Group", "", 6, false));
-            list.add(new SubcategoryModel(R.drawable.country, "On-site sharing", "", 7, false));
+            list.add(new SubcategoryModel("home", "Home", "", 0, true));
+            list.add(new SubcategoryModel("announcement", "News Update", "", 1, true));
+            list.add(new SubcategoryModel("announcement", "Event+Activities", "", 2, true));
+            list.add(new SubcategoryModel("sharing", "Latest", "", 3, true));
+            list.add(new SubcategoryModel("sharing", "Submit", "", 4, false));
+            list.add(new SubcategoryModel("activities", "Personal+Event Calendar", "", 5, false));
+            list.add(new SubcategoryModel("country", "Study Group", "", 6, false));
+            list.add(new SubcategoryModel("country", "On-site sharing", "", 7, false));
         }
         return list;
     }

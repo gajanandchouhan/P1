@@ -19,9 +19,9 @@
             android:id="@+id/textView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_logo"
             android:drawablePadding="@dimen/_2sdp"
             android:fontFamily="@font/bold"
-            android:drawableLeft="@drawable/ic_logo"
             android:text="@string/richestlife"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_16sdp" />
@@ -29,11 +29,12 @@
 
         <ImageView
             android:id="@+id/imageView_profile"
-            android:layout_marginRight="@dimen/_15sdp"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_gravity="right"
-            android:src="@drawable/profile" />
+            android:layout_marginRight="@dimen/_15sdp"
+            android:src="@drawable/profile"
+            android:visibility="gone" />
     </android.support.v7.widget.Toolbar>
 
     <View

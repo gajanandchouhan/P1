@@ -118,4 +118,14 @@ public interface ApiInterface {
     @POST("usersSharing")
     Observable<ShareListResponseModel> getUserShare(@PartMap() Map<String, RequestBody> partMap,
                                                     @HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("latest")
+    Observable<ShareListResponseModel> getAllShareList(@HeaderMap Map<String,String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("likeSharing")
+    Observable<BaseResponseModel> likeSharing(@PartMap() Map<String, RequestBody> partMap,
+                                           @HeaderMap Map<String, String> headers);
 }
