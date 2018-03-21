@@ -123,6 +123,9 @@
             android:label="@string/title_activity_image_viewer"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.dailyactivities.EventCalendarActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

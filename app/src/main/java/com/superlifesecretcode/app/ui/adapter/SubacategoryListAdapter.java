@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.ui.dailyactivities.EventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
@@ -89,6 +90,12 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
                     CommonUtils.startActivity(((SubCategoryActivity) mContext), LatestActivity.class);
                 } else if (position == 1) {
                     CommonUtils.startActivity(((SubCategoryActivity) mContext), SubmitListActivity.class);
+                }
+                break;
+            case ConstantLib.TYPE_DAILY_ACTIVITIES:
+                if (position == 0) {
+                    CommonUtils.startActivity(((SubCategoryActivity) mContext),EventCalendarActivity.class);
+                } else if (position == 1) {
                 }
                 break;
         }

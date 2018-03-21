@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SuperLifeSecretCode.iml" filepath="$PROJECT_DIR$/SuperLifeSecretCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/calendarmodule/calendarmodule.iml" filepath="$PROJECT_DIR$/calendarmodule/calendarmodule.iml" />
       <module fileurl="file://$PROJECT_DIR$/countrypicker/countrypicker.iml" filepath="$PROJECT_DIR$/countrypicker/countrypicker.iml" />
     </modules>
   </component>
