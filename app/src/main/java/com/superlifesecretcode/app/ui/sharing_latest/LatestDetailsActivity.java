@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.shares.FileResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
@@ -120,7 +121,11 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
-        textViewTitle.setText(conversionData != null ? conversionData.getLatest() : "Latest");
+        if (from_submit) {
+            textViewTitle.setText(conversionData != null ? conversionData.getSubmit() : "Submit");
+        } else {
+            textViewTitle.setText(conversionData != null ? conversionData.getLatest() : "Latest");
+        }
     }
 
     @Override
@@ -142,6 +147,18 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.imageView_like:
                 likeShare();
+                break;
+            case R.id.textView_share:
+            case R.id.imageView_share:
+                List<FileResponseData> sharing_files = data.getSharing_files();
+                if (sharing_files != null && sharing_files.size() > 0) {
+                    String type = sharing_files.get(pager.getCurrentItem()).getType();
+                    if (type.equalsIgnoreCase(ConstantLib.TYPE_IMAGE)) {
+                        CommonUtils.shareImage(sharing_files.get(pager.getCurrentItem()).getFile(), this);
+                    }
+                } else {
+                    CommonUtils.shareContent(this, data.getContent());
+                }
                 break;
         }
     }

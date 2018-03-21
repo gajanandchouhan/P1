@@ -89,7 +89,7 @@ public class NewsAapter extends RecyclerView.Adapter<NewsAapter.ItemViewHolder> 
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.imageView_share) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString(), list.get(getAdapterPosition()).getImage());
+                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString());
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("news", (ArrayList) list);

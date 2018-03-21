@@ -56,6 +56,7 @@ public class ApiController implements RequestType {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
+        ApiClient.ADD_LOG = true;
         HashMap requestParams = getRequestParams(body);
         switch (reqTyoe) {
             case REQ_CONVERSION:
@@ -103,6 +104,7 @@ public class ApiController implements RequestType {
     }
 
     public void callMultipart(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, File> files) {
+        ApiClient.ADD_LOG = false;
         try {
             if (!CheckNetworkState.isOnline(mContext)) {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
@@ -128,6 +130,7 @@ public class ApiController implements RequestType {
 
     public void callMultiparWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, File> files, Map<String, String> header) {
         try {
+            ApiClient.ADD_LOG = false;
             if (!CheckNetworkState.isOnline(mContext)) {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
                 return;
@@ -152,6 +155,7 @@ public class ApiController implements RequestType {
 
     public void callWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, String> header) {
         try {
+            ApiClient.ADD_LOG = true;
             if (!CheckNetworkState.isOnline(mContext)) {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
                 return;
@@ -210,6 +214,7 @@ public class ApiController implements RequestType {
     }
 
     public void callGet(Context mContext, byte reqTyoe, ResponseHandler handler) {
+        ApiClient.ADD_LOG = true;
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -224,11 +229,14 @@ public class ApiController implements RequestType {
         }
 
     }
-    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler,Map<String,String> headers) {
+
+    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> headers) {
+
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
+        ApiClient.ADD_LOG = true;
         switch (reqTyoe) {
             case REQ_GET_ALL_LATEST:
                 Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers);
@@ -239,6 +247,7 @@ public class ApiController implements RequestType {
         }
 
     }
+
     public HashMap<String, RequestBody> getRequestParams(Map<String, String> stringParams) {
         HashMap<String, RequestBody> params = new HashMap<>();
         for (Map.Entry<String, String> entry : stringParams.entrySet()) {
@@ -266,10 +275,11 @@ public class ApiController implements RequestType {
         return files;
     }
 
-    public void callMultpleFileUpload(byte reqType, ResponseHandler responseHandler, RequestBody fileParams,Map<String,String> headers) {
+    public void callMultpleFileUpload(byte reqType, ResponseHandler responseHandler, RequestBody fileParams, Map<String, String> headers) {
+        ApiClient.ADD_LOG = false;
         switch (reqType) {
             case REQ_ADD_SHARE:
-                Observable<BaseResponseModel> addShareObservable = apiInterface.addShare(fileParams,headers);
+                Observable<BaseResponseModel> addShareObservable = apiInterface.addShare(fileParams, headers);
                 addShareObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));

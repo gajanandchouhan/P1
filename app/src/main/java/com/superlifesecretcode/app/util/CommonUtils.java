@@ -199,35 +199,33 @@ public class CommonUtils {
         void onNegativeClick();
     }
 
-    public static void shareContent(final Context mContext, final String text, final String image) {
-        final Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("text/plain");
-        if (image != null) {
-            i.putExtra(Intent.EXTRA_TEXT, image + "\n" + text);
-        } else {
-            i.putExtra(Intent.EXTRA_TEXT, text);
-        }
-
-           /* if (image != null) {
-                GlideApp.with(mContext).asBitmap().load(image).into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        Uri imageUri = getImageUri(mContext, resource);
-                        if (imageUri != null)
-                            i.putExtra(Intent.EXTRA_STREAM, imageUri);
-                        if (text != null) {
-                            i.putExtra(Intent.EXTRA_TEXT, text);
-                        }
-                    }
-                });
-            }*/
-
-
+    public static void shareContent(Context mContext, final String text) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("image/*");
+        i.putExtra(Intent.EXTRA_TEXT, text);
         mContext.startActivity(i);
     }
 
     public static int getResurceId(Context mContext, String stringId) {
         return mContext.getResources().getIdentifier(stringId, "drawable", mContext.getPackageName());
+    }
+
+    public static void shareImage(String image, final Context mContext) {
+        if (image != null && !image.isEmpty()) {
+            GlideApp.with(mContext).asBitmap().load(image).into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    Uri imageUri = getImageUri(mContext, resource);
+                    if (imageUri != null) {
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("image/*");
+                        i.putExtra(Intent.EXTRA_STREAM, imageUri);
+                        mContext.startActivity(Intent.createChooser(i, "Share Image"));
+                    }
+
+                }
+            });
+        }
     }
 
     private static Uri getImageUri(Context inContext, Bitmap inImage) {

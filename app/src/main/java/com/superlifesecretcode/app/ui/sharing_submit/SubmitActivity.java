@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +54,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
     private SubmitPresenter presenter;
     private ImagePicker imagePicker;
     private VideoPicker videoPicker;
+    private boolean openVideoPicker;
 
     @Override
     protected int getContentView() {
@@ -109,6 +111,11 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onImagesChosen(List<ChosenImage> list) {
                 setPathArray(list);
+                for (ChosenImage chosenImage : list) {
+                    long size = chosenImage.getSize();
+                    Log.v("SIZE",size+"");
+                }
+
             }
 
             @Override
@@ -117,8 +124,8 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
             }
         });
         imagePicker.allowMultiple(); // Default is false
-// imagePicker.shouldGenerateMetadata(false); // Default is true
-// imagePicker.shouldGenerateThumbnails(false); // Default is true
+        imagePicker.shouldGenerateMetadata(true); // Default is true
+        imagePicker.shouldGenerateThumbnails(false); // Default is true
         imagePicker.pickImage();
     }
 
@@ -138,7 +145,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
             }
         });
         videoPicker.allowMultiple(); // Default is false
-        videoPicker.shouldGenerateMetadata(false); // Default is true
+        videoPicker.shouldGenerateMetadata(true); // Default is true
         videoPicker.shouldGeneratePreviewImages(false); // Default is true
         videoPicker.pickVideo();
     }
@@ -158,6 +165,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
                 if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
                     pickImage();
                 } else {
+                    openVideoPicker = false;
                     ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
                 }
                 break;
@@ -165,6 +173,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
                 if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
                     pickVideo();
                 } else {
+                    openVideoPicker = true;
                     ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
                 }
                 break;
@@ -245,7 +254,10 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
                     return;
                 }
             }
-            pickImage();
+            if (openVideoPicker)
+                pickVideo();
+            else
+                pickImage();
         }
     }
 

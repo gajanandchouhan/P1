@@ -111,7 +111,7 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
                 }
 
             } else if (v.getId() == R.id.imageView_share) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString(), list.get(getAdapterPosition()).getImage());
+                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString());
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("events", (ArrayList) list);

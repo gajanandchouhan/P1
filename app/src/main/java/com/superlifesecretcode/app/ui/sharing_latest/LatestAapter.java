@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.shares.FileResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListAapter;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -102,7 +103,19 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.imageView_share || v.getId() == R.id.textView_share) {
-
+                ShareListResponseData data = list.get(getAdapterPosition());
+                List<FileResponseData> sharing_files = data.getSharing_files();
+                if (sharing_files != null && sharing_files.size() > 0) {
+                    String type = sharing_files.get(pager.getCurrentItem()).getType();
+                    if (type.equalsIgnoreCase(ConstantLib.TYPE_IMAGE)) {
+                        CommonUtils.shareImage(sharing_files.get(pager.getCurrentItem()).getFile(), mContext);
+                    }
+                    else{
+                        CommonUtils.shareContent(mContext, sharing_files.get(pager.getCurrentItem()).getFile());
+                    }
+                } else {
+                    CommonUtils.shareContent(mContext, list.get(getAdapterPosition()).getContent());
+                }
             } else if (v.getId() == R.id.imageView_like) {
                 String liked_by_user = list.get(getAdapterPosition()).getLiked_by_user();
                 ((LatestActivity) mContext).likeShare(getAdapterPosition(), liked_by_user != null && liked_by_user.equalsIgnoreCase("1") ? "0" : "1",

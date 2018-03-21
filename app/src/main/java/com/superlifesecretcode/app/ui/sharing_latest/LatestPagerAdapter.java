@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.shares.FileResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
+import com.superlifesecretcode.app.ui.sharing_submit.ImageViewerActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -45,12 +46,19 @@ public class LatestPagerAdapter extends PagerAdapter {
         }
         ImageLoadUtils.loadImage(bannerList.get(position).getFile(), imageView);
         collection.addView(layout);
-        imageViewPlay.setOnClickListener(new View.OnClickListener() {
+        layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("video", bannerList.get(position).getFile());
-                CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
+                if (bannerList.get(position).getType().equalsIgnoreCase(ConstantLib.TYPE_IMAGE)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("image", bannerList.get(position).getFile());
+                    CommonUtils.startActivity((AppCompatActivity) mContext, ImageViewerActivity.class, bundle, false);
+                } else if (bannerList.get(position).getType().equalsIgnoreCase(ConstantLib.TYPE_VIDEO)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("video", bannerList.get(position).getFile());
+                    CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
+                }
+
             }
         });
         return layout;

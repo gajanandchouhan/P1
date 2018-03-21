@@ -115,10 +115,14 @@
         <activity
             android:name=".ui.customizebar.CustomizeBarActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.sharing_latest.VideoPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize" />
+        <activity
+            android:name=".ui.sharing_submit.ImageViewerActivity"
+            android:label="@string/title_activity_image_viewer"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
