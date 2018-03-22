@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.events;
 
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,9 +53,11 @@ public class EventActivity extends BaseActivity implements EventView {
         tabLayout = findViewById(R.id.tab_layout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
-        newsAapter = new EventAapter(list, this);
+        newsAapter = new EventAapter(list, this,conversionData);
         recyclerView.setAdapter(newsAapter);
         tabLayout.addOnTabSelectedListener(listener);
+        tabLayout.getTabAt(0).setText(conversionData.getToday());
+        tabLayout.getTabAt(1).setText(conversionData.getUpcoming());
     }
 
     @Override

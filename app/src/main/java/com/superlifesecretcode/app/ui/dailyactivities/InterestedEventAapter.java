@@ -1,8 +1,9 @@
-package com.superlifesecretcode.app.ui.events;
+package com.superlifesecretcode.app.ui.dailyactivities;
 
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -13,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
-import com.superlifesecretcode.app.ui.news.NewsActivity;
-import com.superlifesecretcode.app.ui.news.NewsDetailsActivity;
+import com.superlifesecretcode.app.ui.events.EventActivity;
+import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -29,8 +31,8 @@ import java.util.List;
  * Created by Divya on 26-02-2018.
  */
 
-public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder> {
-    private final List<EventsInfoModel> list;
+public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventAapter.ItemViewHolder> {
+    private final List<Event> list;
     private final LanguageResponseData coversionData;
     TextView textViewInterested;
     private Context mContext;
@@ -40,7 +42,7 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
         isToday = today;
     }
 
-    public EventAapter(List list, Context mContext, LanguageResponseData conversionData) {
+    public InterestedEventAapter(List list, Context mContext, LanguageResponseData conversionData) {
         this.list = list;
         this.mContext = mContext;
         this.coversionData = conversionData;
@@ -53,9 +55,10 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        EventsInfoModel eventsInfoModel = list.get(position);
+        Event event = list.get(position);
+        EventsInfoModel eventsInfoModel = (EventsInfoModel) event.getData();
         holder.textViewTitle.setText(eventsInfoModel.getAnnouncement_name());
-        ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
+        ImageLoadUtils.loadImage(eventsInfoModel.getImage(), holder.imageView);
         holder.textAddress.setText(eventsInfoModel.getVenue());
         holder.layoutInterested.setSelected(eventsInfoModel.getUserIntrested() != null && eventsInfoModel.getUserIntrested().equalsIgnoreCase("1"));
         if (isToday) {
@@ -108,23 +111,10 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.button_interested) {
-                String userIntrested = list.get(getAdapterPosition()).getUserIntrested();
-                if (userIntrested != null && userIntrested.equalsIgnoreCase("1")) {
-                    ((EventActivity) mContext).updateEventInterest(getAdapterPosition(), "0", list.get(getAdapterPosition()).getAnnouncement_id());
-                } else {
-                    ((EventActivity) mContext).updateEventInterest(getAdapterPosition(), "1", list.get(getAdapterPosition()).getAnnouncement_id());
-                }
-
-            } else if (v.getId() == R.id.imageView_share) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString());
-            } else {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("events", (ArrayList) list);
-                bundle.putInt("position", getAdapterPosition());
-                CommonUtils.startActivity((EventActivity) mContext, EventDetailsActivity.class, bundle, false);
-            }
-
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("events", (ArrayList) list);
+//            bundle.putInt("position", getAdapterPosition());
+//            CommonUtils.startActivity((AppCompatActivity) mContext, EventDetailsActivity.class, bundle, false);
         }
     }
 }

@@ -189,6 +189,21 @@ public class CommonUtils {
         return (String) getRelativeTimeSpanString(epoch, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
     }
 
+    public static long getTimeInMilis(String dateTime) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = null;
+        try {
+            date = df.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long epoch = 0;
+        if (date != null) {
+            epoch = date.getTime();
+        }
+        return epoch;
+    }
+
     public static void showToast(Context mContext, String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }

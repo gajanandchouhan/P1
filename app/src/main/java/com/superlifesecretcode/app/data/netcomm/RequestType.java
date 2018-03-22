@@ -23,4 +23,5 @@ public interface RequestType {
     byte REQ_GET_USER_SHARE = 15;
     byte REQ_GET_ALL_LATEST = 16;
     byte REQ_LIKE_SHARING = 17;
+    byte REQ_MY_INTERESTED_EVENT = 18;
 }

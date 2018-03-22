@@ -5,10 +5,10 @@ import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
-import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
+import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
@@ -205,6 +205,12 @@ public class ApiController implements RequestType {
                     likeSharingObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
+                case REQ_MY_INTERESTED_EVENT:
+                    Observable<InterestedEventResponseModel> myEventObservable = apiInterface.userIntrestedEvents(stringMultipartParamsParams, header);
+                    myEventObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<InterestedEventResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

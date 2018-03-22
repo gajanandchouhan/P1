@@ -67,7 +67,6 @@ public class CustomizeBarActivity extends BaseActivity {
                 List<SubcategoryModel> list = latestAapter.getList();
                 if (isValid(list)) {
                     SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
-                    MainActivity.BOTTOM_BAR_CHANGED = true;
                     onBackPressed();
                 } else {
                     CommonUtils.showToast(CustomizeBarActivity.this, "Please select at least 4 menu options.");
@@ -75,7 +74,7 @@ public class CustomizeBarActivity extends BaseActivity {
 
             }
         });
-        textViewTitle.setText("Customize Bottom Bar");
+        textViewTitle.setText(conversionData.getCustmize_bar());
     }
 
     @Override

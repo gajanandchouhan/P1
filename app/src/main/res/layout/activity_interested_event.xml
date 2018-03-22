@@ -25,10 +25,17 @@
         android:paddingRight="10dp"
         app:compactCalendarBackgroundColor="@color/colorWhite"
         app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
+        app:compactCalendarCurrentDayTextColor="@color/colorWhite"
         app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
         app:compactCalendarCurrentSelectedDayTextColor="@color/colorWhite"
-        app:compactCalendarMultiEventIndicatorColor="#fff"
+        app:compactCalendarMultiEventIndicatorColor="@color/colorPrimary"
         app:compactCalendarTargetHeight="@dimen/_200sdp"
         app:compactCalendarTextColor="@color/colorBlack"
         app:compactCalendarTextSize="@dimen/_12sdp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

@@ -35,6 +35,7 @@ import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
@@ -47,7 +48,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
     public static boolean PROFILE_UPDATED;
-    public static boolean BOTTOM_BAR_CHANGED;
     DrawerLayout mDrawerLayout;
     private LinearLayout layoutDrawer, mainLayout;
     private RecyclerView recyclerView;
@@ -227,10 +227,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             textView3.setText(bottomList.get(2).getTitle());
             tab4.setTag(bottomList.get(3).getType());
             textView4.setText(bottomList.get(3).getTitle());
-            imageView1.setImageResource(CommonUtils.getResurceId(this,bottomList.get(0).getIcon()));
-            imageView2.setImageResource(CommonUtils.getResurceId(this,bottomList.get(1).getIcon()));
-            imageView3.setImageResource(CommonUtils.getResurceId(this,bottomList.get(2).getIcon()));
-            imageView4.setImageResource(CommonUtils.getResurceId(this,bottomList.get(3).getIcon()));
+            imageView1.setImageResource(CommonUtils.getResurceId(this, bottomList.get(0).getIcon()));
+            imageView2.setImageResource(CommonUtils.getResurceId(this, bottomList.get(1).getIcon()));
+            imageView3.setImageResource(CommonUtils.getResurceId(this, bottomList.get(2).getIcon()));
+            imageView4.setImageResource(CommonUtils.getResurceId(this, bottomList.get(3).getIcon()));
         }
     }
 
@@ -242,15 +242,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             getMainCategories();
             LANGAUE_CHANGED = false;
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+            setUpBottomBar();
         }
         if (PROFILE_UPDATED) {
             userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
             setUpUserdetails();
         }
-        if (BOTTOM_BAR_CHANGED) {
-            setUpBottomBar();
-            BOTTOM_BAR_CHANGED = false;
-        }
+
     }
 
     private void getMainCategories() {
@@ -373,26 +371,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void handleBottomClick(int tag) {
         switch (tag) {
-            case 0:
+            case ConstantLib.TYPE_HOME:
                 break;
-            case 1:
+            case ConstantLib.TYPE_NEWS:
                 CommonUtils.startActivity(this, NewsActivity.class);
                 break;
-            case 2:
+            case ConstantLib.TYPE_EVENT:
                 CommonUtils.startActivity(this, EventActivity.class);
                 break;
-            case 3:
+            case ConstantLib.TYPE_LATEST:
                 CommonUtils.startActivity(this, LatestActivity.class);
                 break;
-            case 4:
+            case ConstantLib.TYPE_SUBMIT:
                 CommonUtils.startActivity(this, SubmitListActivity.class);
                 break;
-            case 5:
+            case ConstantLib.TYPE_PERSONAL_CALENDAR:
                 break;
-            case 6:
+            case ConstantLib.TYPE_EVENT_CALENDAR:
                 break;
-            case 7:
+            case ConstantLib.TYPE_STUDY_GROUP:
                 break;
+            case ConstantLib.TYPE_ONSITE:
+                break;
+
         }
     }
 
@@ -443,7 +444,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void showAlert(String alert_text, final int clikedPostion) {
-        CommonUtils.showAlert(this, alert_text, "YES", "NO", new CommonUtils.ClickListner() {
+        CommonUtils.showAlert(this, alert_text, conversionData!=null?conversionData.getYes():"YES", conversionData!=null?conversionData.getNo():"NO", new CommonUtils.ClickListner() {
             @Override
             public void onPositiveClick() {
                 SuperLifeSecretPreferences.getInstance().setAlertAccepted(list.get(clikedPostion).getId());
@@ -465,18 +466,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", 2, true));
             list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", 3, true));
             list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", 4, false));
-            list.add(new SubcategoryModel("activities", conversionData.getPersonal_calendar(), "", 5, false));
-            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 6, false));
-            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 7, false));
+            list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", 5, false));
+            list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", 6, false));
+            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 7, false));
+            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 8, false));
         } else {
             list.add(new SubcategoryModel("home", "Home", "", 0, true));
             list.add(new SubcategoryModel("announcement", "News Update", "", 1, true));
             list.add(new SubcategoryModel("announcement", "Event+Activities", "", 2, true));
             list.add(new SubcategoryModel("sharing", "Latest", "", 3, true));
             list.add(new SubcategoryModel("sharing", "Submit", "", 4, false));
-            list.add(new SubcategoryModel("activities", "Personal+Event Calendar", "", 5, false));
-            list.add(new SubcategoryModel("country", "Study Group", "", 6, false));
-            list.add(new SubcategoryModel("country", "On-site sharing", "", 7, false));
+            list.add(new SubcategoryModel("activities", "Personal Calendar", "", 5, false));
+            list.add(new SubcategoryModel("activities", "Event Calendar", "", 6, false));
+            list.add(new SubcategoryModel("country", "Study Group", "", 7, false));
+            list.add(new SubcategoryModel("country", "On-site sharing", "", 8, false));
         }
         return list;
     }

@@ -2,28 +2,27 @@ package com.superlifesecretcode.app.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.data.model.DrawerItem;
-import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
-import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.main.MainActivity;
-import com.superlifesecretcode.app.ui.webview.WebViewActivity;
-import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -49,11 +48,21 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
         if (list.get(position).getId() != null) {
             holder.textView.setText(list.get(position).getTitle());
             ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
-            GradientDrawable drawable = (GradientDrawable) holder.itemView.getBackground();
-     /*   Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256),
-        rnd.nextInt(256));*/
-            drawable.setColor(Color.parseColor(list.get(position).getColor()));
+            StateListDrawable stateListDrawable = (StateListDrawable) holder.itemView.getBackground();
+            DrawableContainer.DrawableContainerState containerState = (DrawableContainer.DrawableContainerState) stateListDrawable
+                    .getConstantState();
+            Drawable[] children = containerState.getChildren();
+            for (Drawable child : children) {
+                if (child instanceof LayerDrawable) {
+                    LayerDrawable layerDrawable = (LayerDrawable) child;
+                    GradientDrawable gradientDrawable = (GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.gradientDrawble);
+                    gradientDrawable.setColor(Color.parseColor(list.get(position).getColor()));
+                } else if (child instanceof GradientDrawable) {
+                    GradientDrawable gradientDrawable = (GradientDrawable) child;
+                    gradientDrawable.setColor(Color.parseColor(list.get(position).getColor()));
+                }
+            }
+
         } else {
             holder.textView.setText(list.get(position).getTitle());
             holder.imageView.setImageResource(list.get(position).getIcon());
@@ -71,9 +80,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+        final Animation myAnim;
         ImageView imageView;
         TextView textView;
+        MediaPlayer mPlayer;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -81,14 +91,33 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
             textView = itemView.findViewById(R.id.textView);
             textView.setSelected(true);
             itemView.setOnClickListener(this);
+            myAnim = AnimationUtils.loadAnimation(mContext, R.anim.bounce);
+            mPlayer = MediaPlayer.create(mContext, R.raw.beep);
+            MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+            myAnim.setInterpolator(interpolator);
+
         }
 
         @Override
         public void onClick(View v) {
-
-            ((MainActivity) mContext).openNextScreen(getAdapterPosition(),list.get(getAdapterPosition()).getPosition(), list.get(getAdapterPosition()).getTitle(), list.get(getAdapterPosition()).getId(),list.get(getAdapterPosition()).getColor());
+            ((MainActivity) mContext).openNextScreen(getAdapterPosition(), list.get(getAdapterPosition()).getPosition(), list.get(getAdapterPosition()).getTitle(), list.get(getAdapterPosition()).getId(), list.get(getAdapterPosition()).getColor());
+            itemView.startAnimation(myAnim);
+            mPlayer.start();
         }
     }
+    class MyBounceInterpolator implements android.view.animation.Interpolator {
+        private double mAmplitude = 1;
+        private double mFrequency = 10;
 
+        MyBounceInterpolator(double amplitude, double frequency) {
+            mAmplitude = amplitude;
+            mFrequency = frequency;
+        }
+
+        public float getInterpolation(float time) {
+            return (float) (-1 * Math.pow(Math.E, -time/ mAmplitude) *
+                    Math.cos(mFrequency * time) + 1);
+        }
+    }
 
 }

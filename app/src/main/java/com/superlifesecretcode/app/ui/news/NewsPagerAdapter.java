@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
 import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -27,11 +28,13 @@ import java.util.List;
 
 public class NewsPagerAdapter extends PagerAdapter {
     private final List<NewsResponseData> newsList;
+    private final LanguageResponseData conversionData;
     private Context mContext;
 
-    public NewsPagerAdapter(Context context, List newsList) {
+    public NewsPagerAdapter(Context context, List newsList, LanguageResponseData conversionData) {
         mContext = context;
         this.newsList = newsList;
+        this.conversionData=conversionData;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class NewsPagerAdapter extends PagerAdapter {
         imageViewLike.setSelected(newsList.get(position).getLiked_by_user().equalsIgnoreCase("1"));
         textViewTitle.setText(newsList.get(position).getAnnouncement_name());
         textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getCreated_at()));
-        textViewLikeCount.setText(String.format("%s Likes", newsList.get(position).getLiked_by()));
+        textViewLikeCount.setText(String.format("%s "+conversionData.getLikes(), newsList.get(position).getLiked_by()));
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         WebView webView = layout.findViewById(R.id.webview);
         webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html", "utf-8");

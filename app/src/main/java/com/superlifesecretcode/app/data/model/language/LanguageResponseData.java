@@ -71,6 +71,114 @@ public class LanguageResponseData {
     private String remember_me;
     private String username;
     private String forgot_password_2;
+    private String personal_cal;
+    private String event_cal;
+    private String yes;
+    private String no;
+    private String custmize_bar;
+    private String share;
+    private String likes;
+    private String unread_news;
+    private String top_news;
+    private String today;
+    private String upcoming;
+    private String interested;
+
+    public String getToday() {
+        return today;
+    }
+
+    public void setToday(String today) {
+        this.today = today;
+    }
+
+    public String getUpcoming() {
+        return upcoming;
+    }
+
+    public void setUpcoming(String upcoming) {
+        this.upcoming = upcoming;
+    }
+
+    public String getInterested() {
+        return interested;
+    }
+
+    public void setInterested(String interested) {
+        this.interested = interested;
+    }
+
+    public String getPersonal_cal() {
+        return personal_cal;
+    }
+
+    public void setPersonal_cal(String personal_cal) {
+        this.personal_cal = personal_cal;
+    }
+
+    public String getEvent_cal() {
+        return event_cal;
+    }
+
+    public void setEvent_cal(String event_cal) {
+        this.event_cal = event_cal;
+    }
+
+    public String getYes() {
+        return yes;
+    }
+
+    public void setYes(String yes) {
+        this.yes = yes;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public String getCustmize_bar() {
+        return custmize_bar;
+    }
+
+    public void setCustmize_bar(String custmize_bar) {
+        this.custmize_bar = custmize_bar;
+    }
+
+    public String getShare() {
+        return share;
+    }
+
+    public void setShare(String share) {
+        this.share = share;
+    }
+
+    public String getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String likes) {
+        this.likes = likes;
+    }
+
+    public String getUnread_news() {
+        return unread_news;
+    }
+
+    public void setUnread_news(String unread_news) {
+        this.unread_news = unread_news;
+    }
+
+    public String getTop_news() {
+        return top_news;
+    }
+
+    public void setTop_news(String top_news) {
+        this.top_news = top_news;
+    }
 
     public String getI_agree() {
         return i_agree;

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.shares.FileResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListAapter;
@@ -28,16 +29,18 @@ import java.util.List;
 
 public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHolder> {
     private final List<ShareListResponseData> list;
+    private final LanguageResponseData conversionData;
     private Context mContext;
     private int screenWidth;
     private int pagerHeight;
 
 
-    public LatestAapter(List list, Context mContext) {
+    public LatestAapter(List list, Context mContext, LanguageResponseData conversionData) {
         this.list = list;
         this.mContext = mContext;
         screenWidth = CommonUtils.getScreenWidth(mContext);
         pagerHeight = screenWidth * 7 / 16;
+        this.conversionData=conversionData;
     }
 
     @Override
@@ -53,9 +56,9 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
         holder.textViewDesc.setText(shareListResponseData.getContent());
         holder.textViewCountryName.setText(shareListResponseData.getCountryName());
         holder.imageViewLike.setSelected(shareListResponseData.getLiked_by_user().equalsIgnoreCase("1"));
-        holder.textViewLike.setText(String.format("%s Likes", shareListResponseData.getLiked_by()));
+        holder.textViewLike.setText(String.format("%s "+conversionData.getLikes(), shareListResponseData.getLiked_by()));
         ImageLoadUtils.loadImage(shareListResponseData.getUser_image(), holder.imageView);
-        if (shareListResponseData.getSharing_files() != null) {
+        if (shareListResponseData.getSharing_files() != null&&shareListResponseData.getSharing_files().size()>0) {
             holder.pager.setVisibility(View.VISIBLE);
             holder.pager.setAdapter(new LatestPagerAdapter(mContext, shareListResponseData.getSharing_files()));
         } else {
@@ -98,6 +101,7 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
             imageViewLike.setOnClickListener(this);
             itemView.findViewById(R.id.imageView_share).setOnClickListener(this);
             itemView.setOnClickListener(this);
+            textViewShare.setText(conversionData.getShare());
         }
 
         @Override

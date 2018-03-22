@@ -124,7 +124,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.dailyactivities.EventCalendarActivity"
+            android:name=".ui.dailyactivities.InterestedEventCalendarActivity"
             android:screenOrientation="portrait" />
     </application>
 

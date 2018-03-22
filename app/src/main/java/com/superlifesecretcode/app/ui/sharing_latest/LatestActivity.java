@@ -51,7 +51,7 @@ public class LatestActivity extends BaseActivity implements ShareListView {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         shareList = new ArrayList<>();
-        latestAapter = new LatestAapter(shareList, this);
+        latestAapter = new LatestAapter(shareList, this,conversionData);
         recyclerView.setAdapter(latestAapter);
     }
 

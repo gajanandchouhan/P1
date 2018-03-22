@@ -15,6 +15,9 @@ public class SubcategoryModel {
         return selected;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public SubcategoryModel(String icon, String title, String url, int type, boolean selected) {
         this.icon = icon;

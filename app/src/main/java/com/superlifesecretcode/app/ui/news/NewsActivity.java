@@ -27,7 +27,7 @@ public class NewsActivity extends BaseActivity implements NewsView {
     private NewsPresenter presenter;
     private UserDetailResponseData userDetailResponseData;
     private List<NewsResponseData> newsList;
-    private TextView textViewUnread;
+    private TextView textViewUnread, textViewTopNews, textViewUnreadLabel;
 
     @Override
     protected int getContentView() {
@@ -38,6 +38,8 @@ public class NewsActivity extends BaseActivity implements NewsView {
     @Override
     protected void initializeView() {
         textViewUnread = findViewById(R.id.textView_unread_count);
+        textViewTopNews = findViewById(R.id.textView_top_news);
+        textViewUnreadLabel = findViewById(R.id.textView_unread_label);
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar();
@@ -46,7 +48,8 @@ public class NewsActivity extends BaseActivity implements NewsView {
         newsList = new ArrayList<>();
         newsAapter = new NewsAapter(newsList, this);
         recyclerView.setAdapter(newsAapter);
-
+        textViewTopNews.setText(conversionData.getTop_news());
+        textViewUnreadLabel.setText(conversionData.getUnread_news());
     }
 
     @Override

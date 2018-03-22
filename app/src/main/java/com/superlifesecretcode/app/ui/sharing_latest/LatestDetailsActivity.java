@@ -85,10 +85,11 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar();
         setUpDetails();
+        textViewShare.setText(conversionData.getShare());
     }
 
     private void setUpDetails() {
-        if (data.getSharing_files() != null) {
+        if (data.getSharing_files() != null && data.getSharing_files().size() > 0) {
             pager.setVisibility(View.VISIBLE);
             pager.setAdapter(new LatestPagerAdapter(this, data.getSharing_files()));
         } else {
@@ -109,7 +110,7 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, data.getCreated_at()));
         textViewDesc.setText(data.getContent());
         textViewCountryName.setText(data.getCountryName());
-        textViewLike.setText(String.format("%s Likes", data.getLiked_by()));
+        textViewLike.setText(String.format("%s " + conversionData.getLikes(), data.getLiked_by()));
         imageViewLike.setSelected(data.getLiked_by_user().equalsIgnoreCase("1"));
         ImageLoadUtils.loadImage(data.getUser_image(), imageView);
     }

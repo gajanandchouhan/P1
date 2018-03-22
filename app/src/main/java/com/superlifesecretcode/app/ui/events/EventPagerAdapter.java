@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -30,10 +31,12 @@ import java.util.List;
 public class EventPagerAdapter extends PagerAdapter {
     private final List<EventsInfoModel> newsList;
     private Context mContext;
+    private LanguageResponseData conversionData;
 
-    public EventPagerAdapter(Context context, List newsList) {
+    public EventPagerAdapter(Context context, List newsList, LanguageResponseData conversionData) {
         mContext = context;
         this.newsList = newsList;
+        this.conversionData= conversionData;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class EventPagerAdapter extends PagerAdapter {
         RelativeLayout relativeLayout = layout.findViewById(R.id.button_interested);
         TextView textViewTitle = layout.findViewById(R.id.textView_title);
         TextView textViewTime = layout.findViewById(R.id.textView_time);
+        TextView textViewInterested = layout.findViewById(R.id.textview_interested);
         TextView textViewAddr = layout.findViewById(R.id.textView_addr);
         ImageView imageViewShare = layout.findViewById(R.id.imageView_share);
         textViewTitle.setText(newsList.get(position).getAnnouncement_name());
@@ -51,6 +55,7 @@ public class EventPagerAdapter extends PagerAdapter {
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         TextView textViewDesc = layout.findViewById(R.id.textView_desc);
         textViewAddr.setText(newsList.get(position).getVenue());
+        textViewInterested.setText(conversionData.getInterested());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(newsList.get(position).getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             textViewDesc.setText(spanned);

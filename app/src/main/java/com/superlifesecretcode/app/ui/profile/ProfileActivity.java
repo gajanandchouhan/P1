@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.dining.countrypicker.Country;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -64,6 +66,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private CountryStatePicker countryStatePicker;
     private boolean isUpdate;
     private boolean lanuguageChanged;
+    private Button buttonCustomize;
 
     @Override
     protected int getContentView() {
@@ -102,8 +105,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewDialCode.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         textViewState.setOnClickListener(this);
-        findViewById(R.id.customize_bar).setOnClickListener(this);
-
+        buttonCustomize = findViewById(R.id.customize_bar);
+        buttonCustomize.setOnClickListener(this);
         if (conversionData != null) {
             genderList = new ArrayList<>();
             genderList.add(conversionData.getMale());
@@ -139,6 +142,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewLanguage.setHint(conversionData.getSelect_language());
         textViewEmailLabel.setText(conversionData.getEmail());
         editTextEmail.setHint(conversionData.getEmail());
+        buttonCustomize.setText(conversionData.getCustmize_bar());
     }
 
     private void setUpUi() {
@@ -472,7 +476,46 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             if (isUpdate) {
                 CommonUtils.startActivity(this, MainActivity.class);
             }
+            if (lanuguageChanged) {
+                List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
+                for (SubcategoryModel subcategoryModel : subMenuList) {
+                    upadateContent(subcategoryModel);
+                }
+                SuperLifeSecretPreferences.getInstance().setSubMenuList(subMenuList);
+            }
             finish();
+        }
+    }
+
+    private void upadateContent(SubcategoryModel subcategoryModel) {
+        switch (subcategoryModel.getType()) {
+            case ConstantLib.TYPE_HOME:
+                subcategoryModel.setTitle(conversionData.getHome());
+                break;
+            case ConstantLib.TYPE_NEWS:
+                subcategoryModel.setTitle(conversionData.getNews_update());
+                break;
+            case ConstantLib.TYPE_EVENT:
+                subcategoryModel.setTitle(conversionData.getEvent_activity());
+                break;
+            case ConstantLib.TYPE_LATEST:
+                subcategoryModel.setTitle(conversionData.getLatest());
+                break;
+            case ConstantLib.TYPE_SUBMIT:
+                subcategoryModel.setTitle(conversionData.getSubmit());
+                break;
+            case ConstantLib.TYPE_PERSONAL_CALENDAR:
+                subcategoryModel.setTitle(conversionData.getPersonal_cal());
+                break;
+            case ConstantLib.TYPE_EVENT_CALENDAR:
+                subcategoryModel.setTitle(conversionData.getEvent_cal());
+                break;
+            case ConstantLib.TYPE_STUDY_GROUP:
+                subcategoryModel.setTitle(conversionData.getStudy_group());
+                break;
+            case ConstantLib.TYPE_ONSITE:
+                subcategoryModel.setTitle(conversionData.getOnsite());
+                break;
         }
     }
 

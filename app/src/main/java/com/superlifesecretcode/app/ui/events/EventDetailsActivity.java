@@ -48,7 +48,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView{
         setUpToolbar();
         pager = findViewById(R.id.pager);
         if (list != null) {
-            newsAapter = new EventPagerAdapter(this, list);
+            newsAapter = new EventPagerAdapter(this, list,conversionData);
             pager.setAdapter(newsAapter);
             pager.setCurrentItem(postion);
         }

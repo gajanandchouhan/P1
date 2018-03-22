@@ -49,7 +49,7 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
         setUpToolbar();
         pager = findViewById(R.id.pager);
         if (list != null) {
-            newsAapter = new NewsPagerAdapter(this, list);
+            newsAapter = new NewsPagerAdapter(this, list,conversionData);
             pager.setAdapter(newsAapter);
             pager.setCurrentItem(postion);
         }

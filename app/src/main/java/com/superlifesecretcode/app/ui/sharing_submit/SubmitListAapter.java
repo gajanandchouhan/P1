@@ -67,7 +67,7 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder1.textViewCountryName.setText(shareListResponseData.getCountryName());
             holder1.textViewStatus.setText(shareListResponseData.getStatus().equals("2") ? "Rejected" : "Published");
             ImageLoadUtils.loadImage(shareListResponseData.getUser_image(), holder1.imageView);
-            if (shareListResponseData.getSharing_files() != null) {
+            if (shareListResponseData.getSharing_files() != null&&shareListResponseData.getSharing_files().size()>0) {
                 holder1.pager.setVisibility(View.VISIBLE);
                 holder1.pager.setAdapter(new LatestPagerAdapter(mContext, shareListResponseData.getSharing_files()));
             } else {
