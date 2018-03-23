@@ -114,7 +114,7 @@ public class SuperLifeSecretPreferences {
             List<String> list = new Gson().fromJson(accepted_id, type);
             return list;
         }
-        List<String> list=new ArrayList<>();
+        List<String> list = new ArrayList<>();
         return list;
     }
 
@@ -133,4 +133,11 @@ public class SuperLifeSecretPreferences {
         return null;
     }
 
+    public void setDeviceToken(String refreshedToken) {
+        editer.putString("device_token", refreshedToken).commit();
+    }
+
+    public String getDeviceToken() {
+        return preferences.getString("device_token", "");
+    }
 }

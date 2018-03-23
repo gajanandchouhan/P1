@@ -1,4 +1,4 @@
-package com.superlifesecretcode.app.ui.dailyactivities;
+package com.superlifesecretcode.app.ui.dailyactivities.interestedevent;
 
 import android.content.Context;
 

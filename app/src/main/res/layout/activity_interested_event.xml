@@ -6,32 +6,68 @@
 
     <include layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/textView_month_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/bold"
-        android:padding="@dimen/_5sdp"
-        android:text="March 2018"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="@dimen/_13sdp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:tint="@android:color/holo_red_dark"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:id="@+id/textView_month_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/bold"
+            android:padding="@dimen/_5sdp"
+            android:text="March 2018"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/_13sdp" />
+
+        <ImageView
+            android:id="@+id/imageView_next"
+            android:layout_width="wrap_content"
+            android:tint="@android:color/holo_red_dark"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/right_arrow" />
+    </RelativeLayout>
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/compactcalendar_view"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_height="@dimen/_150sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
         app:compactCalendarBackgroundColor="@color/colorWhite"
         app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
         app:compactCalendarCurrentDayTextColor="@color/colorWhite"
         app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
         app:compactCalendarCurrentSelectedDayTextColor="@color/colorWhite"
         app:compactCalendarMultiEventIndicatorColor="@color/colorPrimary"
-        app:compactCalendarTargetHeight="@dimen/_200sdp"
+        app:compactCalendarTargetHeight="@dimen/_150sdp"
         app:compactCalendarTextColor="@color/colorBlack"
-        app:compactCalendarTextSize="@dimen/_12sdp" />
+        app:compactCalendarTextSize="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/textView_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:padding="@dimen/_5sdp"
+        android:text="Wednesday, 22 March"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_13sdp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

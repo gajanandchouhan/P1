@@ -1,4 +1,4 @@
-package com.superlifesecretcode.app.ui.dailyactivities;
+package com.superlifesecretcode.app.ui.dailyactivities.interestedevent;
 
 import android.content.Context;
 import android.os.Build;
@@ -18,7 +18,6 @@ import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
-import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -34,6 +33,7 @@ import java.util.List;
 public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventAapter.ItemViewHolder> {
     private final List<Event> list;
     private final LanguageResponseData coversionData;
+    private final ArrayList<EventsInfoModel> infoList;
     TextView textViewInterested;
     private Context mContext;
     boolean isToday;
@@ -46,6 +46,7 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
         this.list = list;
         this.mContext = mContext;
         this.coversionData = conversionData;
+        infoList = new ArrayList<>();
     }
 
     @Override
@@ -111,10 +112,13 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
 
         @Override
         public void onClick(View v) {
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("events", (ArrayList) list);
-//            bundle.putInt("position", getAdapterPosition());
-//            CommonUtils.startActivity((AppCompatActivity) mContext, EventDetailsActivity.class, bundle, false);
+            infoList.clear();
+            EventsInfoModel infoModel = (EventsInfoModel) list.get(getAdapterPosition()).getData();
+            infoList.add(infoModel);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("events", infoList);
+            bundle.putInt("position", getAdapterPosition());
+            CommonUtils.startActivity((AppCompatActivity) mContext, EventDetailsActivity.class, bundle, false);
         }
     }
 }

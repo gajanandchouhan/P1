@@ -124,8 +124,23 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.dailyactivities.InterestedEventCalendarActivity"
+            android:name=".ui.dailyactivities.interestedevent.InterestedEventCalendarActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dailyactivities.personalevent.PersonalEventCalendarActivity"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".service.MyFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".service.MyFirebaseInstanceMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

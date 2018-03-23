@@ -35,10 +35,6 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initializeView() {
-        final List<String> list = new ArrayList<>();
-        list.add("English");
-        list.add("繁體中文");
-        list.add("繁体中文");
         final ImageView imageViewPre = findViewById(R.id.imageView_previous);
         final ImageView imageViewNext = findViewById(R.id.imageView_next);
         buttonNext = findViewById(R.id.button_next);

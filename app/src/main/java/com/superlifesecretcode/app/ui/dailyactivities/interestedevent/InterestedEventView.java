@@ -1,4 +1,4 @@
-package com.superlifesecretcode.app.ui.dailyactivities;
+package com.superlifesecretcode.app.ui.dailyactivities.interestedevent;
 
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.ui.base.BaseView;

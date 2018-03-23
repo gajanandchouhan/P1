@@ -10,7 +10,7 @@ public interface ConstantLib {
     String LANGUAGE_ENGLISH = "3";
     String RESPONSE_SUCCESS = "true";
     String STRING_ENGLISH = "English";
-    String STRING_SIMPLIFIED = "繁体中文";
+    String STRING_SIMPLIFIED = "簡化中文";
     String STRING_TRADITIONAL = "繁體中文";
     String TC_URL = "https://www.richestlife.com/terms-of-service/";
     int TYPE_ANNOUNCEMENT = 5;

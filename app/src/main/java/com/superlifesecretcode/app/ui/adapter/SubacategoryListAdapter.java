@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
-import com.superlifesecretcode.app.ui.dailyactivities.InterestedEventCalendarActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
@@ -30,6 +31,7 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
     private final List<SubcategoryModel> list;
     private final String colorCode;
     private Context mContext;
+
 
     public SubacategoryListAdapter(List<SubcategoryModel> list, Context mContext, String colorCode) {
         this.list = list;
@@ -94,9 +96,11 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
                 break;
             case ConstantLib.TYPE_DAILY_ACTIVITIES:
                 if (position == 0) {
+                    CommonUtils.startActivity(((SubCategoryActivity) mContext), PersonalEventCalendarActivity.class);
                 } else if (position == 1) {
-                    CommonUtils.startActivity(((SubCategoryActivity) mContext),InterestedEventCalendarActivity.class);
+                    CommonUtils.startActivity(((SubCategoryActivity) mContext), InterestedEventCalendarActivity.class);
                 }
+
                 break;
         }
     }

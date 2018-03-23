@@ -879,7 +879,7 @@ class CompactCalendarController {
                     dayPaint.setColor(calenderTextColor);
                     dayPaint.setTypeface(ResourcesCompat.getFont(context, R.font.bold));
                     dayPaint.setStyle(Paint.Style.FILL);
-                    dayPaint.setTextSize(40);
+                    dayPaint.setTextSize(30);
                     dayPaint.setColor(Color.parseColor("#94B74B"));
                     canvas.drawText(dayColumnNames[dayColumn], xPosition, paddingHeight, dayPaint);
                     dayPaint.setTypeface(Typeface.DEFAULT);

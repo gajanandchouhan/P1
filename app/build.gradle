@@ -71,5 +71,6 @@ dependencies {
     //video player
     //    compile 'com.github.sundeepk:compact-calendar-view:2.0.2.3' //calendar
     implementation project(':calendarmodule')
+    compile 'com.google.firebase:firebase-messaging:11.6.2'
 }
 apply plugin: 'com.google.gms.google-services'
