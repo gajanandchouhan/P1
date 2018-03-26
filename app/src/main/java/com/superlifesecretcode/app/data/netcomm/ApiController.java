@@ -13,6 +13,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
+import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -97,6 +98,13 @@ public class ApiController implements RequestType {
                 getSubCategoryResponseModelObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CategoryResponseModel>(handler));
+                break;
+
+            case REQ_GET_STANDARD_EVENT:
+                Observable<StandardEventResponseModel> standardEventObservable = apiInterface.getStandardEvents(requestParams);
+                standardEventObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<StandardEventResponseModel>(handler));
                 break;
         }
 

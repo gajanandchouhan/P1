@@ -29,17 +29,17 @@ public class PersonalEventAapter extends RecyclerView.Adapter<PersonalEventAapte
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event, parent, false));
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_personal_calendar, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Event event = list.get(position);
+//        Event event = list.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return 5;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

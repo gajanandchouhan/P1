@@ -16,6 +16,8 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventPresenter;
+import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -132,6 +134,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_profile:
+                CommonUtils.startActivity(this, AddNewEventCalendarActivity.class);
                 break;
             case R.id.imageView_next:
                 compactCalendarView.showNextMonth();

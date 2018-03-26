@@ -19,7 +19,34 @@ public class CategoryResponseData {
     private int icon;
     private int position;
     private String alert;
+    private String alert_count;
     private String alert_text;
+    private String positive_resp;
+    private String negative_resp;
+
+    public String getPositive_resp() {
+        return positive_resp;
+    }
+
+    public void setNegative_resp(String negative_resp) {
+        this.negative_resp = negative_resp;
+    }
+
+    public void setPositive_resp(String positive_resp) {
+        this.positive_resp = positive_resp;
+    }
+
+    public String getNegative_resp() {
+        return negative_resp;
+    }
+
+    public void setAlert_count(String alert_count) {
+        this.alert_count = alert_count;
+    }
+
+    public String getAlert_count() {
+        return alert_count;
+    }
 
     public String getAlert() {
         return alert;
