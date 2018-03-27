@@ -13,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -34,7 +37,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
     public SubListAdapter(List<CategoryResponseData> list, Context mContext, String colorCode) {
         this.list = list;
         this.mContext = mContext;
-        this.colorCode=colorCode;
+        this.colorCode = colorCode;
     }
 
     @Override
@@ -77,12 +80,58 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
 
         @Override
         public void onClick(View v) {
-            Bundle bundle = new Bundle();
-            bundle.putString("title", list.get(getAdapterPosition()).getTitle());
-            bundle.putBoolean("is_link", list.get(getAdapterPosition()).getType().equalsIgnoreCase("1"));
-            bundle.putString("url", list.get(getAdapterPosition()).getLink());
-            bundle.putString("content", list.get(getAdapterPosition()).getContent());
-            CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
+            int clickedPostion=getAdapterPosition();
+            if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
+                AlertModel alertModel = new AlertModel();
+                alertModel.setCount(Integer.parseInt(list.get(clickedPostion).getAlert_count()));
+                alertModel.setId(list.get(clickedPostion).getId());
+                if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(alertModel)) {
+                    showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, null, null);
+                } else {
+                    List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
+                    int index = alertModelList.indexOf(alertModel);
+                    AlertModel alertModel1 = alertModelList.get(index);
+                    if (alertModel1.getCount() == 0) {
+                       openNext(clickedPostion);
+                    } else {
+                        showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
+                    }
+
+                }
+            }
         }
+    }
+    private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
+        String positive_resp = list.get(clikedPostion).getPositive_resp();
+        String negative_resp = list.get(clikedPostion).getNegative_resp();
+        CommonUtils.showAlert(mContext, alert_text, positive_resp, negative_resp, new CommonUtils.ClickListner() {
+            @Override
+            public void onPositiveClick() {
+                if (alertModel1 != null) {
+                    alertModel1.setCount(alertModel1.getCount() - 1);
+                    SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
+                } else {
+                    AlertModel alertModel = new AlertModel();
+                    alertModel.setId(list.get(clikedPostion).getId());
+                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count())-1);
+                    SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
+                }
+                openNext(clikedPostion);
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
+    }
+
+    private void openNext(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", list.get(position).getTitle());
+        bundle.putBoolean("is_link", list.get(position).getType().equalsIgnoreCase("1"));
+        bundle.putString("url", list.get(position).getLink());
+        bundle.putString("content", list.get(position).getContent());
+        CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
     }
 }

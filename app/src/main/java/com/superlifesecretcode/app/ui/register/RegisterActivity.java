@@ -266,6 +266,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         body.put("state_id", stateId);
         body.put("password", password);
         body.put("phone_code", dialCode);
+        body.put("device_token",SuperLifeSecretPreferences.getInstance().getDeviceToken());
         body.put("country_code", countryCode.toLowerCase());
         body.put("email", email);
         HashMap<String, File> fileParams = null;

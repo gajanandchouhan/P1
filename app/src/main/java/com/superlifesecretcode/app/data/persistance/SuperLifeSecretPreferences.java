@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -100,21 +101,21 @@ public class SuperLifeSecretPreferences {
     }
 
 
-    public void setAlertAccepted(String id) {
-        List<String> acceptedIds = getAcceptedIds();
-        acceptedIds.add(id);
+    public void setAlertAccepted(AlertModel alertModel) {
+        List<AlertModel> acceptedIds = getAcceptedIds();
+        acceptedIds.add(alertModel);
         editer.putString("accepted_id", new Gson().toJson(acceptedIds)).commit();
     }
 
-    public List<String> getAcceptedIds() {
+    public List<AlertModel> getAcceptedIds() {
         String accepted_id = preferences.getString("accepted_id", "");
         if (accepted_id.length() > 0) {
-            Type type = new TypeToken<List<String>>() {
+            Type type = new TypeToken<List<AlertModel>>() {
             }.getType();
-            List<String> list = new Gson().fromJson(accepted_id, type);
+            List<AlertModel> list = new Gson().fromJson(accepted_id, type);
             return list;
         }
-        List<String> list = new ArrayList<>();
+        List<AlertModel> list = new ArrayList<>();
         return list;
     }
 
@@ -139,5 +140,9 @@ public class SuperLifeSecretPreferences {
 
     public String getDeviceToken() {
         return preferences.getString("device_token", "");
+    }
+
+    public void updateAlertList(List<AlertModel> alertModelList) {
+        editer.putString("accepted_id", new Gson().toJson(alertModelList)).commit();
     }
 }

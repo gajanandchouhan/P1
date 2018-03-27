@@ -2,6 +2,8 @@ package com.superlifesecretcode.app.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +39,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -112,20 +116,35 @@ public class CommonUtils {
     }
 
     public static void showAlert(Context baseActivity, String message, String positive, String negative, final ClickListner clickListner) {
-        new AlertDialog.Builder(baseActivity).setMessage(message).setPositiveButton(positive, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                clickListner.onPositiveClick();
-            }
-        }).setNegativeButton(negative, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                clickListner.onNegativeClick();
 
-            }
-        }).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity).setMessage(message);
+        if (negative != null && !negative.isEmpty()) {
+            builder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    clickListner.onPositiveClick();
+
+                }
+            });
+
+            builder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    clickListner.onNegativeClick();
+                }
+            });
+        } else {
+            builder.setNeutralButton(positive, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    clickListner.onPositiveClick();
+                }
+            });
+        }
+        builder.show();
     }
 
 
@@ -208,6 +227,26 @@ public class CommonUtils {
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 
+    public static String getFromatttedDate(int year, int month, int dayOfMonth) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(year);
+        stringBuilder.append("-");
+        stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
+        stringBuilder.append("-");
+        stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
+        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString());
+    }
+
+    public static String getAppendedDate(int year, int month, int dayOfMonth) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(year);
+        stringBuilder.append("-");
+        stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
+        stringBuilder.append("-");
+        stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
+        return stringBuilder.toString();
+    }
+
     public interface ClickListner {
         void onPositiveClick();
 
@@ -260,4 +299,29 @@ public class CommonUtils {
         int width = displayMetrics.widthPixels;
         return width;
     }
+
+
+    public static void showDatePicker(Context activity, DatePickerDialog.OnDateSetListener listener) {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                activity, listener, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
+    }
+
+
+    public static void showTimePicker(Context mContext, TimePickerDialog.OnTimeSetListener listner) {
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(mContext, listner, hour, minute, true);//Yes 24 hour time
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
+    }
+
+
 }

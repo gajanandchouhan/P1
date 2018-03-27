@@ -33,8 +33,15 @@
             android:maxLines="1"
             android:text="Event Name"
             android:textColor="@android:color/holo_red_dark"
-
             android:textSize="@dimen/_12sdp" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            app:thumbTint="@color/thumb_color"
+            app:trackTint="@color/switch_color" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

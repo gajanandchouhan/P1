@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
+import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.DrawerItem;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
@@ -399,16 +400,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
-            if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(list.get(clickedPostion).getId())) {
-                showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion);
+            AlertModel alertModel = new AlertModel();
+            alertModel.setCount(Integer.parseInt(list.get(clickedPostion).getAlert_count()));
+            alertModel.setId(list.get(clickedPostion).getId());
+            if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(alertModel)) {
+                showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, null, null);
             } else {
-                Bundle bundle = new Bundle();
-                bundle.putString("title", title);
-                bundle.putInt("pos", position);
-                bundle.putString("parent_id", parentId);
-                bundle.putString("color", color);
-                bundle.putSerializable("banner", bannerList);
-                CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+                List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
+                int index = alertModelList.indexOf(alertModel);
+                AlertModel alertModel1 = alertModelList.get(index);
+                if (alertModel1.getCount() == 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", title);
+                    bundle.putInt("pos", position);
+                    bundle.putString("parent_id", parentId);
+                    bundle.putString("color", color);
+                    bundle.putSerializable("banner", bannerList);
+                    CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+                } else {
+                    showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
+                }
+
             }
         } else {
             Bundle bundle = new Bundle();
@@ -421,7 +433,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
     }
-
+    public void openNext(int clickedPostion, int position, String title, String parentId, String color) {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", title);
+            bundle.putInt("pos", position);
+            bundle.putString("parent_id", parentId);
+            bundle.putString("color", color);
+            bundle.putSerializable("banner", bannerList);
+            CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+    }
     @Override
     public void setHomeData(CategoryResponseModel categoryResponseModel) {
         if (categoryResponseModel.getData() != null) {
@@ -443,12 +463,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mainAdapter.notifyDataSetChanged();
     }
 
-    private void showAlert(String alert_text, final int clikedPostion) {
-        CommonUtils.showAlert(this, alert_text, conversionData!=null?conversionData.getYes():"YES", conversionData!=null?conversionData.getNo():"NO", new CommonUtils.ClickListner() {
+    private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
+        String positive_resp = list.get(clikedPostion).getPositive_resp();
+        String negative_resp = list.get(clikedPostion).getNegative_resp();
+        CommonUtils.showAlert(this, alert_text, positive_resp, negative_resp, new CommonUtils.ClickListner() {
             @Override
             public void onPositiveClick() {
-                SuperLifeSecretPreferences.getInstance().setAlertAccepted(list.get(clikedPostion).getId());
-                openNextScreen(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
+                if (alertModel1 != null) {
+                    alertModel1.setCount(alertModel1.getCount() - 1);
+                    SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
+                } else {
+                    AlertModel alertModel = new AlertModel();
+                    alertModel.setId(list.get(clikedPostion).getId());
+                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count())-1);
+                    SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
+                }
+                openNext(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
             }
 
             @Override
