@@ -11,4 +11,6 @@ import java.util.List;
 
 public interface AddEventView extends BaseView {
     void setStandardActivities(List<StandardEventResponseData> data);
+
+    void onEventAdded();
 }

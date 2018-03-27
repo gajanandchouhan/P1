@@ -25,4 +25,7 @@ public interface RequestType {
     byte REQ_LIKE_SHARING = 17;
     byte REQ_MY_INTERESTED_EVENT = 18;
     byte REQ_GET_STANDARD_EVENT = 19;
+    byte REQ_ADD_ACTIVITY = 20;
+    byte REQ_GET_PERSONAL_EVENT = 21;
+    byte REQ_UPDATE_EVENT_STATUS = 22;
 }

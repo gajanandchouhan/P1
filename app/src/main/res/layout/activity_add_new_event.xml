@@ -167,6 +167,7 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/button_add_event"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_30sdp"

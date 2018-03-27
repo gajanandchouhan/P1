@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.dailyactivities.personalevent;
 
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -27,20 +30,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PersonalEventCalendarActivity extends BaseActivity implements View.OnClickListener {
+public class PersonalEventCalendarActivity extends BaseActivity implements View.OnClickListener, PersonalEventView {
 
 
+    public static boolean MODIFIEDLIST = false;
     private LanguageResponseData conversionData;
     private CompactCalendarView compactCalendarView;
     private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
     private SimpleDateFormat dateFormatForDay = new SimpleDateFormat("EEEE, dd MMMM", Locale.getDefault());
     private UserDetailResponseData userData;
-    private InterestedEventPresenter presenter;
+    private PersonalEventPresenter presenter;
     private TextView textViewMonth, textViewDay;
     RecyclerView recyclerView;
     PersonalEventAapter adapter;
     List<Event> eventList;
     private ImageView imageViewProfile;
+    private PersonalEventResponseData object;
+    private int position;
+    private String status;
 
     @Override
     protected int getContentView() {
@@ -95,18 +102,28 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         }
     };
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (MODIFIEDLIST) {
+            MODIFIEDLIST = false;
+            getInterestedEvent();
+        }
+    }
+
     private void getInterestedEvent() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
         params.put("user_id", userData.getUser_id());
-//        presenter.getInterestedEvent(params, headers);
+        presenter.getPersonalEvent(params, headers);
     }
+
 
     @Override
     protected void initializePresenter() {
-//        presenter = new InterestedEventPresenter(this);
-//        presenter.setView(this);
+        presenter = new PersonalEventPresenter(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -143,5 +160,45 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
                 compactCalendarView.showPreviousMonth();
                 break;
         }
+    }
+
+    @Override
+    public void setEventData(List<PersonalEventResponseData> data) {
+        if (data != null) {
+            compactCalendarView.removeAllEvents();
+            for (PersonalEventResponseData interestedEventResponseData : data) {
+                compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()), interestedEventResponseData));
+            }
+        }
+        listener.onDayClick(new Date());
+    }
+
+    @Override
+    public void onStatusUpdated() {
+        object.setStatus(status);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStatusFailed() {
+        object.setStatus(status.equalsIgnoreCase("1")?"0":"1");
+        adapter.notifyDataSetChanged();
+    }
+
+    public void updateState(int adapterPosition) {
+        this.position = adapterPosition;
+        this.object = (PersonalEventResponseData) eventList.get(adapterPosition).getData();
+        if (object.getStatus().equalsIgnoreCase("1")) {
+            this.status = "0";
+        } else {
+            this.status = "1";
+        }
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("activity_id", object.getActivity_id());
+        params.put("status", status);
+        presenter.updateEventStatus(params, headers);
+
     }
 }

@@ -9,6 +9,7 @@ import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventRes
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
+import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -140,4 +141,21 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getActivityTypes")
     Observable<StandardEventResponseModel> getStandardEvents(@PartMap() Map<String, RequestBody> partMap);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("addDailyActivity")
+    Observable<BaseResponseModel> addActivity(@PartMap() Map<String, RequestBody> partMap,
+                                              @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("dailyActivities")
+    Observable<PersonalEventResponseModel> getPersonalAcivities(@PartMap() Map<String, RequestBody> partMap,
+                                                                @HeaderMap Map<String, String> headers);
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("updateDailyActivityStatus")
+    Observable<BaseResponseModel> updateEventStatus(@PartMap() Map<String, RequestBody> partMap,
+                                              @HeaderMap Map<String, String> headers);
 }

@@ -1,5 +1,8 @@
 package com.superlifesecretcode.app.ui.splash;
 
+import android.util.Log;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
@@ -23,6 +26,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     protected void initializeView() {
+        Log.v("TOKE", FirebaseInstanceId.getInstance().getToken());
         CommonUtils.printHashKey(this);
         presenter.delaySplash();
     }

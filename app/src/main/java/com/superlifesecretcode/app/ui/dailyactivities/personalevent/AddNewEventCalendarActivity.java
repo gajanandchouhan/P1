@@ -2,11 +2,13 @@ package com.superlifesecretcode.app.ui.dailyactivities.personalevent;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,16 +16,19 @@ import android.widget.TimePicker;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseData;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.picker.selectiondialog.SelectionListDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class AddNewEventCalendarActivity extends BaseActivity implements View.OnClickListener, AddEventView {
 
@@ -38,6 +43,10 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
     String typeId = "";
     String date = "";
     String time = "";
+    Button buttonAddEvent;
+    String id = "";
+    PersonalEventResponseData eventResponseData;
+    private boolean isStandard;
 
     @Override
     protected int getContentView() {
@@ -52,10 +61,16 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
         editTextTitle = findViewById(R.id.edit_text_event);
         textViewDate = findViewById(R.id.textView_date);
         textViewTime = findViewById(R.id.textView_time);
+        buttonAddEvent = findViewById(R.id.button_add_event);
         editTextReminderMinute = findViewById(R.id.edit_text_reminder);
+        Bundle detail = getIntent().getBundleExtra("bundle");
+        if (detail != null && detail.getBoolean("isDetails")) {
+            eventResponseData = (PersonalEventResponseData) detail.getSerializable("detail");
+        }
         textViewSelect.setOnClickListener(this);
         textViewTime.setOnClickListener(this);
         textViewDate.setOnClickListener(this);
+        buttonAddEvent.setOnClickListener(this);
         setUpToolbar();
         getStandardActivities();
         editTextTitle.addTextChangedListener(new TextWatcher() {
@@ -71,12 +86,37 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (textViewDate.getVisibility() == View.GONE) {
-                    textViewDate.setVisibility(View.VISIBLE);
-                    typeId = "";
+                if (!isStandard) {
+                    if (textViewDate.getVisibility() == View.GONE) {
+                        textViewDate.setVisibility(View.VISIBLE);
+                        typeId = "";
+                    }
+                } else {
+                    isStandard = false;
                 }
+
             }
         });
+        setUpLocalData();
+    }
+
+    private void setUpLocalData() {
+        if (eventResponseData != null) {
+            id = eventResponseData.getActivity_id();
+            if (eventResponseData.getType_id().equalsIgnoreCase("0")) {
+                date = eventResponseData.getActivity_date();
+                textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
+                        ConstantLib.OUTPUT_DATE_FORMATE, eventResponseData.getActivity_date()));
+            } else {
+                textViewDate.setVisibility(View.GONE);
+                isStandard = true;
+                typeId = eventResponseData.getType_id();
+            }
+            time = eventResponseData.getActivity_time();
+            textViewTime.setText(time);
+            editTextReminderMinute.setText(eventResponseData.getRemind_before());
+            editTextTitle.append(eventResponseData.getTitle());
+        }
     }
 
     private void getStandardActivities() {
@@ -127,8 +167,51 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
             case R.id.textView_time:
                 showTimePicker();
                 break;
+            case R.id.button_add_event:
+                validateAndAdd();
+                break;
 
         }
+    }
+
+    private void validateAndAdd() {
+        String title = editTextTitle.getText().toString().trim();
+        String reminderMinute = editTextReminderMinute.getText().toString().trim();
+        if (typeId.isEmpty()) {
+            if (title.isEmpty()) {
+                editTextTitle.setError("Please select or enter title of event.");
+                return;
+            }
+            if (date.isEmpty()) {
+                CommonUtils.showSnakeBar(this, "Please select date.");
+                return;
+            }
+        }
+        if (time.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "Please select time.");
+            return;
+        }
+        if (reminderMinute.isEmpty()) {
+            editTextTitle.setError("Please enter reminder time before event.");
+            return;
+        }
+        if (Integer.parseInt(reminderMinute) < 1) {
+            editTextReminderMinute.setError("Please enter valid reminder time before event.");
+            return;
+        }
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("type_id", typeId);
+        params.put("user_id", userData.getUser_id());
+        params.put("title", title);
+        params.put("activity_date", date);
+        params.put("remind_before", reminderMinute);
+        params.put("activity_time", time);
+        params.put("sound", "beep");
+        params.put("activity_id", id);
+        presenter.addEvent(params, headers);
     }
 
     private void showDatePicker() {
@@ -177,5 +260,11 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
     @Override
     public void setStandardActivities(List<StandardEventResponseData> data) {
         eventResponseDataList = data;
+    }
+
+    @Override
+    public void onEventAdded() {
+        PersonalEventCalendarActivity.MODIFIEDLIST = true;
+        onBackPressed();
     }
 }

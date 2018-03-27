@@ -41,12 +41,13 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
         }
 
         if (remoteMessage.getNotification() != null) {
+            sendNotification(remoteMessage.getNotification());
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
     }
 
-    private void sendNotification(Map<String, String> messageBody) {
+    private void sendNotification(RemoteMessage.Notification messageBody) {
         Intent intent = new Intent(this, InterestedEventCalendarActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
@@ -59,8 +60,8 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
         } else {
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
         }
-        notificationBuilder.setContentTitle(getString(R.string.app_name));
-        notificationBuilder.setContentText(getString(R.string.app_name));
+        notificationBuilder.setContentTitle(messageBody.getTitle());
+        notificationBuilder.setContentText(messageBody.getBody());
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setSound(defaultSoundUri);
         notificationBuilder.setContentIntent(pendingIntent);
