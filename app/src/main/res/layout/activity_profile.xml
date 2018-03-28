@@ -29,12 +29,27 @@
                     android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
-                    <com.superlifesecretcode.app.custom.CircleImageView
-                        android:id="@+id/imageView_user"
-                        android:layout_width="@dimen/_65sdp"
-                        android:layout_height="@dimen/_65sdp"
+                    <RelativeLayout
                         android:layout_gravity="center"
-                        android:src="@drawable/default_placeholder" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.superlifesecretcode.app.custom.CircleImageView
+                            android:id="@+id/imageView_user"
+                            android:layout_width="@dimen/_65sdp"
+                            android:layout_height="@dimen/_65sdp"
+                            android:src="@drawable/default_placeholder" />
+
+                        <ImageView
+                            android:id="@+id/imageView_camera"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/textView_name"

@@ -67,7 +67,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         recyclerView = findViewById(R.id.recycler_view);
         imageViewProfile = findViewById(R.id.imageView_profile);
         imageViewProfile.setVisibility(View.VISIBLE);
-        imageViewProfile.setImageResource(R.drawable.date);
+        imageViewProfile.setImageResource(R.drawable.add_event);
         imageViewProfile.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         compactCalendarView.setUseThreeLetterAbbreviation(true);

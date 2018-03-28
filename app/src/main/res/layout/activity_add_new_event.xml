@@ -105,7 +105,7 @@
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/rounded_gray"
-            android:drawableRight="@drawable/date"
+            android:drawableRight="@drawable/time"
             android:fontFamily="@font/reguler"
             android:gravity="center_vertical"
             android:hint="Time"

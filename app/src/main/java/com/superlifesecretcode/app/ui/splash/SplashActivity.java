@@ -26,7 +26,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     protected void initializeView() {
-        Log.v("TOKE", FirebaseInstanceId.getInstance().getToken());
+//        Log.v("TOKE", FirebaseInstanceId.getInstance().getToken());
         CommonUtils.printHashKey(this);
         presenter.delaySplash();
     }

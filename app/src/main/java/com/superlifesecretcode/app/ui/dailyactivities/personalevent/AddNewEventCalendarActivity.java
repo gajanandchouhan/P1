@@ -116,6 +116,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
             textViewTime.setText(time);
             editTextReminderMinute.setText(eventResponseData.getRemind_before());
             editTextTitle.append(eventResponseData.getTitle());
+            buttonAddEvent.setText("Update Event");
         }
     }
 

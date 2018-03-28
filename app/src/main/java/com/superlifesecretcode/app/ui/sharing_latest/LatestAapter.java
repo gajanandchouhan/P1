@@ -40,7 +40,7 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
         this.mContext = mContext;
         screenWidth = CommonUtils.getScreenWidth(mContext);
         pagerHeight = screenWidth * 7 / 16;
-        this.conversionData=conversionData;
+        this.conversionData = conversionData;
     }
 
     @Override
@@ -56,9 +56,9 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
         holder.textViewDesc.setText(shareListResponseData.getContent());
         holder.textViewCountryName.setText(shareListResponseData.getCountryName());
         holder.imageViewLike.setSelected(shareListResponseData.getLiked_by_user().equalsIgnoreCase("1"));
-        holder.textViewLike.setText(String.format("%s "+conversionData.getLikes(), shareListResponseData.getLiked_by()));
+        holder.textViewLike.setText(String.format("%s " + conversionData.getLikes(), shareListResponseData.getLiked_by()));
         ImageLoadUtils.loadImage(shareListResponseData.getUser_image(), holder.imageView);
-        if (shareListResponseData.getSharing_files() != null&&shareListResponseData.getSharing_files().size()>0) {
+        if (shareListResponseData.getSharing_files() != null && shareListResponseData.getSharing_files().size() > 0) {
             holder.pager.setVisibility(View.VISIBLE);
             holder.pager.setAdapter(new LatestPagerAdapter(mContext, shareListResponseData.getSharing_files()));
         } else {
@@ -112,9 +112,8 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
                 if (sharing_files != null && sharing_files.size() > 0) {
                     String type = sharing_files.get(pager.getCurrentItem()).getType();
                     if (type.equalsIgnoreCase(ConstantLib.TYPE_IMAGE)) {
-                        CommonUtils.shareImage(sharing_files.get(pager.getCurrentItem()).getFile(), mContext);
-                    }
-                    else{
+                        ((LatestActivity) mContext).shareImage(sharing_files.get(pager.getCurrentItem()).getFile());
+                    } else {
                         CommonUtils.shareContent(mContext, sharing_files.get(pager.getCurrentItem()).getFile());
                     }
                 } else {

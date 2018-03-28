@@ -1,6 +1,9 @@
 package com.superlifesecretcode.app.ui.sharing_latest;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import com.superlifesecretcode.app.ui.sharing_submit.ShareListView;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
+import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -155,12 +159,33 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
                 if (sharing_files != null && sharing_files.size() > 0) {
                     String type = sharing_files.get(pager.getCurrentItem()).getType();
                     if (type.equalsIgnoreCase(ConstantLib.TYPE_IMAGE)) {
-                        CommonUtils.shareImage(sharing_files.get(pager.getCurrentItem()).getFile(), this);
+                        shareImage(sharing_files.get(pager.getCurrentItem()).getFile());
                     }
                 } else {
                     CommonUtils.shareContent(this, data.getContent());
                 }
                 break;
+        }
+    }
+
+    public void shareImage(String file) {
+        if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+            CommonUtils.shareImage(file, this);
+        } else {
+            ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionConstant.CODE_PROFILE) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
         }
     }
 

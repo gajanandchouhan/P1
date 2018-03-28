@@ -268,6 +268,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         body.put("phone_code", dialCode);
         body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
         body.put("country_code", countryCode.toLowerCase());
+        body.put("device_type","1");
         body.put("email", email);
         HashMap<String, File> fileParams = null;
         if (imagePath != null) {

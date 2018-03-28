@@ -67,6 +67,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private boolean isUpdate;
     private boolean lanuguageChanged;
     private Button buttonCustomize;
+    ImageView imageViewCamera;
 
     @Override
     protected int getContentView() {
@@ -90,6 +91,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewDialCode = findViewById(R.id.textView_phonecode);
         imageViewUser = findViewById(R.id.imageView_user);
         imageViewFlag = findViewById(R.id.imageView_flag);
+        imageViewCamera=findViewById(R.id.imageView_camera);
         textViewNameLabel = findViewById(R.id.textView_name_label);
         textViewMobileLabel = findViewById(R.id.textView_mobile_label);
         textViewGenderLabel = findViewById(R.id.textView_gender_label);
@@ -365,9 +367,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private void enableDisableView(boolean enbale) {
         isEnabled = enbale;
         if (enbale) {
+            imageViewCamera.setVisibility(View.VISIBLE);
             imageViewProfile.setImageResource(R.drawable.right);
         } else {
             imageViewProfile.setImageResource(R.drawable.edit);
+            imageViewCamera.setVisibility(View.GONE);
         }
         editTextName.setEnabled(enbale);
         imageViewUser.setEnabled(enbale);
