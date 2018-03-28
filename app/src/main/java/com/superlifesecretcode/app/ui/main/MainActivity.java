@@ -49,6 +49,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
     public static boolean PROFILE_UPDATED;
+    public static boolean BOTTOM_BAR_CHANGED = false;
     DrawerLayout mDrawerLayout;
     private LinearLayout layoutDrawer, mainLayout;
     private RecyclerView recyclerView;
@@ -245,6 +246,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
             setUpBottomBar();
         }
+        if (BOTTOM_BAR_CHANGED) {
+            setUpBottomBar();
+            BOTTOM_BAR_CHANGED = false;
+        }
         if (PROFILE_UPDATED) {
             userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
             setUpUserdetails();
@@ -433,15 +438,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
     }
+
     public void openNext(int clickedPostion, int position, String title, String parentId, String color) {
-            Bundle bundle = new Bundle();
-            bundle.putString("title", title);
-            bundle.putInt("pos", position);
-            bundle.putString("parent_id", parentId);
-            bundle.putString("color", color);
-            bundle.putSerializable("banner", bannerList);
-            CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putInt("pos", position);
+        bundle.putString("parent_id", parentId);
+        bundle.putString("color", color);
+        bundle.putSerializable("banner", bannerList);
+        CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
     }
+
     @Override
     public void setHomeData(CategoryResponseModel categoryResponseModel) {
         if (categoryResponseModel.getData() != null) {
@@ -475,7 +482,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 } else {
                     AlertModel alertModel = new AlertModel();
                     alertModel.setId(list.get(clikedPostion).getId());
-                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count())-1);
+                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
                     SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
                 }
                 openNext(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
@@ -498,8 +505,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", 4, false));
             list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", 5, false));
             list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", 6, false));
-            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 7, false));
-            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 8, false));
+            list.add(new SubcategoryModel("country_globe", conversionData.getStudy_group(), "", 7, false));
+            list.add(new SubcategoryModel("country_globe", conversionData.getOnsite(), "", 8, false));
         } else {
             list.add(new SubcategoryModel("home", "Home", "", 0, true));
             list.add(new SubcategoryModel("announcement", "News Update", "", 1, true));
@@ -508,8 +515,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             list.add(new SubcategoryModel("sharing", "Submit", "", 4, false));
             list.add(new SubcategoryModel("activities", "Personal Calendar", "", 5, false));
             list.add(new SubcategoryModel("activities", "Event Calendar", "", 6, false));
-            list.add(new SubcategoryModel("country", "Study Group", "", 7, false));
-            list.add(new SubcategoryModel("country", "On-site sharing", "", 8, false));
+            list.add(new SubcategoryModel("country_globe", "Study Group", "", 7, false));
+            list.add(new SubcategoryModel("country_globe", "On-site sharing", "", 8, false));
         }
         return list;
     }

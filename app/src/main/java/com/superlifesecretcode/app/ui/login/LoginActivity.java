@@ -304,6 +304,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         body.put("social_id", socialId);
         body.put("name", name);
         body.put("email", email != null ? email : "");
+        body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
+        body.put("device_type", "1");
         presenter.loginSocialUser(body);
     }
 }

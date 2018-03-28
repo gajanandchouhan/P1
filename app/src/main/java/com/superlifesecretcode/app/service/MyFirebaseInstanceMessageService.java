@@ -33,6 +33,7 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIB
 public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
     private static final String TAG = "FCMMESSAGE";
     private String CHANNEL_ID = "123";
+    int id = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -88,8 +89,8 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, notificationBuilder.build());
+        id = id + 1;
+        notificationManager.notify(id, notificationBuilder.build());
     }
 
     public boolean foregrounded() {

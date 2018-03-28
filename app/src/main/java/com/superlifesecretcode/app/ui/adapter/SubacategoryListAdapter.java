@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
@@ -101,6 +103,18 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
                     CommonUtils.startActivity(((SubCategoryActivity) mContext), InterestedEventCalendarActivity.class);
                 }
 
+                break;
+            case ConstantLib.TYPE_COUNTRY_ACTIVITIES:
+                boolean isStudyGroup = false;
+                if (position == 0) {
+                    isStudyGroup = true;
+                } else if (position == 1) {
+                    isStudyGroup = false;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("title", list.get(position).getTitle());
+                bundle.putBoolean("isStudyGroup", isStudyGroup);
+                CommonUtils.startActivity(((SubCategoryActivity) mContext), CountryAcitvitiesActivity.class, bundle, false);
                 break;
         }
     }

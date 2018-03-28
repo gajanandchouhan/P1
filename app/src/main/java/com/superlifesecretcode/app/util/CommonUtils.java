@@ -164,7 +164,8 @@ public class CommonUtils {
         }
     }
 
-    public static String getformattedDateFromString(String inputFormat, String outputFormat, String inputDate) {
+    public static String
+    getformattedDateFromString(String inputFormat, String outputFormat, String inputDate) {
         if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
             inputFormat = "yyyy-MM-dd hh:mm:ss";
         }

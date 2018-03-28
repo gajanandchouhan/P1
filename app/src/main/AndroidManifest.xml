@@ -145,6 +145,10 @@
         <activity
             android:name=".ui.dailyactivities.personalevent.AddNewEventCalendarActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.countryactivities.CountryAcitvitiesActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

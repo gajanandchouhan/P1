@@ -420,7 +420,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     private void pickImage() {
         CropImage.activity()
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setCropShape(CropImageView.CropShape.OVAL)
                 .start(this);
 
     }
