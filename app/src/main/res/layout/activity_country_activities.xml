@@ -13,6 +13,7 @@
         android:padding="@dimen/_5sdp">
 
         <EditText
+            android:id="@+id/edit_text_search"
             android:layout_width="0dp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center_vertical"

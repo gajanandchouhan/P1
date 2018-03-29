@@ -28,4 +28,5 @@ public interface RequestType {
     byte REQ_ADD_ACTIVITY = 20;
     byte REQ_GET_PERSONAL_EVENT = 21;
     byte REQ_UPDATE_EVENT_STATUS = 22;
+    byte REQ_GET_COUNTRY_ACTIVITY = 23;
 }

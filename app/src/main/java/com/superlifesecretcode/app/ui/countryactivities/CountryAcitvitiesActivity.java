@@ -1,14 +1,20 @@
 package com.superlifesecretcode.app.ui.countryactivities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.countryactivities.CounActivtyResponseData;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -20,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CountryAcitvitiesActivity extends BaseActivity implements CountryActivitiesView {
 
@@ -28,15 +36,18 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     private CountryActivityAapter countryActivityAapter;
     private LanguageResponseData conversionData;
     private CountryAcivitiesPresenter presenter;
-    private List<EventsInfoModel> list;
+    private List<CountryActivityInfoModel> list;
     private TabLayout tabLayout;
-    private List<EventsInfoModel> todayList;
-    private List<EventsInfoModel> upcomingList;
+    private List<CountryActivityInfoModel> todayList;
+    private List<CountryActivityInfoModel> upcomingList;
     private UserDetailResponseData userData;
     private int position;
     private String interested;
     private boolean isStudyGroup;
     private String title;
+    private boolean isUpdated = false;
+    EditText editTextSearch;
+
 
     @Override
     protected int getContentView() {
@@ -48,6 +59,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     protected void initializeView() {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
+        editTextSearch = findViewById(R.id.edit_text_search);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         title = bundle.getString("title");
         isStudyGroup = bundle.getBoolean("isStudyGroup");
@@ -61,12 +73,53 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         tabLayout.addOnTabSelectedListener(listener);
         tabLayout.getTabAt(0).setText(conversionData.getToday());
         tabLayout.getTabAt(1).setText(conversionData.getUpcoming());
+        getEvents("", "", "");
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            private Timer timer = new Timer();
+            private final long DELAY = 500; // milliseconds
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(final Editable s) {
+                timer.cancel();
+                timer = new Timer();
+                timer.schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                // TODO: do what you need here (refresh list)
+                                // you will probably need to use runOnUiThread(Runnable action) for some specific actions
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getEvents(s.toString(), "", "");
+                                    }
+                                });
+                            }
+                        },
+                        DELAY
+                );
+
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getEvents();
+        if (isUpdated) {
+            isUpdated = false;
+            getEvents("", "", "");
+        }
     }
 
     TabLayout.OnTabSelectedListener listener = new TabLayout.OnTabSelectedListener() {
@@ -161,12 +214,15 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         newsAapter.notifyDataSetChanged();
     }*/
 
-    private void getEvents() {
+    private void getEvents(String keyword, String startDate, String endDate) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("announcement_type", "1");
-//        presenter.getAcivities(params, headers);
+        params.put("type", isStudyGroup ? "1" : "2");
+        params.put("keyword", keyword);
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        presenter.getAcivities(params, headers);
     }
 
     public void updateEventInterest(int position, String interested, String id) {
@@ -175,9 +231,31 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("announcement_id", id);
+        params.put("activity_id", id);
         params.put("interest", interested);
         params.put("user_id", userData.getUser_id());
         presenter.makeInterested(params, headers);
+    }
+
+    @Override
+    public void setCountyAcivityData(CounActivtyResponseData data) {
+        if (data != null) {
+            todayList = data.getToday();
+            upcomingList = data.getUpcoming();
+            list.clear();
+            if (tabLayout.getSelectedTabPosition() == 0) {
+                if (todayList != null) {
+                    list.addAll(todayList);
+                    countryActivityAapter.setToday(true);
+                    countryActivityAapter.notifyDataSetChanged();
+                }
+            } else {
+                if (upcomingList != null) {
+                    list.addAll(upcomingList);
+                    countryActivityAapter.setToday(true);
+                    countryActivityAapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }

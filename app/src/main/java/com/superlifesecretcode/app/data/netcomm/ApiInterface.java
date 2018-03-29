@@ -4,6 +4,7 @@ package com.superlifesecretcode.app.data.netcomm;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
@@ -124,19 +125,20 @@ public interface ApiInterface {
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("latest")
-    Observable<ShareListResponseModel> getAllShareList(@HeaderMap Map<String,String> headers);
+    Observable<ShareListResponseModel> getAllShareList(@HeaderMap Map<String, String> headers);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("likeSharing")
     Observable<BaseResponseModel> likeSharing(@PartMap() Map<String, RequestBody> partMap,
-                                           @HeaderMap Map<String, String> headers);
+                                              @HeaderMap Map<String, String> headers);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("userIntrestedEvents")
     Observable<InterestedEventResponseModel> userIntrestedEvents(@PartMap() Map<String, RequestBody> partMap,
                                                                  @HeaderMap Map<String, String> headers);
+
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getActivityTypes")
@@ -153,9 +155,16 @@ public interface ApiInterface {
     @POST("dailyActivities")
     Observable<PersonalEventResponseModel> getPersonalAcivities(@PartMap() Map<String, RequestBody> partMap,
                                                                 @HeaderMap Map<String, String> headers);
+
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("updateDailyActivityStatus")
     Observable<BaseResponseModel> updateEventStatus(@PartMap() Map<String, RequestBody> partMap,
-                                              @HeaderMap Map<String, String> headers);
+                                                    @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("activities")
+    Observable<CountryActivitiesResponseModel> getCountryAcivities(@PartMap() Map<String, RequestBody> partMap,
+                                                                   @HeaderMap Map<String, String> headers);
 }

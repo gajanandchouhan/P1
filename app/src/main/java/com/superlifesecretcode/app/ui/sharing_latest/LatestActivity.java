@@ -36,6 +36,7 @@ public class LatestActivity extends BaseActivity implements ShareListView {
     private List<ShareListResponseData> shareList;
     private int position;
     private String like;
+    public static boolean isUpdated = false;
 
     @Override
     protected int getContentView() {
@@ -57,14 +58,18 @@ public class LatestActivity extends BaseActivity implements ShareListView {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         shareList = new ArrayList<>();
-        latestAapter = new LatestAapter(shareList, this,conversionData);
+        latestAapter = new LatestAapter(shareList, this, conversionData);
         recyclerView.setAdapter(latestAapter);
+        getAllLatestShare();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getAllLatestShare();
+        if (isUpdated) {
+            isUpdated = false;
+            getAllLatestShare();
+        }
     }
 
     private void getAllLatestShare() {
@@ -82,6 +87,7 @@ public class LatestActivity extends BaseActivity implements ShareListView {
         TextView textViewTitle = findViewById(R.id.textView_title);
         textViewTitle.setText(conversionData != null ? conversionData.getLatest() : "Latest");
     }
+
     public void likeShare(int position, String like, String id) {
         this.position = position;
         this.like = like;
@@ -137,10 +143,9 @@ public class LatestActivity extends BaseActivity implements ShareListView {
     }
 
     public void shareImage(String file) {
-        if(CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)){
+        if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
             CommonUtils.shareImage(file, this);
-        }
-        else{
+        } else {
             ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
         }
 

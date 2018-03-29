@@ -7,6 +7,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
@@ -241,6 +242,12 @@ public class ApiController implements RequestType {
                     updateEventStatusObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
+                case REQ_GET_COUNTRY_ACTIVITY:
+                    Observable<CountryActivitiesResponseModel> countryActivitiesResponseModelObservable = apiInterface.getCountryAcivities(stringMultipartParamsParams, header);
+                    countryActivitiesResponseModelObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<CountryActivitiesResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

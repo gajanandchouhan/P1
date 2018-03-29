@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
@@ -39,15 +40,15 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callWithHeader(mContext, RequestType.REQ_GET_EVENTS, new ResponseHandler<EventResponseModel>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_GET_COUNTRY_ACTIVITY, new ResponseHandler<CountryActivitiesResponseModel>() {
             @Override
-            public void onResponse(EventResponseModel newsResponseModel) {
+            public void onResponse(CountryActivitiesResponseModel activitiesResponseModel) {
                 view.hideProgress();
-                if (newsResponseModel != null) {
-                    if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-//                        view(newsResponseModel);
+                if (activitiesResponseModel != null) {
+                    if (activitiesResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setCountyAcivityData(activitiesResponseModel.getData());
                     } else
-                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                        CommonUtils.showToast(mContext, activitiesResponseModel.getMessage());
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }

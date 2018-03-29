@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.ui.events.EventActivity;
@@ -30,7 +31,7 @@ import java.util.List;
  */
 
 public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityAapter.ItemViewHolder> {
-    private final List<EventsInfoModel> list;
+    private final List<CountryActivityInfoModel> list;
     private final LanguageResponseData coversionData;
     TextView textViewInterested;
     private Context mContext;
@@ -53,8 +54,8 @@ public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityA
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-       /* EventsInfoModel eventsInfoModel = list.get(position);
-        holder.textViewTitle.setText(eventsInfoModel.getAnnouncement_name());
+        CountryActivityInfoModel eventsInfoModel = list.get(position);
+        holder.textViewTitle.setText(eventsInfoModel.getTitle());
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
         holder.textAddress.setText(eventsInfoModel.getVenue());
         holder.layoutInterested.setSelected(eventsInfoModel.getUserIntrested() != null && eventsInfoModel.getUserIntrested().equalsIgnoreCase("1"));
@@ -62,22 +63,22 @@ public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityA
             holder.textViewDate.setText(coversionData.getToday());
         } else {
             holder.textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date()));
+                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getActivity_date()));
         }
 
-        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getAnnouncement_time()));
+        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getActivity_time()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Spanned spanned = Html.fromHtml(eventsInfoModel.getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
+            Spanned spanned = Html.fromHtml(eventsInfoModel.getDescription(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);
         } else {
-            Spanned spanned = Html.fromHtml(eventsInfoModel.getAnnouncement_description());
+            Spanned spanned = Html.fromHtml(eventsInfoModel.getDescription());
             holder.textViewDesc.setText(spanned);
-        }*/
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
