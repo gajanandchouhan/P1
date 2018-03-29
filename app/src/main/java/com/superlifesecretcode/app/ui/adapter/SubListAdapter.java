@@ -80,7 +80,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
 
         @Override
         public void onClick(View v) {
-            int clickedPostion=getAdapterPosition();
+            int clickedPostion = getAdapterPosition();
             if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
                 AlertModel alertModel = new AlertModel();
                 alertModel.setCount(Integer.parseInt(list.get(clickedPostion).getAlert_count()));
@@ -92,15 +92,18 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     int index = alertModelList.indexOf(alertModel);
                     AlertModel alertModel1 = alertModelList.get(index);
                     if (alertModel1.getCount() == 0) {
-                       openNext(clickedPostion);
+                        openNext(clickedPostion);
                     } else {
                         showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
                     }
 
                 }
+            } else {
+                openNext(clickedPostion);
             }
         }
     }
+
     private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
         String positive_resp = list.get(clikedPostion).getPositive_resp();
         String negative_resp = list.get(clikedPostion).getNegative_resp();
@@ -113,7 +116,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                 } else {
                     AlertModel alertModel = new AlertModel();
                     alertModel.setId(list.get(clikedPostion).getId());
-                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count())-1);
+                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
                     SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
                 }
                 openNext(clikedPostion);

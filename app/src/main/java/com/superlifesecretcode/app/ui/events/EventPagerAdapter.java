@@ -36,7 +36,7 @@ public class EventPagerAdapter extends PagerAdapter {
     public EventPagerAdapter(Context context, List newsList, LanguageResponseData conversionData) {
         mContext = context;
         this.newsList = newsList;
-        this.conversionData= conversionData;
+        this.conversionData = conversionData;
     }
 
     @Override

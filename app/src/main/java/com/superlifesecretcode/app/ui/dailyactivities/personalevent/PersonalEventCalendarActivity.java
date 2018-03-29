@@ -48,6 +48,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     private PersonalEventResponseData object;
     private int position;
     private String status;
+    private Date date;
 
     @Override
     protected int getContentView() {
@@ -71,6 +72,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         imageViewProfile.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         compactCalendarView.setUseThreeLetterAbbreviation(true);
+        date = new Date();
         final Date firstDayOfCurrentMonth = compactCalendarView.getFirstDayOfCurrentMonth();
         String format = dateFormatForMonth.format(firstDayOfCurrentMonth);
         textViewMonth = findViewById(R.id.textView_month_year);
@@ -81,12 +83,13 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         recyclerView.setAdapter(adapter);
         setUpToolbar();
         getInterestedEvent();
-        listener.onDayClick(new Date());
+        listener.onDayClick(date);
     }
 
     CompactCalendarView.CompactCalendarViewListener listener = new CompactCalendarView.CompactCalendarViewListener() {
         @Override
         public void onDayClick(Date dateClicked) {
+            date = dateClicked;
             textViewDay.setText(dateFormatForDay.format(dateClicked));
             List<Event> events = compactCalendarView.getEvents(dateClicked);
             eventList.clear();
@@ -170,7 +173,8 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
                 compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()), interestedEventResponseData));
             }
         }
-        listener.onDayClick(new Date());
+        listener.onDayClick(
+                date);
     }
 
     @Override
@@ -181,7 +185,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
 
     @Override
     public void onStatusFailed() {
-        object.setStatus(status.equalsIgnoreCase("1")?"0":"1");
+        object.setStatus(status.equalsIgnoreCase("1") ? "0" : "1");
         adapter.notifyDataSetChanged();
     }
 

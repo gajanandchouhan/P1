@@ -13,7 +13,9 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
+import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventdata;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -31,6 +33,7 @@ import java.util.Map;
 public class InterestedEventCalendarActivity extends BaseActivity implements InterestedEventView, View.OnClickListener {
 
 
+    public static boolean UPDATED = false;
     private LanguageResponseData conversionData;
     private CompactCalendarView compactCalendarView;
     private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
@@ -41,7 +44,8 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     RecyclerView recyclerView;
     InterestedEventAapter adapter;
     List<Event> eventList;
-  //  private ImageView imageViewProfile;
+    private Date date;
+    //  private ImageView imageViewProfile;
 
     @Override
     protected int getContentView() {
@@ -63,6 +67,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
 //        imageViewProfile.setVisibility(View.VISIBLE);
 //        imageViewProfile.setImageResource(R.drawable.date);
 //        imageViewProfile.setOnClickListener(this);
+        date = new Date();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         compactCalendarView.setUseThreeLetterAbbreviation(true);
         final Date firstDayOfCurrentMonth = compactCalendarView.getFirstDayOfCurrentMonth();
@@ -75,12 +80,22 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
         recyclerView.setAdapter(adapter);
         setUpToolbar();
         getInterestedEvent();
-        listener.onDayClick(new Date());
+        listener.onDayClick(date);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (UPDATED) {
+            UPDATED = false;
+            getInterestedEvent();
+        }
     }
 
     CompactCalendarView.CompactCalendarViewListener listener = new CompactCalendarView.CompactCalendarViewListener() {
         @Override
         public void onDayClick(Date dateClicked) {
+            date = dateClicked;
             textViewDay.setText(dateFormatForDay.format(dateClicked));
             List<Event> events = compactCalendarView.getEvents(dateClicked);
             eventList.clear();
@@ -131,13 +146,24 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     }
 
     @Override
-    public void setEventData(List<EventsInfoModel> interestedEventResponseDataList) {
+    public void setEventData(List<InterestedEventdata> interestedEventResponseDataList) {
+        compactCalendarView.removeAllEvents();
         if (interestedEventResponseDataList != null) {
-            for (EventsInfoModel interestedEventResponseData : interestedEventResponseDataList) {
-                compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getAnnouncement_date() + " " + interestedEventResponseData.getAnnouncement_time()), interestedEventResponseData));
+            for (InterestedEventdata interestedEventResponseData : interestedEventResponseDataList) {
+                compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time()), interestedEventResponseData));
             }
         }
-        listener.onDayClick(new Date());
+        listener.onDayClick(date);
+    }
+
+    @Override
+    public void setDetails(SingleNewsResponseModel newsResponseModel) {
+
+    }
+
+    @Override
+    public void onUpdateInteresed() {
+
     }
 
     @Override
@@ -146,7 +172,6 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
             case R.id.imageView_profile:
                 CommonUtils.startActivity(this, PersonalEventCalendarActivity.class);
                 break;
-
             case R.id.imageView_next:
                 compactCalendarView.showNextMonth();
                 break;

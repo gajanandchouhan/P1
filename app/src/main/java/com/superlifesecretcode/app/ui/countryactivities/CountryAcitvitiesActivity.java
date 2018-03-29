@@ -73,7 +73,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         tabLayout.addOnTabSelectedListener(listener);
         tabLayout.getTabAt(0).setText(conversionData.getToday());
         tabLayout.getTabAt(1).setText(conversionData.getUpcoming());
-        getEvents("", "", "");
+        getEvents("", "", "", true);
         editTextSearch.addTextChangedListener(new TextWatcher() {
             private Timer timer = new Timer();
             private final long DELAY = 500; // milliseconds
@@ -101,7 +101,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        getEvents(s.toString(), "", "");
+                                        getEvents(s.toString(), "", "", false);
                                     }
                                 });
                             }
@@ -118,7 +118,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         super.onResume();
         if (isUpdated) {
             isUpdated = false;
-            getEvents("", "", "");
+            getEvents("", "", "", true);
         }
     }
 
@@ -214,7 +214,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         newsAapter.notifyDataSetChanged();
     }*/
 
-    private void getEvents(String keyword, String startDate, String endDate) {
+    private void getEvents(String keyword, String startDate, String endDate, boolean showProgress) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
@@ -222,7 +222,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         params.put("keyword", keyword);
         params.put("startDate", startDate);
         params.put("endDate", endDate);
-        presenter.getAcivities(params, headers);
+        presenter.getAcivities(params, headers, showProgress);
     }
 
     public void updateEventInterest(int position, String interested, String id) {

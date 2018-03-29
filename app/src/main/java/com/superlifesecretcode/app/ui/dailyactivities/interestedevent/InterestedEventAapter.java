@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
+import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventdata;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -33,7 +34,6 @@ import java.util.List;
 public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventAapter.ItemViewHolder> {
     private final List<Event> list;
     private final LanguageResponseData coversionData;
-    private final ArrayList<EventsInfoModel> infoList;
     TextView textViewInterested;
     private Context mContext;
     boolean isToday;
@@ -46,7 +46,6 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
         this.list = list;
         this.mContext = mContext;
         this.coversionData = conversionData;
-        infoList = new ArrayList<>();
     }
 
     @Override
@@ -57,8 +56,8 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Event event = list.get(position);
-        EventsInfoModel eventsInfoModel = (EventsInfoModel) event.getData();
-        holder.textViewTitle.setText(eventsInfoModel.getAnnouncement_name());
+        InterestedEventdata eventsInfoModel = (InterestedEventdata) event.getData();
+        holder.textViewTitle.setText(eventsInfoModel.getTitle());
         ImageLoadUtils.loadImage(eventsInfoModel.getImage(), holder.imageView);
         holder.textAddress.setText(eventsInfoModel.getVenue());
         holder.layoutInterested.setSelected(eventsInfoModel.getUserIntrested() != null && eventsInfoModel.getUserIntrested().equalsIgnoreCase("1"));
@@ -66,15 +65,15 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
             holder.textViewDate.setText(coversionData.getToday());
         } else {
             holder.textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date()));
+                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getEvent_date()));
         }
 
-        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getAnnouncement_time()));
+        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getEvent_time()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Spanned spanned = Html.fromHtml(eventsInfoModel.getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
+            Spanned spanned = Html.fromHtml(eventsInfoModel.getDescription(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);
         } else {
-            Spanned spanned = Html.fromHtml(eventsInfoModel.getAnnouncement_description());
+            Spanned spanned = Html.fromHtml(eventsInfoModel.getDescription());
             holder.textViewDesc.setText(spanned);
         }
     }
@@ -112,13 +111,18 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
 
         @Override
         public void onClick(View v) {
-            infoList.clear();
-            EventsInfoModel infoModel = (EventsInfoModel) list.get(getAdapterPosition()).getData();
-            infoList.add(infoModel);
+
+            InterestedEventdata eventsInfoModel = (InterestedEventdata) list.get(getAdapterPosition()).getData();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("events", infoList);
-            bundle.putInt("position", getAdapterPosition());
-            CommonUtils.startActivity((AppCompatActivity) mContext, EventDetailsActivity.class, bundle, false);
+            bundle.putString("id", eventsInfoModel.getEvent_id());
+            if (eventsInfoModel.getEvent_type().equalsIgnoreCase("1")) {
+                CommonUtils.startActivity((AppCompatActivity) mContext, InterestedEventActivityDetailsActivity.class, bundle, false);
+            }
+            //            infoList.add(infoModel);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("events", infoList);
+//            bundle.putInt("position", getAdapterPosition());
+//            CommonUtils.startActivity((AppCompatActivity) mContext, EventDetailsActivity.class, bundle, false);
         }
     }
 }

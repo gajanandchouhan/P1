@@ -33,12 +33,13 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
         view = newsView;
     }
 
-    public void getAcivities(HashMap<String, String> params, Map<String, String> headers) {
+    public void getAcivities(HashMap<String, String> params, Map<String, String> headers, boolean showProgress) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
-        view.showProgress();
+        if (showProgress)
+            view.showProgress();
         ApiController apiController = ApiController.getInstance();
         apiController.callWithHeader(mContext, RequestType.REQ_GET_COUNTRY_ACTIVITY, new ResponseHandler<CountryActivitiesResponseModel>() {
             @Override

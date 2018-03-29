@@ -11,14 +11,14 @@ import java.util.List;
  */
 
 public class InterestedEventResponseModel extends BaseResponseModel {
-    private List<EventsInfoModel> data;
+    private List<InterestedEventdata> data;
 
 
-    public List<EventsInfoModel> getData() {
+    public List<InterestedEventdata> getData() {
         return data;
     }
 
-    public void setData(List<EventsInfoModel> data) {
+    public void setData(List<InterestedEventdata> data) {
         this.data = data;
     }
 }

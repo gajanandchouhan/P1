@@ -3,7 +3,9 @@ package com.superlifesecretcode.app.ui.dailyactivities.interestedevent;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
+import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
@@ -62,7 +64,67 @@ public class InterestedEventPresenter extends BasePresenter<InterestedEventView>
         }, params, headers);
     }
 
+    public void getDetails(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_MARK_READ, new ResponseHandler<SingleNewsResponseModel>() {
+            @Override
+            public void onResponse(SingleNewsResponseModel newsResponseModel) {
+                view.hideProgress();
+                if (newsResponseModel != null) {
+                    if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setDetails(newsResponseModel);
+                    } else
+                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
 
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
+
+    public void makeInterested(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_INTERESTED_EVENT, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel newsResponseModel) {
+                view.hideProgress();
+                if (newsResponseModel != null) {
+                    if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.onUpdateInteresed();
+                    } else
+                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
 }
 
 

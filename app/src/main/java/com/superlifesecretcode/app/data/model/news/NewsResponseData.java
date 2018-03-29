@@ -30,6 +30,7 @@ public class NewsResponseData implements Serializable {
     private String shared_by_user;
     private String readed_by_user;
     private String created_at;
+    private String userIntrested;
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
@@ -213,5 +214,13 @@ public class NewsResponseData implements Serializable {
 
     public void setReaded_by_user(String readed_by_user) {
         this.readed_by_user = readed_by_user;
+    }
+
+    public String getUserIntrested() {
+        return userIntrested;
+    }
+
+    public void setUserIntrested(String userIntrested) {
+        this.userIntrested = userIntrested;
     }
 }

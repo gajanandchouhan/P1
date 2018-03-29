@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         this.callback = callBack;
         if (!CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_LOCATION)) {
             ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_LOCATION, PermissionConstant.CODE_LOCATION);
-        }else {
+        } else {
             locationManager = new MyLocationManager(this) {
                 @Override
                 protected void locationUpdate(Location location) {
@@ -110,10 +110,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
 
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        boolean ret=false;
+        boolean ret = false;
         try {
             View view = getCurrentFocus();
             ret = super.dispatchTouchEvent(event);
