@@ -1,26 +1,28 @@
 package com.superlifesecretcode.app.ui.countryactivities;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.countryactivities.CounActivtyResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
-import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.events.EventAapter;
+import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +59,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
 
     @Override
     protected void initializeView() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         editTextSearch = findViewById(R.id.edit_text_search);
@@ -109,6 +112,16 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                         DELAY
                 );
 
+            }
+        });
+        editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    CommonUtils.hideKeyboard(CountryAcitvitiesActivity.this);
+                    return true;
+                }
+                return false;
             }
         });
     }

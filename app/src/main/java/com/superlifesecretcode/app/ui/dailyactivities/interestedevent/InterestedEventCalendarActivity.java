@@ -45,6 +45,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     InterestedEventAapter adapter;
     List<Event> eventList;
     private Date date;
+    private ImageView imageViewProfile;
     //  private ImageView imageViewProfile;
 
     @Override
@@ -63,10 +64,11 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
         imageViewPre.setOnClickListener(this);
         textViewDay = findViewById(R.id.textView_day);
         recyclerView = findViewById(R.id.recycler_view);
-//        imageViewProfile = findViewById(R.id.imageView_profile);
-//        imageViewProfile.setVisibility(View.VISIBLE);
-//        imageViewProfile.setImageResource(R.drawable.date);
-//        imageViewProfile.setOnClickListener(this);
+        imageViewProfile = findViewById(R.id.imageView_profile);
+        imageViewProfile.setVisibility(View.VISIBLE);
+        imageViewProfile.setImageResource(R.drawable.date);
+        findViewById(R.id.imageView_add_event).setVisibility(View.INVISIBLE);
+        imageViewProfile.setOnClickListener(this);
         date = new Date();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         compactCalendarView.setUseThreeLetterAbbreviation(true);

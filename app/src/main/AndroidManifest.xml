@@ -148,6 +148,7 @@
 
         <activity
             android:name=".ui.countryactivities.CountryAcitvitiesActivity"
+            android:configChanges="keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dailyactivities.interestedevent.InterestedEventActivityDetailsActivity"

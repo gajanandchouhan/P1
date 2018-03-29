@@ -18,6 +18,7 @@ import com.superlifesecretcode.app.data.model.personalevent.PersonalEventRespons
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventPresenter;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -65,10 +66,11 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         imageViewNext.setOnClickListener(this);
         imageViewPre.setOnClickListener(this);
         textViewDay = findViewById(R.id.textView_day);
+        findViewById(R.id.imageView_add_event).setOnClickListener(this);
         recyclerView = findViewById(R.id.recycler_view);
         imageViewProfile = findViewById(R.id.imageView_profile);
         imageViewProfile.setVisibility(View.VISIBLE);
-        imageViewProfile.setImageResource(R.drawable.add_event);
+        imageViewProfile.setImageResource(R.drawable.date);
         imageViewProfile.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         compactCalendarView.setUseThreeLetterAbbreviation(true);
@@ -154,6 +156,9 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_profile:
+                CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
+                break;
+            case R.id.imageView_add_event:
                 CommonUtils.startActivity(this, AddNewEventCalendarActivity.class);
                 break;
             case R.id.imageView_next:

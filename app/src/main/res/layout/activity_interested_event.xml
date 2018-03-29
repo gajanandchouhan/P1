@@ -15,16 +15,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:tint="@android:color/holo_red_dark"
             android:padding="@dimen/_5sdp"
-            android:src="@drawable/left_arrow" />
+            android:src="@drawable/left_arrow"
+            android:tint="@android:color/holo_red_dark" />
 
         <TextView
             android:id="@+id/textView_month_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_previous"
+            android:layout_toLeftOf="@+id/imageView_next"
+            android:layout_toRightOf="@+id/imageView_previous"
+            android:layout_toStartOf="@+id/imageView_next"
             android:fontFamily="@font/bold"
             android:padding="@dimen/_5sdp"
             android:text="March 2018"
@@ -34,13 +38,24 @@
         <ImageView
             android:id="@+id/imageView_next"
             android:layout_width="wrap_content"
-            android:tint="@android:color/holo_red_dark"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageView_add_event"
+            android:layout_toStartOf="@+id/imageView_add_event"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/right_arrow"
+            android:tint="@android:color/holo_red_dark" />
+
+        <ImageView
+            android:id="@+id/imageView_add_event"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/right_arrow" />
+            android:paddingRight="@dimen/_10sdp"
+            android:src="@drawable/add_event" />
+
     </RelativeLayout>
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"

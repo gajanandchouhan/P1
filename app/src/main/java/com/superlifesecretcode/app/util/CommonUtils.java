@@ -22,6 +22,8 @@ import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -324,5 +326,17 @@ public class CommonUtils {
         mTimePicker.show();
     }
 
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        if (inputManager != null) {
+            inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
 }
