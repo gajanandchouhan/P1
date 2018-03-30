@@ -35,7 +35,6 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
 
     @Override
     protected int getContentView() {
-        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_news_details;
     }
 
@@ -49,7 +48,7 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
         setUpToolbar();
         pager = findViewById(R.id.pager);
         if (list != null) {
-            newsAapter = new NewsPagerAdapter(this, list,conversionData);
+            newsAapter = new NewsPagerAdapter(this, list, conversionData);
             pager.setAdapter(newsAapter);
             pager.setCurrentItem(postion);
         }
@@ -119,7 +118,6 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
 
     @Override
     protected void onPause() {
-        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
         super.onPause();
     }
 

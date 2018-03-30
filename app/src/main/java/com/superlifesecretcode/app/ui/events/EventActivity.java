@@ -40,7 +40,6 @@ public class EventActivity extends BaseActivity implements EventView {
 
     @Override
     protected int getContentView() {
-        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_event;
     }
 
@@ -119,7 +118,6 @@ public class EventActivity extends BaseActivity implements EventView {
 
     @Override
     protected void onPause() {
-        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
         super.onPause();
     }
 
@@ -146,7 +144,7 @@ public class EventActivity extends BaseActivity implements EventView {
             } else {
                 if (upcomingList != null) {
                     list.addAll(upcomingList);
-                    newsAapter.setToday(true);
+                    newsAapter.setToday(false);
                     newsAapter.notifyDataSetChanged();
                 }
             }

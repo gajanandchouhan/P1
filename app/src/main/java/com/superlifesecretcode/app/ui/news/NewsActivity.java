@@ -31,7 +31,6 @@ public class NewsActivity extends BaseActivity implements NewsView {
 
     @Override
     protected int getContentView() {
-        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_news;
     }
 
@@ -85,7 +84,6 @@ public class NewsActivity extends BaseActivity implements NewsView {
 
     @Override
     protected void onPause() {
-        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
         super.onPause();
     }
 

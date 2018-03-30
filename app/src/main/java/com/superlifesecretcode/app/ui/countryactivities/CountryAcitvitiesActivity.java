@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
@@ -22,6 +24,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.picker.DateRangePicker;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class CountryAcitvitiesActivity extends BaseActivity implements CountryActivitiesView {
+public class CountryAcitvitiesActivity extends BaseActivity implements CountryActivitiesView, View.OnClickListener {
 
 
     private RecyclerView recyclerView;
@@ -49,11 +52,12 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     private String title;
     private boolean isUpdated = false;
     EditText editTextSearch;
+    private DateRangePicker rangePicker;
+    private ImageView imageViewDate;
 
 
     @Override
     protected int getContentView() {
-        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_country_activities;
     }
 
@@ -63,6 +67,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         editTextSearch = findViewById(R.id.edit_text_search);
+        imageViewDate = findViewById(R.id.imageView_date);
+        imageViewDate.setOnClickListener(this);
+        imageViewDate.setVisibility(View.GONE);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         title = bundle.getString("title");
         isStudyGroup = bundle.getBoolean("isStudyGroup");
@@ -140,6 +147,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getPosition()) {
                 case 0:
+                    imageViewDate.setVisibility(View.GONE);
                     list.clear();
                     if (todayList != null) {
                         list.addAll(todayList);
@@ -148,6 +156,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                     countryActivityAapter.notifyDataSetChanged();
                     break;
                 case 1:
+                    imageViewDate.setVisibility(View.VISIBLE);
                     list.clear();
                     if (upcomingList != null) {
                         list.addAll(upcomingList);
@@ -187,7 +196,6 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
 
     @Override
     protected void onPause() {
-        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
         super.onPause();
     }
 
@@ -265,10 +273,34 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
             } else {
                 if (upcomingList != null) {
                     list.addAll(upcomingList);
-                    countryActivityAapter.setToday(true);
+                    countryActivityAapter.setToday(false);
                     countryActivityAapter.notifyDataSetChanged();
                 }
             }
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imageView_date:
+                showDateRnagePicker();
+                break;
+        }
+    }
+
+    private void showDateRnagePicker() {
+        if (rangePicker == null) {
+            rangePicker = new DateRangePicker(this);
+            rangePicker.setOnClickListner(new DateRangePicker.OnClickListner() {
+                @Override
+                public void onDateRnageSelected(String startDate, String endDate) {
+                    CommonUtils.showLog("DATE", startDate + ", " + endDate);
+                    getEvents("", startDate, endDate, true);
+                    rangePicker.dismiss();
+                }
+            });
+        }
+        rangePicker.show();
     }
 }

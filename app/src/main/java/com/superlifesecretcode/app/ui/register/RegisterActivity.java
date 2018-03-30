@@ -76,7 +76,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected int getContentView() {
-        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_register;
     }
 
@@ -151,7 +150,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 
     @Override

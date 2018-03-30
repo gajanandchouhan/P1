@@ -125,9 +125,11 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.dailyactivities.interestedevent.InterestedEventCalendarActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dailyactivities.personalevent.PersonalEventCalendarActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.MyFirebaseInstanceIdService">

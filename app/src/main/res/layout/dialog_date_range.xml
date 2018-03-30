@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/white_rounded_corner"
+    android:padding="@dimen/_15sdp">
+
+    <TextView
+        android:id="@+id/textVew_label_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/reguler"
+        android:text="Start Date"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/_13sdp" />
+
+    <TextView
+        android:id="@+id/textView_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/rounded_gray"
+        android:fontFamily="@font/reguler"
+        android:gravity="center_vertical"
+        android:hint="Select Date"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/_13sdp" />
+
+    <TextView
+        android:id="@+id/textVew_label_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/reguler"
+        android:text="End Date"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/_13sdp" />
+
+    <TextView
+        android:id="@+id/textView_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/rounded_gray"
+        android:fontFamily="@font/reguler"
+        android:gravity="center_vertical"
+        android:hint="Select Date"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/_13sdp" />
+
+
+    <Button
+        android:id="@+id/button_ok"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/red_fill_rounded"
+        android:text="OK"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_13sdp" />
+
+</LinearLayout>

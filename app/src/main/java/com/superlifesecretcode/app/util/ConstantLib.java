@@ -16,11 +16,11 @@ public interface ConstantLib {
     int TYPE_ANNOUNCEMENT = 5;
     int TYPE_SHARING = 6;
     String INPUT_DATE_ONLY_FORMATE = "yyyy-MM-dd";
-    String OUTPUT_DATE_FORMATE = "dd MMM, yyyy";
+    String OUTPUT_DATE_FORMATE = "dd MMMM, yyyy";
     String INPUT_DATE_TIME_FORMATE = "yyyy-MM-dd HH:mm:ss";
     int TYPE_DAILY_ACTIVITIES = 7;
     int TYPE_COUNTRY_ACTIVITIES = 8;
-    String OUTPUT_DATE_TIME_FORMATE = "dd MMM, yyyy hh:mm a";
+    String OUTPUT_DATE_TIME_FORMATE = "dd MMMM, yyyy hh:mm a";
     String STATUS_SUBMITED = "0";
     String STATUS_PUBLISHED = "1";
     String STATUS_REJECTED = "2";

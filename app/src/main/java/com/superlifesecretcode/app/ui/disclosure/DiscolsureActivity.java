@@ -23,7 +23,6 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected int getContentView() {
-        overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         return R.layout.activity_discolsure;
     }
 
@@ -102,6 +101,5 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 }

@@ -163,7 +163,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
                 }
                 break;
             case R.id.textView_date:
-                showDatePicker();
+                showDatePicker(System.currentTimeMillis()-1000);
                 break;
             case R.id.textView_time:
                 showTimePicker();
@@ -215,7 +215,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
         presenter.addEvent(params, headers);
     }
 
-    private void showDatePicker() {
+    private void showDatePicker(long minDate) {
         CommonUtils.showDatePicker(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -223,7 +223,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
                 date = CommonUtils.getAppendedDate(year, month, dayOfMonth);
                 textViewDate.setText(fromatttedDate);
             }
-        });
+        },minDate);
     }
 
     private void showTimePicker() {

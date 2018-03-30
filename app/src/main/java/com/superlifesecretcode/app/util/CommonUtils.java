@@ -225,7 +225,20 @@ public class CommonUtils {
         }
         return epoch;
     }
-
+    public static long getDateInMilis(String dateTime) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date = null;
+        try {
+            date = df.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long epoch = 0;
+        if (date != null) {
+            epoch = date.getTime();
+        }
+        return epoch;
+    }
     public static void showToast(Context mContext, String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
@@ -304,14 +317,14 @@ public class CommonUtils {
     }
 
 
-    public static void showDatePicker(Context activity, DatePickerDialog.OnDateSetListener listener) {
+    public static void showDatePicker(Context activity, DatePickerDialog.OnDateSetListener listener,long minDate) {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         final int day = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 activity, listener, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.getDatePicker().setMinDate(minDate);
         datePickerDialog.show();
     }
 
