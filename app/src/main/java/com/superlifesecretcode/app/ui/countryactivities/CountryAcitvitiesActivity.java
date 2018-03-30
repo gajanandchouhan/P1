@@ -90,7 +90,8 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         tabLayout.addOnTabSelectedListener(listener);
         tabLayout.getTabAt(0).setText(conversionData.getToday());
         tabLayout.getTabAt(1).setText(conversionData.getUpcoming());
-        getEvents("", "", "", true);
+        countryName = userData.getCountryName();
+        getEvents(countryName, "", "", true);
         editTextSearch.addTextChangedListener(new TextWatcher() {
             private Timer timer = new Timer();
             private final long DELAY = 500; // milliseconds
@@ -145,7 +146,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         super.onResume();
         if (isUpdated) {
             isUpdated = false;
-            getEvents("", "", "", true);
+            getEvents(countryName, "", "", true);
         }
     }
 
@@ -322,7 +323,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                 @Override
                 public void onDateRnageSelected(String startDate, String endDate) {
                     CommonUtils.showLog("DATE", startDate + ", " + endDate);
-                    getEvents("", startDate, endDate, true);
+                    getEvents(countryName, startDate, endDate, true);
                     rangePicker.dismiss();
                 }
             });
