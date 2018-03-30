@@ -117,9 +117,10 @@ public class CommonUtils {
         }
     }
 
-    public static void showAlert(Context baseActivity, String message, String positive, String negative, final ClickListner clickListner) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity).setMessage(message);
+    public static void showAlert(Context baseActivity, String message, String positive, String negative, final com.superlifesecretcode.app.ui.picker.AlertDialog.OnClickListner clickListner) {
+        com.superlifesecretcode.app.ui.picker.AlertDialog dialog = new com.superlifesecretcode.app.ui.picker.AlertDialog(baseActivity, message, positive, negative, clickListner);
+        dialog.show();
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity).setMessage(message);
         if (negative != null && !negative.isEmpty()) {
             builder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
                 @Override
@@ -146,7 +147,7 @@ public class CommonUtils {
                 }
             });
         }
-        builder.show();
+        builder.show();*/
     }
 
 
@@ -225,6 +226,7 @@ public class CommonUtils {
         }
         return epoch;
     }
+
     public static long getDateInMilis(String dateTime) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = null;
@@ -239,6 +241,7 @@ public class CommonUtils {
         }
         return epoch;
     }
+
     public static void showToast(Context mContext, String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
@@ -317,7 +320,7 @@ public class CommonUtils {
     }
 
 
-    public static void showDatePicker(Context activity, DatePickerDialog.OnDateSetListener listener,long minDate) {
+    public static void showDatePicker(Context activity, DatePickerDialog.OnDateSetListener listener, long minDate) {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);

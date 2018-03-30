@@ -17,6 +17,7 @@ import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -107,7 +108,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
     private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
         String positive_resp = list.get(clikedPostion).getPositive_resp();
         String negative_resp = list.get(clikedPostion).getNegative_resp();
-        CommonUtils.showAlert(mContext, alert_text, positive_resp, negative_resp, new CommonUtils.ClickListner() {
+        CommonUtils.showAlert(mContext, alert_text, positive_resp, negative_resp, new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
                 if (alertModel1 != null) {

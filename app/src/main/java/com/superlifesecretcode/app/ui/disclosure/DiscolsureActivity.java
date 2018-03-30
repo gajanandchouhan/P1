@@ -12,6 +12,7 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.language.LanguageActivity;
 import com.superlifesecretcode.app.ui.login.LoginActivity;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.register.RegisterActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.GeoCoderUtils;
@@ -66,7 +67,7 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
     }
 
     protected void showInternetAlert() {
-        CommonUtils.showAlert(this, getString(R.string.no_internet), "OK", "CANCEL", new CommonUtils.ClickListner() {
+        CommonUtils.showAlert(this, getString(R.string.no_internet), "OK", "CANCEL", new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
             }

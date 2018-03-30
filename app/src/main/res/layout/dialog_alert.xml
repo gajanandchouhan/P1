@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/bold"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/app_name"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/_15sdp" />
+
+    <TextView
+        android:id="@+id/textView_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/reguler"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:text="@string/app_name"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/_13sdp" />
+
+    <RelativeLayout
+        android:id="@+id/layout_positive_negative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp">
+
+        <Button
+            android:id="@+id/button_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/rounded_gray"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <Button
+            android:id="@+id/button_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_gray"
+            android:text="Ok"
+            android:textAllCaps="false"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/button_neutral"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/rounded_gray"
+        android:text="Ok"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/_13sdp"
+        android:visibility="gone" />
+</LinearLayout>

@@ -30,6 +30,7 @@ import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
@@ -471,7 +472,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
         String positive_resp = list.get(clikedPostion).getPositive_resp();
         String negative_resp = list.get(clikedPostion).getNegative_resp();
-        CommonUtils.showAlert(this, alert_text, positive_resp, negative_resp, new CommonUtils.ClickListner() {
+        CommonUtils.showAlert(this, alert_text, positive_resp, negative_resp, new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
                 if (alertModel1 != null) {

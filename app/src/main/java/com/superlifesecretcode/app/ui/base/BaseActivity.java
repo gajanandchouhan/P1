@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.MyLocationManager;
 import com.superlifesecretcode.app.util.PermissionConstant;
@@ -96,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     protected void showAlert() {
-        CommonUtils.showAlert(this, "You have to allow location to use this app.", "Allow", "Cancel", new CommonUtils.ClickListner() {
+        CommonUtils.showAlert(this, "You have to allow location to use this app.", "Allow", "Cancel", new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
                 getCurrentLocation(callback);
