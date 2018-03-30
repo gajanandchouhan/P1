@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
+import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
@@ -72,13 +73,13 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callWithHeader(mContext, RequestType.REQ_INTERESTED_EVENT, new ResponseHandler<BaseResponseModel>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_MAKEINTERESTED_COUNTRY_ACTIVITY, new ResponseHandler<BaseResponseModel>() {
             @Override
             public void onResponse(BaseResponseModel newsResponseModel) {
                 view.hideProgress();
                 if (newsResponseModel != null) {
                     if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-//                        view.onUpdateInteresed();
+                        view.onUpdateInteresed();
                     } else
                         CommonUtils.showToast(mContext, newsResponseModel.getMessage());
                 } else {
@@ -96,5 +97,67 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
         }, params, headers);
     }
 
+    public void getCountry() {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGet(mContext, RequestType.REQ_GET_COUNTRY, new ResponseHandler<CountryResponseModel>() {
+            @Override
+            public void onResponse(CountryResponseModel countryResponseModel) {
+                view.hideProgress();
+                if (countryResponseModel != null) {
+                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setCountryData(countryResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
 
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        });
+    }
+
+    public void getStates(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_GET_STATE, new ResponseHandler<CountryResponseModel>() {
+            @Override
+            public void onResponse(CountryResponseModel countryResponseModel) {
+                view.hideProgress();
+                if (countryResponseModel != null) {
+                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setStateData(countryResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
+    }
 }

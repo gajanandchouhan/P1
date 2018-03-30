@@ -18,12 +18,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CounActivtyResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DateRangePicker;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -54,7 +56,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     EditText editTextSearch;
     private DateRangePicker rangePicker;
     private ImageView imageViewDate;
-
+    private TextView textViewCountry;
+    private CountryStatePicker countryStatePicker;
+    String countryName = "";
 
     @Override
     protected int getContentView() {
@@ -68,6 +72,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         editTextSearch = findViewById(R.id.edit_text_search);
         imageViewDate = findViewById(R.id.imageView_date);
+        textViewCountry = findViewById(R.id.textView_country);
+        textViewCountry.setOnClickListener(this);
+        textViewCountry.setText(userData.getCountry_code().toUpperCase());
         imageViewDate.setOnClickListener(this);
         imageViewDate.setVisibility(View.GONE);
         Bundle bundle = getIntent().getBundleExtra("bundle");
@@ -207,33 +214,11 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         return super.onOptionsItemSelected(item);
     }
 
-   /* @Override
-    public void setEventData(EventResponseModel newsResponseModel) {
-        if (newsResponseModel.getData() != null) {
-            todayList = newsResponseModel.getData().getToday();
-            upcomingList = newsResponseModel.getData().getUpcoming();
-            list.clear();
-            if (tabLayout.getSelectedTabPosition() == 0) {
-                if (todayList != null) {
-                    list.addAll(todayList);
-                    newsAapter.setToday(true);
-                    newsAapter.notifyDataSetChanged();
-                }
-            } else {
-                if (upcomingList != null) {
-                    list.addAll(upcomingList);
-                    newsAapter.setToday(true);
-                    newsAapter.notifyDataSetChanged();
-                }
-            }
-        }
-    }
-
     @Override
     public void onUpdateInteresed() {
         list.get(position).setUserIntrested(interested);
-        newsAapter.notifyDataSetChanged();
-    }*/
+        countryActivityAapter.notifyDataSetChanged();
+    }
 
     private void getEvents(String keyword, String startDate, String endDate, boolean showProgress) {
         Map<String, String> headers = new HashMap<>();
@@ -244,6 +229,10 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         params.put("startDate", startDate);
         params.put("endDate", endDate);
         presenter.getAcivities(params, headers, showProgress);
+    }
+
+    private void getCountry() {
+        presenter.getCountry();
     }
 
     public void updateEventInterest(int position, String interested, String id) {
@@ -281,10 +270,47 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     }
 
     @Override
+    public void setCountryData(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewCountry.setText(country.getCountrycode());
+                String id = country.getId();
+                countryName = country.getName();
+                countryStatePicker.dismiss();
+                getState(id);
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    private void getState(String countryId) {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("country_id", countryId);
+        presenter.getStates(body);
+    }
+
+    @Override
+    public void setStateData(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                countryStatePicker.dismiss();
+                String stateName = country.getName();
+                getEvents(stateName, "", "", true);
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_date:
                 showDateRnagePicker();
+                break;
+            case R.id.textView_country:
+                getCountry();
                 break;
         }
     }

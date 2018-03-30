@@ -167,4 +167,12 @@ public interface ApiInterface {
     @POST("activities")
     Observable<CountryActivitiesResponseModel> getCountryAcivities(@PartMap() Map<String, RequestBody> partMap,
                                                                    @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("ca_attendance")
+    Observable<BaseResponseModel> makeCountryActivityInterested(@PartMap() Map<String, RequestBody> partMap,
+                                                 @HeaderMap Map<String, String> headers);
+
+
 }

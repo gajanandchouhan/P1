@@ -18,6 +18,7 @@ import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.ShareListView;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -48,6 +49,12 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
+        super.onBackPressed();
     }
 
     @Override

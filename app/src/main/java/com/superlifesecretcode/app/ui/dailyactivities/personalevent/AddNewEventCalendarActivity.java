@@ -100,6 +100,12 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
         setUpLocalData();
     }
 
+    @Override
+    public void onBackPressed() {
+        CommonUtils.startActivity(this, PersonalEventCalendarActivity.class);
+        super.onBackPressed();
+    }
+
     private void setUpLocalData() {
         if (eventResponseData != null) {
             id = eventResponseData.getActivity_id();
@@ -163,7 +169,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
                 }
                 break;
             case R.id.textView_date:
-                showDatePicker(System.currentTimeMillis()-1000);
+                showDatePicker(System.currentTimeMillis() - 1000);
                 break;
             case R.id.textView_time:
                 showTimePicker();
@@ -223,7 +229,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
                 date = CommonUtils.getAppendedDate(year, month, dayOfMonth);
                 textViewDate.setText(fromatttedDate);
             }
-        },minDate);
+        }, minDate);
     }
 
     private void showTimePicker() {

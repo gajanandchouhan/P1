@@ -249,6 +249,12 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<CountryActivitiesResponseModel>(handler));
                     break;
+                case REQ_MAKEINTERESTED_COUNTRY_ACTIVITY:
+                    Observable<BaseResponseModel> cpuntInterestObservable = apiInterface.makeCountryActivityInterested(stringMultipartParamsParams, header);
+                    cpuntInterestObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

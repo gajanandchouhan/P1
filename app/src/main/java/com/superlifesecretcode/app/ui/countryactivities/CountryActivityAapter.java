@@ -109,17 +109,17 @@ public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityA
 
         @Override
         public void onClick(View v) {
-           /* if (v.getId() == R.id.button_interested) {
+            if (v.getId() == R.id.button_interested) {
                 String userIntrested = list.get(getAdapterPosition()).getUserIntrested();
                 if (userIntrested != null && userIntrested.equalsIgnoreCase("1")) {
-                    ((EventActivity) mContext).updateEventInterest(getAdapterPosition(), "0", list.get(getAdapterPosition()).getAnnouncement_id());
+                    ((CountryAcitvitiesActivity) mContext).updateEventInterest(getAdapterPosition(), "0", list.get(getAdapterPosition()).getActivity_id());
                 } else {
-                    ((EventActivity) mContext).updateEventInterest(getAdapterPosition(), "1", list.get(getAdapterPosition()).getAnnouncement_id());
+                    ((CountryAcitvitiesActivity) mContext).updateEventInterest(getAdapterPosition(), "1", list.get(getAdapterPosition()).getActivity_id());
                 }
 
             } else if (v.getId() == R.id.imageView_share) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString());
-            } else {
+                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getDescription()).toString());
+            } /*else {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("events", (ArrayList) list);
                 bundle.putInt("position", getAdapterPosition());
