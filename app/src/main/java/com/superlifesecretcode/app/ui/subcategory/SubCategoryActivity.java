@@ -300,6 +300,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     private void handleBottomClick(int tag) {
         switch (tag) {
             case ConstantLib.TYPE_HOME:
+                onBackPressed();
                 break;
             case ConstantLib.TYPE_NEWS:
                 CommonUtils.startActivity(this, NewsActivity.class);

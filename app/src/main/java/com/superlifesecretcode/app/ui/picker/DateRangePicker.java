@@ -47,7 +47,7 @@ public class DateRangePicker extends Dialog implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_date_range);
         getWindow().setBackgroundDrawableResource(R.drawable.white_rounded_corner);
-        getWindow().setLayout(CommonUtils.getScreenWidth(context) - 200, WindowManager.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(CommonUtils.getScreenWidth(context) - 100, WindowManager.LayoutParams.WRAP_CONTENT);
         buttonOk = findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(this);
         textViewFromDate = findViewById(R.id.textView_start_date);

@@ -43,7 +43,7 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_alert);
         getWindow().setBackgroundDrawableResource(R.drawable.alert_bg);
-        getWindow().setLayout(CommonUtils.getScreenWidth(context) - 200, WindowManager.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(CommonUtils.getScreenWidth(context) - 100, WindowManager.LayoutParams.WRAP_CONTENT);
         buttonPositive = findViewById(R.id.button_positive);
         buttonNegative = findViewById(R.id.button_negative);
         textViewMessage = findViewById(R.id.textView_message);
