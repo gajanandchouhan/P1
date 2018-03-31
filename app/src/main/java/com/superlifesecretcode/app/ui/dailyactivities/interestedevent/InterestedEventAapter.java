@@ -19,6 +19,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventdata;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.ui.countryactivities.CountryActivityDetailsActivity;
 import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -115,8 +116,11 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
             InterestedEventdata eventsInfoModel = (InterestedEventdata) list.get(getAdapterPosition()).getData();
             Bundle bundle = new Bundle();
             bundle.putString("id", eventsInfoModel.getEvent_id());
+            bundle.putBoolean("from_calendar", true);
             if (eventsInfoModel.getEvent_type().equalsIgnoreCase("1")) {
                 CommonUtils.startActivity((AppCompatActivity) mContext, InterestedEventActivityDetailsActivity.class, bundle, false);
+            } else if (eventsInfoModel.getEvent_type().equalsIgnoreCase("2")) {
+                CommonUtils.startActivity((AppCompatActivity) mContext, CountryActivityDetailsActivity.class, bundle, false);
             }
             //            infoList.add(infoModel);
 //            Bundle bundle = new Bundle();

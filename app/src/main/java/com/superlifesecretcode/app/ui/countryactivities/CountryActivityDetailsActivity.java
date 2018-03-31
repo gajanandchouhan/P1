@@ -1,0 +1,240 @@
+package com.superlifesecretcode.app.ui.countryactivities;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spanned;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
+import com.superlifesecretcode.app.data.model.countryactivities.CounActivtyResponseData;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.news.NewsResponseData;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CountryActivityDetailsActivity extends BaseActivity implements View.OnClickListener, CountryActivitiesView {
+
+
+    private UserDetailResponseData userData;
+    private LanguageResponseData conversionData;
+    private CountryAcivitiesPresenter presenter;
+    private String id;
+    ImageView imageViewShare, imageView, imageViewMap;
+    RelativeLayout relativeLayout;
+    private TextView textViewTitle1, textViewTime, textViewInterested,
+            textViewAddr, textViewDesc;
+    private TextView textViewCountry, textViewCityState,
+            textViewName, textViewPhone, textViewEmail;
+    private boolean fromCalendar;
+    private String interested;
+    private CountryActivityInfoModel countryActivityInfoModel;
+    private String lat, lng;
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_country_activity_details;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fromCalendar) {
+            CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
+        }
+        super.onBackPressed();
+    }
+
+    private void showDirection() {
+        if (lat != null && !lat.isEmpty() && lng != null && !lng.isEmpty()) {
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//        mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        }
+    }
+
+    @Override
+    protected void initializeView() {
+        imageView = findViewById(R.id.imageView);
+        relativeLayout = findViewById(R.id.button_interested);
+        textViewTitle1 = findViewById(R.id.textView_title_event);
+        textViewTime = findViewById(R.id.textView_time);
+        textViewInterested = findViewById(R.id.textview_interested);
+        textViewAddr = findViewById(R.id.textView_addr);
+        imageViewShare = findViewById(R.id.imageView_share);
+        textViewDesc = findViewById(R.id.textView_desc);
+        textViewCountry = findViewById(R.id.textView_country);
+        textViewCityState = findViewById(R.id.textView_city_state);
+        textViewName = findViewById(R.id.textView_name);
+        textViewPhone = findViewById(R.id.textView_phone);
+        textViewEmail = findViewById(R.id.textView_email);
+        imageViewMap = findViewById(R.id.imageView_map);
+        imageViewMap.setOnClickListener(this);
+        userData = SuperLifeSecretPreferences.getInstance().getUserData();
+        conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        id = getIntent().getBundleExtra("bundle").getString("id");
+        fromCalendar = getIntent().getBundleExtra("bundle").getBoolean("from_calendar");
+        setUpToolbar();
+        getDetails();
+    }
+
+    private void getDetails() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("activity_id", id);
+        presenter.getDetails(params, headers);
+    }
+
+    private void setUpToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        TextView textViewTitle = findViewById(R.id.textView_title);
+        textViewTitle.setText(conversionData != null ? conversionData.getCountry_activities() : "Country Activities");
+    }
+
+    @Override
+    protected void initializePresenter() {
+        presenter = new CountryAcivitiesPresenter(this);
+        presenter.setView(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imageView_map:
+                showDirection();
+                break;
+        }
+    }
+
+
+    @Override
+    public void setCountyAcivityData(CounActivtyResponseData data) {
+
+    }
+
+    @Override
+    public void setCountryData(List<CountryResponseData> data) {
+
+    }
+
+    @Override
+    public void setStateData(List<CountryResponseData> data) {
+
+    }
+
+    @Override
+    public void onUpdateInteresed() {
+        if (fromCalendar) {
+            InterestedEventCalendarActivity.UPDATED = true;
+            onBackPressed();
+        } else {
+            CountryAcitvitiesActivity.UPDATED = true;
+        }
+        relativeLayout.setSelected(interested.equalsIgnoreCase("1"));
+        countryActivityInfoModel.setUserIntrested(interested);
+    }
+
+    @Override
+    public void setActivtyDetails(CountryActivityInfoModel data) {
+        setUpData(data);
+    }
+
+    private void setUpData(final CountryActivityInfoModel countryActivityInfoModel) {
+        if (countryActivityInfoModel != null) {
+            this.countryActivityInfoModel = countryActivityInfoModel;
+            textViewTitle1.setText(countryActivityInfoModel.getTitle());
+           /* if (newsResponseModel.getEnd_date() != null && !newsResponseModel.getEnd_date().isEmpty()) {
+                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time());
+                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time());
+                textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
+
+            } else {*//*
+                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
+            }*/
+            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, countryActivityInfoModel.getActivity_date() + " " + countryActivityInfoModel.getActivity_time()));
+            ImageLoadUtils.loadImage(countryActivityInfoModel.getImage(), imageView);
+            textViewAddr.setText(countryActivityInfoModel.getVenue());
+            textViewInterested.setText(conversionData.getInterested());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Spanned spanned = Html.fromHtml(countryActivityInfoModel.getDescription(), Html.FROM_HTML_MODE_LEGACY);
+                textViewDesc.setText(spanned);
+            } else {
+                Spanned spanned = Html.fromHtml(countryActivityInfoModel.getDescription());
+                textViewDesc.setText(spanned);
+            }
+            textViewName.setText(countryActivityInfoModel.getContact_name());
+            textViewCountry.setText(String.format("(%s)", countryActivityInfoModel.getCountryName()));
+            textViewCityState.setText(String.format("%s(%s)", countryActivityInfoModel.getCityName(), countryActivityInfoModel.getStateName()));
+            textViewEmail.setText(countryActivityInfoModel.getContact_email());
+            textViewPhone.setText(countryActivityInfoModel.getContact_no());
+            relativeLayout.setSelected(countryActivityInfoModel.getUserIntrested() != null && countryActivityInfoModel.getUserIntrested().equalsIgnoreCase("1"));
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String userIntrested = countryActivityInfoModel.getUserIntrested();
+                    if (userIntrested != null && userIntrested.equalsIgnoreCase("1")) {
+                        updateEventInterest("0", countryActivityInfoModel.getActivity_id());
+                    } else {
+                        updateEventInterest("1", countryActivityInfoModel.getActivity_id());
+                    }
+                }
+            });
+            String url = "http://maps.google.com/maps/api/staticmap?markers=color:blue%7C" + countryActivityInfoModel.getLatitude() + "," + countryActivityInfoModel.getLongitude() + "&zoom=13&size=640x116&sensor=true";
+            ImageLoadUtils.loadImage(url, imageViewMap);
+            imageViewShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CommonUtils.shareContent(CountryActivityDetailsActivity.this, Html.fromHtml(countryActivityInfoModel.getDescription()).toString());
+                }
+            });
+            lat = countryActivityInfoModel.getLatitude();
+            lng = countryActivityInfoModel.getLongitude();
+        }
+    }
+
+    public void updateEventInterest(String interested, String id) {
+        this.interested = interested;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("activity_id", id);
+        params.put("interest", interested);
+        params.put("user_id", userData.getUser_id());
+        presenter.makeInterested(params, headers);
+    }
+}

@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.countryactivities;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -119,12 +120,11 @@ public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityA
 
             } else if (v.getId() == R.id.imageView_share) {
                 CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getDescription()).toString());
-            } /*else {
+            } else {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("events", (ArrayList) list);
-                bundle.putInt("position", getAdapterPosition());
-                CommonUtils.startActivity((EventActivity) mContext, EventDetailsActivity.class, bundle, false);
-            }*/
+                bundle.putString("id", list.get(getAdapterPosition()).getActivity_id());
+                CommonUtils.startActivity((AppCompatActivity) mContext, CountryActivityDetailsActivity.class, bundle, false);
+            }
 
         }
     }

@@ -8,6 +8,7 @@ import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityDetailResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
@@ -254,6 +255,12 @@ public class ApiController implements RequestType {
                     cpuntInterestObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
+                case REQ_COUNTRY_ACTIVITY_DETAILS:
+                    Observable<CountryActivityDetailResponseModel> countryAcivitiesDetailsObservable = apiInterface.getCountryAcivityDetails(stringMultipartParamsParams, header);
+                    countryAcivitiesDetailsObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<CountryActivityDetailResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

@@ -39,6 +39,7 @@ import java.util.TimerTask;
 public class CountryAcitvitiesActivity extends BaseActivity implements CountryActivitiesView, View.OnClickListener {
 
 
+    public static boolean UPDATED;
     private RecyclerView recyclerView;
     private CountryActivityAapter countryActivityAapter;
     private LanguageResponseData conversionData;
@@ -52,13 +53,13 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     private String interested;
     private boolean isStudyGroup;
     private String title;
-    private boolean isUpdated = false;
     EditText editTextSearch;
     private DateRangePicker rangePicker;
     private ImageView imageViewDate;
     private TextView textViewCountry;
     private CountryStatePicker countryStatePicker;
-    String countryName = "";
+    private String stateId = "";
+    private String countryId = "";
 
     @Override
     protected int getContentView() {
@@ -90,8 +91,8 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         tabLayout.addOnTabSelectedListener(listener);
         tabLayout.getTabAt(0).setText(conversionData.getToday());
         tabLayout.getTabAt(1).setText(conversionData.getUpcoming());
-        countryName = userData.getCountryName();
-        getEvents(countryName, "", "", true);
+        countryId = userData.getCountry();
+        getEvents("", "", "", true);
         editTextSearch.addTextChangedListener(new TextWatcher() {
             private Timer timer = new Timer();
             private final long DELAY = 500; // milliseconds
@@ -144,9 +145,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     @Override
     protected void onResume() {
         super.onResume();
-        if (isUpdated) {
-            isUpdated = false;
-            getEvents(countryName, "", "", true);
+        if (UPDATED) {
+            UPDATED = false;
+            getEvents("", "", "", true);
         }
     }
 
@@ -221,6 +222,11 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         countryActivityAapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void setActivtyDetails(CountryActivityInfoModel data) {
+
+    }
+
     private void getEvents(String keyword, String startDate, String endDate, boolean showProgress) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
@@ -229,6 +235,8 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         params.put("keyword", keyword);
         params.put("startDate", startDate);
         params.put("endDate", endDate);
+        params.put("country_id", countryId);
+        params.put("state_id", stateId);
         presenter.getAcivities(params, headers, showProgress);
     }
 
@@ -276,10 +284,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
             @Override
             public void onPick(CountryResponseData country) {
                 textViewCountry.setText(country.getCountrycode());
-                String id = country.getId();
-                countryName = country.getName();
+                countryId = country.getId();
                 countryStatePicker.dismiss();
-                getState(id);
+                getState(countryId);
             }
         }, data);
         countryStatePicker.show();
@@ -297,8 +304,8 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
             @Override
             public void onPick(CountryResponseData country) {
                 countryStatePicker.dismiss();
-                String stateName = country.getName();
-                getEvents(stateName, "", "", true);
+                stateId = country.getId();
+                getEvents("", "", "", true);
             }
         }, data);
         countryStatePicker.show();
@@ -323,7 +330,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                 @Override
                 public void onDateRnageSelected(String startDate, String endDate) {
                     CommonUtils.showLog("DATE", startDate + ", " + endDate);
-                    getEvents(countryName, startDate, endDate, true);
+                    getEvents("", startDate, endDate, true);
                     rangePicker.dismiss();
                 }
             });

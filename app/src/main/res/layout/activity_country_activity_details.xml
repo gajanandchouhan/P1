@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView_title_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/bold"
+                    android:maxWidth="@dimen/_180sdp"
+                    android:text="Title"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="@dimen/_13sdp" />
+
+                <TextView
+                    android:id="@+id/textView_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/textView_title_event"
+                    android:layout_toLeftOf="@+id/imageView_share"
+                    android:layout_toRightOf="@+id/textView_title_event"
+                    android:layout_toStartOf="@+id/imageView_share"
+                    android:fontFamily="@font/bold"
+                    android:text="United states of America"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/_13sdp" />
+
+                <ImageView
+                    android:id="@+id/imageView_share"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/share_green" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView_city_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/reguler"
+                    android:text="City,State"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:id="@+id/textView_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/reguler"
+                    android:text="Date,Time "
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/_11sdp" />
+            </RelativeLayout>
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_placeholder" />
+
+            <TextView
+                android:id="@+id/textView_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/reguler"
+                android:text="Description"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="@dimen/_13sdp" />
+
+            <TextView
+                android:id="@+id/textView_contact_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:text="Contact Details"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/imageView_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/person" />
+
+
+                <TextView
+                    android:id="@+id/textView_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/imageView_contact"
+                    android:layout_toRightOf="@+id/imageView_contact"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/bold"
+                    android:text="Name"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:id="@+id/textView_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView_name"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/imageView_contact"
+                    android:layout_toRightOf="@+id/imageView_contact"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/bold"
+                    android:text="Name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_11sdp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/imageView_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/mail" />
+
+
+                <TextView
+                    android:id="@+id/textView_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/imageView_email"
+                    android:layout_toRightOf="@+id/imageView_email"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/reguler"
+                    android:text="xyz@mailinator.com"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/_11sdp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/imageView_addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location" />
+
+
+                <TextView
+                    android:id="@+id/textView_addr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/imageView_addr"
+                    android:layout_toRightOf="@+id/imageView_addr"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/reguler"
+                    android:text="160-161 , 2nd floor, PU-4, Scheme No.54, A.B. Road, (Behind C-21 Mall &amp; above Amway office), Indore, MP – 452010"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/_11sdp" />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imageView_map"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp" />
+
+            <RelativeLayout
+                android:id="@+id/button_interested"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/red_selecer"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp">
+
+                <TextView
+                    android:id="@+id/textview_interested"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/iterested_selector"
+                    android:fontFamily="@font/reguler"
+                    android:gravity="center"
+                    android:text="Interested"
+                    android:textColor="@color/interested_color"
+                    android:textSize="@dimen/_12sdp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

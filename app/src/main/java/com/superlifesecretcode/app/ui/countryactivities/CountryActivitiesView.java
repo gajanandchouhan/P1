@@ -2,6 +2,7 @@ package com.superlifesecretcode.app.ui.countryactivities;
 
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CounActivtyResponseData;
+import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
 import com.superlifesecretcode.app.ui.base.BaseView;
 
 import java.util.List;
@@ -18,4 +19,6 @@ interface CountryActivitiesView extends BaseView {
     void setStateData(List<CountryResponseData> data);
 
     void onUpdateInteresed();
+
+    void setActivtyDetails(CountryActivityInfoModel data);
 }
