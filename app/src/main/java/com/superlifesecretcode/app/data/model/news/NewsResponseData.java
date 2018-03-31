@@ -31,6 +31,24 @@ public class NewsResponseData implements Serializable {
     private String readed_by_user;
     private String created_at;
     private String userIntrested;
+    private String end_date;
+    private String end_time;
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;

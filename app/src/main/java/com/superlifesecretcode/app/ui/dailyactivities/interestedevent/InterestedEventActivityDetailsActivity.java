@@ -134,7 +134,15 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
     private void setUpData(final NewsResponseData newsResponseModel) {
         if (newsResponseModel != null) {
             textViewTitle1.setText(newsResponseModel.getAnnouncement_name());
-            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
+            if (newsResponseModel.getEnd_date() != null && !newsResponseModel.getEnd_date().isEmpty()) {
+                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time());
+                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time());
+                textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
+
+            } else {
+                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
+            }
+//            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
             ImageLoadUtils.loadImage(newsResponseModel.getImage(), imageView);
             textViewAddr.setText(newsResponseModel.getVenue());
             textViewInterested.setText(conversionData.getInterested());

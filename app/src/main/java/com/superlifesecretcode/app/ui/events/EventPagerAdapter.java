@@ -51,7 +51,14 @@ public class EventPagerAdapter extends PagerAdapter {
         TextView textViewAddr = layout.findViewById(R.id.textView_addr);
         ImageView imageViewShare = layout.findViewById(R.id.imageView_share);
         textViewTitle.setText(newsList.get(position).getAnnouncement_name());
-        textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time()));
+        if (newsList.get(position).getEnd_date() != null && !newsList.get(position).getEnd_date().isEmpty()) {
+            String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time());
+            String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getEnd_date() + " " + newsList.get(position).getEnd_time());
+            textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
+
+        } else {
+            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time()));
+        }
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         TextView textViewDesc = layout.findViewById(R.id.textView_desc);
         textViewAddr.setText(newsList.get(position).getVenue());
