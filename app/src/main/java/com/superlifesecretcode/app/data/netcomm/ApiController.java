@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
@@ -108,6 +109,12 @@ public class ApiController implements RequestType {
                 standardEventObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<StandardEventResponseModel>(handler));
+                break;
+            case REQ_GET_ALL_MENU:
+                Observable<AllMenuResponseModel> allMenuObservable = apiInterface.getAllMenus(requestParams);
+                allMenuObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<AllMenuResponseModel>(handler));
                 break;
         }
 

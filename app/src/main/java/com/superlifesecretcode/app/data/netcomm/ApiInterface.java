@@ -2,6 +2,7 @@ package com.superlifesecretcode.app.data.netcomm;
 
 
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
@@ -173,12 +174,18 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("ca_attendance")
     Observable<BaseResponseModel> makeCountryActivityInterested(@PartMap() Map<String, RequestBody> partMap,
-                                                 @HeaderMap Map<String, String> headers);
+                                                                @HeaderMap Map<String, String> headers);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getSingleActivity")
     Observable<CountryActivityDetailResponseModel> getCountryAcivityDetails(@PartMap() Map<String, RequestBody> partMap,
                                                                             @HeaderMap Map<String, String> headers);
+
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getAllCategories")
+    Observable<AllMenuResponseModel> getAllMenus(@PartMap() Map<String, RequestBody> partMap);
 
 }
