@@ -15,6 +15,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
@@ -59,6 +60,9 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
                 break;
             case ConstantLib.NOTIFICATION_EVENT:
                 clazz = InterestedEventCalendarActivity.class;
+                break;
+            case ConstantLib.NOTIFICATION_COUNTY_ACTIVITY:
+                clazz = CountryAcitvitiesActivity.class;
                 break;
         }
         Intent intent = new Intent(this, clazz);
