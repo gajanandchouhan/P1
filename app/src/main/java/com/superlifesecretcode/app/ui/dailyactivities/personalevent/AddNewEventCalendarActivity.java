@@ -216,7 +216,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
         params.put("activity_date", date);
         params.put("remind_before", reminderMinute);
         params.put("activity_time", time);
-        params.put("sound", "beep");
+        params.put("sound", "");
         params.put("activity_id", id);
         presenter.addEvent(params, headers);
     }

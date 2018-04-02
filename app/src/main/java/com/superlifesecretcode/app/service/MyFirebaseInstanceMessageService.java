@@ -71,7 +71,7 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
             soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                     + "://" + getPackageName() + "/raw/" + messageBody.get("sound"));
         } else {
-            soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
