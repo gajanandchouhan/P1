@@ -276,6 +276,18 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                     break;
+                case REQ_ANNOUNCE_REMINDER:
+                    Observable<BaseResponseModel> announceReminderObservable = apiInterface.updateAnnouncementReminder(stringMultipartParamsParams, header);
+                    announceReminderObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
+                case REQ_COUNTRY_ACTIVITY_REMINDER:
+                    Observable<BaseResponseModel> countryActivityReminderObservable = apiInterface.updateCountryActivityReminder(stringMultipartParamsParams, header);
+                    countryActivityReminderObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

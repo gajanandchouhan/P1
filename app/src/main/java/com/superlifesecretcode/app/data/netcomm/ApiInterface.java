@@ -30,7 +30,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
-import retrofit2.http.Path;
 
 /**
  * Created by JAIN COMPUTERS on 11/18/2017.
@@ -194,4 +193,18 @@ public interface ApiInterface {
     @POST("removeActivity")
     Observable<BaseResponseModel> removeActivity(@PartMap() Map<String, RequestBody> partMap,
                                                  @HeaderMap Map<String, String> headers);
+
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("announcementRemindTime")
+    Observable<BaseResponseModel> updateAnnouncementReminder(@PartMap() Map<String, RequestBody> partMap,
+                                                             @HeaderMap Map<String, String> headers);
+
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("activityRemindTime")
+    Observable<BaseResponseModel> updateCountryActivityReminder(@PartMap() Map<String, RequestBody> partMap,
+                                                                @HeaderMap Map<String, String> headers);
 }

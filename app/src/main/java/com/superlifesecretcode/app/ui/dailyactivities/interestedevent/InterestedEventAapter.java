@@ -93,6 +93,7 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
         TextView textViewDesc;
         TextView textAddress;
         RelativeLayout layoutInterested;
+        ImageView imageViewRemind;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -103,30 +104,37 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
             textViewTitme = itemView.findViewById(R.id.textView_time);
             textViewDesc = itemView.findViewById(R.id.textView_desc);
             textAddress = itemView.findViewById(R.id.textView_addr);
+            imageViewRemind = itemView.findViewById(R.id.imageView_remind);
+            imageViewRemind.setVisibility(View.VISIBLE);
             textViewInterested.setText(coversionData.getInterested());
             itemView.findViewById(R.id.imageView_share).setOnClickListener(this);
             layoutInterested = itemView.findViewById(R.id.button_interested);
             layoutInterested.setOnClickListener(this);
             itemView.setOnClickListener(this);
+            imageViewRemind.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
-            InterestedEventdata eventsInfoModel = (InterestedEventdata) list.get(getAdapterPosition()).getData();
-            Bundle bundle = new Bundle();
-            bundle.putString("id", eventsInfoModel.getEvent_id());
-            bundle.putBoolean("from_calendar", true);
-            if (eventsInfoModel.getEvent_type().equalsIgnoreCase("1")) {
-                CommonUtils.startActivity((AppCompatActivity) mContext, InterestedEventActivityDetailsActivity.class, bundle, false);
-            } else if (eventsInfoModel.getEvent_type().equalsIgnoreCase("2")) {
-                CommonUtils.startActivity((AppCompatActivity) mContext, CountryActivityDetailsActivity.class, bundle, false);
-            }
-            //            infoList.add(infoModel);
+            if (v.getId() == R.id.imageView_remind) {
+                InterestedEventCalendarActivity activity = (InterestedEventCalendarActivity) mContext;
+                activity.showUpdateAlert(getAdapterPosition());
+            } else {
+                InterestedEventdata eventsInfoModel = (InterestedEventdata) list.get(getAdapterPosition()).getData();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", eventsInfoModel.getEvent_id());
+                bundle.putBoolean("from_calendar", true);
+                if (eventsInfoModel.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_ANNOUNCEMENT_EVENT)) {
+                    CommonUtils.startActivity((AppCompatActivity) mContext, InterestedEventActivityDetailsActivity.class, bundle, false);
+                } else if (eventsInfoModel.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_COUNTRY_ACTIVITY_EVENT)) {
+                    CommonUtils.startActivity((AppCompatActivity) mContext, CountryActivityDetailsActivity.class, bundle, false);
+                }
+                //            infoList.add(infoModel);
 //            Bundle bundle = new Bundle();
 //            bundle.putSerializable("events", infoList);
 //            bundle.putInt("position", getAdapterPosition());
 //            CommonUtils.startActivity((AppCompatActivity) mContext, EventDetailsActivity.class, bundle, false);
+            }
         }
     }
 }

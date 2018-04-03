@@ -125,6 +125,68 @@ public class InterestedEventPresenter extends BasePresenter<InterestedEventView>
             }
         }, params, headers);
     }
+
+    public void updateannouncementRemindTime(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_ANNOUNCE_REMINDER, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel newsResponseModel) {
+                view.hideProgress();
+                if (newsResponseModel != null) {
+                    if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.onTimeUpdated();
+                    } else
+                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
+
+    public void updateCountryActivityRemindTime(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_COUNTRY_ACTIVITY_REMINDER, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel newsResponseModel) {
+                view.hideProgress();
+                if (newsResponseModel != null) {
+                    if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.onTimeUpdated();
+                    } else
+                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
 }
 
 

@@ -17,4 +17,6 @@ interface InterestedEventView extends BaseView{
     void setDetails(SingleNewsResponseModel newsResponseModel);
 
     void onUpdateInteresed();
+
+    void onTimeUpdated();
 }

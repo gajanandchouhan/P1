@@ -33,4 +33,6 @@ public interface RequestType {
     byte REQ_COUNTRY_ACTIVITY_DETAILS = 25;
     byte REQ_GET_ALL_MENU = 26;
     byte REQ_REMOVE_ACTIVITY = 27;
+    byte REQ_ANNOUNCE_REMINDER = 28;
+    byte REQ_COUNTRY_ACTIVITY_REMINDER = 29;
 }

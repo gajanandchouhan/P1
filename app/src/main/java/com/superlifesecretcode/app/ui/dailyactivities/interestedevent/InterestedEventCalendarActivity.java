@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventdata;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
@@ -20,7 +19,9 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
+import com.superlifesecretcode.app.ui.picker.TimeEditPicker;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +47,9 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     List<Event> eventList;
     private Date date;
     private ImageView imageViewProfile;
+    private int position;
+    private TimeEditPicker editPicker;
+    private InterestedEventdata interestedEventdata;
     //  private ImageView imageViewProfile;
 
     @Override
@@ -169,6 +173,11 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     }
 
     @Override
+    public void onTimeUpdated() {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_profile:
@@ -181,5 +190,36 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
                 compactCalendarView.showPreviousMonth();
                 break;
         }
+    }
+
+    public void showUpdateAlert(int adapterPosition) {
+        this.position = adapterPosition;
+        editPicker = new TimeEditPicker(this, "30");
+        editPicker.setOnClickListner(new TimeEditPicker.OnClickListner() {
+            @Override
+            public void onInputDone(String time) {
+                updateRemindTime(time);
+
+            }
+        });
+        editPicker.show();
+    }
+
+    private void updateRemindTime(String time) {
+        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
+        interestedEventdata = (InterestedEventdata) eventList.get(position).getData();
+        if (interestedEventdata.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_ANNOUNCEMENT_EVENT)) {
+            headers.put("Authorization", "Bearer " + userData.getApi_token());
+            params.put("announcement_id", interestedEventdata.getEvent_id());
+            params.put("remind_before", time);
+            presenter.updateannouncementRemindTime(params, headers);
+        } else if (interestedEventdata.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_COUNTRY_ACTIVITY_EVENT)) {
+            headers.put("Authorization", "Bearer " + userData.getApi_token());
+            params.put("activity_id", interestedEventdata.getEvent_id());
+            params.put("remind_before", time);
+            presenter.updateCountryActivityRemindTime(params, headers);
+        }
+
     }
 }
