@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.service;
 
 import android.app.ActivityManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
@@ -58,11 +59,9 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
             case ConstantLib.NOTIFICATION_PERSONAL:
                 clazz = PersonalEventCalendarActivity.class;
                 break;
+            case ConstantLib.NOTIFICATION_COUNTY_ACTIVITY:
             case ConstantLib.NOTIFICATION_EVENT:
                 clazz = InterestedEventCalendarActivity.class;
-                break;
-            case ConstantLib.NOTIFICATION_COUNTY_ACTIVITY:
-                clazz = CountryAcitvitiesActivity.class;
                 break;
         }
         Intent intent = new Intent(this, clazz);
@@ -94,7 +93,9 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         id = id + 1;
-        notificationManager.notify(id, notificationBuilder.build());
+        Notification notification = notificationBuilder.build();
+        notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
+        notificationManager.notify(id,notification );
     }
 
     public boolean foregrounded() {

@@ -13,4 +13,6 @@ interface PersonalEventView extends BaseView{
     void setEventData(List<PersonalEventResponseData> data);
     void onStatusUpdated();
     void onStatusFailed();
+
+    void onRemoveSuccess();
 }

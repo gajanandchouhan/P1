@@ -63,6 +63,7 @@ public class PersonalEventAapter extends RecyclerView.Adapter<PersonalEventAapte
             textViewTitle = itemView.findViewById(R.id.textView_title);
             textViewTime = itemView.findViewById(R.id.textView_time);
             switchCompat = itemView.findViewById(R.id.switch_reminder);
+            itemView.findViewById(R.id.imageView_remove).setOnClickListener(this);
             switchCompat.setOnClickListener(this);
         }
 
@@ -70,6 +71,8 @@ public class PersonalEventAapter extends RecyclerView.Adapter<PersonalEventAapte
         public void onClick(View v) {
             if (v.getId() == R.id.switch_reminder) {
                 ((PersonalEventCalendarActivity) mContext).updateState(getAdapterPosition());
+            } else  if (v.getId() == R.id.imageView_remove) {
+                ((PersonalEventCalendarActivity) mContext).removeActivity(getAdapterPosition());
             } else {
                 PersonalEventResponseData data = (PersonalEventResponseData) list.get(getAdapterPosition()).getData();
                 Bundle bundle = new Bundle();

@@ -188,4 +188,10 @@ public interface ApiInterface {
     @POST("getAllCategories")
     Observable<AllMenuResponseModel> getAllMenus(@PartMap() Map<String, RequestBody> partMap);
 
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("removeActivity")
+    Observable<BaseResponseModel> removeActivity(@PartMap() Map<String, RequestBody> partMap,
+                                                 @HeaderMap Map<String, String> headers);
 }

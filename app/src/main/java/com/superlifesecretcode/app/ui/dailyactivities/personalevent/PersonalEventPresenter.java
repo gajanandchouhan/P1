@@ -80,7 +80,7 @@ class PersonalEventPresenter extends BasePresenter<PersonalEventView> {
                 if (baseResponseModel != null) {
                     if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.onStatusUpdated();
-                    } else{
+                    } else {
                         view.onStatusFailed();
                         CommonUtils.showToast(mContext, baseResponseModel.getMessage());
                     }
@@ -95,6 +95,40 @@ class PersonalEventPresenter extends BasePresenter<PersonalEventView> {
             @Override
             public void onError() {
                 view.onStatusFailed();
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
+
+    public void removeActivity(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            view.onStatusFailed();
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_REMOVE_ACTIVITY, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel baseResponseModel) {
+                view.hideProgress();
+                if (baseResponseModel != null) {
+                    if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.onRemoveSuccess();
+                    } else {
+                        CommonUtils.showToast(mContext, baseResponseModel.getMessage());
+                    }
+
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
                 view.hideProgress();
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 

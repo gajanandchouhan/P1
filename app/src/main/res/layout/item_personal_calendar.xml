@@ -16,7 +16,7 @@
             android:id="@+id/textView_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
+            android:layout_gravity="center_vertical"
             android:fontFamily="@font/reguler"
             android:text="05:30 PM"
             android:textColor="@color/colorPrimary"
@@ -27,10 +27,10 @@
             android:id="@+id/textView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:ellipsize="end"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_weight="1"
             android:fontFamily="@font/reguler"
-            android:maxLines="1"
             android:text="Event Name"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="@dimen/_12sdp" />
@@ -39,9 +39,17 @@
             android:id="@+id/switch_reminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:checked="true"
             app:thumbTint="@color/thumb_color"
             app:trackTint="@color/switch_color" />
 
+        <ImageView
+            android:id="@+id/imageView_remove"
+            android:padding="@dimen/_5sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@android:drawable/ic_delete" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

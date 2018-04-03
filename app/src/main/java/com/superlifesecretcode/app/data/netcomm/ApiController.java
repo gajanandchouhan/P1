@@ -269,6 +269,13 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<CountryActivityDetailResponseModel>(handler));
                     break;
+
+                case REQ_REMOVE_ACTIVITY:
+                    Observable<BaseResponseModel> removeActivtyObservable = apiInterface.removeActivity(stringMultipartParamsParams, header);
+                    removeActivtyObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

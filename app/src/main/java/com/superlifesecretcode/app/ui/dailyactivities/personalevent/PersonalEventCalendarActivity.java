@@ -50,6 +50,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     private int position;
     private String status;
     private Date date;
+    private Event event;
 
     @Override
     protected int getContentView() {
@@ -194,6 +195,13 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onRemoveSuccess() {
+        eventList.remove(position);
+        compactCalendarView.removeEvent(event);
+        adapter.notifyDataSetChanged();
+    }
+
     public void updateState(int adapterPosition) {
         this.position = adapterPosition;
         this.object = (PersonalEventResponseData) eventList.get(adapterPosition).getData();
@@ -209,5 +217,17 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         params.put("status", status);
         presenter.updateEventStatus(params, headers);
 
+    }
+
+
+    public void removeActivity(int position) {
+        this.position = position;
+        event = eventList.get(position);
+        this.object = (PersonalEventResponseData) eventList.get(position).getData();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("activity_id", object.getActivity_id());
+        presenter.removeActivity(params, headers);
     }
 }
