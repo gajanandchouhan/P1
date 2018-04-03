@@ -92,12 +92,26 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
                     int index = alertModelList.indexOf(alertModel);
                     AlertModel alertModel1 = alertModelList.get(index);
+                    if (alertModel.getCount() > alertModel1.getShowCount()) {
+                        showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
+                    } else {
+                        openNext(clickedPostion);
+                    }
+              /*  AlertModel alertModel = new AlertModel();
+                alertModel.setCount(Integer.parseInt(list.get(clickedPostion).getAlert_count()));
+                alertModel.setId(list.get(clickedPostion).getId());
+                if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(alertModel)) {
+                    showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, null, null);
+                } else {
+                    List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
+                    int index = alertModelList.indexOf(alertModel);
+                    AlertModel alertModel1 = alertModelList.get(index);
                     if (alertModel1.getCount() == 0) {
                         openNext(clickedPostion);
                     } else {
                         showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
                     }
-
+*/
                 }
             } else {
                 openNext(clickedPostion);
@@ -112,10 +126,11 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
             @Override
             public void onPositiveClick() {
                 if (alertModel1 != null) {
-                    alertModel1.setCount(alertModel1.getCount() - 1);
+                    alertModel1.setShowCount(alertModel1.getShowCount() + 1);
                     SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
                 } else {
                     AlertModel alertModel = new AlertModel();
+                    alertModel.setShowCount(1);
                     alertModel.setId(list.get(clikedPostion).getId());
                     alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
                     SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);

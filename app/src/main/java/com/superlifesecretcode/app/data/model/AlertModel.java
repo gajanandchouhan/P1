@@ -7,6 +7,15 @@ package com.superlifesecretcode.app.data.model;
 public class AlertModel {
     private String id;
     private int count;
+    private int showCount;
+
+    public int getShowCount() {
+        return showCount;
+    }
+
+    public void setShowCount(int showCount) {
+        this.showCount = showCount;
+    }
 
     public String getId() {
         return id;

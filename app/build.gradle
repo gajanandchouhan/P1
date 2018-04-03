@@ -12,10 +12,12 @@ android {
     }
     buildTypes {
         release {
+            useProguard true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            useProguard true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -48,8 +50,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     implementation 'com.android.support:design:27.1.0'
     compile 'com.intuit.sdp:sdp-android:1.0.5'
-    implementation 'com.google.android.gms:play-services-location:11.6.2'
-    implementation 'com.google.android.gms:play-services-auth:11.6.2'
+    implementation 'com.google.android.gms:play-services-location:12.0.1'
+    implementation 'com.google.android.gms:play-services-auth:12.0.1'
     implementation project(':countrypicker')
     compile 'com.theartofdev.edmodo:android-image-cropper:2.6.0'
     // image picker and cropper
@@ -71,6 +73,6 @@ dependencies {
     //video player
     //    compile 'com.github.sundeepk:compact-calendar-view:2.0.2.3' //calendar
     implementation project(':calendarmodule')
-    compile 'com.google.firebase:firebase-messaging:11.6.2'
+    compile 'com.google.firebase:firebase-messaging:12.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

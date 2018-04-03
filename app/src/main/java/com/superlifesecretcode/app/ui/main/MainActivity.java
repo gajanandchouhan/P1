@@ -413,7 +413,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
                 int index = alertModelList.indexOf(alertModel);
                 AlertModel alertModel1 = alertModelList.get(index);
-                if (alertModel1.getCount() == 0) {
+                if (alertModel.getCount() > alertModel1.getShowCount()) {
+                    showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", title);
+                    bundle.putInt("pos", position);
+                    bundle.putString("parent_id", parentId);
+                    bundle.putString("color", color);
+                    bundle.putSerializable("banner", bannerList);
+                    CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+                }
+               /* if (alertModel1.getCount() == 0) {
                     Bundle bundle = new Bundle();
                     bundle.putString("title", title);
                     bundle.putInt("pos", position);
@@ -423,7 +434,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
                 } else {
                     showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
-                }
+                }*/
 
             }
         } else {
@@ -476,6 +487,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onPositiveClick() {
                 if (alertModel1 != null) {
+                    alertModel1.setShowCount(alertModel1.getShowCount() + 1);
+                    SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
+                } else {
+                    AlertModel alertModel = new AlertModel();
+                    alertModel.setShowCount(1);
+                    alertModel.setId(list.get(clikedPostion).getId());
+                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
+                    SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
+                }
+                /*if (alertModel1 != null) {
                     alertModel1.setCount(alertModel1.getCount() - 1);
                     SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
                 } else {
@@ -483,7 +504,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     alertModel.setId(list.get(clikedPostion).getId());
                     alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
                     SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
-                }
+                }*/
                 openNext(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
             }
 
