@@ -47,8 +47,10 @@ public class InterestedEventPresenter extends BasePresenter<InterestedEventView>
                 if (newsResponseModel != null) {
                     if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.setEventData(newsResponseModel.getData());
-                    } else
-                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                    } else{
+                       view.noData();
+                    }
+
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }
@@ -140,8 +142,8 @@ public class InterestedEventPresenter extends BasePresenter<InterestedEventView>
                 if (newsResponseModel != null) {
                     if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.onTimeUpdated();
-                    } else
-                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                    }
+                    CommonUtils.showToast(mContext, newsResponseModel.getMessage());
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }
@@ -171,8 +173,8 @@ public class InterestedEventPresenter extends BasePresenter<InterestedEventView>
                 if (newsResponseModel != null) {
                     if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.onTimeUpdated();
-                    } else
-                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                    }
+                    CommonUtils.showToast(mContext, newsResponseModel.getMessage());
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }

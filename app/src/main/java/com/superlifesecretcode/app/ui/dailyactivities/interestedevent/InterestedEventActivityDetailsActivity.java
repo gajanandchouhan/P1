@@ -131,6 +131,16 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
         onBackPressed();
     }
 
+    @Override
+    public void onTimeUpdated() {
+
+    }
+
+    @Override
+    public void noData() {
+
+    }
+
     private void setUpData(final NewsResponseData newsResponseModel) {
         if (newsResponseModel != null) {
             textViewTitle1.setText(newsResponseModel.getAnnouncement_name());

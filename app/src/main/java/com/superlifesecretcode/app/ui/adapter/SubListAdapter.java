@@ -50,7 +50,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.textView.setText(list.get(position).getTitle());
         holder.textViewChar.setText(list.get(position).getTitle().substring(0, 1));
-        if (list.get(position).getImage() != null) {
+        if (list.get(position).getImage() != null && !list.get(position).getImage().isEmpty()) {
             holder.imageView.setVisibility(View.VISIBLE);
             ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
         } else {

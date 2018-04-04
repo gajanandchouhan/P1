@@ -230,4 +230,11 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         params.put("activity_id", object.getActivity_id());
         presenter.removeActivity(params, headers);
     }
+
+    @Override
+    public void noData() {
+        compactCalendarView.removeAllEvents();
+        eventList.clear();
+        adapter.notifyDataSetChanged();
+    }
 }

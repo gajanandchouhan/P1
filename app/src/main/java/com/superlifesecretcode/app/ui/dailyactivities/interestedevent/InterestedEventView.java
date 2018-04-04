@@ -19,4 +19,6 @@ interface InterestedEventView extends BaseView{
     void onUpdateInteresed();
 
     void onTimeUpdated();
+
+    void noData();
 }

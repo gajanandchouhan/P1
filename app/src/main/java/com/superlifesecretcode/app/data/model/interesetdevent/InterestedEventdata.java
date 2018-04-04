@@ -14,7 +14,15 @@ public class InterestedEventdata {
     private String venue;
     private String event_type;
     private String userIntrested;
+    private String remind_before;
 
+    public String getRemind_before() {
+        return remind_before;
+    }
+
+    public void setRemind_before(String remind_before) {
+        this.remind_before = remind_before;
+    }
 
     public String getEvent_id() {
         return event_id;

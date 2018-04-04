@@ -178,6 +178,13 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     }
 
     @Override
+    public void noData() {
+        compactCalendarView.removeAllEvents();
+        eventList.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_profile:
@@ -212,12 +219,14 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
         if (interestedEventdata.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_ANNOUNCEMENT_EVENT)) {
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             params.put("announcement_id", interestedEventdata.getEvent_id());
+            params.put("user_id", userData.getUser_id());
             params.put("remind_before", time);
             presenter.updateannouncementRemindTime(params, headers);
         } else if (interestedEventdata.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_COUNTRY_ACTIVITY_EVENT)) {
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             params.put("activity_id", interestedEventdata.getEvent_id());
             params.put("remind_before", time);
+            params.put("user_id", userData.getUser_id());
             presenter.updateCountryActivityRemindTime(params, headers);
         }
 

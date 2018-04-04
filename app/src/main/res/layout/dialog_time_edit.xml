@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/reguler"
-        android:text="Reminder"
+        android:text="Reminder Before Event"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="@dimen/_13sdp" />
 

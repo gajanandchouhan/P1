@@ -48,8 +48,10 @@ class PersonalEventPresenter extends BasePresenter<PersonalEventView> {
                 if (newsResponseModel != null) {
                     if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.setEventData(newsResponseModel.getData());
-                    } else
+                    } else {
+                        view.noData();
                         CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                    }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }

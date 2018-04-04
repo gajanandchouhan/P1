@@ -274,7 +274,7 @@ public class CommonUtils {
 
     public static void shareContent(Context mContext, final String text) {
         Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("image/*");
+        i.setType("text/plain");
         i.putExtra(Intent.EXTRA_TEXT, text);
         mContext.startActivity(i);
     }
