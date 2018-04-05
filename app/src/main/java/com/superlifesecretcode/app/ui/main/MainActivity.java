@@ -30,6 +30,7 @@ import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
+import com.superlifesecretcode.app.ui.notification.NotificationActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
@@ -120,6 +121,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         View viewById = findViewById(R.id.imageView_profile);
         viewById.setVisibility(View.VISIBLE);
         viewById.setOnClickListener(this);
+        View viewNotifcation = findViewById(R.id.imageView_notification);
+        viewNotifcation.setVisibility(View.VISIBLE);
+        viewNotifcation.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
         drawerAdapter = new DrawerAdapter(list);
@@ -346,6 +350,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.imageView_notification:
+                CommonUtils.startActivity(this, NotificationActivity.class);
+                break;
          /*   case R.id.cardview_about:
                 openNextScreen(1, getString(R.string.abourt));
                 break;

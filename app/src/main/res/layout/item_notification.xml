@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorWhite"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/imageView_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/notification"
+            android:tint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/imageView_icon"
+            android:layout_toLeftOf="@+id/textView_time"
+            android:layout_toRightOf="@+id/imageView_icon"
+            android:layout_toStartOf="@+id/textView_time"
+            android:fontFamily="@font/bold"
+            android:text="Title"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/reguler"
+            android:text="Date,time"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/_11sdp" />
+
+        <TextView
+            android:id="@+id/textView_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_time"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/imageView_icon"
+            android:layout_toRightOf="@+id/imageView_icon"
+            android:fontFamily="@font/reguler"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in elit ante. Donec maximus, felis porttitor vehicula pellentesque, orci ante hendrerit dui, non mollis mauris neque id metus. Maecenas dolor nisi, "
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

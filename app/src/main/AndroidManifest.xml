@@ -165,6 +165,9 @@
         <activity
             android:name=".ui.forgotpassword.ResetPaswordActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.notification.NotificationActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -50,6 +50,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     private int position;
     private TimeEditPicker editPicker;
     private InterestedEventdata interestedEventdata;
+    private String remindBefore = "30";
     //  private ImageView imageViewProfile;
 
     @Override
@@ -174,7 +175,8 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
 
     @Override
     public void onTimeUpdated() {
-
+        interestedEventdata.setRemind_before(remindBefore);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -201,12 +203,13 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
 
     public void showUpdateAlert(int adapterPosition) {
         this.position = adapterPosition;
-        editPicker = new TimeEditPicker(this, "30");
+        interestedEventdata = (InterestedEventdata) eventList.get(position).getData();
+        editPicker = new TimeEditPicker(this, interestedEventdata.getRemind_before());
         editPicker.setOnClickListner(new TimeEditPicker.OnClickListner() {
             @Override
             public void onInputDone(String time) {
                 updateRemindTime(time);
-
+                remindBefore = time;
             }
         });
         editPicker.show();
@@ -215,7 +218,6 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     private void updateRemindTime(String time) {
         Map<String, String> headers = new HashMap<>();
         HashMap<String, String> params = new HashMap<>();
-        interestedEventdata = (InterestedEventdata) eventList.get(position).getData();
         if (interestedEventdata.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_ANNOUNCEMENT_EVENT)) {
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             params.put("announcement_id", interestedEventdata.getEvent_id());
