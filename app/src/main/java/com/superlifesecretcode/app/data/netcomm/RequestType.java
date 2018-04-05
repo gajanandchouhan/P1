@@ -35,4 +35,6 @@ public interface RequestType {
     byte REQ_REMOVE_ACTIVITY = 27;
     byte REQ_ANNOUNCE_REMINDER = 28;
     byte REQ_COUNTRY_ACTIVITY_REMINDER = 29;
+    byte REQ_GET_RESET_CODE = 30;
+    byte REQ_RESET_PASS = 31;
 }

@@ -116,6 +116,20 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<AllMenuResponseModel>(handler));
                 break;
+
+            case REQ_GET_RESET_CODE:
+                Observable<BaseResponseModel> getCodeObservable = apiInterface.generateTempPassword(requestParams);
+                getCodeObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                break;
+
+            case REQ_RESET_PASS:
+                Observable<BaseResponseModel> resetPassObservable = apiInterface.updatePassword(requestParams);
+                resetPassObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                break;
         }
 
 

@@ -207,4 +207,14 @@ public interface ApiInterface {
     @POST("activityRemindTime")
     Observable<BaseResponseModel> updateCountryActivityReminder(@PartMap() Map<String, RequestBody> partMap,
                                                                 @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("generateTempPassword")
+    Observable<BaseResponseModel> generateTempPassword(@PartMap() Map<String, RequestBody> params);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("updatePassword")
+    Observable<BaseResponseModel> updatePassword(@PartMap() Map<String, RequestBody> params);
 }

@@ -158,6 +158,13 @@
         <activity
             android:name=".ui.countryactivities.CountryActivityDetailsActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.forgotpassword.ForgotPaswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.forgotpassword.ResetPaswordActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

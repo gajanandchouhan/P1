@@ -28,6 +28,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.forgotpassword.ForgotPaswordActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.register.RegisterActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -134,6 +135,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.imageView_t:
                 signinWithTwitter();
+                break;
+            case R.id.textView_forgot:
+                CommonUtils.startActivity(this, ForgotPaswordActivity.class);
                 break;
         }
     }
