@@ -15,6 +15,7 @@ import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
+import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 
 import java.util.Map;
@@ -217,4 +218,10 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("updatePassword")
     Observable<BaseResponseModel> updatePassword(@PartMap() Map<String, RequestBody> params);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getUnreadAnnouncementCount")
+    Observable<AnnouncementCountResponseModel> getUnreadAnnouncementCount(@PartMap() Map<String, RequestBody> partMap,
+                                                                          @HeaderMap Map<String, String> headers);
 }

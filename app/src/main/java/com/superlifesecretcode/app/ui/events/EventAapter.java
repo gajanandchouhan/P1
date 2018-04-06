@@ -1,8 +1,10 @@
 package com.superlifesecretcode.app.ui.events;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -54,6 +56,11 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         EventsInfoModel eventsInfoModel = list.get(position);
+        if (eventsInfoModel.getReaded_by_user().equalsIgnoreCase("1")) {
+            holder.cardView.setCardBackgroundColor(Color.WHITE);
+        } else {
+            holder.cardView.setCardBackgroundColor(Color.LTGRAY);
+        }
         holder.textViewTitle.setText(eventsInfoModel.getAnnouncement_name());
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
         holder.textAddress.setText(eventsInfoModel.getVenue());
@@ -62,10 +69,10 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
             holder.textViewDate.setText(coversionData.getToday());
         } else {
             holder.textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date()));
+                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date(),true));
         }
 
-        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getAnnouncement_time()));
+        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getAnnouncement_time(),true));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(eventsInfoModel.getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);
@@ -89,10 +96,12 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
         TextView textViewDesc;
         TextView textAddress;
         RelativeLayout layoutInterested;
+        CardView cardView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView_event);
+            cardView=itemView.findViewById(R.id.card_view);
             textViewInterested = itemView.findViewById(R.id.textVew_interested);
             textViewTitle = itemView.findViewById(R.id.textView_title);
             textViewDate = itemView.findViewById(R.id.textView_date);

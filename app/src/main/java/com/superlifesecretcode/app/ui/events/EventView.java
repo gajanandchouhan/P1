@@ -13,4 +13,6 @@ interface EventView extends BaseView{
     void setEventData(EventResponseModel newsResponseModel);
 
     void onUpdateInteresed();
+
+    void onEvendReaded();
 }

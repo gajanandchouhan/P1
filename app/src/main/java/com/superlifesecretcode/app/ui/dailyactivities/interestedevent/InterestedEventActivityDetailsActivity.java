@@ -145,12 +145,12 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
         if (newsResponseModel != null) {
             textViewTitle1.setText(newsResponseModel.getAnnouncement_name());
             if (newsResponseModel.getEnd_date() != null && !newsResponseModel.getEnd_date().isEmpty()) {
-                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time());
-                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time());
+                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(),true);
+                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time(),true);
                 textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
 
             } else {
-                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
+                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(),true));
             }
 //            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
             ImageLoadUtils.loadImage(newsResponseModel.getImage(), imageView);

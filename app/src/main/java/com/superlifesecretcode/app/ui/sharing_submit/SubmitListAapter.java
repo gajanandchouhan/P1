@@ -62,12 +62,12 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ItemViewHolder holder1 = (ItemViewHolder) holder;
             ShareListResponseData shareListResponseData = list.get(position - 1);
             holder1.textViewName.setText(shareListResponseData.getUsername());
-            holder1.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at()));
+            holder1.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(), true));
             holder1.textViewDesc.setText(shareListResponseData.getContent());
             holder1.textViewCountryName.setText(shareListResponseData.getCountryName());
             holder1.textViewStatus.setText(shareListResponseData.getStatus().equals("2") ? "Rejected" : "Published");
             ImageLoadUtils.loadImage(shareListResponseData.getUser_image(), holder1.imageView);
-            if (shareListResponseData.getSharing_files() != null&&shareListResponseData.getSharing_files().size()>0) {
+            if (shareListResponseData.getSharing_files() != null && shareListResponseData.getSharing_files().size() > 0) {
                 holder1.pager.setVisibility(View.VISIBLE);
                 holder1.pager.setAdapter(new LatestPagerAdapter(mContext, shareListResponseData.getSharing_files()));
             } else {
@@ -114,7 +114,7 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void onClick(View v) {
             Bundle bundle = new Bundle();
             bundle.putSerializable("share", list.get(getAdapterPosition() - 1));
-            bundle.putBoolean("from_submit",true);
+            bundle.putBoolean("from_submit", true);
             CommonUtils.startActivity((AppCompatActivity) mContext, LatestDetailsActivity.class, bundle, false);
         }
     }

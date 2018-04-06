@@ -101,6 +101,7 @@ public class NewsActivity extends BaseActivity implements NewsView {
             newsList.clear();
             newsList.addAll(newsResponseModel.getData());
             newsAapter.notifyDataSetChanged();
+            SuperLifeSecretPreferences.getInstance().setNewsUndread(newsResponseModel.getUnread());
             textViewUnread.setText(String.valueOf(newsResponseModel.getUnread()));
         }
     }

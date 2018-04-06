@@ -18,6 +18,7 @@ import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
+import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -301,6 +302,12 @@ public class ApiController implements RequestType {
                     countryActivityReminderObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
+                case REQ_GET_ANNOUNCEMENT_COUNT:
+                    Observable<AnnouncementCountResponseModel> announcementCountObservable = apiInterface.getUnreadAnnouncementCount(stringMultipartParamsParams, header);
+                    announcementCountObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<AnnouncementCountResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

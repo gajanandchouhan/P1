@@ -1,6 +1,5 @@
 package com.superlifesecretcode.app.ui.events;
 
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +14,6 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.news.NewsAapter;
-import com.superlifesecretcode.app.ui.news.NewsPresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,6 +129,8 @@ public class EventActivity extends BaseActivity implements EventView {
     @Override
     public void setEventData(EventResponseModel newsResponseModel) {
         if (newsResponseModel.getData() != null) {
+            int unread = newsResponseModel.getUnread();
+            SuperLifeSecretPreferences.getInstance().setEventUndread(unread);
             todayList = newsResponseModel.getData().getToday();
             upcomingList = newsResponseModel.getData().getUpcoming();
             list.clear();
@@ -155,6 +154,11 @@ public class EventActivity extends BaseActivity implements EventView {
     public void onUpdateInteresed() {
         list.get(position).setUserIntrested(interested);
         newsAapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEvendReaded() {
+
     }
 
     private void getEvents() {

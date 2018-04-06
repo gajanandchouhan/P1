@@ -186,7 +186,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
             } else {*//*
                 textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
             }*/
-            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, countryActivityInfoModel.getActivity_date() + " " + countryActivityInfoModel.getActivity_time()));
+            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, countryActivityInfoModel.getActivity_date() + " " + countryActivityInfoModel.getActivity_time(),true));
             ImageLoadUtils.loadImage(countryActivityInfoModel.getImage(), imageView);
             textViewAddr.setText(countryActivityInfoModel.getVenue());
             textViewInterested.setText(conversionData.getInterested());

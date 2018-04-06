@@ -55,6 +55,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     private String colorCode;
     LinearLayout tab1, tab2, tab3, tab4;
     ImageView imageView1, imageView2, imageView3, imageView4;
+    private SubacategoryListAdapter subacategoryListAdapter;
 
     @Override
     protected int getContentView() {
@@ -92,7 +93,8 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
 //        recyclerView.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
         if (positon == 5 || positon == 6 || positon == 7 || positon == 8) {
             bannerList = (ArrayList<BannerModel>) getIntent().getBundleExtra("bundle").getSerializable("banner");
-            recyclerView.setAdapter(new SubacategoryListAdapter(getList(positon), this, colorCode));
+            subacategoryListAdapter = new SubacategoryListAdapter(getList(positon), this, colorCode);
+            recyclerView.setAdapter(subacategoryListAdapter);
         } else {
             getSubCategory();
             subList = new ArrayList<>();
@@ -111,6 +113,14 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         autoScrollViewPager.getLayoutParams().height = height;
         setUpBanner();
         setUpBottomBar();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (subacategoryListAdapter != null) {
+            subacategoryListAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpBottomBar() {

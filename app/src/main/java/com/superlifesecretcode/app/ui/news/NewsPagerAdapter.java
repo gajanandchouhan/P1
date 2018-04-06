@@ -49,7 +49,7 @@ public class NewsPagerAdapter extends PagerAdapter {
         ImageView imageViewShare = layout.findViewById(R.id.imageView_share);
         imageViewLike.setSelected(newsList.get(position).getLiked_by_user().equalsIgnoreCase("1"));
         textViewTitle.setText(newsList.get(position).getAnnouncement_name());
-        textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getCreated_at()));
+        textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getCreated_at(),true));
         textViewLikeCount.setText(String.format("%s "+conversionData.getLikes(), newsList.get(position).getLiked_by()));
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         WebView webView = layout.findViewById(R.id.webview);

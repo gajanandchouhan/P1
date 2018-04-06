@@ -4,29 +4,48 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/colorWhite"
-   >
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp">
 
-        <TextView
-            android:id="@+id/textView_char"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/circle_bg"
-            android:fontFamily="@font/reguler"
-            android:gravity="center"
-            android:maxWidth="@dimen/_70sdp"
-            android:text="T"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_30sdp" />
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/textView_char"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circle_bg"
+                android:fontFamily="@font/reguler"
+                android:gravity="center"
+                android:maxWidth="@dimen/_70sdp"
+                android:text="T"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_30sdp" />
+
+            <TextView
+                android:id="@+id/textView_count"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/circle_count_bg"
+                android:fontFamily="@font/reguler"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView_item"
@@ -34,8 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/textView_char"
-            android:layout_toRightOf="@+id/textView_char"
+            android:layout_toEndOf="@+id/layout"
+            android:layout_toRightOf="@+id/layout"
             android:fontFamily="@font/reguler"
             android:text="Caetgrgory"
             android:textColor="@color/colorLightBlack"
@@ -43,11 +62,13 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:visibility="invisible"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/default_placeholder" />
+            android:src="@drawable/default_placeholder"
+            android:visibility="invisible" />
+
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

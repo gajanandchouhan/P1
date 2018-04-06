@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EventDetailsActivity extends BaseActivity implements EventView{
+public class EventDetailsActivity extends BaseActivity implements EventView {
 
 
     private ViewPager pager;
@@ -40,17 +40,43 @@ public class EventDetailsActivity extends BaseActivity implements EventView{
     @Override
     protected void initializeView() {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
-        userData=SuperLifeSecretPreferences.getInstance().getUserData();
+        userData = SuperLifeSecretPreferences.getInstance().getUserData();
         Bundle bundle = getIntent().getBundleExtra("bundle");
         int postion = bundle.getInt("position");
         list = (List<EventsInfoModel>) bundle.getSerializable("events");
         setUpToolbar();
         pager = findViewById(R.id.pager);
         if (list != null) {
-            newsAapter = new EventPagerAdapter(this, list,conversionData);
+            newsAapter = new EventPagerAdapter(this, list, conversionData);
             pager.setAdapter(newsAapter);
             pager.setCurrentItem(postion);
         }
+        String readed_by_user = list.get(postion).getReaded_by_user();
+        if (readed_by_user.equalsIgnoreCase("0")) {
+            markRead();
+        }
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                String readed_by_user1 = list.get(position).getReaded_by_user();
+                if (readed_by_user1.equalsIgnoreCase("0")) {
+                    markRead();
+                }
+                EventDetailsActivity.this.position = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -58,7 +84,13 @@ public class EventDetailsActivity extends BaseActivity implements EventView{
         presenter = new EventPresenter(this);
         presenter.setView(this);
     }
-
+    private void markRead() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("announcement_id", list.get(position).getAnnouncement_id());
+        presenter.readMark(params, headers);
+    }
     private void setUpToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,6 +135,12 @@ public class EventDetailsActivity extends BaseActivity implements EventView{
     @Override
     public void onUpdateInteresed() {
         list.get(position).setUserIntrested(interested);
+        newsAapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEvendReaded() {
+        list.get(position).setReaded_by_user("1");
         newsAapter.notifyDataSetChanged();
     }
 }

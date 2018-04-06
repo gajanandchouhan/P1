@@ -145,4 +145,20 @@ public class SuperLifeSecretPreferences {
     public void updateAlertList(List<AlertModel> alertModelList) {
         editer.putString("accepted_id", new Gson().toJson(alertModelList)).commit();
     }
+
+    public void setNewsUndread(int unread) {
+        editer.putInt("news_unread", unread).commit();
+    }
+
+    public void setEventUndread(int unread) {
+        editer.putInt("event_unread", unread).commit();
+    }
+
+    public int getNewsUnread() {
+        return preferences.getInt("news_unread", 0);
+    }
+
+    public int getEventUnread() {
+        return preferences.getInt("event_unread", 0);
+    }
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
+import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
+import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
@@ -95,4 +97,34 @@ public class EventPresenter extends BasePresenter<EventView> {
     }
 
 
+    public void readMark(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_MARK_READ, new ResponseHandler<SingleNewsResponseModel>() {
+            @Override
+            public void onResponse(SingleNewsResponseModel newsResponseModel) {
+                view.hideProgress();
+                if (newsResponseModel != null) {
+                    if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.onEvendReaded();
+                    } else
+                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
 }

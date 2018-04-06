@@ -23,6 +23,7 @@ import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCounData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
@@ -47,6 +48,7 @@ import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
@@ -243,6 +245,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
+        if (mainAdapter != null) {
+            mainAdapter.notifyDataSetChanged();
+        }
         if (LANGAUE_CHANGED) {
             getMainCategories();
             LANGAUE_CHANGED = false;
@@ -275,7 +280,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
     }
-
+    private void getAnnouementCount() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("announcement_type", "1");
+        params.put("user_id", userDetailResponseData.getUser_id());
+        presenter.getAnnouncementCount(params, headers);
+    }
     private void setUpUserdetails() {
         if (userDetailResponseData != null) {
             textViewName.setText(userDetailResponseData.getUsername());
@@ -483,8 +495,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (conversionData != null) {
             textViewEditProfile.setText(conversionData.getEdit_profile());
         }
+        getAnnouementCount();
         drawerAdapter.notifyDataSetChanged();
         mainAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setAnnounceMentCount(AnnouncementCounData announcementCountResponseModel) {
+        if (announcementCountResponseModel != null) {
+            SuperLifeSecretPreferences.getInstance().setEventUndread(announcementCountResponseModel.getUnreadEvents());
+            SuperLifeSecretPreferences.getInstance().setNewsUndread(announcementCountResponseModel.getUnreadNews());
+            if (mainAdapter != null) {
+                mainAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {

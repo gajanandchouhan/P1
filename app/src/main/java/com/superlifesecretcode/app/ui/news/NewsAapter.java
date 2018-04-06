@@ -51,7 +51,7 @@ public class NewsAapter extends RecyclerView.Adapter<NewsAapter.ItemViewHolder> 
         }
         holder.textViewTitle.setText(list.get(position).getAnnouncement_name());
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
-        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, list.get(position).getCreated_at()));
+        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, list.get(position).getCreated_at(),true));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(list.get(position).getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);

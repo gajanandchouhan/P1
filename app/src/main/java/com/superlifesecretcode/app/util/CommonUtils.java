@@ -1,11 +1,9 @@
 package com.superlifesecretcode.app.util;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -30,9 +28,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.superlifesecretcode.app.BuildConfig;
 import com.superlifesecretcode.app.GlideApp;
-import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.main.MainActivity;
-import com.superlifesecretcode.app.ui.splash.SplashActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
@@ -41,12 +36,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
@@ -167,8 +162,7 @@ public class CommonUtils {
         }
     }
 
-    public static String
-    getformattedDateFromString(String inputFormat, String outputFormat, String inputDate) {
+    public static String getformattedDateFromString(String inputFormat, String outputFormat, String inputDate, boolean needConvert) {
         if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
             inputFormat = "yyyy-MM-dd hh:mm:ss";
         }
@@ -178,9 +172,13 @@ public class CommonUtils {
         Date parsed = null;
         String outputDate = "";
 
-        SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, java.util.Locale.getDefault());
-        SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, java.util.Locale.getDefault());
+        SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, Locale.ENGLISH);
 
+        SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, Locale.ENGLISH);
+       /* if (needConvert) {
+            df_input.setTimeZone(TimeZone.getTimeZone("UTC"));
+            df_output.setTimeZone(TimeZone.getDefault());
+        }*/
         // You can set a different Locale, This example set a locale of Country Mexico.
         //SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, new Locale("es", "MX"));
         //SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, new Locale("es", "MX"));
@@ -253,7 +251,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString());
+        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString(),false);
     }
 
     public static String getAppendedDate(int year, int month, int dayOfMonth) {
@@ -263,7 +261,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return stringBuilder.toString();
+        return getformattedDateFromString("yyyy-MM-dd","yyyy-MM-dd",stringBuilder.toString(),true);
     }
 
     public interface ClickListner {

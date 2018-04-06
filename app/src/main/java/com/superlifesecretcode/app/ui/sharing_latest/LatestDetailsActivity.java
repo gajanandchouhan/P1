@@ -109,7 +109,7 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         }
 
         textViewName.setText(data.getUsername());
-        textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, data.getCreated_at()));
+        textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, data.getCreated_at(),true));
         textViewDesc.setText(data.getContent());
         textViewCountryName.setText(data.getCountryName());
         textViewLike.setText(String.format("%s " + conversionData.getLikes(), data.getLiked_by()));

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
@@ -32,10 +33,13 @@ import java.util.Random;
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemViewHolder> {
     private final List<CategoryResponseData> list;
     private Context mContext;
+    SuperLifeSecretPreferences preferences;
 
     public MainListAdapter(List<CategoryResponseData> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
+        preferences=SuperLifeSecretPreferences.getInstance();
+
     }
 
     @Override
@@ -46,6 +50,12 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         if (list.get(position).getId() != null) {
+            if (list.get(position).getPosition() == 5&&(preferences.getNewsUnread()+preferences.getEventUnread())>0) {
+                holder.textViewCount.setVisibility(View.VISIBLE);
+                holder.textViewCount.setText(String.valueOf(preferences.getNewsUnread()+preferences.getEventUnread()));
+            } else {
+                holder.textViewCount.setVisibility(View.GONE);
+            }
             holder.textView.setText(list.get(position).getTitle());
             ImageLoadUtils.loadImage(list.get(position).getImage(), holder.imageView);
             StateListDrawable stateListDrawable = (StateListDrawable) holder.itemView.getBackground();
@@ -84,11 +94,13 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
         ImageView imageView;
         TextView textView;
         MediaPlayer mPlayer;
+        TextView textViewCount;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             textView = itemView.findViewById(R.id.textView);
+            textViewCount = itemView.findViewById(R.id.textView_count);
             textView.setSelected(true);
             itemView.setOnClickListener(this);
             myAnim = AnimationUtils.loadAnimation(mContext, R.anim.bounce);
@@ -105,6 +117,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
             mPlayer.start();
         }
     }
+
     class MyBounceInterpolator implements android.view.animation.Interpolator {
         private double mAmplitude = 1;
         private double mFrequency = 10;
@@ -115,7 +128,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ItemVi
         }
 
         public float getInterpolation(float time) {
-            return (float) (-1 * Math.pow(Math.E, -time/ mAmplitude) *
+            return (float) (-1 * Math.pow(Math.E, -time / mAmplitude) *
                     Math.cos(mFrequency * time) + 1);
         }
     }
