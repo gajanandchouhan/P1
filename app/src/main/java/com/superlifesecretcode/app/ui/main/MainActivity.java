@@ -1,6 +1,11 @@
 package com.superlifesecretcode.app.ui.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -245,6 +250,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
+        getBanner();
         if (mainAdapter != null) {
             mainAdapter.notifyDataSetChanged();
         }
@@ -265,8 +271,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
-    private void getMainCategories() {
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        super.onDestroy();
+    }
 
+    private void getMainCategories() {
         if (userDetailResponseData.getCountry() != null) {
             HashMap<String, String> body = new HashMap<>();
             body.put("country_id", userDetailResponseData.getCountry());
@@ -280,6 +291,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
     }
+
     private void getAnnouementCount() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
@@ -288,6 +300,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         params.put("user_id", userDetailResponseData.getUser_id());
         presenter.getAnnouncementCount(params, headers);
     }
+
     private void setUpUserdetails() {
         if (userDetailResponseData != null) {
             textViewName.setText(userDetailResponseData.getUsername());
@@ -511,6 +524,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
+    @Override
+    public void setBanners(List<BannerModel> banners) {
+        if (banners != null) {
+            bannerList.clear();
+            bannerList.addAll(banners);
+            bannerPagerAdapter.notifyDataSetChanged();
+        }
+    }
+
     private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
         String positive_resp = list.get(clikedPostion).getPositive_resp();
         String negative_resp = list.get(clikedPostion).getNegative_resp();
@@ -570,5 +592,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             list.add(new SubcategoryModel("country_globe", "On-site sharing", "", 8, false));
         }
         return list;
+    }
+
+    private void getBanner() {
+        if (userDetailResponseData.getCountry() != null) {
+            HashMap<String, String> body = new HashMap<>();
+            body.put("country_id", userDetailResponseData.getCountry());
+            presenter.getBanners(body);
+        }
     }
 }

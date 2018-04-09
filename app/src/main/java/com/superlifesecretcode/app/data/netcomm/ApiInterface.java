@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.data.netcomm;
 
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
+import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
@@ -224,4 +225,9 @@ public interface ApiInterface {
     @POST("getUnreadAnnouncementCount")
     Observable<AnnouncementCountResponseModel> getUnreadAnnouncementCount(@PartMap() Map<String, RequestBody> partMap,
                                                                           @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getBanners")
+    Observable<BannerResponseModel> getBanners(@PartMap() Map<String, RequestBody> params);
 }

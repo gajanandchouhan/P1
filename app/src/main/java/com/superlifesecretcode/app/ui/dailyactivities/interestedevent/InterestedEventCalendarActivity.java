@@ -208,8 +208,10 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
         editPicker.setOnClickListner(new TimeEditPicker.OnClickListner() {
             @Override
             public void onInputDone(String time) {
-                updateRemindTime(time);
-                remindBefore = time;
+                if (!time.equalsIgnoreCase(interestedEventdata.getRemind_before())) {
+                    updateRemindTime(time);
+                    remindBefore = time;
+                }
             }
         });
         editPicker.show();

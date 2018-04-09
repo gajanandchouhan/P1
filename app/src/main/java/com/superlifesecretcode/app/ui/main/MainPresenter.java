@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.main;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
@@ -93,5 +94,34 @@ public class MainPresenter extends BasePresenter<MainView> {
 
             }
         }, params, headers);
+    }
+
+    public void getBanners(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_GET_BANNERS, new ResponseHandler<BannerResponseModel>() {
+            @Override
+            public void onResponse(BannerResponseModel categoryResponseModel) {
+                if (categoryResponseModel != null) {
+                    if (categoryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS))
+                        view.setBanners(categoryResponseModel.getData());
+                    else {
+                        CommonUtils.showSnakeBar(mContext, categoryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
     }
 }

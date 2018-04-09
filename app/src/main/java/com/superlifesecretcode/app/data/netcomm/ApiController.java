@@ -1,11 +1,14 @@
 package com.superlifesecretcode.app.data.netcomm;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
+import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
@@ -130,6 +133,12 @@ public class ApiController implements RequestType {
                 resetPassObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                break;
+            case REQ_GET_BANNERS:
+                Observable<BannerResponseModel> bannerObservable = apiInterface.getBanners(requestParams);
+                bannerObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BannerResponseModel>(handler));
                 break;
         }
 

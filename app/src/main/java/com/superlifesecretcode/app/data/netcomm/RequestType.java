@@ -38,4 +38,5 @@ public interface RequestType {
     byte REQ_GET_RESET_CODE = 30;
     byte REQ_RESET_PASS = 31;
     byte REQ_GET_ANNOUNCEMENT_COUNT = 32;
+    byte REQ_GET_BANNERS = 33;
 }
