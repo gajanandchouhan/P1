@@ -88,13 +88,14 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
         notificationBuilder.setContentText(messageBody.get("body"));
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setSound(soundUri);
+        notificationBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
         notificationBuilder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         id = id + 1;
         Notification notification = notificationBuilder.build();
-        notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
+//        notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
         notificationManager.notify(id,notification );
     }
 

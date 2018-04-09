@@ -296,7 +296,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("announcement_type", "1");
         params.put("user_id", userDetailResponseData.getUser_id());
         presenter.getAnnouncementCount(params, headers);
     }

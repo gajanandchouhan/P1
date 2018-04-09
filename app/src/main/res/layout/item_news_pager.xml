@@ -36,12 +36,6 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:scaleType="fitXY"
             android:src="@drawable/default_placeholder" />
-
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -76,5 +70,11 @@
                 android:padding="@dimen/_5sdp"
                 android:src="@drawable/share_red" />
         </RelativeLayout>
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 </ScrollView>

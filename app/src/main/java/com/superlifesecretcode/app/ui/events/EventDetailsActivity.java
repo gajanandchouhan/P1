@@ -28,9 +28,9 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
     private LanguageResponseData conversionData;
     private List<EventsInfoModel> list;
     private UserDetailResponseData userData;
-    private int position;
     private String interested;
     private EventPresenter presenter;
+    private int postion;
 
     @Override
     protected int getContentView() {
@@ -42,7 +42,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         Bundle bundle = getIntent().getBundleExtra("bundle");
-        int postion = bundle.getInt("position");
+         postion = bundle.getInt("position");
         list = (List<EventsInfoModel>) bundle.getSerializable("events");
         setUpToolbar();
         pager = findViewById(R.id.pager);
@@ -69,7 +69,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
                 if (readed_by_user1.equalsIgnoreCase("0")) {
                     markRead();
                 }
-                EventDetailsActivity.this.position = position;
+                postion = position;
             }
 
             @Override
@@ -88,7 +88,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("announcement_id", list.get(position).getAnnouncement_id());
+        params.put("announcement_id", list.get(postion).getAnnouncement_id());
         presenter.readMark(params, headers);
     }
     private void setUpToolbar() {
@@ -116,7 +116,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
     }
 
     public void updateEventInterest(int position, String interested, String id) {
-        this.position = position;
+        this.postion = position;
         this.interested = interested;
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
@@ -134,13 +134,13 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
 
     @Override
     public void onUpdateInteresed() {
-        list.get(position).setUserIntrested(interested);
+        list.get(postion).setUserIntrested(interested);
         newsAapter.notifyDataSetChanged();
     }
 
     @Override
     public void onEvendReaded() {
-        list.get(position).setReaded_by_user("1");
+        list.get(postion).setReaded_by_user("1");
         newsAapter.notifyDataSetChanged();
     }
 }
