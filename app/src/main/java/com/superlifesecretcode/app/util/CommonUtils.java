@@ -34,8 +34,10 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -352,5 +354,36 @@ public class CommonUtils {
         if (inputManager != null) {
             inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
+    }
+
+
+    public static List<Date> getDates(String dateString1, String dateString2)
+    {
+        ArrayList<Date> dates = new ArrayList<Date>();
+        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        Date date1 = null;
+        Date date2 = null;
+
+        try {
+            date1 = df1 .parse(dateString1);
+            date2 = df1 .parse(dateString2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+
+        while(!cal1.after(cal2))
+        {
+            dates.add(cal1.getTime());
+            cal1.add(Calendar.DATE, 1);
+        }
+        return dates;
     }
 }

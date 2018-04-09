@@ -72,6 +72,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
         imageViewProfile = findViewById(R.id.imageView_profile);
         imageViewProfile.setVisibility(View.VISIBLE);
         imageViewProfile.setImageResource(R.drawable.date);
+        compactCalendarView.shouldDrawIndicatorsBelowSelectedDays(true);
         findViewById(R.id.imageView_add_event).setVisibility(View.INVISIBLE);
         imageViewProfile.setOnClickListener(this);
         date = new Date();
@@ -157,7 +158,17 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
         compactCalendarView.removeAllEvents();
         if (interestedEventResponseDataList != null) {
             for (InterestedEventdata interestedEventResponseData : interestedEventResponseDataList) {
-                compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time()), interestedEventResponseData));
+                if (interestedEventResponseData.getEnd_date() != null &&
+                        !interestedEventResponseData.getEnd_date().isEmpty()) {
+                    List<Date> dates = CommonUtils.getDates(interestedEventResponseData.getEvent_date(), interestedEventResponseData.getEnd_date());
+                    for (Date date1 : dates) {
+                        compactCalendarView.addEvent(new Event(Color.RED, date1.getTime(), interestedEventResponseData));
+                    }
+
+                } else {
+                    compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time()), interestedEventResponseData));
+                }
+
             }
         }
         listener.onDayClick(date);

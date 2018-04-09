@@ -15,6 +15,24 @@ public class InterestedEventdata {
     private String event_type;
     private String userIntrested;
     private String remind_before;
+    private String end_date;
+    private String end_time;
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
 
     public String getRemind_before() {
         return remind_before;
