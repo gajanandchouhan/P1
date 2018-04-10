@@ -557,7 +557,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
                     SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
                 }*/
-                openNext(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
+//                openNext(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
             }
 
             @Override

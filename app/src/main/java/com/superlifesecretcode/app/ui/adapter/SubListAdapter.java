@@ -135,7 +135,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
                     SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
                 }
-                openNext(clikedPostion);
+//                openNext(clikedPostion);
             }
 
             @Override
