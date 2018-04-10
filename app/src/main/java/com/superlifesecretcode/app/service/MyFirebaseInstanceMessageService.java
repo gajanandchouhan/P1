@@ -15,12 +15,14 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.superlifesecretcode.app.FCMReceiver;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.splash.SplashActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.Map;
@@ -42,7 +44,18 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         if (remoteMessage.getData().size() > 0) {
-            sendNotification(remoteMessage.getData());
+            Intent intent = new Intent(this, FCMReceiver.class);
+            intent.putExtra("title",remoteMessage.getData().get("title"));
+            intent.putExtra("body",remoteMessage.getData().get("body"));
+            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+                    intent, 0);
+            try {
+                pendingIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                e.printStackTrace();
+            }
+//            sendNotification(remoteMessage.getData());
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
@@ -88,7 +101,7 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
         notificationBuilder.setContentText(messageBody.get("body"));
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setSound(soundUri);
-        notificationBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+        notificationBuilder.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
         notificationBuilder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
@@ -96,7 +109,7 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
         id = id + 1;
         Notification notification = notificationBuilder.build();
 //        notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
-        notificationManager.notify(id,notification );
+        notificationManager.notify(id, notification);
     }
 
     public boolean foregrounded() {

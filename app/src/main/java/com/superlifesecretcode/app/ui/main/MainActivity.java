@@ -1,11 +1,6 @@
 package com.superlifesecretcode.app.ui.main;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -38,9 +33,9 @@ import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.notification.NotificationActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
+import com.superlifesecretcode.app.ui.player.PLayerPopupActivity;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
-import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
