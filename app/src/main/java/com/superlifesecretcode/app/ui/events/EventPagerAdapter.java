@@ -17,6 +17,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
+import com.superlifesecretcode.app.ui.news.NewsDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -52,12 +53,12 @@ public class EventPagerAdapter extends PagerAdapter {
         ImageView imageViewShare = layout.findViewById(R.id.imageView_share);
         textViewTitle.setText(newsList.get(position).getAnnouncement_name());
         if (newsList.get(position).getEnd_date() != null && !newsList.get(position).getEnd_date().isEmpty()) {
-            String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(),true);
-            String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getEnd_date() + " " + newsList.get(position).getEnd_time(),true);
+            String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(), true);
+            String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getEnd_date() + " " + newsList.get(position).getEnd_time(), true);
             textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
 
         } else {
-            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(),true));
+            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(), true));
         }
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         TextView textViewDesc = layout.findViewById(R.id.textView_desc);
@@ -86,7 +87,7 @@ public class EventPagerAdapter extends PagerAdapter {
         imageViewShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(newsList.get(position).getAnnouncement_description()).toString());
+                ((EventDetailsActivity) mContext).shareImageAndText(newsList.get(position).getImage(), Html.fromHtml(newsList.get(position).getAnnouncement_description()).toString());
             }
         });
         collection.addView(layout);

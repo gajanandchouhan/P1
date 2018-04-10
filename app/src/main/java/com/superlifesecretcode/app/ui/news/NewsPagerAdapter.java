@@ -58,7 +58,7 @@ public class NewsPagerAdapter extends PagerAdapter {
         imageViewShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(newsList.get(position).getAnnouncement_description()).toString());
+                ((NewsDetailsActivity) mContext).shareImageAndText(newsList.get(position).getImage(), Html.fromHtml(newsList.get(position).getAnnouncement_description()).toString());
             }
         });
 

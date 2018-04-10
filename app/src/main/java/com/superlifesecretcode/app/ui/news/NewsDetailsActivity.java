@@ -1,6 +1,9 @@
 package com.superlifesecretcode.app.ui.news;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +17,8 @@ import com.superlifesecretcode.app.data.model.news.NewsResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -152,5 +157,26 @@ public class NewsDetailsActivity extends BaseActivity implements NewsDetailsView
         }
         list.get(postion).setLiked_by_user(like);
         newsAapter.notifyDataSetChanged();
+    }
+
+    public void shareImageAndText(String image, String text) {
+        if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+            CommonUtils.shareImageWithContent(image, text, this);
+        } else {
+            ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionConstant.CODE_PROFILE) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
+        }
     }
 }

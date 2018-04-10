@@ -119,7 +119,7 @@ public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityA
                 }
 
             } else if (v.getId() == R.id.imageView_share) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getDescription()).toString());
+                ((CountryAcitvitiesActivity) mContext).shareImageAndText(list.get(getAdapterPosition()).getImage(), Html.fromHtml(list.get(getAdapterPosition()).getDescription()).toString());
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", list.get(getAdapterPosition()).getActivity_id());

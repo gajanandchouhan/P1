@@ -166,7 +166,11 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
                     }
 
                 } else {
-                    compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time()), interestedEventResponseData));
+                    if (interestedEventResponseData.getEvent_type().equalsIgnoreCase(ConstantLib.TYPE_ANNOUNCEMENT_EVENT)) {
+                        compactCalendarView.addEvent(new Event(Color.RED, System.currentTimeMillis(), interestedEventResponseData));
+                    } else {
+                        compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time()), interestedEventResponseData));
+                    }
                 }
 
             }

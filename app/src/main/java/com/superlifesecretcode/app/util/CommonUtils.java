@@ -253,7 +253,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString(),false);
+        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString(), false);
     }
 
     public static String getAppendedDate(int year, int month, int dayOfMonth) {
@@ -263,7 +263,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return getformattedDateFromString("yyyy-MM-dd","yyyy-MM-dd",stringBuilder.toString(),true);
+        return getformattedDateFromString("yyyy-MM-dd", "yyyy-MM-dd", stringBuilder.toString(), true);
     }
 
     public interface ClickListner {
@@ -298,6 +298,29 @@ public class CommonUtils {
 
                 }
             });
+        }
+    }
+
+    public static void shareImageWithContent(String image, final String text, final Context mContext) {
+        if (image != null && !image.isEmpty() && text != null && !text.isEmpty()) {
+            GlideApp.with(mContext).asBitmap().load(image).into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    Uri imageUri = getImageUri(mContext, resource);
+                    if (imageUri != null) {
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("*/*");
+                        i.putExtra(Intent.EXTRA_STREAM, imageUri);
+                        i.putExtra(Intent.EXTRA_TEXT, text);
+                        mContext.startActivity(Intent.createChooser(i, "Share Image"));
+                    }
+
+                }
+            });
+        } else if (image != null && !image.isEmpty()) {
+            shareImage(image, mContext);
+        } else if (text != null && !text.isEmpty()) {
+            shareContent(mContext, text);
         }
     }
 
@@ -357,8 +380,7 @@ public class CommonUtils {
     }
 
 
-    public static List<Date> getDates(String dateString1, String dateString2)
-    {
+    public static List<Date> getDates(String dateString1, String dateString2) {
         ArrayList<Date> dates = new ArrayList<Date>();
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
@@ -366,8 +388,8 @@ public class CommonUtils {
         Date date2 = null;
 
         try {
-            date1 = df1 .parse(dateString1);
-            date2 = df1 .parse(dateString2);
+            date1 = df1.parse(dateString1);
+            date2 = df1.parse(dateString2);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -379,8 +401,7 @@ public class CommonUtils {
         Calendar cal2 = Calendar.getInstance();
         cal2.setTime(date2);
 
-        while(!cal1.after(cal2))
-        {
+        while (!cal1.after(cal2)) {
             dates.add(cal1.getTime());
             cal1.add(Calendar.DATE, 1);
         }

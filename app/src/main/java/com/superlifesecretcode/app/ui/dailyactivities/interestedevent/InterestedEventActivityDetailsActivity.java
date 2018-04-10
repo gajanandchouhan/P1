@@ -1,6 +1,9 @@
 package com.superlifesecretcode.app.ui.dailyactivities.interestedevent;
 
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
@@ -24,6 +27,7 @@ import com.superlifesecretcode.app.ui.sharing_submit.ShareListView;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
+import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.util.HashMap;
 import java.util.List;
@@ -145,12 +149,12 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
         if (newsResponseModel != null) {
             textViewTitle1.setText(newsResponseModel.getAnnouncement_name());
             if (newsResponseModel.getEnd_date() != null && !newsResponseModel.getEnd_date().isEmpty()) {
-                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(),true);
-                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time(),true);
+                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(), true);
+                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time(), true);
                 textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
 
             } else {
-                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(),true));
+                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(), true));
             }
 //            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
             ImageLoadUtils.loadImage(newsResponseModel.getImage(), imageView);
@@ -179,7 +183,7 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
             imageViewShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CommonUtils.shareContent(InterestedEventActivityDetailsActivity.this, Html.fromHtml(newsResponseModel.getAnnouncement_description()).toString());
+                    shareImageAndText(newsResponseModel.getImage(), Html.fromHtml(newsResponseModel.getAnnouncement_description()).toString());
                 }
             });
         }
@@ -193,5 +197,26 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
         params.put("interest", interested);
         params.put("user_id", userData.getUser_id());
         presenter.makeInterested(params, headers);
+    }
+
+    public void shareImageAndText(String image, String text) {
+        if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+            CommonUtils.shareImageWithContent(image, text, this);
+        } else {
+            ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionConstant.CODE_PROFILE) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
+        }
     }
 }

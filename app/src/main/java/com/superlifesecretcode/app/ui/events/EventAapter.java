@@ -68,11 +68,11 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
         if (isToday) {
             holder.textViewDate.setText(coversionData.getToday());
         } else {
-            holder.textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date(),true));
+            holder.textViewDate.setText(String.format("Start Date : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
+                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date(), true)));
         }
 
-        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getAnnouncement_time(),true));
+        holder.textViewTitme.setText(String.format("Time : %s", CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getAnnouncement_time(), true)));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(eventsInfoModel.getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);
@@ -101,7 +101,7 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
         public ItemViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView_event);
-            cardView=itemView.findViewById(R.id.card_view);
+            cardView = itemView.findViewById(R.id.card_view);
             textViewInterested = itemView.findViewById(R.id.textVew_interested);
             textViewTitle = itemView.findViewById(R.id.textView_title);
             textViewDate = itemView.findViewById(R.id.textView_date);
@@ -126,7 +126,7 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
                 }
 
             } else if (v.getId() == R.id.imageView_share) {
-                CommonUtils.shareContent(mContext, Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString());
+                ((EventActivity) mContext).shareImageAndText(list.get(getAdapterPosition()).getImage(), Html.fromHtml(list.get(getAdapterPosition()).getAnnouncement_description()).toString());
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("events", (ArrayList) list);

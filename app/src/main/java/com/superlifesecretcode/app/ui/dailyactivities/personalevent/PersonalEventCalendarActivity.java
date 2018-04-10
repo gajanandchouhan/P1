@@ -75,6 +75,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         imageViewProfile.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         compactCalendarView.setUseThreeLetterAbbreviation(true);
+        compactCalendarView.shouldDrawIndicatorsBelowSelectedDays(true);
         date = new Date();
         final Date firstDayOfCurrentMonth = compactCalendarView.getFirstDayOfCurrentMonth();
         String format = dateFormatForMonth.format(firstDayOfCurrentMonth);

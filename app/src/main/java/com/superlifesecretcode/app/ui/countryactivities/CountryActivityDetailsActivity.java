@@ -1,8 +1,11 @@
 package com.superlifesecretcode.app.ui.countryactivities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
@@ -25,6 +28,7 @@ import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.Interested
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
+import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.util.HashMap;
 import java.util.List;
@@ -219,7 +223,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
             imageViewShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CommonUtils.shareContent(CountryActivityDetailsActivity.this, Html.fromHtml(countryActivityInfoModel.getDescription()).toString());
+                    shareImageAndText(countryActivityInfoModel.getImage(), Html.fromHtml(countryActivityInfoModel.getDescription()).toString());
                 }
             });
             lat = countryActivityInfoModel.getLatitude();
@@ -236,5 +240,27 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
         params.put("interest", interested);
         params.put("user_id", userData.getUser_id());
         presenter.makeInterested(params, headers);
+    }
+
+
+    public void shareImageAndText(String image, String text) {
+        if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+            CommonUtils.shareImageWithContent(image, text, this);
+        } else {
+            ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionConstant.CODE_PROFILE) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
+        }
     }
 }
