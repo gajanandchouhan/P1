@@ -203,7 +203,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         recyclerViewMain.setAdapter(mainAdapter);
         recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
         setUpBottomBar();
-        getMainCategories();
+//        getMainCategories();
     }
 
     private void setUpBottomBar() {
@@ -245,12 +245,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
-        getBanner();
+//        getBanner();
+        getMainCategories();
         if (mainAdapter != null) {
             mainAdapter.notifyDataSetChanged();
         }
         if (LANGAUE_CHANGED) {
-            getMainCategories();
+//            getMainCategories();
             LANGAUE_CHANGED = false;
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
             setUpBottomBar();

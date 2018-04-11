@@ -1,12 +1,17 @@
 package com.superlifesecretcode.app.ui.player;
 
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +24,8 @@ public class PLayerPopupActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     TextView textViewTitle;
     TextView textViewMessage;
+    private KeyguardManager myKM;
+//    private PowerManager powerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +35,7 @@ public class PLayerPopupActivity extends AppCompatActivity {
         textViewMessage = findViewById(R.id.textView_message);
         textViewTitle = findViewById(R.id.textView_title);
         Bundle bundle = getIntent().getBundleExtra("bundle");
-        if (bundle!=null) {
+        if (bundle != null) {
             textViewMessage.setText(bundle.getString("body"));
             textViewTitle.setText(bundle.getString("title"));
         }
@@ -51,7 +58,24 @@ public class PLayerPopupActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        myKM = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        boolean isPhoneLocked = myKM.inKeyguardRestrictedInputMode();
+//        powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
+    }
+
+    private boolean isScreenOn() {
+//        return (Build.VERSION.SDK_INT < 20 ? powerManager.isScreenOn() : powerManager.isInteractive());
+        boolean isPhoneLocked = myKM.inKeyguardRestrictedInputMode();
+        return !isPhoneLocked;
+    }
+
+    @Override
+    protected void onPause() {
+        if (isScreenOn()) {
+            finish();
+        }
+        super.onPause();
     }
 
     @Override
@@ -71,4 +95,6 @@ public class PLayerPopupActivity extends AppCompatActivity {
             mediaPlayer = null;
         }
     }
+
+
 }
