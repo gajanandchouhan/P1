@@ -175,6 +175,9 @@
         </receiver>
 
         <activity
+            android:name=".ui.ringtone.RingtoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.player.PLayerPopupActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"

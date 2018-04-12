@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 /**
@@ -30,7 +32,7 @@ public class DateRangePicker extends Dialog implements View.OnClickListener {
     private OnClickListner onClickListner;
     private String id = "";
     private TextView textViewFromDate, textViewToDate;
-    private EditText editTextName;
+    private TextView textViewLabelStartDate, textViewLabelEndDate;
 
 
     public DateRangePicker(@NonNull Context context) {
@@ -46,14 +48,25 @@ public class DateRangePicker extends Dialog implements View.OnClickListener {
     private void initView() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_date_range);
+        LanguageResponseData conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         getWindow().setBackgroundDrawableResource(R.drawable.white_rounded_corner);
         getWindow().setLayout(CommonUtils.getScreenWidth(context) - 100, WindowManager.LayoutParams.WRAP_CONTENT);
         buttonOk = findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(this);
+        textViewLabelStartDate = findViewById(R.id.textVew_label_start_date);
+        textViewLabelEndDate = findViewById(R.id.textVew_label_end_date);
         textViewFromDate = findViewById(R.id.textView_start_date);
         textViewToDate = findViewById(R.id.textView_end_date);
         textViewFromDate.setOnClickListener(this);
         textViewToDate.setOnClickListener(this);
+        if (conversionData != null) {
+            textViewLabelStartDate.setText(conversionData.getStart_date());
+            textViewLabelEndDate.setText(conversionData.getEnd_date());
+            textViewFromDate.setHint(conversionData.getSelect_date_label());
+            textViewToDate.setHint(conversionData.getSelect_date_label());
+            buttonOk.setText("OK");
+
+        }
     }
 
     @Override

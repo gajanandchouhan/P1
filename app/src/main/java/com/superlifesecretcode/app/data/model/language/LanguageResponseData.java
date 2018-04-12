@@ -83,6 +83,213 @@ public class LanguageResponseData {
     private String today;
     private String upcoming;
     private String interested;
+    private String start_date;
+    private String time;
+    private String event_title;
+    private String when;
+    private String date;
+    private String reminder_before_event;
+    private String select;
+    private String in_minute;
+    private String add_event;
+    private String select_date;
+    private String select_time;
+    private String enter_reminder_time_event;
+    private String enter_valid_reminder_time;
+    private String enter_event_details;
+    private String update_event;
+    private String update;
+    private String search;
+    private String end_date;
+    private String select_date_label;
+    private String select_start_date;
+    private String select_end_date;
+    private String contact_details;
+    private String select_enter_title;
+
+    public String getSelect_enter_title() {
+        return select_enter_title;
+    }
+
+    public void setSelect_enter_title(String select_enter_title) {
+        this.select_enter_title = select_enter_title;
+    }
+
+    public String getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getEvent_title() {
+        return event_title;
+    }
+
+    public void setEvent_title(String event_title) {
+        this.event_title = event_title;
+    }
+
+    public String getWhen() {
+        return when;
+    }
+
+    public void setWhen(String when) {
+        this.when = when;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getReminder_before_event() {
+        return reminder_before_event;
+    }
+
+    public void setReminder_before_event(String reminder_before_event) {
+        this.reminder_before_event = reminder_before_event;
+    }
+
+    public String getSelect() {
+        return select;
+    }
+
+    public void setSelect(String select) {
+        this.select = select;
+    }
+
+    public String getIn_minute() {
+        return in_minute;
+    }
+
+    public void setIn_minute(String in_minute) {
+        this.in_minute = in_minute;
+    }
+
+    public String getAdd_event() {
+        return add_event;
+    }
+
+    public void setAdd_event(String add_event) {
+        this.add_event = add_event;
+    }
+
+    public String getSelect_date() {
+        return select_date;
+    }
+
+    public void setSelect_date(String select_date) {
+        this.select_date = select_date;
+    }
+
+    public String getSelect_time() {
+        return select_time;
+    }
+
+    public void setSelect_time(String select_time) {
+        this.select_time = select_time;
+    }
+
+    public String getEnter_reminder_time_event() {
+        return enter_reminder_time_event;
+    }
+
+    public void setEnter_reminder_time_event(String enter_reminder_time_event) {
+        this.enter_reminder_time_event = enter_reminder_time_event;
+    }
+
+    public String getEnter_valid_reminder_time() {
+        return enter_valid_reminder_time;
+    }
+
+    public void setEnter_valid_reminder_time(String enter_valid_reminder_time) {
+        this.enter_valid_reminder_time = enter_valid_reminder_time;
+    }
+
+    public String getEnter_event_details() {
+        return enter_event_details;
+    }
+
+    public void setEnter_event_details(String enter_event_details) {
+        this.enter_event_details = enter_event_details;
+    }
+
+    public String getUpdate_event() {
+        return update_event;
+    }
+
+    public void setUpdate_event(String update_event) {
+        this.update_event = update_event;
+    }
+
+    public String getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(String update) {
+        this.update = update;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
+    }
+
+    public String getSelect_date_label() {
+        return select_date_label;
+    }
+
+    public void setSelect_date_label(String select_date_label) {
+        this.select_date_label = select_date_label;
+    }
+
+    public String getSelect_start_date() {
+        return select_start_date;
+    }
+
+    public void setSelect_start_date(String select_start_date) {
+        this.select_start_date = select_start_date;
+    }
+
+    public String getSelect_end_date() {
+        return select_end_date;
+    }
+
+    public void setSelect_end_date(String select_end_date) {
+        this.select_end_date = select_end_date;
+    }
+
+    public String getContact_details() {
+        return contact_details;
+    }
+
+    public void setContact_details(String contact_details) {
+        this.contact_details = contact_details;
+    }
 
     public String getToday() {
         return today;

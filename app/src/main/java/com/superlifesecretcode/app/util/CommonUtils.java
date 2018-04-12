@@ -2,17 +2,22 @@ package com.superlifesecretcode.app.util;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +48,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 import java.util.UUID;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
@@ -285,9 +289,11 @@ public class CommonUtils {
 
     public static void shareImage(String image, final Context mContext) {
         if (image != null && !image.isEmpty()) {
+            final ProgressDialog show = ProgressDialog.show(mContext, "", "", true, false);
             GlideApp.with(mContext).asBitmap().load(image).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    show.dismiss();
                     Uri imageUri = getImageUri(mContext, resource);
                     if (imageUri != null) {
                         Intent i = new Intent(Intent.ACTION_SEND);
@@ -297,16 +303,25 @@ public class CommonUtils {
                     }
 
                 }
+
+                @Override
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    super.onLoadFailed(errorDrawable);
+                    show.dismiss();
+
+                }
             });
         }
     }
 
     public static void shareImageWithContent(String image, final String text, final Context mContext) {
         if (image != null && !image.isEmpty() && text != null && !text.isEmpty()) {
+            final ProgressDialog show = ProgressDialog.show(mContext, "", "", true, false);
             GlideApp.with(mContext).asBitmap().load(image).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                     Uri imageUri = getImageUri(mContext, resource);
+                    show.dismiss();
                     if (imageUri != null) {
                         Intent i = new Intent(Intent.ACTION_SEND);
                         i.setType("*/*");
@@ -315,6 +330,12 @@ public class CommonUtils {
                         mContext.startActivity(Intent.createChooser(i, "Share Image"));
                     }
 
+                }
+
+                @Override
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    super.onLoadFailed(errorDrawable);
+                    show.dismiss();
                 }
             });
         } else if (image != null && !image.isEmpty()) {
@@ -406,5 +427,23 @@ public class CommonUtils {
             cal1.add(Calendar.DATE, 1);
         }
         return dates;
+    }
+
+
+    public static Uri[] getRingtoneUris(Context mContext) {
+        RingtoneManager ringtoneMgr = new RingtoneManager(mContext);
+        ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
+        Cursor alarmsCursor = ringtoneMgr.getCursor();
+        int alarmsCount = alarmsCursor.getCount();
+        if (alarmsCount == 0 && !alarmsCursor.moveToFirst()) {
+            return null;
+        }
+        Uri[] alarms = new Uri[alarmsCount];
+        while (!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
+            int currentPosition = alarmsCursor.getPosition();
+            alarms[currentPosition] = ringtoneMgr.getRingtoneUri(currentPosition);
+        }
+        alarmsCursor.close();
+        return alarms;
     }
 }

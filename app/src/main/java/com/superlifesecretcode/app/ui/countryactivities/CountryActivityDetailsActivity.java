@@ -51,6 +51,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
     private String interested;
     private CountryActivityInfoModel countryActivityInfoModel;
     private String lat, lng;
+    TextView textViewContactDetails;
 
     @Override
     protected int getContentView() {
@@ -95,6 +96,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
         textViewPhone = findViewById(R.id.textView_phone);
         textViewEmail = findViewById(R.id.textView_email);
         imageViewMap = findViewById(R.id.imageView_map);
+        textViewContactDetails = findViewById(R.id.textView_contact_details);
         imageViewMap.setOnClickListener(this);
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
@@ -102,6 +104,9 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
         fromCalendar = getIntent().getBundleExtra("bundle").getBoolean("from_calendar");
         setUpToolbar();
         getDetails();
+        if (conversionData != null) {
+            textViewContactDetails.setText(conversionData.getContact_details());
+        }
     }
 
     private void getDetails() {
@@ -190,7 +195,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
             } else {*//*
                 textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
             }*/
-            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, countryActivityInfoModel.getActivity_date() + " " + countryActivityInfoModel.getActivity_time(),true));
+            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, countryActivityInfoModel.getActivity_date() + " " + countryActivityInfoModel.getActivity_time(), true));
             ImageLoadUtils.loadImage(countryActivityInfoModel.getImage(), imageView);
             textViewAddr.setText(countryActivityInfoModel.getVenue());
             textViewInterested.setText(conversionData.getInterested());

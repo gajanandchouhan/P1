@@ -47,6 +47,8 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
     String id = "";
     PersonalEventResponseData eventResponseData;
     private boolean isStandard;
+    TextView textViewTitleLable, textViewEventTitleLabel, textViewWhen,
+            textViewLabelReminder, textViewInMin;
 
     @Override
     protected int getContentView() {
@@ -61,7 +63,12 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
         editTextTitle = findViewById(R.id.edit_text_event);
         textViewDate = findViewById(R.id.textView_date);
         textViewTime = findViewById(R.id.textView_time);
+        textViewInMin = findViewById(R.id.textVew_minute);
         buttonAddEvent = findViewById(R.id.button_add_event);
+        textViewTitleLable = findViewById(R.id.textView_label_event_details);
+        textViewEventTitleLabel = findViewById(R.id.textVew_label_event_title);
+        textViewWhen = findViewById(R.id.textVew_label_when);
+        textViewLabelReminder = findViewById(R.id.textVew_label_reminder);
         editTextReminderMinute = findViewById(R.id.edit_text_reminder);
         Bundle detail = getIntent().getBundleExtra("bundle");
         if (detail != null && detail.getBoolean("isDetails")) {
@@ -98,6 +105,17 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
             }
         });
         setUpLocalData();
+        if (conversionData != null) {
+            textViewEventTitleLabel.setText(conversionData.getEvent_title());
+            textViewTitleLable.setText(conversionData.getEnter_event_details());
+            textViewSelect.setText(conversionData.getSelect());
+            textViewDate.setHint(conversionData.getDate());
+            textViewTime.setHint(conversionData.getTime());
+            textViewLabelReminder.setText(conversionData.getReminder_before_event());
+            editTextReminderMinute.setHint(conversionData.getReminder_before_event());
+            textViewInMin.setText(conversionData.getIn_minute());
+            buttonAddEvent.setText(conversionData.getAdd_event());
+        }
     }
 
     @Override
@@ -186,24 +204,24 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
         String reminderMinute = editTextReminderMinute.getText().toString().trim();
         if (typeId.isEmpty()) {
             if (title.isEmpty()) {
-                editTextTitle.setError("Please select or enter title of event.");
+                editTextTitle.setError(conversionData.getSelect_enter_title());
                 return;
             }
             if (date.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please select date.");
+                CommonUtils.showSnakeBar(this, conversionData.getSelect_date());
                 return;
             }
         }
         if (time.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please select time.");
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_time());
             return;
         }
         if (reminderMinute.isEmpty()) {
-            editTextTitle.setError("Please enter reminder time before event.");
+            editTextReminderMinute.setError(conversionData.getEnter_reminder_time_event());
             return;
         }
         if (Integer.parseInt(reminderMinute) < 1) {
-            editTextReminderMinute.setError("Please enter valid reminder time before event.");
+            editTextReminderMinute.setError(conversionData.getEnter_valid_reminder_time());
             return;
         }
 
@@ -240,7 +258,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
                 String minute = String.format(Locale.getDefault(), "%02d", selectedMinute);
                 String t = String.format("%s:%s", hour, minute);
                 textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false));
-                time=CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, true);
+                time = CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, true);
 
             }
         });

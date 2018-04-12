@@ -144,6 +144,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                 return false;
             }
         });
+        editTextSearch.setHint(conversionData.getSearch());
     }
 
     @Override
