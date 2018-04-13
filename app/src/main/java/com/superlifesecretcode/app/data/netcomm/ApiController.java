@@ -18,6 +18,7 @@ import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventRes
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
+import com.superlifesecretcode.app.data.model.notifications.NotificationResponseModel;
 import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
@@ -317,6 +318,12 @@ public class ApiController implements RequestType {
                     announcementCountObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<AnnouncementCountResponseModel>(handler));
+                    break;
+                case REQ_GET_NOTIFICATIONS:
+                    Observable<NotificationResponseModel> notificationObservable = apiInterface.getNotifications(stringMultipartParamsParams, header);
+                    notificationObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<NotificationResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

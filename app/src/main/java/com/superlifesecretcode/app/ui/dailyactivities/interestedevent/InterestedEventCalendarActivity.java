@@ -25,6 +25,7 @@ import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -108,6 +109,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
             List<Event> events = compactCalendarView.getEvents(dateClicked);
             eventList.clear();
             eventList.addAll(events);
+            Collections.reverse(eventList);
             adapter.notifyDataSetChanged();
         }
 
@@ -174,6 +176,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
                 }
 
             }
+
         }
         listener.onDayClick(date);
     }

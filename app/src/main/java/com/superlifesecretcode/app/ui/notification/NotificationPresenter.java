@@ -3,9 +3,14 @@ package com.superlifesecretcode.app.ui.notification;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.notifications.NotificationResponseModel;
+import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
+import com.superlifesecretcode.app.data.netcomm.RequestType;
+import com.superlifesecretcode.app.data.netcomm.ResponseHandler;
 import com.superlifesecretcode.app.ui.base.BasePresenter;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,15 +36,15 @@ public class NotificationPresenter extends BasePresenter<NotificationView> {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
-   /*     view.showProgress();
+        view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callWithHeader(mContext, RequestType.REQ_GET_NEWS_UPDATES, new ResponseHandler<NewsResponseModel>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_GET_NOTIFICATIONS, new ResponseHandler<NotificationResponseModel>() {
             @Override
-            public void onResponse(NewsResponseModel newsResponseModel) {
+            public void onResponse(NotificationResponseModel newsResponseModel) {
                 view.hideProgress();
                 if (newsResponseModel != null) {
                     if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.setNewsData(newsResponseModel);
+                        view.setNotificationData(newsResponseModel.getData());
                     } else
                         CommonUtils.showToast(mContext, newsResponseModel.getMessage());
                 } else {
@@ -54,6 +59,6 @@ public class NotificationPresenter extends BasePresenter<NotificationView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        }, params, headers);*/
+        }, params, headers);
     }
 }

@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
+import com.superlifesecretcode.app.data.model.notifications.NotificationResponseData;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ import java.util.List;
  */
 
 public class NotificationAapter extends RecyclerView.Adapter<NotificationAapter.ItemViewHolder> {
-    private final List<NewsResponseData> list;
+    private final List<NotificationResponseData> list;
     private Context mContext;
 
     public NotificationAapter(List list, Context mContext) {
@@ -32,13 +35,14 @@ public class NotificationAapter extends RecyclerView.Adapter<NotificationAapter.
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-
-
+        holder.textViewTitle.setText(list.get(position).getTitle());
+        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMM, yy hh:mm a", list.get(position).getCreated_at(), false));
+        holder.textViewDesc.setText(list.get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

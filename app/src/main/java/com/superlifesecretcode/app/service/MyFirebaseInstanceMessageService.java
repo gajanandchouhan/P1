@@ -45,8 +45,9 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
 
         if (remoteMessage.getData().size() > 0) {
             Intent intent = new Intent(this, FCMReceiver.class);
-            intent.putExtra("title",remoteMessage.getData().get("title"));
-            intent.putExtra("body",remoteMessage.getData().get("body"));
+            intent.putExtra("title", remoteMessage.getData().get("title"));
+            intent.putExtra("body", remoteMessage.getData().get("body"));
+            intent.putExtra("type", remoteMessage.getData().get("notification_type"));
             // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
                     intent, 0);

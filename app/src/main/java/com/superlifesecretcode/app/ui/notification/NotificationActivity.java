@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.news.NewsResponseData;
+import com.superlifesecretcode.app.data.model.notifications.NotificationResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -21,11 +22,11 @@ import java.util.Map;
 public class NotificationActivity extends BaseActivity implements NotificationView {
 
     private RecyclerView recyclerView;
-    private NotificationAapter newsAapter;
+    private NotificationAapter notificationAdapter;
     private LanguageResponseData conversionData;
     private NotificationPresenter presenter;
     private UserDetailResponseData userDetailResponseData;
-    private List<NewsResponseData> newsList;
+    private List<NotificationResponseData> notificationList;
 
     @Override
     protected int getContentView() {
@@ -39,22 +40,22 @@ public class NotificationActivity extends BaseActivity implements NotificationVi
         setUpToolbar();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsList = new ArrayList<>();
-        newsAapter = new NotificationAapter(newsList, this);
-        recyclerView.setAdapter(newsAapter);
+        notificationList = new ArrayList<>();
+        notificationAdapter = new NotificationAapter(notificationList, this);
+        recyclerView.setAdapter(notificationAdapter);
+        getNotifications();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        getNews();
     }
 
-    private void getNews() {
+    private void getNotifications() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("announcement_type", "2");
+        params.put("user_id", userDetailResponseData.getUser_id());
         presenter.getNotification(params, headers);
     }
 
@@ -89,4 +90,11 @@ public class NotificationActivity extends BaseActivity implements NotificationVi
     }
 
 
+    @Override
+    public void setNotificationData(List<NotificationResponseData> data) {
+        if (data != null) {
+            notificationList.addAll(data);
+            notificationAdapter.notifyDataSetChanged();
+        }
+    }
 }
