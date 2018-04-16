@@ -109,6 +109,7 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
             textViewInterested.setText(coversionData.getInterested());
             itemView.findViewById(R.id.imageView_share).setOnClickListener(this);
             layoutInterested = itemView.findViewById(R.id.button_interested);
+            layoutInterested.setVisibility(View.GONE);
             layoutInterested.setOnClickListener(this);
             itemView.setOnClickListener(this);
             imageViewRemind.setOnClickListener(this);

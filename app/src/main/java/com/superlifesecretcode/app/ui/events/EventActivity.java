@@ -17,6 +17,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
@@ -54,7 +55,7 @@ public class EventActivity extends BaseActivity implements EventView {
         tabLayout = findViewById(R.id.tab_layout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
-        newsAapter = new EventAapter(list, this,conversionData);
+        newsAapter = new EventAapter(list, this, conversionData);
         recyclerView.setAdapter(newsAapter);
         tabLayout.addOnTabSelectedListener(listener);
         tabLayout.getTabAt(0).setText(conversionData.getToday());
@@ -158,7 +159,20 @@ public class EventActivity extends BaseActivity implements EventView {
     @Override
     public void onUpdateInteresed() {
         list.get(position).setUserIntrested(interested);
+        if (interested.equalsIgnoreCase("1")) {
+            setAlarm(list.get(position));
+        } else {
+            removeAlarm(list.get(position));
+        }
         newsAapter.notifyDataSetChanged();
+    }
+
+    private void setAlarm(EventsInfoModel eventsInfoModel) {
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getAnnouncement_name(), CommonUtils.getTimeInMilis(eventsInfoModel.getAnnouncement_date() + " " + eventsInfoModel.getAnnouncement_time()) - 60 * 1000 * 30, false);
+    }
+
+    private void removeAlarm(EventsInfoModel eventsInfoModel) {
+        AlarmUtility.getInstance(this).removeAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()));
     }
 
     @Override

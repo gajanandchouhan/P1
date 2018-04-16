@@ -21,9 +21,7 @@ import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
-import com.superlifesecretcode.app.ui.events.EventDetailsActivity;
-import com.superlifesecretcode.app.ui.sharing_submit.ShareListView;
+import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -44,6 +42,8 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
     RelativeLayout relativeLayout;
     private TextView textViewTitle1, textViewTime, textViewInterested,
             textViewAddr, textViewDesc;
+    private String interested;
+    private NewsResponseData newsResponseModel;
 
     @Override
     protected int getContentView() {
@@ -131,6 +131,11 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
 
     @Override
     public void onUpdateInteresed() {
+        if (interested.equalsIgnoreCase("1")) {
+            setAlarm(newsResponseModel);
+        } else {
+            removeAlarm(newsResponseModel);
+        }
         InterestedEventCalendarActivity.UPDATED = true;
         onBackPressed();
     }
@@ -145,8 +150,17 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
 
     }
 
+    private void setAlarm(NewsResponseData eventsInfoModel) {
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getAnnouncement_name(), CommonUtils.getTimeInMilis(eventsInfoModel.getAnnouncement_date() + " " + eventsInfoModel.getAnnouncement_time()) - 60 * 1000 * 30, false);
+    }
+
+    private void removeAlarm(NewsResponseData eventsInfoModel) {
+        AlarmUtility.getInstance(this).removeAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()));
+    }
+
     private void setUpData(final NewsResponseData newsResponseModel) {
         if (newsResponseModel != null) {
+            this.newsResponseModel = newsResponseModel;
             textViewTitle1.setText(newsResponseModel.getAnnouncement_name());
             if (newsResponseModel.getEnd_date() != null && !newsResponseModel.getEnd_date().isEmpty()) {
                 String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(), true);
@@ -190,6 +204,7 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
     }
 
     public void updateEventInterest(String interested, String id) {
+        this.interested = interested;
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();

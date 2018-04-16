@@ -12,15 +12,13 @@ import android.widget.TextView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
-import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventPresenter;
-import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.text.SimpleDateFormat;
@@ -177,6 +175,9 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         if (data != null) {
             compactCalendarView.removeAllEvents();
             for (PersonalEventResponseData interestedEventResponseData : data) {
+                if (interestedEventResponseData.getStatus() != null && interestedEventResponseData.getStatus().equalsIgnoreCase("1")) {
+                    setAlarm(interestedEventResponseData);
+                }
                 compactCalendarView.addEvent(new Event(Color.RED, CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()), interestedEventResponseData));
             }
         }
@@ -184,9 +185,22 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
                 date);
     }
 
+    private void setAlarm(PersonalEventResponseData interestedEventResponseData) {
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getActivity_id()), "RichestLifeReminder", "Hi one new event is near- " + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before())*1000*60), interestedEventResponseData.getTypeName()!=null&&!interestedEventResponseData.getTypeName().isEmpty());
+    }
+
+    private void removeAlarm(PersonalEventResponseData interestedEventResponseData) {
+        AlarmUtility.getInstance(this).removeAlarm(Integer.parseInt(interestedEventResponseData.getActivity_id()));
+    }
+
     @Override
     public void onStatusUpdated() {
         object.setStatus(status);
+        if (status.equalsIgnoreCase("1")) {
+            setAlarm(object);
+        } else {
+            removeAlarm(object);
+        }
         adapter.notifyDataSetChanged();
     }
 
@@ -200,6 +214,9 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     public void onRemoveSuccess() {
         eventList.remove(position);
         compactCalendarView.removeEvent(event);
+        if (object!=null){
+            removeAlarm(object);
+        }
         adapter.notifyDataSetChanged();
     }
 
@@ -238,4 +255,6 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         eventList.clear();
         adapter.notifyDataSetChanged();
     }
+
+
 }

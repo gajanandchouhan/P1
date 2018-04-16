@@ -24,12 +24,14 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CounActivtyResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
+import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DateRangePicker;
+import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
@@ -224,6 +226,12 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     @Override
     public void onUpdateInteresed() {
         list.get(position).setUserIntrested(interested);
+        if (interested.equalsIgnoreCase("1")){
+            setAlarm(list.get(position));
+        }
+        else{
+            removeAlarm(list.get(position));
+        }
         countryActivityAapter.notifyDataSetChanged();
     }
 
@@ -362,5 +370,12 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                 }
             }
         }
+    }
+    private void setAlarm(CountryActivityInfoModel eventsInfoModel) {
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getTitle(), CommonUtils.getTimeInMilis(eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time()) - 60 * 1000 * 30,false);
+    }
+
+    private void removeAlarm(CountryActivityInfoModel eventsInfoModel) {
+        AlarmUtility.getInstance(this).removeAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()));
     }
 }

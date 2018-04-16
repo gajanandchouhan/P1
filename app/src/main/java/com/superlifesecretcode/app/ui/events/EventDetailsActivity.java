@@ -13,11 +13,10 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventsInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
-import com.superlifesecretcode.app.data.model.news.NewsResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.news.NewsPagerAdapter;
+import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
@@ -47,7 +46,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         Bundle bundle = getIntent().getBundleExtra("bundle");
-         postion = bundle.getInt("position");
+        postion = bundle.getInt("position");
         list = (List<EventsInfoModel>) bundle.getSerializable("events");
         setUpToolbar();
         pager = findViewById(R.id.pager);
@@ -89,6 +88,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
         presenter = new EventPresenter(this);
         presenter.setView(this);
     }
+
     private void markRead() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
@@ -96,6 +96,7 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
         params.put("announcement_id", list.get(postion).getAnnouncement_id());
         presenter.readMark(params, headers);
     }
+
     private void setUpToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -140,7 +141,20 @@ public class EventDetailsActivity extends BaseActivity implements EventView {
     @Override
     public void onUpdateInteresed() {
         list.get(postion).setUserIntrested(interested);
+        if (interested.equalsIgnoreCase("1")) {
+            setAlarm(list.get(postion));
+        } else {
+            removeAlarm(list.get(postion));
+        }
         newsAapter.notifyDataSetChanged();
+    }
+
+    private void setAlarm(EventsInfoModel eventsInfoModel) {
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getAnnouncement_name(), CommonUtils.getTimeInMilis(eventsInfoModel.getAnnouncement_date() + " " + eventsInfoModel.getAnnouncement_time()) - 60 * 1000 * 30, false);
+    }
+
+    private void removeAlarm(EventsInfoModel eventsInfoModel) {
+        AlarmUtility.getInstance(this).removeAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()));
     }
 
     @Override

@@ -48,7 +48,7 @@
             android:id="@+id/textView_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_time"
+            android:layout_below="@+id/textView_title"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_toEndOf="@+id/imageView_icon"
             android:layout_toRightOf="@+id/imageView_icon"

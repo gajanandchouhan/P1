@@ -127,10 +127,12 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.dailyactivities.interestedevent.InterestedEventCalendarActivity"
+            android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dailyactivities.personalevent.PersonalEventCalendarActivity"
+            android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
@@ -184,6 +186,7 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ui.player.MessagePopupActivity"
+            android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog" />
     </application>
