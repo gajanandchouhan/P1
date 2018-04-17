@@ -20,6 +20,7 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.picker.TimeEditPicker;
+import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
@@ -160,6 +161,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
         compactCalendarView.removeAllEvents();
         if (interestedEventResponseDataList != null) {
             for (InterestedEventdata interestedEventResponseData : interestedEventResponseDataList) {
+                setAlarm(interestedEventResponseData);
                 if (interestedEventResponseData.getEnd_date() != null &&
                         !interestedEventResponseData.getEnd_date().isEmpty()) {
                     List<Date> dates = CommonUtils.getDates(interestedEventResponseData.getEvent_date(), interestedEventResponseData.getEnd_date());
@@ -194,6 +196,7 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
     @Override
     public void onTimeUpdated() {
         interestedEventdata.setRemind_before(remindBefore);
+        setAlarm(interestedEventdata);
         adapter.notifyDataSetChanged();
     }
 
@@ -252,5 +255,14 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
             presenter.updateCountryActivityRemindTime(params, headers);
         }
 
+    }
+
+
+    private void setAlarm(InterestedEventdata interestedEventResponseData) {
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getEvent_id()), "RichestLifeReminder", "Hi one new event is near- " + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before()) * 1000 * 60), false);
+    }
+
+    private void removeAlarm(InterestedEventdata interestedEventResponseData) {
+        AlarmUtility.getInstance(this).removeAlarm(Integer.parseInt(interestedEventResponseData.getEvent_id()));
     }
 }
