@@ -36,7 +36,7 @@ public class NotificationAapter extends RecyclerView.Adapter<NotificationAapter.
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.textViewTitle.setText(list.get(position).getTitle());
-        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMM, yy hh:mm a", list.get(position).getCreated_at(), false));
+        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMM, yy hh:mm a", list.get(position).getCreated_at(), false,null));
         holder.textViewDesc.setText(list.get(position).getDescription());
     }
 

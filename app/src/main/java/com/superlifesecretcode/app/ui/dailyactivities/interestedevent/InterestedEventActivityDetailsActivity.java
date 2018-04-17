@@ -151,7 +151,9 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
     }
 
     private void setAlarm(NewsResponseData eventsInfoModel) {
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getAnnouncement_name(), CommonUtils.getTimeInMilis(eventsInfoModel.getAnnouncement_date() + " " + eventsInfoModel.getAnnouncement_time()) - 60 * 1000 * 30, false);
+        String dateTime = eventsInfoModel.getAnnouncement_date() + " " + eventsInfoModel.getAnnouncement_time();
+        long timeInMilis = CommonUtils.getTimeInMilis(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.INPUT_DATE_TIME_FORMATE, dateTime, true, eventsInfoModel.getTimezone()));
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getAnnouncement_name(), timeInMilis - 60 * 1000 * 30, false);
     }
 
     private void removeAlarm(NewsResponseData eventsInfoModel) {
@@ -163,12 +165,12 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
             this.newsResponseModel = newsResponseModel;
             textViewTitle1.setText(newsResponseModel.getAnnouncement_name());
             if (newsResponseModel.getEnd_date() != null && !newsResponseModel.getEnd_date().isEmpty()) {
-                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(), true);
-                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time(), true);
+                String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(), true,newsResponseModel.getTimezone());
+                String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getEnd_date() + " " + newsResponseModel.getEnd_time(), true,newsResponseModel.getTimezone());
                 textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
 
             } else {
-                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(), true));
+                textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time(), true,newsResponseModel.getTimezone()));
             }
 //            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsResponseModel.getAnnouncement_date() + " " + newsResponseModel.getAnnouncement_time()));
             ImageLoadUtils.loadImage(newsResponseModel.getImage(), imageView);

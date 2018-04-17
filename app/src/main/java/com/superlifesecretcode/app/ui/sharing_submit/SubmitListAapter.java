@@ -62,7 +62,7 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ItemViewHolder holder1 = (ItemViewHolder) holder;
             ShareListResponseData shareListResponseData = list.get(position - 1);
             holder1.textViewName.setText(shareListResponseData.getUsername());
-            holder1.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(), true));
+            holder1.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(), false,null));
             holder1.textViewDesc.setText(shareListResponseData.getContent());
             holder1.textViewCountryName.setText(shareListResponseData.getCountryName());
             holder1.textViewStatus.setText(shareListResponseData.getStatus().equals("2") ? "Rejected" : "Published");

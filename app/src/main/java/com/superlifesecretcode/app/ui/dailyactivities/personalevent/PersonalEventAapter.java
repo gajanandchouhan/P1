@@ -43,7 +43,7 @@ public class PersonalEventAapter extends RecyclerView.Adapter<PersonalEventAapte
         Event event = list.get(position);
         PersonalEventResponseData data = (PersonalEventResponseData) event.getData();
         holder.textViewTitle.setText(data.getTitle());
-        holder.textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm","hh:mm a",data.getActivity_time(),true));
+        holder.textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm","hh:mm a",data.getActivity_time(),false,null));
         holder.switchCompat.setChecked(data.getStatus().equals("1"));
     }
 

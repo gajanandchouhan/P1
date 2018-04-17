@@ -28,7 +28,15 @@ public class CountryActivityInfoModel {
     private String activitiesTypeName;
     private String total_attendance;
     private String userIntrested;
+    private String timezone;
 
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
 
     public String getActivity_id() {
         return activity_id;

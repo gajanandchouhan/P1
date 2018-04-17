@@ -17,7 +17,15 @@ public class InterestedEventdata {
     private String remind_before;
     private String end_date;
     private String end_time;
+    private String timezone;
 
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
     public String getEnd_date() {
         return end_date;
     }

@@ -70,10 +70,10 @@ public class EventAapter extends RecyclerView.Adapter<EventAapter.ItemViewHolder
             holder.textViewDate.setText(coversionData.getToday());
         } else {
             holder.textViewDate.setText(String.format(coversionData.getStart_date() + " : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date(), true)));
+                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getAnnouncement_date(), true,eventsInfoModel.getTimezone())));
         }
 
-        holder.textViewTitme.setText(String.format(coversionData.getTime() + " : %s", CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", eventsInfoModel.getAnnouncement_time(), true)));
+        holder.textViewTitme.setText(String.format(coversionData.getTime() + " : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "hh:mm a", eventsInfoModel.getAnnouncement_date()+" "+eventsInfoModel.getAnnouncement_time(), true,eventsInfoModel.getTimezone())));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(eventsInfoModel.getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);

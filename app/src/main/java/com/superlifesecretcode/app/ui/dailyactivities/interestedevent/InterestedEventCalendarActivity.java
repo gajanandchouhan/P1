@@ -259,7 +259,9 @@ public class InterestedEventCalendarActivity extends BaseActivity implements Int
 
 
     private void setAlarm(InterestedEventdata interestedEventResponseData) {
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getEvent_id()), "RichestLifeReminder", "Hi one new event is near- " + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before()) * 1000 * 60), false);
+        String dateTime = interestedEventResponseData.getEvent_date() + " " + interestedEventResponseData.getEvent_time();
+        long timeInMilis = CommonUtils.getTimeInMilis(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.INPUT_DATE_TIME_FORMATE, dateTime, true, interestedEventResponseData.getTimezone()));
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getEvent_id()), "RichestLifeReminder", "Hi one new event is near- " + interestedEventResponseData.getTitle(), timeInMilis - 60 * 1000 * Integer.parseInt(interestedEventResponseData.getRemind_before()), false);
     }
 
     private void removeAlarm(InterestedEventdata interestedEventResponseData) {

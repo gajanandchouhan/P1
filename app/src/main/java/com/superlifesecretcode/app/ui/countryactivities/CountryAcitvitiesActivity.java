@@ -33,6 +33,7 @@ import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DateRangePicker;
 import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.util.ArrayList;
@@ -372,7 +373,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         }
     }
     private void setAlarm(CountryActivityInfoModel eventsInfoModel) {
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getTitle(), CommonUtils.getTimeInMilis(eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time()) - 60 * 1000 * 30,false);
+        String dateTime = eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time();
+        long timeInMilis = CommonUtils.getTimeInMilis(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.INPUT_DATE_TIME_FORMATE, dateTime, true, eventsInfoModel.getTimezone()));
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getTitle(), timeInMilis - 60 * 1000 * 30, false);
     }
 
     private void removeAlarm(CountryActivityInfoModel eventsInfoModel) {

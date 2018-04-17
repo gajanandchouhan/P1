@@ -54,12 +54,12 @@ public class EventPagerAdapter extends PagerAdapter {
         ImageView imageViewShare = layout.findViewById(R.id.imageView_share);
         textViewTitle.setText(newsList.get(position).getAnnouncement_name());
         if (newsList.get(position).getEnd_date() != null && !newsList.get(position).getEnd_date().isEmpty()) {
-            String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(), true);
-            String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getEnd_date() + " " + newsList.get(position).getEnd_time(), true);
+            String startDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(), true,newsList.get(position).getTimezone());
+            String endDateTime = CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getEnd_date() + " " + newsList.get(position).getEnd_time(), true,newsList.get(position).getTimezone());
             textViewTime.setText(String.format("%s-%s", startDateTime, endDateTime));
 
         } else {
-            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(), true));
+            textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(), true,newsList.get(position).getTimezone()));
         }
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         TextView textViewDesc = layout.findViewById(R.id.textView_desc);

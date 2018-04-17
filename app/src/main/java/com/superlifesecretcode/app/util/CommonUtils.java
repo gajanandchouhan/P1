@@ -48,6 +48,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
@@ -168,7 +169,7 @@ public class CommonUtils {
         }
     }
 
-    public static String getformattedDateFromString(String inputFormat, String outputFormat, String inputDate, boolean needConvert) {
+    public static String getformattedDateFromString(String inputFormat, String outputFormat, String inputDate, boolean needConvert, String timeZone) {
         if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
             inputFormat = "yyyy-MM-dd hh:mm:ss";
         }
@@ -181,10 +182,12 @@ public class CommonUtils {
         SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, Locale.ENGLISH);
 
         SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, Locale.ENGLISH);
-       /* if (needConvert) {
-            df_input.setTimeZone(TimeZone.getTimeZone("UTC"));
+        if (needConvert) {
+            if (timeZone != null) {
+                df_input.setTimeZone(TimeZone.getTimeZone(timeZone));
+            }
             df_output.setTimeZone(TimeZone.getDefault());
-        }*/
+        }
         // You can set a different Locale, This example set a locale of Country Mexico.
         //SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, new Locale("es", "MX"));
         //SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, new Locale("es", "MX"));
@@ -257,7 +260,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString(), false);
+        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString(), false,null);
     }
 
     public static String getAppendedDate(int year, int month, int dayOfMonth) {
@@ -267,7 +270,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return getformattedDateFromString("yyyy-MM-dd", "yyyy-MM-dd", stringBuilder.toString(), true);
+        return getformattedDateFromString("yyyy-MM-dd", "yyyy-MM-dd", stringBuilder.toString(), false,null);
     }
 
     public interface ClickListner {
