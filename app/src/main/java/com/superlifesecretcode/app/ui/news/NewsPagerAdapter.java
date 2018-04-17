@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +42,7 @@ public class NewsPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup collection, final int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_news_pager, collection, false);
+        ScrollView scrollView=layout.findViewById(R.id.scrollView);
         ImageView imageView = layout.findViewById(R.id.imageView);
         TextView textViewTitle = layout.findViewById(R.id.textView_title);
         TextView textViewTime = layout.findViewById(R.id.textView_time);
@@ -54,7 +56,8 @@ public class NewsPagerAdapter extends PagerAdapter {
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         WebView webView = layout.findViewById(R.id.webview);
         webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html", "utf-8");
-
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.smoothScrollBy(0,0);
         imageViewShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

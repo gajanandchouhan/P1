@@ -44,12 +44,12 @@ public class AlarmUtility {
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         // Single alarms in 1, 2, ..., 10 minutes (in `i` minutes)
         if (isRepeating) {
-            if (instance.getTimeInMillis() < System.currentTimeMillis() + 60000) {
+            if (instance.getTimeInMillis() < System.currentTimeMillis()) {
                 instance.setTimeInMillis(time + 1000 * 60 * 60 * 24);
-                Log.v("ALARM", "" + instance.getTimeInMillis());
             }
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                     instance.getTimeInMillis(), 1000 * 60 * 60 * 24, pendingIntent);
+            Log.v("ALARM", "" + instance.getTimeInMillis());
         } else {
             if (instance.getTimeInMillis() > System.currentTimeMillis() + 60000) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP,

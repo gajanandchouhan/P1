@@ -69,7 +69,7 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
                     ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getEvent_date(), true,eventsInfoModel.getTimezone())));
         }
 
-        holder.textViewTitme.setText(String.format(coversionData.getTime() + " : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "hh:mm a", eventsInfoModel.getEnd_date()+" "+eventsInfoModel.getEvent_time(), true,eventsInfoModel.getTimezone())));
+        holder.textViewTitme.setText(String.format(coversionData.getTime() + " : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "hh:mm a", eventsInfoModel.getEvent_date()+" "+eventsInfoModel.getEvent_time(), true,eventsInfoModel.getTimezone())));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(eventsInfoModel.getDescription(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);

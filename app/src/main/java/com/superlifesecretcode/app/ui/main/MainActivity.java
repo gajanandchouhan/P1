@@ -29,6 +29,9 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.notification.NotificationActivity;
@@ -418,12 +421,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 CommonUtils.startActivity(this, SubmitListActivity.class);
                 break;
             case ConstantLib.TYPE_PERSONAL_CALENDAR:
+                CommonUtils.startActivity(this, PersonalEventCalendarActivity.class);
                 break;
             case ConstantLib.TYPE_EVENT_CALENDAR:
+                CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
                 break;
             case ConstantLib.TYPE_STUDY_GROUP:
+                Bundle bundle = new Bundle();
+                bundle.putString("title", conversionData.getStudy_group());
+                bundle.putBoolean("isStudyGroup", true);
+                CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle, false);
                 break;
             case ConstantLib.TYPE_ONSITE:
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("title", conversionData.getOnsite());
+                bundle2.putBoolean("isStudyGroup", false);
+                CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle2, false);
                 break;
 
         }
@@ -573,8 +586,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", 4, false));
             list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", 5, false));
             list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", 6, false));
-            list.add(new SubcategoryModel("country_globe", conversionData.getStudy_group(), "", 7, false));
-            list.add(new SubcategoryModel("country_globe", conversionData.getOnsite(), "", 8, false));
+            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 7, false));
+            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 8, false));
         } else {
             list.add(new SubcategoryModel("home", "Home", "", 0, true));
             list.add(new SubcategoryModel("announcement", "News Update", "", 1, true));
@@ -583,8 +596,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             list.add(new SubcategoryModel("sharing", "Submit", "", 4, false));
             list.add(new SubcategoryModel("activities", "Personal Calendar", "", 5, false));
             list.add(new SubcategoryModel("activities", "Event Calendar", "", 6, false));
-            list.add(new SubcategoryModel("country_globe", "Study Group", "", 7, false));
-            list.add(new SubcategoryModel("country_globe", "On-site sharing", "", 8, false));
+            list.add(new SubcategoryModel("country", "Study Group", "", 7, false));
+            list.add(new SubcategoryModel("country", "On-site sharing", "", 8, false));
         }
         return list;
     }
