@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
@@ -54,6 +55,7 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
         SubcategoryModel s = list.get(position);
         holder.textView.setText(s.getTitle());
         holder.textViewChar.setText(s.getTitle().substring(0, 1));
+        holder.imageView.setImageResource(R.mipmap.ic_launcher_round);
         if (list.size() > 0 && list.get(position).getType() == ConstantLib.TYPE_ANNOUNCEMENT) {
             if (position == 0 && preferences.getNewsUnread() > 0) {
                 holder.textViewCount.setVisibility(View.VISIBLE);
@@ -78,10 +80,13 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
 
         private final TextView textView;
         private final TextView textViewCount;
+        ImageView imageView;
         private TextView textViewChar;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
+            imageView.setVisibility(View.VISIBLE);
             textView = itemView.findViewById(R.id.textView_item);
             textViewCount = itemView.findViewById(R.id.textView_count);
             textViewChar = itemView.findViewById(R.id.textView_char);
