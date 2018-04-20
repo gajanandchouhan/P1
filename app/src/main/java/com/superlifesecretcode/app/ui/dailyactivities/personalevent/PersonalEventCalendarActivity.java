@@ -186,7 +186,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     }
 
     private void setAlarm(PersonalEventResponseData interestedEventResponseData) {
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getActivity_id()), "RichestLifeReminder", "Hi one new event is near- " + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before())*1000*60), interestedEventResponseData.getTypeName()!=null&&!interestedEventResponseData.getTypeName().isEmpty());
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getActivity_id()), "RichestLifeReminder", "" + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before())*1000*60), interestedEventResponseData.getTypeName()!=null&&!interestedEventResponseData.getTypeName().isEmpty());
     }
 
     private void removeAlarm(PersonalEventResponseData interestedEventResponseData) {

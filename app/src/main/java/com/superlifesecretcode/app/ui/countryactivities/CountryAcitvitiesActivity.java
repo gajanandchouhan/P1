@@ -375,7 +375,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     private void setAlarm(CountryActivityInfoModel eventsInfoModel) {
         String dateTime = eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time();
         long timeInMilis = CommonUtils.getTimeInMilis(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.INPUT_DATE_TIME_FORMATE, dateTime, true, eventsInfoModel.getTimezone()));
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getTitle(), timeInMilis - 60 * 1000 * 30, false);
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()), "RichestLifeReminder", "" + eventsInfoModel.getTitle(), timeInMilis - 60 * 1000 * 30, false);
     }
 
     private void removeAlarm(CountryActivityInfoModel eventsInfoModel) {

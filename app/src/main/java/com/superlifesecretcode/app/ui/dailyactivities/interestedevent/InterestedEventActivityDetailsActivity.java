@@ -153,7 +153,7 @@ public class InterestedEventActivityDetailsActivity extends BaseActivity impleme
     private void setAlarm(NewsResponseData eventsInfoModel) {
         String dateTime = eventsInfoModel.getAnnouncement_date() + " " + eventsInfoModel.getAnnouncement_time();
         long timeInMilis = CommonUtils.getTimeInMilis(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.INPUT_DATE_TIME_FORMATE, dateTime, true, eventsInfoModel.getTimezone()));
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getAnnouncement_name(), timeInMilis - 60 * 1000 * 30, false);
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getAnnouncement_id()), "RichestLifeReminder", "" + eventsInfoModel.getAnnouncement_name(), timeInMilis - 60 * 1000 * 30, false);
     }
 
     private void removeAlarm(NewsResponseData eventsInfoModel) {

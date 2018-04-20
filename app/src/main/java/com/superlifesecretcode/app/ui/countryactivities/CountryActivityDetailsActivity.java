@@ -184,7 +184,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
     }
 
     private void setAlarm(CountryActivityInfoModel eventsInfoModel) {
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()), "RichestLifeReminder", "Hi one new event is near- " + eventsInfoModel.getTitle(), CommonUtils.getTimeInMilis(eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time()) - 60 * 1000 * 30, false);
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(eventsInfoModel.getActivity_id()), "RichestLifeReminder", "" + eventsInfoModel.getTitle(), CommonUtils.getTimeInMilis(eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time()) - 60 * 1000 * 30, false);
     }
 
     private void removeAlarm(CountryActivityInfoModel eventsInfoModel) {

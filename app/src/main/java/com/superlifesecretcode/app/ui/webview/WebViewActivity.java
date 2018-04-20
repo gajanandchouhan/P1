@@ -35,10 +35,11 @@ public class WebViewActivity extends BaseActivity {
         progressBar = findViewById(R.id.progress_bar);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDefaultTextEncodingName("utf-8");
         if (isLink) {
             webView.loadUrl(getIntent().getBundleExtra("bundle").getString("url"));
         } else {
-            webView.loadData(getIntent().getBundleExtra("bundle").getString("content"), "text/html", "utf-8");
+            webView.loadData(getIntent().getBundleExtra("bundle").getString("content"),  "text/html; charset=utf-8", "utf-8");
         }
         webView.setWebViewClient(new MyWebViewClient());
     }
@@ -107,5 +108,14 @@ public class WebViewActivity extends BaseActivity {
         // If it wasn't the Back key or there's no web page history, bubble up to the default
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()){
+            webView.goBack();
+            return;
+        }
+        super.onBackPressed();
     }
 }

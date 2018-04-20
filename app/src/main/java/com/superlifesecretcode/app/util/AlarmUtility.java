@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.superlifesecretcode.app.FCMReceiver;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 
 import java.util.Calendar;
 
@@ -36,8 +38,15 @@ public class AlarmUtility {
         Calendar instance = Calendar.getInstance();
         instance.setTimeInMillis(time);
         Intent intent = new Intent(mContext, FCMReceiver.class);
-        intent.putExtra("title", title);
-        intent.putExtra("body", message);
+        LanguageResponseData conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        if (conversionData!=null){
+            intent.putExtra("title", conversionData.getRichest_life_reminder());
+            intent.putExtra("body", conversionData.getNew_event_near()+" "+message);
+        }else{
+            intent.putExtra("title", title);
+            intent.putExtra("body", message);
+        }
+
         intent.putExtra("type", ConstantLib.NOTIFICATION_EVENT);
         // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, id,

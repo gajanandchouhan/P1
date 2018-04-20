@@ -106,6 +106,33 @@ public class LanguageResponseData {
     private String select_end_date;
     private String contact_details;
     private String select_enter_title;
+    private String  richest_life_reminder;
+    private String new_event_near;
+    private String dismiss;
+
+    public String getRichest_life_reminder() {
+        return richest_life_reminder;
+    }
+
+    public void setRichest_life_reminder(String richest_life_reminder) {
+        this.richest_life_reminder = richest_life_reminder;
+    }
+
+    public String getNew_event_near() {
+        return new_event_near;
+    }
+
+    public void setNew_event_near(String new_event_near) {
+        this.new_event_near = new_event_near;
+    }
+
+    public String getDismiss() {
+        return dismiss;
+    }
+
+    public void setDismiss(String dismiss) {
+        this.dismiss = dismiss;
+    }
 
     public String getSelect_enter_title() {
         return select_enter_title;
