@@ -9,9 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 
 import java.io.IOException;
 
@@ -46,8 +48,9 @@ public class MessagePopupActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        findViewById(R.id.button_dismiss).setOnClickListener(new View.OnClickListener() {
+        Button buttonDismiss = findViewById(R.id.button_dismiss);
+        buttonDismiss.setText(SuperLifeSecretPreferences.getInstance().getConversionData().getDismiss());
+        buttonDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();

@@ -66,6 +66,7 @@ public class TimeEditPicker extends Dialog implements View.OnClickListener {
                 String time = editTextTime.getText().toString().trim();
                 if (time.isEmpty()) {
                     dismiss();
+                    onClickListner.onInputDone("0");
                     return;
                 }
                 dismiss();

@@ -13,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 
 import java.io.IOException;
 
@@ -35,9 +38,10 @@ public class PLayerPopupActivity extends AppCompatActivity {
         textViewMessage = findViewById(R.id.textView_message);
         textViewTitle = findViewById(R.id.textView_title);
         Bundle bundle = getIntent().getBundleExtra("bundle");
+        LanguageResponseData responseData = SuperLifeSecretPreferences.getInstance().getConversionData();
         if (bundle != null) {
-            textViewMessage.setText(bundle.getString("body"));
-            textViewTitle.setText(bundle.getString("title"));
+            textViewMessage.setText(String.format("%s %s", responseData.getNew_event_near(), bundle.getString("body")));
+            textViewTitle.setText(responseData.getRichest_life_reminder());
         }
         setFinishOnTouchOutside(false);
         Uri myUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
@@ -52,7 +56,9 @@ public class PLayerPopupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        findViewById(R.id.button_dismiss).setOnClickListener(new View.OnClickListener() {
+        Button buttonDismiss = findViewById(R.id.button_dismiss);
+        buttonDismiss.setText(SuperLifeSecretPreferences.getInstance().getConversionData().getDismiss());
+        buttonDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();

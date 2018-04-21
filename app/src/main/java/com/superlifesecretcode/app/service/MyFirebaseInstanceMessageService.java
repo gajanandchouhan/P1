@@ -49,8 +49,9 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
             intent.putExtra("body", remoteMessage.getData().get("body"));
             intent.putExtra("type", remoteMessage.getData().get("notification_type"));
             // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-                    intent, 0);
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {

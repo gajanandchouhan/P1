@@ -130,14 +130,14 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
             if (eventResponseData.getType_id().equalsIgnoreCase("0")) {
                 date = eventResponseData.getActivity_date();
                 textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                        ConstantLib.OUTPUT_DATE_FORMATE, eventResponseData.getActivity_date(), false,null));
+                        ConstantLib.OUTPUT_DATE_FORMATE, eventResponseData.getActivity_date(), false, null));
             } else {
                 textViewDate.setVisibility(View.GONE);
                 isStandard = true;
                 typeId = eventResponseData.getType_id();
             }
             time = eventResponseData.getActivity_time();
-            textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", time, false,null));
+            textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", time, false, null));
             editTextReminderMinute.setText(eventResponseData.getRemind_before());
             editTextTitle.append(eventResponseData.getTitle());
             buttonAddEvent.setText("Update Event");
@@ -217,13 +217,13 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
             return;
         }
         if (reminderMinute.isEmpty()) {
-            editTextReminderMinute.setError(conversionData.getEnter_reminder_time_event());
-            return;
+            reminderMinute = "0";
+//            editTextReminderMinute.setError(conversionData.getEnter_reminder_time_event());
         }
-        if (Integer.parseInt(reminderMinute) < 1) {
+     /*   if (Integer.parseInt(reminderMinute) < 1) {
             editTextReminderMinute.setError(conversionData.getEnter_valid_reminder_time());
             return;
-        }
+        }*/
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
@@ -257,8 +257,8 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
                 String hour = String.format(Locale.getDefault(), "%02d", selectedHour);
                 String minute = String.format(Locale.getDefault(), "%02d", selectedMinute);
                 String t = String.format("%s:%s", hour, minute);
-                textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false,null));
-                time = CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false,null);
+                textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false, null));
+                time = CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false, null);
 
             }
         });
