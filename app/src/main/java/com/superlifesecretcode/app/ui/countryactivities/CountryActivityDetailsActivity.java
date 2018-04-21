@@ -74,6 +74,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
     private void showDirection() {
         if (lat != null && !lat.isEmpty() && lng != null && !lng.isEmpty()) {
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+          //  Uri gmmIntentUri = Uri.parse("geo: " + lat + "," + lng);
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
 //        mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);

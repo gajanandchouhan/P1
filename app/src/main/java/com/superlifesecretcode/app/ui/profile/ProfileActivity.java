@@ -167,7 +167,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             countryId = userDetailResponseData.getCountry();
             stateId = userDetailResponseData.getState();
             editTextEmail.setText(userDetailResponseData.getEmail());
-            currentLanguag = getLanguage(SuperLifeSecretPreferences.getInstance().getLanguageId());
+            languageId=SuperLifeSecretPreferences.getInstance().getLanguageId();
+            currentLanguag = getLanguage(languageId);
             textViewLanguage.setText(currentLanguag);
             ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
         }
