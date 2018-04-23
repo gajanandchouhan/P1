@@ -345,7 +345,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         HashMap<String, String> body = new HashMap<>();
         body.put("name", name);
         body.put("gender", gender);
-        body.put("mobile", mobileNumber);
+        body.put("mobile", mobileNumber.startsWith("0")?mobileNumber:"0"+mobileNumber);
         body.put("country_id", countryId);
         body.put("state_id", stateId);
         body.put("phone_code", dialCode);

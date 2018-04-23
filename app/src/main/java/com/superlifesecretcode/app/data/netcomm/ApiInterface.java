@@ -8,6 +8,7 @@ import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityDetailResponseModel;
+import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
@@ -237,4 +238,10 @@ public interface ApiInterface {
     @POST("intrestedUsersNotificationList")
     Observable<NotificationResponseModel> getNotifications(@PartMap() Map<String, RequestBody> partMap,
                                                            @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getDisclosure")
+    Observable<DisclosureResponseModel> getDisclosure(@PartMap() Map<String, RequestBody> params);
+
 }

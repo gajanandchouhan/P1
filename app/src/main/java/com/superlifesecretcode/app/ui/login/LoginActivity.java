@@ -154,7 +154,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             return;
         }
         HashMap<String, String> body = new HashMap<>();
-        body.put("mobile", mobileNumber);
+        body.put("mobile", mobileNumber.startsWith("0")?mobileNumber:"0"+mobileNumber);
         body.put("password", password);
         body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
         body.put("device_type", "1");

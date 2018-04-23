@@ -116,7 +116,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (conversionData != null) {
             textViewLabel.setText(conversionData.getSignup());
             editTextName.setHint(conversionData.getName());
-            editTextMobileNumber.setHint(conversionData.getMobile_no());
+            editTextMobileNumber.setHint(conversionData.getMobile_no()+"(Ex. 012345678)");
             textViewGender.setHint(conversionData.getGender());
             textViewCountry.setHint(conversionData.getCountry());
             textState.setHint(conversionData.getState());
@@ -259,7 +259,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         HashMap<String, String> body = new HashMap<>();
         body.put("name", name);
         body.put("gender", gender);
-        body.put("mobile", mobileNumber);
+        body.put("mobile", mobileNumber.startsWith("0")?mobileNumber:"0"+mobileNumber);
         body.put("country_id", countryId);
         body.put("state_id", stateId);
         body.put("password", password);

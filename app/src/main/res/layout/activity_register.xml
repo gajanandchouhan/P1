@@ -112,7 +112,7 @@
                     android:background="@android:color/transparent"
                     android:digits="0123456789"
                     android:fontFamily="@font/reguler"
-                    android:hint="@string/mobile_number"
+                    android:hint="Mobile No.(Ex.0123456789)"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
                     android:maxLength="12"

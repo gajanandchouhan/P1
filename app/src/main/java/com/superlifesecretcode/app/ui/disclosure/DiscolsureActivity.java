@@ -1,12 +1,16 @@
 package com.superlifesecretcode.app.ui.disclosure;
 
 import android.location.Location;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -17,10 +21,13 @@ import com.superlifesecretcode.app.ui.register.RegisterActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.GeoCoderUtils;
 
-public class DiscolsureActivity extends BaseActivity implements View.OnClickListener {
+import java.util.HashMap;
+
+public class DiscolsureActivity extends BaseActivity implements View.OnClickListener, DisclosureView {
     private static final String TAG = "DiscolsureActivity";
     private Button buttonAccept, buttonReject;
     private TextView textViewDisclosureText;
+    private DisclosurePresenter presenter;
 
     @Override
     protected int getContentView() {
@@ -35,6 +42,13 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
         buttonAccept.setOnClickListener(this);
         buttonReject.setOnClickListener(this);
         setUpConersion();
+        getDisclosureText();
+    }
+
+    private void getDisclosureText() {
+        HashMap<String, String> requestBody = new HashMap<>();
+        requestBody.put("disclosure_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
+        presenter.getDisclosure(requestBody);
     }
 
     private void setUpConersion() {
@@ -42,12 +56,13 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
         if (conversionData != null) {
             buttonReject.setText(conversionData.getReject());
             buttonAccept.setText(conversionData.getAccept());
-            textViewDisclosureText.setText(conversionData.getDisclosure_text());
         }
     }
 
     @Override
     protected void initializePresenter() {
+        presenter = new DisclosurePresenter(this);
+        presenter.setView(this);
     }
 
 
@@ -102,5 +117,16 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void setDisclosureData(DisclosureResponseData data) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Spanned spanned = Html.fromHtml(data.getDisclosure(), Html.FROM_HTML_MODE_LEGACY);
+            textViewDisclosureText.setText(spanned);
+        } else {
+            Spanned spanned = Html.fromHtml(data.getDisclosure());
+            textViewDisclosureText.setText(spanned);
+        }
     }
 }

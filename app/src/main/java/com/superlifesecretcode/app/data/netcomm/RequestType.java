@@ -40,4 +40,5 @@ public interface RequestType {
     byte REQ_GET_ANNOUNCEMENT_COUNT = 32;
     byte REQ_GET_BANNERS = 33;
     byte REQ_GET_NOTIFICATIONS = 33;
+    byte REQ_GET_DISCLOSURE = 34;
 }
