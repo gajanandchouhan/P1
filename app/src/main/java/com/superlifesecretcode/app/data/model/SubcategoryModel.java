@@ -5,6 +5,7 @@ package com.superlifesecretcode.app.data.model;
  */
 
 public class SubcategoryModel {
+    private int img;
     private String icon;
     private String title;
     private String url;
@@ -25,6 +26,18 @@ public class SubcategoryModel {
         this.url = url;
         this.type = type;
         this.selected = selected;
+    }
+    public SubcategoryModel(String icon, String title, String url, int type, boolean selected,int img) {
+        this.icon = icon;
+        this.title = title;
+        this.url = url;
+        this.type = type;
+        this.selected = selected;
+        this.img=img;
+    }
+
+    public int getImg() {
+        return img;
     }
 
     public void setSelected(boolean selected) {

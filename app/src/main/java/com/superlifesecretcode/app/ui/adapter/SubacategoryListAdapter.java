@@ -55,7 +55,7 @@ public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryLi
         SubcategoryModel s = list.get(position);
         holder.textView.setText(s.getTitle());
         holder.textViewChar.setText(s.getTitle().substring(0, 1));
-        holder.imageView.setImageResource(R.mipmap.ic_launcher_round);
+        holder.imageView.setImageResource(s.getImg());
         if (list.size() > 0 && list.get(position).getType() == ConstantLib.TYPE_ANNOUNCEMENT) {
             if (position == 0 && preferences.getNewsUnread() > 0) {
                 holder.textViewCount.setVisibility(View.VISIBLE);

@@ -204,31 +204,31 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         switch (position) {
             case 5:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", position, true));
-                    list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", position, true));
+                    list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", position, true,R.drawable.news));
+                    list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", position, true,R.drawable.activity2));
                 } else {
-                    list.add(new SubcategoryModel("announcement", "News Update", "", position, true));
-                    list.add(new SubcategoryModel("announcement", "Event+Activities", "", position, true));
+                    list.add(new SubcategoryModel("announcement", "News Update", "", position, true,R.drawable.news));
+                    list.add(new SubcategoryModel("announcement", "Event+Activities", "", position, true,R.drawable.activity2));
 
                 }
                 return list;
 
             case 6:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", position, true));
-                    list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", position, true));
+                    list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", position, true,R.drawable.latest_sharing));
+                    list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", position, true,R.drawable.sharing_submit));
                 } else {
-                    list.add(new SubcategoryModel("sharing", "Latest", "", position, true));
-                    list.add(new SubcategoryModel("sharing", "Submit", "", position, true));
+                    list.add(new SubcategoryModel("sharing", "Latest", "", position, true,R.drawable.latest_sharing));
+                    list.add(new SubcategoryModel("sharing", "Submit", "", position, true,R.drawable.sharing_submit));
                 }
                 return list;
             case 7:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", position, false));
-                    list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", position, false));
+                    list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", position, false,R.drawable.personal_calendar));
+                    list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", position, false,R.drawable.personal_calendar));
                 } else {
-                    list.add(new SubcategoryModel("activities", "Personal Calendar", "", position, false));
-                    list.add(new SubcategoryModel("activities", "Event Calendar", "", position, false));
+                    list.add(new SubcategoryModel("activities", "Personal Calendar", "", position, false,R.drawable.personal_calendar));
+                    list.add(new SubcategoryModel("activities", "Event Calendar", "", position, false,R.drawable.personal_calendar));
                 }
                 return list;
            /* case 7:
@@ -239,11 +239,11 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
 
             case 8:
                 if (conversionData != null) {
-                    list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", position, false));
-                    list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", position, false));
+                    list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", position, false,R.drawable.study_group));
+                    list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", position, false,R.drawable.onsite_haring));
                 } else {
-                    list.add(new SubcategoryModel("country", "Study Group", "", position, false));
-                    list.add(new SubcategoryModel("country", "On-site sharing", "", position, false));
+                    list.add(new SubcategoryModel("country", "Study Group", "", position, false,R.drawable.study_group));
+                    list.add(new SubcategoryModel("country", "On-site sharing", "", position, false,R.drawable.onsite_haring));
                 }
                 return list;
         }
