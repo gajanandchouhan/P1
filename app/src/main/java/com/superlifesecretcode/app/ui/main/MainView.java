@@ -1,6 +1,6 @@
 package com.superlifesecretcode.app.ui.main;
 
-import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCounData;
@@ -19,4 +19,6 @@ interface MainView extends BaseView {
     void setAnnounceMentCount(AnnouncementCounData announcementCountResponseModel);
 
     void setBanners(List<BannerModel> banners);
+
+    void setAllCaetgoryData(List<AllMenuResponseData> data);
 }

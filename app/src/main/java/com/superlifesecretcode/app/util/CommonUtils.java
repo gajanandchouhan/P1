@@ -449,4 +449,15 @@ public class CommonUtils {
         alarmsCursor.close();
         return alarms;
     }
+
+
+    public static boolean isPackageExisted(String targetPackage,Context mContext){
+        PackageManager pm=mContext.getPackageManager();
+        try {
+            PackageInfo info=pm.getPackageInfo(targetPackage,PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
 }

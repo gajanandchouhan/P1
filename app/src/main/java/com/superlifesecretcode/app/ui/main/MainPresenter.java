@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.main;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
 import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
@@ -119,6 +120,38 @@ public class MainPresenter extends BasePresenter<MainView> {
 
             @Override
             public void onError() {
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
+    }
+
+    public void getAllMenu(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_GET_ALL_MENU, new ResponseHandler<AllMenuResponseModel>() {
+            @Override
+            public void onResponse(AllMenuResponseModel categoryResponseModel) {
+                view.hideProgress();
+                if (categoryResponseModel != null) {
+                    if (categoryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS))
+                        view.setAllCaetgoryData(categoryResponseModel.getData());
+                    else {
+                        CommonUtils.showSnakeBar(mContext, categoryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }

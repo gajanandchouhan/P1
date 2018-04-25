@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
@@ -62,9 +63,9 @@ public class CustomizeBarActivity extends BaseActivity {
         imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<SubcategoryModel> list = latestAapter.getList();
+                List<AllMenuResponseData> list = latestAapter.getList();
                 if (isValid(list)) {
-                    SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
+                    SuperLifeSecretPreferences.getInstance().setAllCategories(list);
                     MainActivity.BOTTOM_BAR_CHANGED=true;
                     onBackPressed();
                 } else {
@@ -89,9 +90,9 @@ public class CustomizeBarActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isValid(List<SubcategoryModel> list) {
+    private boolean isValid(List<AllMenuResponseData> list) {
         int count = 0;
-        for (SubcategoryModel subcategoryModel : list) {
+        for (AllMenuResponseData subcategoryModel : list) {
             if (subcategoryModel.isSelected()) {
                 count = count + 1;
             }

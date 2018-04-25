@@ -20,6 +20,24 @@ public class AllMenuResponseData {
     private String alert_count;
     private String positive_resp;
     private String negative_resp;
+    private String parent_image;
+    private boolean selected;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public String getParent_image() {
+        return parent_image;
+    }
+
+    public void setParent_image(String parent_image) {
+        this.parent_image = parent_image;
+    }
 
     public String getId() {
         return id;

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -20,16 +21,16 @@ import java.util.List;
  */
 
 public class BottomBartAapter extends RecyclerView.Adapter<BottomBartAapter.ItemViewHolder> {
-    private final List<SubcategoryModel> list;
+    private final List<AllMenuResponseData> list;
     private Context mContext;
 
-    public List<SubcategoryModel> getList() {
+    public List<AllMenuResponseData> getList() {
         return list;
     }
 
     public BottomBartAapter(Context mContext) {
         this.mContext = mContext;
-        list = SuperLifeSecretPreferences.getInstance().getSubMenuList();
+        list = SuperLifeSecretPreferences.getInstance().getAllCategories();
 
     }
 
@@ -62,7 +63,7 @@ public class BottomBartAapter extends RecyclerView.Adapter<BottomBartAapter.Item
 
         @Override
         public void onClick(View v) {
-            SubcategoryModel subcategoryModel = list.get(getAdapterPosition());
+            AllMenuResponseData subcategoryModel = list.get(getAdapterPosition());
             if (!subcategoryModel.isSelected()) {
                 if (shouldAdd()) {
                     subcategoryModel.setSelected(!subcategoryModel.isSelected());
@@ -80,7 +81,7 @@ public class BottomBartAapter extends RecyclerView.Adapter<BottomBartAapter.Item
 
     private boolean shouldAdd() {
         int count = 0;
-        for (SubcategoryModel subcategoryModel : list) {
+        for (AllMenuResponseData subcategoryModel : list) {
             if (subcategoryModel.isSelected()) {
                 count = count + 1;
             }

@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 
@@ -160,5 +161,24 @@ public class SuperLifeSecretPreferences {
 
     public int getEventUnread() {
         return preferences.getInt("event_unread", 0);
+    }
+
+    public void setAllCategories(List<AllMenuResponseData> data) {
+        editer.putString("all_menu", new Gson().toJson(data)).commit();
+    }
+
+    public List<AllMenuResponseData> getAllCategories() {
+        String subMneus = preferences.getString("all_menu", "");
+        if (subMneus.length() > 0) {
+            Type type = new TypeToken<List<AllMenuResponseData>>() {
+            }.getType();
+            List<AllMenuResponseData> list = new Gson().fromJson(subMneus, type);
+            return list;
+        }
+        return null;
+    }
+
+    public void clearAllCategories(){
+        editer.putString("all_menu", "").commit();
     }
 }

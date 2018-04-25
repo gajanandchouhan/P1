@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
@@ -36,6 +37,7 @@ import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 
@@ -116,7 +118,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         autoScrollViewPager.getLayoutParams().width = screenWidth;
         autoScrollViewPager.getLayoutParams().height = height;
         setUpBanner();
-        setUpBottomBar();
+        setUpBottomBar2();
     }
 
     @Override
@@ -126,8 +128,42 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             subacategoryListAdapter.notifyDataSetChanged();
         }
     }
+    private void setUpBottomBar2() {
+        List<AllMenuResponseData> bottomList = new ArrayList<>();
+        List<AllMenuResponseData> subMenuList = SuperLifeSecretPreferences.getInstance().getAllCategories();
+        if (subMenuList != null && subMenuList.size() > 0) {
+            for (AllMenuResponseData subcategoryModel : subMenuList) {
+                if (subcategoryModel.isSelected()) {
+                    bottomList.add(subcategoryModel);
+                }
+            }
+        } else {
+         /*   getAllMenu();
+           *//* List<SubcategoryModel> list = getList();
+            SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
+            for (SubcategoryModel subcategoryModel : list) {
+                if (subcategoryModel.isSelected()) {
+                    bottomList.add(subcategoryModel);
+                }
+            }*/
 
-    private void setUpBottomBar() {
+        }
+        if (bottomList.size() > 3) {
+            tab1.setTag(bottomList.get(0));
+            textView1.setText(bottomList.get(0).getTitle());
+            tab2.setTag(bottomList.get(1));
+            textView2.setText(bottomList.get(1).getTitle());
+            tab3.setTag(bottomList.get(2));
+            textView3.setText(bottomList.get(2).getTitle());
+            tab4.setTag(bottomList.get(3));
+            textView4.setText(bottomList.get(3).getTitle());
+            ImageLoadUtils.loadImage(bottomList.get(0).getParent_image() != null && !bottomList.get(0).getParent_image().isEmpty() ? bottomList.get(0).getParent_image() : bottomList.get(0).getImage(), imageView1, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView1, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView1, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(3).getParent_image() != null && !bottomList.get(3).getParent_image().isEmpty() ? bottomList.get(3).getParent_image() : bottomList.get(3).getImage(), imageView1, R.drawable.ic_logo);
+        }
+    }
+/*    private void setUpBottomBar() {
         List<SubcategoryModel> bottomList = new ArrayList<>();
         List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
         if (subMenuList != null && subMenuList.size() > 0) {
@@ -160,7 +196,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             imageView3.setImageResource(CommonUtils.getResurceId(this, bottomList.get(2).getIcon()));
             imageView4.setImageResource(CommonUtils.getResurceId(this, bottomList.get(3).getIcon()));
         }
-    }
+    }*/
 
 
     private void setUpToolbar(String title) {

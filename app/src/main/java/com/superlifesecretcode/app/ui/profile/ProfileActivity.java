@@ -479,13 +479,13 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             if (isUpdate) {
                 CommonUtils.startActivity(this, MainActivity.class);
             }
-            if (lanuguageChanged) {
+          /*  if (lanuguageChanged) {
                 List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
                 for (SubcategoryModel subcategoryModel : subMenuList) {
                     upadateContent(subcategoryModel);
                 }
                 SuperLifeSecretPreferences.getInstance().setSubMenuList(subMenuList);
-            }
+            }*/
             finish();
         }
     }

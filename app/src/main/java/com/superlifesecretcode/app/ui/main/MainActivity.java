@@ -19,6 +19,7 @@ import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.DrawerItem;
 import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
@@ -37,7 +38,6 @@ import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.notification.NotificationActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
-import com.superlifesecretcode.app.ui.ringtone.RingtoneActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
@@ -205,11 +205,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mainAdapter = new MainListAdapter(list, this);
         recyclerViewMain.setAdapter(mainAdapter);
         recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
-        setUpBottomBar();
+        setUpBottomBar2();
 //        getMainCategories();
     }
 
-    private void setUpBottomBar() {
+/*    private void setUpBottomBar() {
         List<SubcategoryModel> bottomList = new ArrayList<>();
         List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
         if (subMenuList != null && subMenuList.size() > 0) {
@@ -242,8 +242,50 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             imageView3.setImageResource(CommonUtils.getResurceId(this, bottomList.get(2).getIcon()));
             imageView4.setImageResource(CommonUtils.getResurceId(this, bottomList.get(3).getIcon()));
         }
+    }*/
+
+    private void setUpBottomBar2() {
+        List<AllMenuResponseData> bottomList = new ArrayList<>();
+        List<AllMenuResponseData> subMenuList = SuperLifeSecretPreferences.getInstance().getAllCategories();
+        if (subMenuList != null && subMenuList.size() > 0) {
+            for (AllMenuResponseData subcategoryModel : subMenuList) {
+                if (subcategoryModel.isSelected()) {
+                    bottomList.add(subcategoryModel);
+                }
+            }
+        } else {
+            getAllMenu();
+           /* List<SubcategoryModel> list = getList();
+            SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
+            for (SubcategoryModel subcategoryModel : list) {
+                if (subcategoryModel.isSelected()) {
+                    bottomList.add(subcategoryModel);
+                }
+            }*/
+
+        }
+        if (bottomList.size() > 3) {
+            tab1.setTag(bottomList.get(0));
+            textView1.setText(bottomList.get(0).getTitle());
+            tab2.setTag(bottomList.get(1));
+            textView2.setText(bottomList.get(1).getTitle());
+            tab3.setTag(bottomList.get(2));
+            textView3.setText(bottomList.get(2).getTitle());
+            tab4.setTag(bottomList.get(3));
+            textView4.setText(bottomList.get(3).getTitle());
+            ImageLoadUtils.loadImage(bottomList.get(0).getParent_image() != null && !bottomList.get(0).getParent_image().isEmpty() ? bottomList.get(0).getParent_image() : bottomList.get(0).getImage(), imageView1, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView2, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView3, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(3).getParent_image() != null && !bottomList.get(3).getParent_image().isEmpty() ? bottomList.get(3).getParent_image() : bottomList.get(3).getImage(), imageView4, R.drawable.ic_logo);
+        }
     }
 
+    private void getAllMenu() {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
+        body.put("country_id", SuperLifeSecretPreferences.getInstance().getUserData().getCountry());
+        presenter.getAllMenu(body);
+    }
 
     @Override
     protected void onResume() {
@@ -257,10 +299,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //            getMainCategories();
             LANGAUE_CHANGED = false;
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
-            setUpBottomBar();
+           SuperLifeSecretPreferences.getInstance().clearAllCategories();
+            setUpBottomBar2();
         }
         if (BOTTOM_BAR_CHANGED) {
-            setUpBottomBar();
+            setUpBottomBar2();
             BOTTOM_BAR_CHANGED = false;
         }
         if (PROFILE_UPDATED) {
@@ -538,6 +581,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             bannerList.clear();
             bannerList.addAll(banners);
             bannerPagerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void setAllCaetgoryData(List<AllMenuResponseData> data) {
+        if (data != null) {
+            if (data.size() > 4) {
+                data.get(1).setSelected(true);
+                data.get(2).setSelected(true);
+                data.get(3).setSelected(true);
+                data.get(4).setSelected(true);
+                SuperLifeSecretPreferences.getInstance().setAllCategories(data);
+                setUpBottomBar2();
+            }
         }
     }
 

@@ -24,14 +24,17 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
+import com.superlifesecretcode.app.ui.picker.selectiondialog.SelectionListDialog;
 import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class CountryActivityDetailsActivity extends BaseActivity implements View.OnClickListener, CountryActivitiesView {
@@ -52,6 +55,10 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
     private CountryActivityInfoModel countryActivityInfoModel;
     private String lat, lng;
     TextView textViewContactDetails;
+    private String googlePackage = "com.google.android.apps.maps";
+    private String wazePackage = "com.waze";
+    SelectionListDialog dialog;
+    List<String> directionApps = new ArrayList<>();
 
     @Override
     protected int getContentView() {
@@ -73,8 +80,9 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
 
     private void showDirection() {
         if (lat != null && !lat.isEmpty() && lng != null && !lng.isEmpty()) {
-            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
-          //  Uri gmmIntentUri = Uri.parse("geo: " + lat + "," + lng);
+//            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+            String s = String.format(Locale.getDefault(), "geo:0,0?q=") + Uri.encode(String.format(Locale.getDefault(), "%s@%f,%f", "", Double.parseDouble(lat), Double.parseDouble(lng)), "UTF-8");
+            Uri gmmIntentUri = Uri.parse(s);
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
 //        mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
@@ -107,6 +115,12 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
         getDetails();
         if (conversionData != null) {
             textViewContactDetails.setText(conversionData.getContact_details());
+        }
+        if (CommonUtils.isPackageExisted(googlePackage, this)) {
+            directionApps.add("Google Map");
+        }
+        if (CommonUtils.isPackageExisted(wazePackage, this)) {
+            directionApps.add("Waze");
         }
     }
 
@@ -281,5 +295,17 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
                 }
             }
         }
+    }
+
+    private void showDirectionPopup() {
+        if (directionApps != null && directionApps.size() > 0) {
+            dialog = new SelectionListDialog(this, directionApps, new SelectionListDialog.SelectedListner<String>() {
+                @Override
+                public void onSelected(int position, String object) {
+
+                }
+            });
+        }
+
     }
 }
