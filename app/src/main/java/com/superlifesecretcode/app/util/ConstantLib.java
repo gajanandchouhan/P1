@@ -27,15 +27,14 @@ public interface ConstantLib {
     String TYPE_IMAGE = "2";
     String TYPE_VIDEO = "1";
 
-    int TYPE_HOME = 0;
-    int TYPE_NEWS = 1;
-    int TYPE_EVENT = 2;
-    int TYPE_LATEST = 3;
-    int TYPE_SUBMIT = 4;
-    int TYPE_PERSONAL_CALENDAR = 5;
-    int TYPE_EVENT_CALENDAR = 6;
-    int TYPE_STUDY_GROUP = 7;
-    int TYPE_ONSITE = 8;
+    String TYPE_NEWS = "3";
+    String TYPE_EVENT = "4";
+    String TYPE_LATEST = "5";
+    String TYPE_SUBMIT = "6";
+    String TYPE_PERSONAL_CALENDAR = "7";
+    String TYPE_EVENT_CALENDAR = "8";
+    String TYPE_STUDY_GROUP = "9";
+    String TYPE_ONSITE = "10";
     String NOTIFICATION_PERSONAL="1";
     String NOTIFICATION_EVENT="2";
     String NOTIFICATION_COUNTY_ACTIVITY="3";

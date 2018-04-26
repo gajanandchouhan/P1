@@ -16,11 +16,19 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
+import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
+import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
+import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
+import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
@@ -33,12 +41,14 @@ import java.util.Random;
 public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemViewHolder> {
     private final List<CategoryResponseData> list;
     private final String colorCode;
+    private final SuperLifeSecretPreferences preferences;
     private Context mContext;
 
     public SubListAdapter(List<CategoryResponseData> list, Context mContext, String colorCode) {
         this.list = list;
         this.mContext = mContext;
         this.colorCode = colorCode;
+        preferences = SuperLifeSecretPreferences.getInstance();
     }
 
     @Override
@@ -56,6 +66,17 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
         } else {
             holder.imageView.setVisibility(View.GONE);
         }
+
+        if (list.get(position).getType().equalsIgnoreCase(ConstantLib.TYPE_NEWS) && preferences.getNewsUnread() > 0) {
+            holder.textViewCount.setVisibility(View.VISIBLE);
+            holder.textViewCount.setText(String.valueOf(preferences.getNewsUnread()));
+        } else if (list.get(position).getType().equalsIgnoreCase(ConstantLib.TYPE_EVENT) && preferences.getEventUnread() > 0) {
+            holder.textViewCount.setVisibility(View.VISIBLE);
+            holder.textViewCount.setText(String.valueOf(preferences.getEventUnread()));
+        } else {
+            holder.textViewCount.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -65,6 +86,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final TextView textViewCount;
         ImageView imageView;
         TextView textView;
         TextView textViewChar;
@@ -74,6 +96,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
             imageView = itemView.findViewById(R.id.imageView);
             textView = itemView.findViewById(R.id.textView_item);
             textViewChar = itemView.findViewById(R.id.textView_char);
+            textViewCount = itemView.findViewById(R.id.textView_count);
             GradientDrawable gradientDrawable = (GradientDrawable) textViewChar.getBackground();
             gradientDrawable.setColor(Color.parseColor(colorCode));
             itemView.setOnClickListener(this);
@@ -146,11 +169,46 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
     }
 
     private void openNext(int position) {
-        Bundle bundle = new Bundle();
-        bundle.putString("title", list.get(position).getTitle());
-        bundle.putBoolean("is_link", list.get(position).getType().equalsIgnoreCase("1"));
-        bundle.putString("url", list.get(position).getLink());
-        bundle.putString("content", list.get(position).getContent());
-        CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
+        if (list.get(position).getType().equalsIgnoreCase("1") || list.get(position).getType().equalsIgnoreCase("2")) {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", list.get(position).getTitle());
+            bundle.putBoolean("is_link", list.get(position).getType().equalsIgnoreCase("1"));
+            bundle.putString("url", list.get(position).getLink());
+            bundle.putString("content", list.get(position).getContent());
+            CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
+        } else {
+            switch (list.get(position).getType()) {
+                case ConstantLib.TYPE_NEWS:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, NewsActivity.class);
+                    break;
+                case ConstantLib.TYPE_EVENT:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, EventActivity.class);
+                    break;
+                case ConstantLib.TYPE_LATEST:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, LatestActivity.class);
+                    break;
+                case ConstantLib.TYPE_SUBMIT:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, SubmitListActivity.class);
+                    break;
+                case ConstantLib.TYPE_PERSONAL_CALENDAR:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, PersonalEventCalendarActivity.class);
+                    break;
+                case ConstantLib.TYPE_EVENT_CALENDAR:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, InterestedEventCalendarActivity.class);
+                    break;
+                case ConstantLib.TYPE_STUDY_GROUP:
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getStudy_group());
+                    bundle.putBoolean("isStudyGroup", true);
+                    CommonUtils.startActivity((AppCompatActivity) mContext, CountryAcitvitiesActivity.class, bundle, false);
+                    break;
+                case ConstantLib.TYPE_ONSITE:
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getOnsite());
+                    bundle2.putBoolean("isStudyGroup", false);
+                    CommonUtils.startActivity((AppCompatActivity) mContext, CountryAcitvitiesActivity.class, bundle2, false);
+                    break;
+            }
+        }
     }
 }

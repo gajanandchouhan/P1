@@ -490,7 +490,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void upadateContent(SubcategoryModel subcategoryModel) {
+  /*  private void upadateContent(SubcategoryModel subcategoryModel) {
         switch (subcategoryModel.getType()) {
             case ConstantLib.TYPE_HOME:
                 subcategoryModel.setTitle(conversionData.getHome());
@@ -520,7 +520,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 subcategoryModel.setTitle(conversionData.getOnsite());
                 break;
         }
-    }
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

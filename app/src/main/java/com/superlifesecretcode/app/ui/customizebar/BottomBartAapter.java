@@ -28,9 +28,9 @@ public class BottomBartAapter extends RecyclerView.Adapter<BottomBartAapter.Item
         return list;
     }
 
-    public BottomBartAapter(Context mContext) {
+    public BottomBartAapter(Context mContext, List<AllMenuResponseData> allCategories) {
         this.mContext = mContext;
-        list = SuperLifeSecretPreferences.getInstance().getAllCategories();
+        list = allCategories;
 
     }
 

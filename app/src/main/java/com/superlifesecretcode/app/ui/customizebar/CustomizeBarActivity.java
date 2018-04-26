@@ -46,8 +46,14 @@ public class CustomizeBarActivity extends BaseActivity {
         setUpToolbar();
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        latestAapter = new BottomBartAapter(this);
-        recyclerView.setAdapter(latestAapter);
+        List<AllMenuResponseData> allCategories = SuperLifeSecretPreferences.getInstance().getAllCategories();
+        if (allCategories != null && allCategories.size() > 0) {
+            latestAapter = new BottomBartAapter(this,allCategories);
+            recyclerView.setAdapter(latestAapter);
+        } else {
+            recyclerView.setAdapter(null);
+        }
+
     }
 
     private void setUpToolbar() {
@@ -66,7 +72,7 @@ public class CustomizeBarActivity extends BaseActivity {
                 List<AllMenuResponseData> list = latestAapter.getList();
                 if (isValid(list)) {
                     SuperLifeSecretPreferences.getInstance().setAllCategories(list);
-                    MainActivity.BOTTOM_BAR_CHANGED=true;
+                    MainActivity.BOTTOM_BAR_CHANGED = true;
                     onBackPressed();
                 } else {
                     CommonUtils.showToast(CustomizeBarActivity.this, "Please select at least 4 menu options.");

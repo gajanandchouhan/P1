@@ -18,7 +18,6 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.DrawerItem;
-import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
@@ -41,6 +40,7 @@ import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
+import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -136,35 +136,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onItemClick(Object object, int position) {
                 openNextScreen(position, list.get(position).getPosition(), list.get(position).getTitle(), list.get(position).getId(), list.get(position).getColor());
-                  /*  case 0:
-                        mDrawerLayout.closeDrawer(layoutDrawer);
-                        break;
-                    case 2:
-                        openNextScreen(2, getString(R.string.product_shopping));
-                        break;
-                    case 1:
-                        openNextScreen(1, getString(R.string.abourt));
-                        break;
-                    case 3:
-                        openNextScreen(3, getString(R.string.learing));
-                        break;
-                    case 4:
-                        openNextScreen(4, getString(R.string.annoucement));
-                        break;
-
-                    case 5:
-                        openNextScreen(5, getString(R.string.sharing));
-                        break;
-
-                    case 6:
-                        openNextScreen(6, getString(R.string.daily_activities));
-                        break;
-                    case 7:
-                        openNextScreen(7, getString(R.string.free_downloads));
-                        break;
-                    case 8:
-                        openNextScreen(8, getString(R.string.country_activities));
-                        break;*/
             }
 
         });
@@ -194,10 +165,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
         setUpBanner();
-      /*  findViewById(R.id.cardview_about).setOnClickListener(this);
-        findViewById(R.id.cardview_learning).setOnClickListener(this);
-        findViewById(R.id.cardview_product_shoping).setOnClickListener(this);
-        findViewById(R.id.cardvview_freedownloads).setOnClickListener(this);*/
         setUpUserdetails();
         recyclerViewMain.setLayoutManager(new GridLayoutManager(this, 3));
         List<DrawerItem> drawerItems = getDrawerList();
@@ -206,77 +173,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         recyclerViewMain.setAdapter(mainAdapter);
         recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
         setUpBottomBar2();
-//        getMainCategories();
     }
 
-/*    private void setUpBottomBar() {
-        List<SubcategoryModel> bottomList = new ArrayList<>();
-        List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
-        if (subMenuList != null && subMenuList.size() > 0) {
-            for (SubcategoryModel subcategoryModel : subMenuList) {
-                if (subcategoryModel.isSelected()) {
-                    bottomList.add(subcategoryModel);
-                }
-            }
-        } else {
-            List<SubcategoryModel> list = getList();
-            SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
-            for (SubcategoryModel subcategoryModel : list) {
-                if (subcategoryModel.isSelected()) {
-                    bottomList.add(subcategoryModel);
-                }
-            }
-
-        }
-        if (bottomList.size() > 3) {
-            tab1.setTag(bottomList.get(0).getType());
-            textView1.setText(bottomList.get(0).getTitle());
-            tab2.setTag(bottomList.get(1).getType());
-            textView2.setText(bottomList.get(1).getTitle());
-            tab3.setTag(bottomList.get(2).getType());
-            textView3.setText(bottomList.get(2).getTitle());
-            tab4.setTag(bottomList.get(3).getType());
-            textView4.setText(bottomList.get(3).getTitle());
-            imageView1.setImageResource(CommonUtils.getResurceId(this, bottomList.get(0).getIcon()));
-            imageView2.setImageResource(CommonUtils.getResurceId(this, bottomList.get(1).getIcon()));
-            imageView3.setImageResource(CommonUtils.getResurceId(this, bottomList.get(2).getIcon()));
-            imageView4.setImageResource(CommonUtils.getResurceId(this, bottomList.get(3).getIcon()));
-        }
-    }*/
 
     private void setUpBottomBar2() {
-        List<AllMenuResponseData> bottomList = new ArrayList<>();
-        List<AllMenuResponseData> subMenuList = SuperLifeSecretPreferences.getInstance().getAllCategories();
-        if (subMenuList != null && subMenuList.size() > 0) {
-            for (AllMenuResponseData subcategoryModel : subMenuList) {
-                if (subcategoryModel.isSelected()) {
-                    bottomList.add(subcategoryModel);
+        if (userDetailResponseData.getCountry() != null&&!userDetailResponseData.getCountry().isEmpty()) {
+            List<AllMenuResponseData> bottomList = new ArrayList<>();
+            List<AllMenuResponseData> subMenuList = SuperLifeSecretPreferences.getInstance().getAllCategories();
+            if (subMenuList != null && subMenuList.size() > 0) {
+                for (AllMenuResponseData subcategoryModel : subMenuList) {
+                    if (subcategoryModel.isSelected()) {
+                        bottomList.add(subcategoryModel);
+                    }
                 }
+            } else {
+                getAllMenu();
             }
-        } else {
-            getAllMenu();
-           /* List<SubcategoryModel> list = getList();
-            SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
-            for (SubcategoryModel subcategoryModel : list) {
-                if (subcategoryModel.isSelected()) {
-                    bottomList.add(subcategoryModel);
-                }
-            }*/
-
-        }
-        if (bottomList.size() > 3) {
-            tab1.setTag(bottomList.get(0));
-            textView1.setText(bottomList.get(0).getTitle());
-            tab2.setTag(bottomList.get(1));
-            textView2.setText(bottomList.get(1).getTitle());
-            tab3.setTag(bottomList.get(2));
-            textView3.setText(bottomList.get(2).getTitle());
-            tab4.setTag(bottomList.get(3));
-            textView4.setText(bottomList.get(3).getTitle());
-            ImageLoadUtils.loadImage(bottomList.get(0).getParent_image() != null && !bottomList.get(0).getParent_image().isEmpty() ? bottomList.get(0).getParent_image() : bottomList.get(0).getImage(), imageView1, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView2, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView3, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(3).getParent_image() != null && !bottomList.get(3).getParent_image().isEmpty() ? bottomList.get(3).getParent_image() : bottomList.get(3).getImage(), imageView4, R.drawable.ic_logo);
+            if (bottomList.size() > 3) {
+                tab1.setTag(bottomList.get(0));
+                textView1.setText(bottomList.get(0).getTitle());
+                tab2.setTag(bottomList.get(1));
+                textView2.setText(bottomList.get(1).getTitle());
+                tab3.setTag(bottomList.get(2));
+                textView3.setText(bottomList.get(2).getTitle());
+                tab4.setTag(bottomList.get(3));
+                textView4.setText(bottomList.get(3).getTitle());
+                ImageLoadUtils.loadImage(bottomList.get(0).getParent_image() != null && !bottomList.get(0).getParent_image().isEmpty() ? bottomList.get(0).getParent_image() : bottomList.get(0).getImage(), imageView1, R.drawable.ic_logo);
+                ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView2, R.drawable.ic_logo);
+                ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView3, R.drawable.ic_logo);
+                ImageLoadUtils.loadImage(bottomList.get(3).getParent_image() != null && !bottomList.get(3).getParent_image().isEmpty() ? bottomList.get(3).getParent_image() : bottomList.get(3).getImage(), imageView4, R.drawable.ic_logo);
+            }
         }
     }
 
@@ -299,7 +225,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //            getMainCategories();
             LANGAUE_CHANGED = false;
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
-           SuperLifeSecretPreferences.getInstance().clearAllCategories();
+            SuperLifeSecretPreferences.getInstance().clearAllCategories();
             setUpBottomBar2();
         }
         if (BOTTOM_BAR_CHANGED) {
@@ -320,7 +246,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void getMainCategories() {
-        if (userDetailResponseData.getCountry() != null) {
+        if (userDetailResponseData.getCountry() != null&&!userDetailResponseData.getCountry().isEmpty()) {
             HashMap<String, String> body = new HashMap<>();
             body.put("country_id", userDetailResponseData.getCountry());
             body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
@@ -419,18 +345,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.imageView_notification:
                 CommonUtils.startActivity(this, NotificationActivity.class);
                 break;
-         /*   case R.id.cardview_about:
-                openNextScreen(1, getString(R.string.abourt));
-                break;
-            case R.id.cardview_product_shoping:
-                openNextScreen(2, getString(R.string.product_shopping));
-                break;
-            case R.id.cardview_learning:
-                openNextScreen(3, getString(R.string.learing));
-                break;
-            case R.id.cardvview_freedownloads:
-                openNextScreen(7, getString(R.string.free_downloads));
-                break;*/
             case R.id.textView_edit:
             case R.id.imageView_profile:
                 Bundle bundle = new Bundle();
@@ -441,49 +355,42 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.tab_2:
             case R.id.tab_3:
             case R.id.tab_4:
-                handleBottomClick((Integer) v.getTag());
+                handleBottomClick((AllMenuResponseData) v.getTag());
                 break;
         }
 
     }
 
-    private void handleBottomClick(int tag) {
-        switch (tag) {
-            case ConstantLib.TYPE_HOME:
-                break;
-            case ConstantLib.TYPE_NEWS:
-                CommonUtils.startActivity(this, NewsActivity.class);
-                break;
-            case ConstantLib.TYPE_EVENT:
-                CommonUtils.startActivity(this, EventActivity.class);
-                break;
-            case ConstantLib.TYPE_LATEST:
-                CommonUtils.startActivity(this, LatestActivity.class);
-                break;
-            case ConstantLib.TYPE_SUBMIT:
-                CommonUtils.startActivity(this, SubmitListActivity.class);
-                break;
-            case ConstantLib.TYPE_PERSONAL_CALENDAR:
-                CommonUtils.startActivity(this, PersonalEventCalendarActivity.class);
-                break;
-            case ConstantLib.TYPE_EVENT_CALENDAR:
-                CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
-                break;
-            case ConstantLib.TYPE_STUDY_GROUP:
-                Bundle bundle = new Bundle();
-                bundle.putString("title", conversionData.getStudy_group());
-                bundle.putBoolean("isStudyGroup", true);
-                CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle, false);
-                break;
-            case ConstantLib.TYPE_ONSITE:
-                Bundle bundle2 = new Bundle();
-                bundle2.putString("title", conversionData.getOnsite());
-                bundle2.putBoolean("isStudyGroup", false);
-                CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle2, false);
-                break;
-
+    private void handleBottomClick(AllMenuResponseData tag) {
+        if (tag.getParent_id().equalsIgnoreCase("0")) {
+            handleMainCategoryClicked(tag);
+        } else {
+            handleSubCaetgoryClicked(tag);
         }
     }
+
+    private void handleSubCaetgoryClicked(AllMenuResponseData tag) {
+        if (tag != null && tag.getAlert().equalsIgnoreCase("1")) {
+            AlertModel alertModel = new AlertModel();
+            alertModel.setCount(Integer.parseInt(tag.getAlert_count()));
+            alertModel.setId(tag.getId());
+            if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(alertModel)) {
+                showAlert2(tag, null, null);
+            } else {
+                List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
+                int index = alertModelList.indexOf(alertModel);
+                AlertModel alertModel1 = alertModelList.get(index);
+                if (alertModel.getCount() > alertModel1.getShowCount()) {
+                    showAlert2(tag, alertModel1, alertModelList);
+                } else {
+                    openNext(tag);
+                }
+            }
+        } else {
+            openNext(tag);
+        }
+    }
+
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
@@ -507,17 +414,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     bundle.putSerializable("banner", bannerList);
                     CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
                 }
-               /* if (alertModel1.getCount() == 0) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("title", title);
-                    bundle.putInt("pos", position);
-                    bundle.putString("parent_id", parentId);
-                    bundle.putString("color", color);
-                    bundle.putSerializable("banner", bannerList);
-                    CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
-                } else {
-                    showAlert(list.get(clickedPostion).getAlert_text(), clickedPostion, alertModel1, alertModelList);
-                }*/
 
             }
         } else {
@@ -532,15 +428,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
-    public void openNext(int clickedPostion, int position, String title, String parentId, String color) {
-        Bundle bundle = new Bundle();
-        bundle.putString("title", title);
-        bundle.putInt("pos", position);
-        bundle.putString("parent_id", parentId);
-        bundle.putString("color", color);
-        bundle.putSerializable("banner", bannerList);
-        CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
-    }
 
     @Override
     public void setHomeData(CategoryResponseModel categoryResponseModel) {
@@ -633,37 +520,136 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
     }
 
-    public List<SubcategoryModel> getList() {
-        List<SubcategoryModel> list = new ArrayList<>();
-        if (conversionData != null) {
-            list.add(new SubcategoryModel("home", conversionData.getHome(), "", 0, true));
-            list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", 1, true));
-            list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", 2, true));
-            list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", 3, true));
-            list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", 4, false));
-            list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", 5, false));
-            list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", 6, false));
-            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 7, false));
-            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 8, false));
-        } else {
-            list.add(new SubcategoryModel("home", "Home", "", 0, true));
-            list.add(new SubcategoryModel("announcement", "News Update", "", 1, true));
-            list.add(new SubcategoryModel("announcement", "Event+Activities", "", 2, true));
-            list.add(new SubcategoryModel("sharing", "Latest", "", 3, true));
-            list.add(new SubcategoryModel("sharing", "Submit", "", 4, false));
-            list.add(new SubcategoryModel("activities", "Personal Calendar", "", 5, false));
-            list.add(new SubcategoryModel("activities", "Event Calendar", "", 6, false));
-            list.add(new SubcategoryModel("country", "Study Group", "", 7, false));
-            list.add(new SubcategoryModel("country", "On-site sharing", "", 8, false));
-        }
-        return list;
+    private void showAlert2(final AllMenuResponseData data, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
+        String positive_resp = data.getPositive_resp();
+        String negative_resp = data.getNegative_resp();
+        CommonUtils.showAlert(this, data.getAlert_text(), positive_resp, negative_resp, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+                if (alertModel1 != null) {
+                    alertModel1.setShowCount(alertModel1.getShowCount() + 1);
+                    SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
+                } else {
+                    AlertModel alertModel = new AlertModel();
+                    alertModel.setShowCount(1);
+                    alertModel.setId(data.getId());
+                    alertModel.setCount(Integer.parseInt(data.getAlert_count()) - 1);
+                    SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
+                }
+                /*if (alertModel1 != null) {
+                    alertModel1.setCount(alertModel1.getCount() - 1);
+                    SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
+                } else {
+                    AlertModel alertModel = new AlertModel();
+                    alertModel.setId(list.get(clikedPostion).getId());
+                    alertModel.setCount(Integer.parseInt(list.get(clikedPostion).getAlert_count()) - 1);
+                    SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
+                }*/
+//                openNext(clikedPostion, list.get(clikedPostion).getPosition(), list.get(clikedPostion).getTitle(), list.get(clikedPostion).getId(), list.get(clikedPostion).getColor());
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
     }
+
 
     private void getBanner() {
         if (userDetailResponseData.getCountry() != null) {
             HashMap<String, String> body = new HashMap<>();
             body.put("country_id", userDetailResponseData.getCountry());
             presenter.getBanners(body);
+        }
+    }
+
+
+    public void handleMainCategoryClicked(AllMenuResponseData data) {
+        if (data.getAlert() != null && data.getAlert().equalsIgnoreCase("1")) {
+            AlertModel alertModel = new AlertModel();
+            alertModel.setCount(Integer.parseInt(data.getAlert_count()));
+            alertModel.setId(data.getId());
+            if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(alertModel)) {
+                showAlert2(data, null, null);
+            } else {
+                List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
+                int index = alertModelList.indexOf(alertModel);
+                AlertModel alertModel1 = alertModelList.get(index);
+                if (alertModel.getCount() > alertModel1.getShowCount()) {
+                    showAlert2(data, alertModel1, alertModelList);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", data.getTitle());
+                    bundle.putString("parent_id", data.getId());
+                    bundle.putString("color", data.getColor());
+                    CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+                }
+               /* if (alertModel1.getCount() == 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", title);
+                    bundle.putInt("pos", position);
+                    bundle.putString("parent_id", parentId);
+                    bundle.putString("color", color);
+                    bundle.putSerializable("banner", bannerList);
+                    CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+                } else {
+                    showAlert(data.getAlert_text(), clickedPostion, alertModel1, alertModelList);
+                }*/
+
+            }
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", data.getTitle());
+            bundle.putString("parent_id", data.getId());
+            bundle.putString("color", data.getColor());
+            CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+        }
+
+    }
+
+
+    private void openNext(AllMenuResponseData tag) {
+        if (tag.getType().equalsIgnoreCase("1") || tag.getType().equalsIgnoreCase("2")) {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", tag.getTitle());
+            bundle.putBoolean("is_link", tag.getType().equalsIgnoreCase("1"));
+            bundle.putString("url", tag.getLink());
+            bundle.putString("content", tag.getContent());
+            CommonUtils.startActivity( this, WebViewActivity.class, bundle, false);
+        } else {
+            switch (tag.getType()) {
+                case ConstantLib.TYPE_NEWS:
+                    CommonUtils.startActivity(this, NewsActivity.class);
+                    break;
+                case ConstantLib.TYPE_EVENT:
+                    CommonUtils.startActivity(this, EventActivity.class);
+                    break;
+                case ConstantLib.TYPE_LATEST:
+                    CommonUtils.startActivity(this, LatestActivity.class);
+                    break;
+                case ConstantLib.TYPE_SUBMIT:
+                    CommonUtils.startActivity(this, SubmitListActivity.class);
+                    break;
+                case ConstantLib.TYPE_PERSONAL_CALENDAR:
+                    CommonUtils.startActivity(this, PersonalEventCalendarActivity.class);
+                    break;
+                case ConstantLib.TYPE_EVENT_CALENDAR:
+                    CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
+                    break;
+                case ConstantLib.TYPE_STUDY_GROUP:
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getStudy_group());
+                    bundle.putBoolean("isStudyGroup", true);
+                    CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle, false);
+                    break;
+                case ConstantLib.TYPE_ONSITE:
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getOnsite());
+                    bundle2.putBoolean("isStudyGroup", false);
+                    CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle2, false);
+                    break;
+            }
         }
     }
 }

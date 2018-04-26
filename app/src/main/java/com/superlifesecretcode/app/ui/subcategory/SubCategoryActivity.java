@@ -3,7 +3,6 @@ package com.superlifesecretcode.app.ui.subcategory;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
-import com.superlifesecretcode.app.data.model.SubcategoryModel;
+import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
@@ -25,21 +24,19 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.SubListAdapter;
-import com.superlifesecretcode.app.ui.adapter.SubacategoryListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
-import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
+import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
-import com.superlifesecretcode.app.util.SpacesItemDecoration;
-import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +44,6 @@ import java.util.List;
 
 public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView, View.OnClickListener {
 
-    private int positon;
     private LanguageResponseData conversionData;
     private SubCategoryPresenter presenter;
     private UserDetailResponseData userData;
@@ -61,7 +57,6 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     private String colorCode;
     LinearLayout tab1, tab2, tab3, tab4;
     ImageView imageView1, imageView2, imageView3, imageView4;
-    private SubacategoryListAdapter subacategoryListAdapter;
 
     @Override
     protected int getContentView() {
@@ -88,7 +83,6 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         tab3.setOnClickListener(this);
         tab4.setOnClickListener(this);
         String title = getIntent().getBundleExtra("bundle").getString("title");
-        positon = getIntent().getBundleExtra("bundle").getInt("pos");
         parentId = getIntent().getBundleExtra("bundle").getString("parent_id");
         colorCode = getIntent().getBundleExtra("bundle").getString("color");
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
@@ -96,23 +90,10 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         setUpToolbar(title);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
-        if (positon == 5 || positon == 6 || positon == 7 || positon == 8) {
-            bannerList = (ArrayList<BannerModel>) getIntent().getBundleExtra("bundle").getSerializable("banner");
-            subacategoryListAdapter = new SubacategoryListAdapter(getList(positon), this, colorCode);
-            recyclerView.setAdapter(subacategoryListAdapter);
-        } else {
-            getSubCategory();
-            subList = new ArrayList<>();
-            subListAdapter = new SubListAdapter(subList, this, colorCode);
-            recyclerView.setAdapter(subListAdapter);
-        }
-      /*  if (conversionData != null) {
-            textViewHome.setText(conversionData.getHome());
-            textViewSharing.setText(conversionData.getSharing());
-            textViewEvent.setText(conversionData.getEvent_activity());
-            textViewNewds.setText(conversionData.getNews_update());
-        }*/
+        getSubCategory();
+        subList = new ArrayList<>();
+        subListAdapter = new SubListAdapter(subList, this, colorCode);
+        recyclerView.setAdapter(subListAdapter);
         int screenWidth = CommonUtils.getScreenWidth(this);
         int height = screenWidth * 6 / 16;
         autoScrollViewPager.getLayoutParams().width = screenWidth;
@@ -124,10 +105,11 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     @Override
     protected void onResume() {
         super.onResume();
-        if (subacategoryListAdapter != null) {
-            subacategoryListAdapter.notifyDataSetChanged();
+        if (subListAdapter != null) {
+            subListAdapter.notifyDataSetChanged();
         }
     }
+
     private void setUpBottomBar2() {
         List<AllMenuResponseData> bottomList = new ArrayList<>();
         List<AllMenuResponseData> subMenuList = SuperLifeSecretPreferences.getInstance().getAllCategories();
@@ -138,14 +120,6 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
                 }
             }
         } else {
-         /*   getAllMenu();
-           *//* List<SubcategoryModel> list = getList();
-            SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
-            for (SubcategoryModel subcategoryModel : list) {
-                if (subcategoryModel.isSelected()) {
-                    bottomList.add(subcategoryModel);
-                }
-            }*/
 
         }
         if (bottomList.size() > 3) {
@@ -158,45 +132,11 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             tab4.setTag(bottomList.get(3));
             textView4.setText(bottomList.get(3).getTitle());
             ImageLoadUtils.loadImage(bottomList.get(0).getParent_image() != null && !bottomList.get(0).getParent_image().isEmpty() ? bottomList.get(0).getParent_image() : bottomList.get(0).getImage(), imageView1, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView1, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView1, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(3).getParent_image() != null && !bottomList.get(3).getParent_image().isEmpty() ? bottomList.get(3).getParent_image() : bottomList.get(3).getImage(), imageView1, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView2, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView3, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(3).getParent_image() != null && !bottomList.get(3).getParent_image().isEmpty() ? bottomList.get(3).getParent_image() : bottomList.get(3).getImage(), imageView4, R.drawable.ic_logo);
         }
     }
-/*    private void setUpBottomBar() {
-        List<SubcategoryModel> bottomList = new ArrayList<>();
-        List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
-        if (subMenuList != null && subMenuList.size() > 0) {
-            for (SubcategoryModel subcategoryModel : subMenuList) {
-                if (subcategoryModel.isSelected()) {
-                    bottomList.add(subcategoryModel);
-                }
-            }
-        } else {
-            List<SubcategoryModel> list = getList();
-            SuperLifeSecretPreferences.getInstance().setSubMenuList(list);
-            for (SubcategoryModel subcategoryModel : list) {
-                if (subcategoryModel.isSelected()) {
-                    bottomList.add(subcategoryModel);
-                }
-            }
-
-        }
-        if (bottomList.size() > 3) {
-            tab1.setTag(bottomList.get(0).getType());
-            textView1.setText(bottomList.get(0).getTitle());
-            tab2.setTag(bottomList.get(1).getType());
-            textView2.setText(bottomList.get(1).getTitle());
-            tab3.setTag(bottomList.get(2).getType());
-            textView3.setText(bottomList.get(2).getTitle());
-            tab4.setTag(bottomList.get(3).getType());
-            textView4.setText(bottomList.get(3).getTitle());
-            imageView1.setImageResource(CommonUtils.getResurceId(this, bottomList.get(0).getIcon()));
-            imageView2.setImageResource(CommonUtils.getResurceId(this, bottomList.get(1).getIcon()));
-            imageView3.setImageResource(CommonUtils.getResurceId(this, bottomList.get(2).getIcon()));
-            imageView4.setImageResource(CommonUtils.getResurceId(this, bottomList.get(3).getIcon()));
-        }
-    }*/
 
 
     private void setUpToolbar(String title) {
@@ -235,56 +175,6 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         return super.onOptionsItemSelected(item);
     }
 
-    public List<SubcategoryModel> getList(int position) {
-        List<SubcategoryModel> list = new ArrayList<>();
-        switch (position) {
-            case 5:
-                if (conversionData != null) {
-                    list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", position, true,R.drawable.news));
-                    list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", position, true,R.drawable.activity2));
-                } else {
-                    list.add(new SubcategoryModel("announcement", "News Update", "", position, true,R.drawable.news));
-                    list.add(new SubcategoryModel("announcement", "Event+Activities", "", position, true,R.drawable.activity2));
-
-                }
-                return list;
-
-            case 6:
-                if (conversionData != null) {
-                    list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", position, true,R.drawable.latest_sharing));
-                    list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", position, true,R.drawable.sharing_submit));
-                } else {
-                    list.add(new SubcategoryModel("sharing", "Latest", "", position, true,R.drawable.latest_sharing));
-                    list.add(new SubcategoryModel("sharing", "Submit", "", position, true,R.drawable.sharing_submit));
-                }
-                return list;
-            case 7:
-                if (conversionData != null) {
-                    list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", position, false,R.drawable.personal_calendar));
-                    list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", position, false,R.drawable.personal_calendar));
-                } else {
-                    list.add(new SubcategoryModel("activities", "Personal Calendar", "", position, false,R.drawable.personal_calendar));
-                    list.add(new SubcategoryModel("activities", "Event Calendar", "", position, false,R.drawable.personal_calendar));
-                }
-                return list;
-           /* case 7:
-                list.add(new SubcategoryModel(android.ic_menu_camera, "Songs", " https://www.richestlife.com/music-downloads/"));
-//                list.add(new SubcategoryModel(android.ic_menu_camera, "Wallpapers","https://m.facebook.com/SuperLifeCode/?refid=46"));
-//                list.add(new SubcategoryModel(android.ic_menu_camera, "Sun Emoji","https://www.youtube.com/watch?v=PKNSIpl1aYQ&feature=youtu.be%20Inbox%20x"));
-                return list;*/
-
-            case 8:
-                if (conversionData != null) {
-                    list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", position, false,R.drawable.study_group));
-                    list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", position, false,R.drawable.onsite_haring));
-                } else {
-                    list.add(new SubcategoryModel("country", "Study Group", "", position, false,R.drawable.study_group));
-                    list.add(new SubcategoryModel("country", "On-site sharing", "", position, false,R.drawable.onsite_haring));
-                }
-                return list;
-        }
-        return list;
-    }
 
     @Override
     public void setSubCaetgiryData(CategoryResponseModel categoryResponseModel) {
@@ -341,76 +231,140 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             case R.id.tab_2:
             case R.id.tab_3:
             case R.id.tab_4:
-                handleBottomClick((Integer) view.getTag());
+                handleBottomClick((AllMenuResponseData) view.getTag());
                 break;
+
         }
 
     }
 
-    private void handleBottomClick(int tag) {
-        switch (tag) {
-            case ConstantLib.TYPE_HOME:
-                onBackPressed();
-                break;
-            case ConstantLib.TYPE_NEWS:
-                CommonUtils.startActivity(this, NewsActivity.class);
-                break;
-            case ConstantLib.TYPE_EVENT:
-                CommonUtils.startActivity(this, EventActivity.class);
-                break;
-            case ConstantLib.TYPE_LATEST:
-                CommonUtils.startActivity(this, LatestActivity.class);
-                break;
-            case ConstantLib.TYPE_SUBMIT:
-                CommonUtils.startActivity(this, SubmitListActivity.class);
-                break;
-            case ConstantLib.TYPE_PERSONAL_CALENDAR:
-                CommonUtils.startActivity(this, PersonalEventCalendarActivity.class);
-                break;
-            case ConstantLib.TYPE_EVENT_CALENDAR:
-                CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
-                break;
-            case ConstantLib.TYPE_STUDY_GROUP:
-                Bundle bundle = new Bundle();
-                bundle.putString("title", conversionData.getStudy_group());
-                bundle.putBoolean("isStudyGroup", true);
-                CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle, false);
-                break;
-            case ConstantLib.TYPE_ONSITE:
-                Bundle bundle2 = new Bundle();
-                bundle2.putString("title", conversionData.getOnsite());
-                bundle2.putBoolean("isStudyGroup", false);
-                CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle2, false);
-                break;
-
-        }
-    }
-
-    public List<SubcategoryModel> getList() {
-        List<SubcategoryModel> list = new ArrayList<>();
-        if (conversionData != null) {
-            list.add(new SubcategoryModel("home", conversionData.getHome(), "", 0, true));
-            list.add(new SubcategoryModel("announcement", conversionData.getNews_update(), "", 1, true));
-            list.add(new SubcategoryModel("announcement", conversionData.getEvent_activity(), "", 2, true));
-            list.add(new SubcategoryModel("sharing", conversionData.getLatest(), "", 3, true));
-            list.add(new SubcategoryModel("sharing", conversionData.getSubmit(), "", 4, false));
-            list.add(new SubcategoryModel("activities", conversionData.getPersonal_cal(), "", 5, false));
-            list.add(new SubcategoryModel("activities", conversionData.getEvent_cal(), "", 6, false));
-            list.add(new SubcategoryModel("country", conversionData.getStudy_group(), "", 7, false));
-            list.add(new SubcategoryModel("country", conversionData.getOnsite(), "", 8, false));
+    private void handleBottomClick(AllMenuResponseData tag) {
+        if (tag.getParent_id().equalsIgnoreCase("0")) {
+            handleMainCategoryClicked(tag);
         } else {
-            list.add(new SubcategoryModel("home", "Home", "", 0, true));
-            list.add(new SubcategoryModel("announcement", "News Update", "", 1, true));
-            list.add(new SubcategoryModel("announcement", "Event+Activities", "", 2, true));
-            list.add(new SubcategoryModel("sharing", "Latest", "", 3, true));
-            list.add(new SubcategoryModel("sharing", "Submit", "", 4, false));
-            list.add(new SubcategoryModel("activities", "Personal Calendar", "", 5, false));
-            list.add(new SubcategoryModel("activities", "Event Calendar", "", 6, false));
-            list.add(new SubcategoryModel("country", "Study Group", "", 7, false));
-            list.add(new SubcategoryModel("country", "On-site sharing", "", 8, false));
+            handleSubCaetgoryClicked(tag);
         }
-        return list;
     }
 
+    private void handleSubCaetgoryClicked(AllMenuResponseData tag) {
+        if (tag != null && tag.getAlert().equalsIgnoreCase("1")) {
+            AlertModel alertModel = new AlertModel();
+            alertModel.setCount(Integer.parseInt(tag.getAlert_count()));
+            alertModel.setId(tag.getId());
+            if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(alertModel)) {
+                showAlert2(tag, null, null);
+            } else {
+                List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
+                int index = alertModelList.indexOf(alertModel);
+                AlertModel alertModel1 = alertModelList.get(index);
+                if (alertModel.getCount() > alertModel1.getShowCount()) {
+                    showAlert2(tag, alertModel1, alertModelList);
+                } else {
+                    openNext(tag);
+                }
+            }
+        } else {
+            openNext(tag);
+        }
+    }
 
+    private void showAlert2(final AllMenuResponseData data, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
+        String positive_resp = data.getPositive_resp();
+        String negative_resp = data.getNegative_resp();
+        CommonUtils.showAlert(this, data.getAlert_text(), positive_resp, negative_resp, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+                if (alertModel1 != null) {
+                    alertModel1.setShowCount(alertModel1.getShowCount() + 1);
+                    SuperLifeSecretPreferences.getInstance().updateAlertList(alertModelList);
+                } else {
+                    AlertModel alertModel = new AlertModel();
+                    alertModel.setShowCount(1);
+                    alertModel.setId(data.getId());
+                    alertModel.setCount(Integer.parseInt(data.getAlert_count()) - 1);
+                    SuperLifeSecretPreferences.getInstance().setAlertAccepted(alertModel);
+                }
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
+    }
+
+    public void handleMainCategoryClicked(AllMenuResponseData data) {
+        if (data.getAlert() != null && data.getAlert().equalsIgnoreCase("1")) {
+            AlertModel alertModel = new AlertModel();
+            alertModel.setCount(Integer.parseInt(data.getAlert_count()));
+            alertModel.setId(data.getId());
+            if (!SuperLifeSecretPreferences.getInstance().getAcceptedIds().contains(alertModel)) {
+                showAlert2(data, null, null);
+            } else {
+                List<AlertModel> alertModelList = SuperLifeSecretPreferences.getInstance().getAcceptedIds();
+                int index = alertModelList.indexOf(alertModel);
+                AlertModel alertModel1 = alertModelList.get(index);
+                if (alertModel.getCount() > alertModel1.getShowCount()) {
+                    showAlert2(data, alertModel1, alertModelList);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", data.getTitle());
+                    bundle.putString("parent_id", data.getId());
+                    bundle.putString("color", data.getColor());
+                    CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+                }
+            }
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", data.getTitle());
+            bundle.putString("parent_id", data.getId());
+            bundle.putString("color", data.getColor());
+            CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+        }
+
+    }
+
+    private void openNext(AllMenuResponseData tag) {
+        if (tag.getType().equalsIgnoreCase("1") || tag.getType().equalsIgnoreCase("2")) {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", tag.getTitle());
+            bundle.putBoolean("is_link", tag.getType().equalsIgnoreCase("1"));
+            bundle.putString("url", tag.getLink());
+            bundle.putString("content", tag.getContent());
+            CommonUtils.startActivity(this, WebViewActivity.class, bundle, false);
+        } else {
+            switch (tag.getType()) {
+                case ConstantLib.TYPE_NEWS:
+                    CommonUtils.startActivity(this, NewsActivity.class);
+                    break;
+                case ConstantLib.TYPE_EVENT:
+                    CommonUtils.startActivity(this, EventActivity.class);
+                    break;
+                case ConstantLib.TYPE_LATEST:
+                    CommonUtils.startActivity(this, LatestActivity.class);
+                    break;
+                case ConstantLib.TYPE_SUBMIT:
+                    CommonUtils.startActivity(this, SubmitListActivity.class);
+                    break;
+                case ConstantLib.TYPE_PERSONAL_CALENDAR:
+                    CommonUtils.startActivity(this, PersonalEventCalendarActivity.class);
+                    break;
+                case ConstantLib.TYPE_EVENT_CALENDAR:
+                    CommonUtils.startActivity(this, InterestedEventCalendarActivity.class);
+                    break;
+                case ConstantLib.TYPE_STUDY_GROUP:
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getStudy_group());
+                    bundle.putBoolean("isStudyGroup", true);
+                    CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle, false);
+                    break;
+                case ConstantLib.TYPE_ONSITE:
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getOnsite());
+                    bundle2.putBoolean("isStudyGroup", false);
+                    CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle2, false);
+                    break;
+            }
+        }
+    }
 }
