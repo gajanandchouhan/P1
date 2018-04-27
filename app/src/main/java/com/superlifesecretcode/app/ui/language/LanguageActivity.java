@@ -140,7 +140,6 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
             SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.LANGUAGE_SETTED,true);
             SuperLifeSecretPreferences.getInstance().setConversionData(data);
             CommonUtils.startActivity(LanguageActivity.this, DiscolsureActivity.class);
-            finish();
         }
     }
 }
