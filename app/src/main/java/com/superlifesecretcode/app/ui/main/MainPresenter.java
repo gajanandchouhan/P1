@@ -80,8 +80,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 if (announcementCountResponseModel != null) {
                     if (announcementCountResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.setAnnounceMentCount(announcementCountResponseModel.getData());
-                    } else
-                        CommonUtils.showToast(mContext, announcementCountResponseModel.getMessage());
+                    }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }
