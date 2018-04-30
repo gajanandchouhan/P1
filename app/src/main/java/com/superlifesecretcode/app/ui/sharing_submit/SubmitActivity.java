@@ -72,6 +72,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         editTextDesc = findViewById(R.id.edit_text_desc);
         Button buttonSubmit = findViewById(R.id.button_submit);
+        editTextDesc.setHint(conversionData.getWhat_in_mind());
         buttonSubmit.setOnClickListener(this);
         setUpToolbar();
         findViewById(R.id.imageView_upload).setOnClickListener(this);
@@ -111,7 +112,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
                 setPathArray(list);
                 for (ChosenImage chosenImage : list) {
                     long size = chosenImage.getSize();
-                    Log.v("SIZE",size+"");
+                    Log.v("SIZE", size + "");
                 }
 
             }

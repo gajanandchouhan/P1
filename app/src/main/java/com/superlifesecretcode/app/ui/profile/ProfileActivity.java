@@ -398,7 +398,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             public void onPick(Country country) {
                 imageViewFlag.setImageResource(country.getFlag());
                 dialCode = country.getDialCode();
-                countryCode = country.getCode().toLowerCase();
+//                countryCode = country.getCode().toLowerCase();
                 countryPicker.dismiss();
                 textViewDialCode.setText(dialCode);
             }
@@ -447,6 +447,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             public void onPick(CountryResponseData country) {
                 textViewCountry.setText(country.getName());
                 countryId = country.getId();
+                countryCode=country.getCountrycode();
                 countryStatePicker.dismiss();
             }
         }, data);

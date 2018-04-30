@@ -33,6 +33,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.superlifesecretcode.app.BuildConfig;
 import com.superlifesecretcode.app.GlideApp;
+import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 
 import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
@@ -60,6 +62,11 @@ import static android.text.format.DateUtils.getRelativeTimeSpanString;
 public class CommonUtils {
 
     public static void showSnakeBar(Context mContext, String message) {
+        if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.server_error))) {
+            message = SuperLifeSecretPreferences.getInstance().getConversionData().getWent_wrong();
+        } else if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.no_internet))) {
+            message = SuperLifeSecretPreferences.getInstance().getConversionData().getNo_internet();
+        }
         Snackbar.make(((AppCompatActivity) mContext).findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
@@ -250,6 +257,11 @@ public class CommonUtils {
     }
 
     public static void showToast(Context mContext, String message) {
+        if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.server_error))) {
+            message = SuperLifeSecretPreferences.getInstance().getConversionData().getWent_wrong();
+        } else if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.no_internet))) {
+            message = SuperLifeSecretPreferences.getInstance().getConversionData().getNo_internet();
+        }
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 
@@ -260,7 +272,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString(), false,null);
+        return getformattedDateFromString("yyyy-MM-dd", ConstantLib.OUTPUT_DATE_FORMATE, stringBuilder.toString(), false, null);
     }
 
     public static String getAppendedDate(int year, int month, int dayOfMonth) {
@@ -270,7 +282,7 @@ public class CommonUtils {
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", month + 1));
         stringBuilder.append("-");
         stringBuilder.append(String.format(Locale.getDefault(), "%02d", dayOfMonth));
-        return getformattedDateFromString("yyyy-MM-dd", "yyyy-MM-dd", stringBuilder.toString(), false,null);
+        return getformattedDateFromString("yyyy-MM-dd", "yyyy-MM-dd", stringBuilder.toString(), false, null);
     }
 
     public interface ClickListner {
@@ -451,10 +463,10 @@ public class CommonUtils {
     }
 
 
-    public static boolean isPackageExisted(String targetPackage,Context mContext){
-        PackageManager pm=mContext.getPackageManager();
+    public static boolean isPackageExisted(String targetPackage, Context mContext) {
+        PackageManager pm = mContext.getPackageManager();
         try {
-            PackageInfo info=pm.getPackageInfo(targetPackage,PackageManager.GET_META_DATA);
+            PackageInfo info = pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }

@@ -10,6 +10,7 @@ import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
 import com.superlifesecretcode.app.data.netcomm.ResponseHandler;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BasePresenter;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -50,7 +51,7 @@ class PersonalEventPresenter extends BasePresenter<PersonalEventView> {
                         view.setEventData(newsResponseModel.getData());
                     } else {
                         view.noData();
-                        CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                        CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getNo_event());
                     }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));

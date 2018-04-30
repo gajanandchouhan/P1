@@ -283,7 +283,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onPick(Country country) {
                 textViewDialCode.setText(country.getDialCode());
                 imageViewFlag.setImageResource(country.getFlag());
-                countryCode = country.getCode().toLowerCase();
+//                countryCode = country.getCode().toLowerCase();
                 countryPicker.dismiss();
             }
         });
@@ -332,6 +332,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onPick(CountryResponseData country) {
                 textViewCountry.setText(country.getName());
                 countryId = country.getId();
+                countryCode=country.getCountrycode();
                 countryStatePicker.dismiss();
             }
         }, data);

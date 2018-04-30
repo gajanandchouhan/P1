@@ -106,9 +106,126 @@ public class LanguageResponseData {
     private String select_end_date;
     private String contact_details;
     private String select_enter_title;
-    private String  richest_life_reminder;
+    private String richest_life_reminder;
     private String new_event_near;
     private String dismiss;
+    private String only_3_menu;
+    private String at_least_3_menu;
+    private String went_wrong;
+    private String profile_updated;
+    private String what_in_mind;
+    private String mobile_exists;
+    private String email_exists;
+    private String no_event;
+    private String no_news;
+    private String no_sharing;
+    private String no_activity;
+    private String no_notification;
+    private String no_internet;
+
+    public String getNo_internet() {
+        return no_internet;
+    }
+
+    public void setNo_internet(String no_internet) {
+        this.no_internet = no_internet;
+    }
+
+    public String getProfile_updated() {
+        return profile_updated;
+    }
+
+    public void setProfile_updated(String profile_updated) {
+        this.profile_updated = profile_updated;
+    }
+
+    public String getWhat_in_mind() {
+        return what_in_mind;
+    }
+
+    public void setWhat_in_mind(String what_in_mind) {
+        this.what_in_mind = what_in_mind;
+    }
+
+    public String getMobile_exists() {
+        return mobile_exists;
+    }
+
+    public void setMobile_exists(String mobile_exists) {
+        this.mobile_exists = mobile_exists;
+    }
+
+    public String getEmail_exists() {
+        return email_exists;
+    }
+
+    public void setEmail_exists(String email_exists) {
+        this.email_exists = email_exists;
+    }
+
+    public String getNo_event() {
+        return no_event;
+    }
+
+    public void setNo_event(String no_event) {
+        this.no_event = no_event;
+    }
+
+    public String getNo_news() {
+        return no_news;
+    }
+
+    public void setNo_news(String no_news) {
+        this.no_news = no_news;
+    }
+
+    public String getNo_sharing() {
+        return no_sharing;
+    }
+
+    public void setNo_sharing(String no_sharing) {
+        this.no_sharing = no_sharing;
+    }
+
+    public String getNo_activity() {
+        return no_activity;
+    }
+
+    public void setNo_activity(String no_activity) {
+        this.no_activity = no_activity;
+    }
+
+    public String getNo_notification() {
+        return no_notification;
+    }
+
+    public void setNo_notification(String no_notification) {
+        this.no_notification = no_notification;
+    }
+
+    public String getWent_wrong() {
+        return went_wrong;
+    }
+
+    public void setWent_wrong(String went_wrong) {
+        this.went_wrong = went_wrong;
+    }
+
+    public String getOnly_3_menu() {
+        return only_3_menu;
+    }
+
+    public void setOnly_3_menu(String only_3_menu) {
+        this.only_3_menu = only_3_menu;
+    }
+
+    public String getAt_least_3_menu() {
+        return at_least_3_menu;
+    }
+
+    public void setAt_least_3_menu(String at_least_3_menu) {
+        this.at_least_3_menu = at_least_3_menu;
+    }
 
     public String getRichest_life_reminder() {
         return richest_life_reminder;

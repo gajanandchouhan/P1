@@ -122,19 +122,18 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         } else {
 
         }
-        if (bottomList.size() > 3) {
-            tab1.setTag(bottomList.get(0));
-            textView1.setText(bottomList.get(0).getTitle());
-            tab2.setTag(bottomList.get(1));
-            textView2.setText(bottomList.get(1).getTitle());
-            tab3.setTag(bottomList.get(2));
-            textView3.setText(bottomList.get(2).getTitle());
-            tab4.setTag(bottomList.get(3));
-            textView4.setText(bottomList.get(3).getTitle());
-            ImageLoadUtils.loadImage(bottomList.get(0).getParent_image() != null && !bottomList.get(0).getParent_image().isEmpty() ? bottomList.get(0).getParent_image() : bottomList.get(0).getImage(), imageView1, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView2, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView3, R.drawable.ic_logo);
-            ImageLoadUtils.loadImage(bottomList.get(3).getParent_image() != null && !bottomList.get(3).getParent_image().isEmpty() ? bottomList.get(3).getParent_image() : bottomList.get(3).getImage(), imageView4, R.drawable.ic_logo);
+        if (bottomList.size() > 2) {
+            textView1.setText(conversionData.getHome());
+            tab2.setTag(bottomList.get(0));
+            textView2.setText(bottomList.get(0).getTitle());
+            tab3.setTag(bottomList.get(1));
+            textView3.setText(bottomList.get(1).getTitle());
+            tab4.setTag(bottomList.get(2));
+            textView4.setText(bottomList.get(2).getTitle());
+            ImageLoadUtils.loadImage(bottomList.get(0).getParent_image() != null && !bottomList.get(0).getParent_image().isEmpty() ? bottomList.get(0).getParent_image() : bottomList.get(0).getImage(), imageView2, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(1).getParent_image() != null && !bottomList.get(1).getParent_image().isEmpty() ? bottomList.get(1).getParent_image() : bottomList.get(1).getImage(), imageView3, R.drawable.ic_logo);
+            ImageLoadUtils.loadImage(bottomList.get(2).getParent_image() != null && !bottomList.get(2).getParent_image().isEmpty() ? bottomList.get(2).getParent_image() : bottomList.get(2).getImage(), imageView4, R.drawable.ic_logo);
+            imageView1.setImageResource(R.drawable.home);
         }
     }
 
@@ -228,6 +227,8 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tab_1:
+                onBackPressed();
+                break;
             case R.id.tab_2:
             case R.id.tab_3:
             case R.id.tab_4:

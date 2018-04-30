@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestDetailsActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestPagerAdapter;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -62,7 +63,7 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ItemViewHolder holder1 = (ItemViewHolder) holder;
             ShareListResponseData shareListResponseData = list.get(position - 1);
             holder1.textViewName.setText(shareListResponseData.getUsername());
-            holder1.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(), false,null));
+            holder1.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(), false, null));
             holder1.textViewDesc.setText(shareListResponseData.getContent());
             holder1.textViewCountryName.setText(shareListResponseData.getCountryName());
             holder1.textViewStatus.setText(shareListResponseData.getStatus().equals("2") ? "Rejected" : "Published");
@@ -124,6 +125,8 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public HeaderViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            TextView viewById = itemView.findViewById(R.id.text_view_what_in_mind);
+            viewById.setHint(SuperLifeSecretPreferences.getInstance().getConversionData().getWhat_in_mind());
         }
 
         @Override

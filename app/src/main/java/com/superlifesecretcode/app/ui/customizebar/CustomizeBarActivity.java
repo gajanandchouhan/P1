@@ -48,7 +48,7 @@ public class CustomizeBarActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<AllMenuResponseData> allCategories = SuperLifeSecretPreferences.getInstance().getAllCategories();
         if (allCategories != null && allCategories.size() > 0) {
-            latestAapter = new BottomBartAapter(this,allCategories);
+            latestAapter = new BottomBartAapter(this, allCategories);
             recyclerView.setAdapter(latestAapter);
         } else {
             recyclerView.setAdapter(null);
@@ -75,7 +75,7 @@ public class CustomizeBarActivity extends BaseActivity {
                     MainActivity.BOTTOM_BAR_CHANGED = true;
                     onBackPressed();
                 } else {
-                    CommonUtils.showToast(CustomizeBarActivity.this, "Please select at least 4 menu options.");
+                    CommonUtils.showToast(CustomizeBarActivity.this, conversionData.getAt_least_3_menu());
                 }
 
             }
@@ -103,6 +103,6 @@ public class CustomizeBarActivity extends BaseActivity {
                 count = count + 1;
             }
         }
-        return count == 4;
+        return count == 3;
     }
 }

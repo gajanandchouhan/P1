@@ -23,13 +23,13 @@
             android:id="@+id/textView_month_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/imageView_previous"
             android:layout_toLeftOf="@+id/imageView_next"
             android:layout_toRightOf="@+id/imageView_previous"
             android:layout_toStartOf="@+id/imageView_next"
             android:fontFamily="@font/bold"
+            android:gravity="center"
             android:padding="@dimen/_5sdp"
             android:text="March 2018"
             android:textColor="@android:color/holo_red_dark"
@@ -46,16 +46,32 @@
             android:src="@drawable/right_arrow"
             android:tint="@android:color/holo_red_dark" />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/imageView_add_event"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/_5sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="@dimen/_10sdp"
-            android:src="@drawable/add_event" />
+            android:layout_centerVertical="true">
 
+            <ImageView
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/add_event" />
+            <TextView
+                android:id="@+id/textView_add_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:text="Add Event"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/_10sdp" />
+
+        </LinearLayout>
     </RelativeLayout>
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -69,7 +69,7 @@ public class BottomBartAapter extends RecyclerView.Adapter<BottomBartAapter.Item
                     subcategoryModel.setSelected(!subcategoryModel.isSelected());
                     notifyItemChanged(getAdapterPosition());
                 } else {
-                    CommonUtils.showToast(mContext, "You can select only four menu options.");
+                    CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getOnly_3_menu());
                 }
             } else {
                 subcategoryModel.setSelected(!subcategoryModel.isSelected());
@@ -86,6 +86,6 @@ public class BottomBartAapter extends RecyclerView.Adapter<BottomBartAapter.Item
                 count = count + 1;
             }
         }
-        return count < 4;
+        return count < 3;
     }
 }

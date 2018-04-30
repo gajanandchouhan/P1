@@ -65,6 +65,8 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         imageViewNext.setOnClickListener(this);
         imageViewPre.setOnClickListener(this);
         textViewDay = findViewById(R.id.textView_day);
+        TextView textViewAddEvent = findViewById(R.id.textView_add_event);
+        textViewAddEvent.setText(conversionData.getAdd_event());
         findViewById(R.id.imageView_add_event).setOnClickListener(this);
         recyclerView = findViewById(R.id.recycler_view);
         imageViewProfile = findViewById(R.id.imageView_profile);
@@ -186,7 +188,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     }
 
     private void setAlarm(PersonalEventResponseData interestedEventResponseData) {
-        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getActivity_id()), "RichestLifeReminder", "" + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before())*1000*60), interestedEventResponseData.getTypeName()!=null&&!interestedEventResponseData.getTypeName().isEmpty());
+        AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getActivity_id()), "RichestLifeReminder", "" + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before()) * 1000 * 60), interestedEventResponseData.getTypeName() != null && !interestedEventResponseData.getTypeName().isEmpty());
     }
 
     private void removeAlarm(PersonalEventResponseData interestedEventResponseData) {
@@ -214,7 +216,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     public void onRemoveSuccess() {
         eventList.remove(position);
         compactCalendarView.removeEvent(event);
-        if (object!=null){
+        if (object != null) {
             removeAlarm(object);
         }
         adapter.notifyDataSetChanged();
