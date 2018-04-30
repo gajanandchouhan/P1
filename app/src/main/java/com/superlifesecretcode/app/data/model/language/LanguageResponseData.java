@@ -122,6 +122,51 @@ public class LanguageResponseData {
     private String no_activity;
     private String no_notification;
     private String no_internet;
+    private String code_sent_to_mail;
+    private String invalid_code_entered;
+    private String email_not_registerted;
+    private String deactivate_user;
+    private String invalid_mobile_pass;
+
+    public String getCode_sent_to_mail() {
+        return code_sent_to_mail;
+    }
+
+    public void setCode_sent_to_mail(String code_sent_to_mail) {
+        this.code_sent_to_mail = code_sent_to_mail;
+    }
+
+    public String getInvalid_code_entered() {
+        return invalid_code_entered;
+    }
+
+    public void setInvalid_code_entered(String invalid_code_entered) {
+        this.invalid_code_entered = invalid_code_entered;
+    }
+
+    public String getEmail_not_registerted() {
+        return email_not_registerted;
+    }
+
+    public void setEmail_not_registerted(String email_not_registerted) {
+        this.email_not_registerted = email_not_registerted;
+    }
+
+    public String getDeactivate_user() {
+        return deactivate_user;
+    }
+
+    public void setDeactivate_user(String deactivate_user) {
+        this.deactivate_user = deactivate_user;
+    }
+
+    public String getInvalid_mobile_pass() {
+        return invalid_mobile_pass;
+    }
+
+    public void setInvalid_mobile_pass(String invalid_mobile_pass) {
+        this.invalid_mobile_pass = invalid_mobile_pass;
+    }
 
     public String getNo_internet() {
         return no_internet;

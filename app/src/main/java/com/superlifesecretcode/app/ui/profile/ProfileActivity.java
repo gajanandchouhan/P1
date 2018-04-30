@@ -90,7 +90,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewDialCode = findViewById(R.id.textView_phonecode);
         imageViewUser = findViewById(R.id.imageView_user);
         imageViewFlag = findViewById(R.id.imageView_flag);
-        imageViewCamera=findViewById(R.id.imageView_camera);
+        imageViewCamera = findViewById(R.id.imageView_camera);
         textViewNameLabel = findViewById(R.id.textView_name_label);
         textViewMobileLabel = findViewById(R.id.textView_mobile_label);
         textViewGenderLabel = findViewById(R.id.textView_gender_label);
@@ -167,7 +167,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             countryId = userDetailResponseData.getCountry();
             stateId = userDetailResponseData.getState();
             editTextEmail.setText(userDetailResponseData.getEmail());
-            languageId=SuperLifeSecretPreferences.getInstance().getLanguageId();
+            languageId = SuperLifeSecretPreferences.getInstance().getLanguageId();
             currentLanguag = getLanguage(languageId);
             textViewLanguage.setText(currentLanguag);
             ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
@@ -345,7 +345,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         HashMap<String, String> body = new HashMap<>();
         body.put("name", name);
         body.put("gender", gender);
-        body.put("mobile", mobileNumber.startsWith("0")?mobileNumber:"0"+mobileNumber);
+        body.put("mobile", mobileNumber.startsWith("0") ? mobileNumber : "0" + mobileNumber);
         body.put("country_id", countryId);
         body.put("state_id", stateId);
         body.put("phone_code", dialCode);
@@ -447,7 +447,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             public void onPick(CountryResponseData country) {
                 textViewCountry.setText(country.getName());
                 countryId = country.getId();
-                countryCode=country.getCountrycode();
+                countryCode = country.getCountrycode();
+                dialCode = "+" + country.getPhonecode();
+                textViewDialCode.setText(dialCode);
+                int id = getResources().getIdentifier("flag_" + countryCode.toLowerCase(), "drawable", getPackageName());
+                imageViewFlag.setImageResource(id);
                 countryStatePicker.dismiss();
             }
         }, data);
