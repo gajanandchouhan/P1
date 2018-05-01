@@ -127,6 +127,69 @@ public class LanguageResponseData {
     private String email_not_registerted;
     private String deactivate_user;
     private String invalid_mobile_pass;
+    private String reset_code;
+    private String enter_reset_code;
+    private String new_pass;
+    private String confirm_new_pass;
+    private String get_reset_code;
+    private String reset_password;
+    private String password_not_match;
+
+    public String getReset_code() {
+        return reset_code;
+    }
+
+    public void setReset_code(String reset_code) {
+        this.reset_code = reset_code;
+    }
+
+    public String getEnter_reset_code() {
+        return enter_reset_code;
+    }
+
+    public void setEnter_reset_code(String enter_reset_code) {
+        this.enter_reset_code = enter_reset_code;
+    }
+
+    public String getNew_pass() {
+        return new_pass;
+    }
+
+    public void setNew_pass(String new_pass) {
+        this.new_pass = new_pass;
+    }
+
+    public String getConfirm_new_pass() {
+        return confirm_new_pass;
+    }
+
+    public void setConfirm_new_pass(String confirm_new_pass) {
+        this.confirm_new_pass = confirm_new_pass;
+    }
+
+    public String getGet_reset_code() {
+        return get_reset_code;
+    }
+
+    public void setGet_reset_code(String get_reset_code) {
+        this.get_reset_code = get_reset_code;
+    }
+
+    public String getReset_password() {
+        return reset_password;
+    }
+
+    public void setReset_password(String reset_password) {
+        this.reset_password = reset_password;
+    }
+
+    public String getPassword_not_match() {
+        return password_not_match;
+    }
+
+    public void setPassword_not_match(String password_not_match) {
+        this.password_not_match = password_not_match;
+    }
 
     public String getCode_sent_to_mail() {
         return code_sent_to_mail;

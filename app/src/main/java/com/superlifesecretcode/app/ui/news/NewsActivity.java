@@ -67,6 +67,7 @@ public class NewsActivity extends BaseActivity implements NewsView {
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
         params.put("announcement_type", "2");
+        params.put("country", userDetailResponseData.getCountry());
         presenter.getNews(params, headers);
     }
 

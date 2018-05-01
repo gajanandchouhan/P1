@@ -188,7 +188,7 @@ public class EventActivity extends BaseActivity implements EventView {
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
         params.put("announcement_type", "1");
-        params.put("country_id", userData.getCountry());
+        params.put("country", userData.getCountry());
         presenter.getEvents(params, headers);
     }
 

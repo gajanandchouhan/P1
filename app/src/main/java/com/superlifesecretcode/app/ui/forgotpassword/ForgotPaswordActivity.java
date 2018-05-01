@@ -67,6 +67,7 @@ public class ForgotPaswordActivity extends BaseActivity implements View.OnClickL
             editTextEmail.setHint(conversionData.getEmail());
             endterEmail = conversionData.getEnter_email();
             endterValidEmail = conversionData.getEnter_valid_email();
+            buttonSendCode.setText(conversionData.getGet_reset_code());
         }
 
     }
@@ -113,9 +114,9 @@ public class ForgotPaswordActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onTempPassSuccess() {
-        Bundle bundle=new Bundle();
-        bundle.putString("email",email);
-        CommonUtils.startActivity(this,ResetPaswordActivity.class,bundle,false);
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        CommonUtils.startActivity(this, ResetPaswordActivity.class, bundle, false);
     }
 
     @Override

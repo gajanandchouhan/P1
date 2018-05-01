@@ -53,6 +53,10 @@ public class ResetPaswordActivity extends BaseActivity implements View.OnClickLi
     private void setUpConversion() {
         conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
+            editTextPassword.setHint(conversionData.getPassword());
+            editTextConfirmPassword.setHint(conversionData.getConfirm_new_pass());
+            editTextCode.setHint(conversionData.getReset_code());
+            buttonResetPassword.setText(conversionData.getReset_password());
         }
 
     }
@@ -86,7 +90,7 @@ public class ResetPaswordActivity extends BaseActivity implements View.OnClickLi
         String newPass = editTextPassword.getText().toString().trim();
         String confirmPass = editTextConfirmPassword.getText().toString().trim();
         if (code.isEmpty()) {
-            editTextCode.setError("Please enter reset code.");
+            editTextCode.setError(conversionData.getEnter_reset_code());
             return;
         }
         if (newPass.length() < 6) {
@@ -94,7 +98,7 @@ public class ResetPaswordActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         if (!newPass.equalsIgnoreCase(confirmPass)) {
-            editTextConfirmPassword.setError("Password not matching");
+            editTextConfirmPassword.setError(conversionData.getPassword_not_match());
             return;
         }
         HashMap<String, String> body = new HashMap<>();
