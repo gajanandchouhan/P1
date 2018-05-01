@@ -9,9 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.List;
@@ -30,7 +32,7 @@ public class SelectionListDialog extends Dialog {
         super(context);
         this.context = context;
         this.selectedListner = selectedListner;
-        this.list=list;
+        this.list = list;
         initView();
     }
 
@@ -39,6 +41,8 @@ public class SelectionListDialog extends Dialog {
         setContentView(R.layout.dialog_selection_popup);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setLayout(CommonUtils.getScreenWidth(context) - 150, WindowManager.LayoutParams.WRAP_CONTENT);
+        TextView textViewTitle = findViewById(R.id.textVIew_title);
+        textViewTitle.setText(SuperLifeSecretPreferences.getInstance().getConversionData().getSelect());
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         setAadapter(recyclerView);

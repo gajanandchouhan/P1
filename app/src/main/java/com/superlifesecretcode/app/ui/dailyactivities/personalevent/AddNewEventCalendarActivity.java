@@ -111,6 +111,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
             textViewSelect.setText(conversionData.getSelect());
             textViewDate.setHint(conversionData.getDate());
             textViewTime.setHint(conversionData.getTime());
+            editTextTitle.setHint(conversionData.getEvent_title());
             textViewLabelReminder.setText(conversionData.getReminder_before_event());
             editTextReminderMinute.setHint(conversionData.getReminder_before_event());
             textViewInMin.setText(conversionData.getIn_minute());

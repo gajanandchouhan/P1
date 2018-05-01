@@ -52,7 +52,7 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         ShareListResponseData shareListResponseData = list.get(position);
         holder.textViewName.setText(shareListResponseData.getUsername());
-        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(),false,null));
+        holder.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(), false, null));
         holder.textViewDesc.setText(shareListResponseData.getContent());
         holder.textViewCountryName.setText(shareListResponseData.getCountryName());
         holder.imageViewLike.setSelected(shareListResponseData.getLiked_by_user().equalsIgnoreCase("1"));
@@ -112,7 +112,12 @@ public class LatestAapter extends RecyclerView.Adapter<LatestAapter.ItemViewHold
                 if (sharing_files != null && sharing_files.size() > 0) {
                     String type = sharing_files.get(pager.getCurrentItem()).getType();
                     if (type.equalsIgnoreCase(ConstantLib.TYPE_IMAGE)) {
-                        ((LatestActivity) mContext).shareImage(sharing_files.get(pager.getCurrentItem()).getFile());
+                        if (data.getContent() != null && !data.getContent().isEmpty()) {
+                            ((LatestActivity) mContext).shareImageAndText(sharing_files.get(pager.getCurrentItem()).getFile(), data.getContent());
+                        } else {
+                            ((LatestActivity) mContext).shareImage(sharing_files.get(pager.getCurrentItem()).getFile());
+                        }
+
                     } else {
                         CommonUtils.shareContent(mContext, sharing_files.get(pager.getCurrentItem()).getFile());
                     }

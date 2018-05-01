@@ -109,7 +109,7 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         }
 
         textViewName.setText(data.getUsername());
-        textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, data.getCreated_at(),false,null));
+        textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, data.getCreated_at(), false, null));
         textViewDesc.setText(data.getContent());
         textViewCountryName.setText(data.getCountryName());
         textViewLike.setText(String.format("%s " + conversionData.getLikes(), data.getLiked_by()));
@@ -156,8 +156,13 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
                 List<FileResponseData> sharing_files = data.getSharing_files();
                 if (sharing_files != null && sharing_files.size() > 0) {
                     String type = sharing_files.get(pager.getCurrentItem()).getType();
+
                     if (type.equalsIgnoreCase(ConstantLib.TYPE_IMAGE)) {
-                        shareImage(sharing_files.get(pager.getCurrentItem()).getFile());
+                        if (data.getContent() != null && !data.getContent().isEmpty()) {
+                            shareImageAndText(sharing_files.get(pager.getCurrentItem()).getFile(), data.getContent());
+                        } else {
+                            shareImage(sharing_files.get(pager.getCurrentItem()).getFile());
+                        }
                     }
                 } else {
                     CommonUtils.shareContent(this, data.getContent());
@@ -175,6 +180,14 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    public void shareImageAndText(String image, String text) {
+        if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+            CommonUtils.shareImageWithContent(image, text, this);
+        } else {
+            ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+        }
+
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

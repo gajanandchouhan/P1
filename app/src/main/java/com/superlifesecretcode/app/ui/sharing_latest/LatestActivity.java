@@ -148,7 +148,14 @@ public class LatestActivity extends BaseActivity implements ShareListView {
         }
 
     }
+    public void shareImageAndText(String image, String text) {
+        if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
+            CommonUtils.shareImageWithContent(image, text, this);
+        } else {
+            ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
+        }
 
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -1,12 +1,18 @@
 package com.superlifesecretcode.app.ui.webview;
 
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -39,9 +45,18 @@ public class WebViewActivity extends BaseActivity {
         if (isLink) {
             webView.loadUrl(getIntent().getBundleExtra("bundle").getString("url"));
         } else {
-            webView.loadData(getIntent().getBundleExtra("bundle").getString("content"),  "text/html; charset=utf-8", "utf-8");
+            webView.loadData(getIntent().getBundleExtra("bundle").getString("content"), "text/html; charset=utf-8", "utf-8");
         }
         webView.setWebViewClient(new MyWebViewClient());
+        webView.setDownloadListener(new DownloadListener() {
+            public void onDownloadStart(String url, String userAgent,
+                                        String contentDisposition, String mimetype,
+                                        long contentLength) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
     }
 
     private void setUpToolbar(String title) {
@@ -62,21 +77,63 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onPause() {
+        webView.onPause();
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        webView.onResume();
+        super.onResume();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        webView.destroy();
+        webView = null;
+        super.onDestroy();
+    }
+
+
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return super.shouldOverrideUrlLoading(view, url);
+            if (url.startsWith("http:") || url.startsWith("https:")) {
+                return false;
+            } else if (url.startsWith("zoomus:")) {
+                if (appInstalledOrNot("us.zoom.videomeetings")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=us.zoom.videomeetings"));
+                    startActivity(intent);
+                    return true;
+                }
+            } else {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+                return true;
+            }
+        }
+
+        private boolean appInstalledOrNot(String uri) {
+            PackageManager pm = getPackageManager();
+            try {
+                pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+                return true;
+            } catch (PackageManager.NameNotFoundException e) {
+            }
+
+            return false;
         }
 
         @Override
@@ -112,7 +169,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()){
+        if (webView.canGoBack()) {
             webView.goBack();
             return;
         }
