@@ -73,7 +73,7 @@ public class NotificationActivity extends BaseActivity implements NotificationVi
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
         if (conversionData != null)
-            textViewTitle.setText("Notifications");
+            textViewTitle.setText(conversionData.getNotifications());
     }
 
     @Override

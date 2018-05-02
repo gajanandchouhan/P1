@@ -65,8 +65,8 @@ public class InterestedEventAapter extends RecyclerView.Adapter<InterestedEventA
         if (isToday) {
             holder.textViewDate.setText(coversionData.getToday());
         } else {
-            holder.textViewDate.setText(String.format(coversionData.getStart_date() + " : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getEvent_date(), true,eventsInfoModel.getTimezone())));
+            holder.textViewDate.setText(String.format(coversionData.getStart_date() + " : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE,
+                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getEvent_date()+" "+eventsInfoModel.getEvent_time(), true,eventsInfoModel.getTimezone())));
         }
 
         holder.textViewTitme.setText(String.format(coversionData.getTime() + " : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "hh:mm a", eventsInfoModel.getEvent_date()+" "+eventsInfoModel.getEvent_time(), true,eventsInfoModel.getTimezone())));

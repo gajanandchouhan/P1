@@ -134,6 +134,15 @@ public class LanguageResponseData {
     private String get_reset_code;
     private String reset_password;
     private String password_not_match;
+    private String notifications;
+
+    public String getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(String notifications) {
+        this.notifications = notifications;
+    }
 
     public String getReset_code() {
         return reset_code;

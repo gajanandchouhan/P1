@@ -73,6 +73,7 @@ public class SubmitActivity extends BaseActivity implements View.OnClickListener
         editTextDesc = findViewById(R.id.edit_text_desc);
         Button buttonSubmit = findViewById(R.id.button_submit);
         editTextDesc.setHint(conversionData.getWhat_in_mind());
+        buttonSubmit.setText(conversionData.getSubmit());
         buttonSubmit.setOnClickListener(this);
         setUpToolbar();
         findViewById(R.id.imageView_upload).setOnClickListener(this);
