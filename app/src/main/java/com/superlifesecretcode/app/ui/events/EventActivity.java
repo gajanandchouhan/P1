@@ -59,8 +59,9 @@ public class EventActivity extends BaseActivity implements EventView {
         newsAapter = new EventAapter(list, this, conversionData);
         recyclerView.setAdapter(newsAapter);
         tabLayout.addOnTabSelectedListener(listener);
-        tabLayout.getTabAt(0).setText(conversionData.getToday());
-        tabLayout.getTabAt(1).setText(conversionData.getUpcoming());
+        tabLayout.getTabAt(0).setText(conversionData.getAll());
+        tabLayout.getTabAt(1).setText(conversionData.getToday());
+        tabLayout.getTabAt(2).setText(conversionData.getUpcoming());
     }
 
     @Override
@@ -78,10 +79,21 @@ public class EventActivity extends BaseActivity implements EventView {
                     if (todayList != null) {
                         list.addAll(todayList);
                     }
-                    newsAapter.setToday(true);
+                    if (upcomingList != null) {
+                        list.addAll(upcomingList);
+                    }
+                    newsAapter.setToday(false);
                     newsAapter.notifyDataSetChanged();
                     break;
                 case 1:
+                    list.clear();
+                    if (todayList != null) {
+                        list.addAll(todayList);
+                    }
+                    newsAapter.setToday(true);
+                    newsAapter.notifyDataSetChanged();
+                    break;
+                case 2:
                     list.clear();
                     if (upcomingList != null) {
                         list.addAll(upcomingList);
@@ -142,6 +154,17 @@ public class EventActivity extends BaseActivity implements EventView {
             upcomingList = newsResponseModel.getData().getUpcoming();
             list.clear();
             if (tabLayout.getSelectedTabPosition() == 0) {
+                if (todayList != null) {
+                    list.addAll(todayList);
+                    newsAapter.setToday(false);
+                    newsAapter.notifyDataSetChanged();
+                }
+                if (upcomingList != null) {
+                    list.addAll(upcomingList);
+                    newsAapter.setToday(false);
+                    newsAapter.notifyDataSetChanged();
+                }
+            } else if (tabLayout.getSelectedTabPosition() == 1) {
                 if (todayList != null) {
                     list.addAll(todayList);
                     newsAapter.setToday(true);

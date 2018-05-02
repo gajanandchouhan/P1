@@ -20,6 +20,12 @@
         app:tabTextColor="@color/colorPrimary">
 
         <android.support.design.widget.TabItem
+            android:id="@+id/tab_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All" />
+
+        <android.support.design.widget.TabItem
             android:id="@+id/tab_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -135,6 +135,7 @@ public class LanguageResponseData {
     private String reset_password;
     private String password_not_match;
     private String notifications;
+    private String all;
 
     public String getNotifications() {
         return notifications;
@@ -1174,5 +1175,13 @@ public class LanguageResponseData {
 
     public void setSelect_state(String select_state) {
         this.select_state = select_state;
+    }
+
+    public String getAll() {
+        return all;
+    }
+
+    public void setAll(String all) {
+        this.all = all;
     }
 }
