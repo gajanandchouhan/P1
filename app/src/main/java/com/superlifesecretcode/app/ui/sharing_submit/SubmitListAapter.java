@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestDetailsActivity;
@@ -35,6 +36,7 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context mContext;
     private int screenWidth;
     private int pagerHeight;
+    LanguageResponseData languageResponseData;
 
 
     public SubmitListAapter(List list, Context mContext) {
@@ -42,6 +44,7 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.mContext = mContext;
         screenWidth = CommonUtils.getScreenWidth(mContext);
         pagerHeight = screenWidth * 7 / 16;
+        languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
     }
 
     @Override
@@ -66,7 +69,7 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder1.textViewDateTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, shareListResponseData.getCreated_at(), false, null));
             holder1.textViewDesc.setText(shareListResponseData.getContent());
             holder1.textViewCountryName.setText(shareListResponseData.getCountryName());
-            holder1.textViewStatus.setText(shareListResponseData.getStatus().equals("2") ? "Rejected" : "Published");
+            holder1.textViewStatus.setText(shareListResponseData.getStatus().equals("2") ? languageResponseData.getRejected() : languageResponseData.getPublished());
             ImageLoadUtils.loadImage(shareListResponseData.getUser_image(), holder1.imageView);
             if (shareListResponseData.getSharing_files() != null && shareListResponseData.getSharing_files().size() > 0) {
                 holder1.pager.setVisibility(View.VISIBLE);

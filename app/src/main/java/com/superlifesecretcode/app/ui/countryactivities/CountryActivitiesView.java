@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Divya on 28-03-2018.
  */
 
-interface CountryActivitiesView extends BaseView {
+public interface CountryActivitiesView extends BaseView {
     void setCountyAcivityData(CounActivtyResponseData data);
 
     void setCountryData(List<CountryResponseData> data);
@@ -21,4 +21,6 @@ interface CountryActivitiesView extends BaseView {
     void onUpdateInteresed();
 
     void setActivtyDetails(CountryActivityInfoModel data);
+
+    void setCities(List<CountryResponseData> data);
 }

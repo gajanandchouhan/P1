@@ -56,6 +56,11 @@ public interface ApiInterface {
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getCities")
+    Observable<CountryResponseModel> getCities(@PartMap() Map<String, RequestBody> params);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("registration")
     Observable<UserDetailResponseModel> registerUser(@PartMap() Map<String, RequestBody> partMap,
                                                      @Part MultipartBody.Part file);

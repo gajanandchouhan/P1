@@ -136,6 +136,125 @@ public class LanguageResponseData {
     private String password_not_match;
     private String notifications;
     private String all;
+    private String published;
+    private String rejected;
+    private String richest_life;
+    private String city;
+    private String day;
+    private String sun;
+    private String mon;
+    private String tue;
+    private String wed;
+    private String thu;
+    private String fri;
+    private String sat;
+    private String filter;
+    private String done;
+    private String ok;
+
+    public String getFilter() {
+        return filter;
+    }
+
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
+
+    public String getDone() {
+        return done;
+    }
+
+    public void setDone(String done) {
+        this.done = done;
+    }
+
+    public String getOk() {
+        return ok;
+    }
+
+    public void setOk(String ok) {
+        this.ok = ok;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getSun() {
+        return sun;
+    }
+
+    public void setSun(String sun) {
+        this.sun = sun;
+    }
+
+    public String getMon() {
+        return mon;
+    }
+
+    public void setMon(String mon) {
+        this.mon = mon;
+    }
+
+    public String getTue() {
+        return tue;
+    }
+
+    public void setTue(String tue) {
+        this.tue = tue;
+    }
+
+    public String getWed() {
+        return wed;
+    }
+
+    public void setWed(String wed) {
+        this.wed = wed;
+    }
+
+    public String getThu() {
+        return thu;
+    }
+
+    public void setThu(String thu) {
+        this.thu = thu;
+    }
+
+    public String getFri() {
+        return fri;
+    }
+
+    public void setFri(String fri) {
+        this.fri = fri;
+    }
+
+    public String getSat() {
+        return sat;
+    }
+
+    public void setSat(String sat) {
+        this.sat = sat;
+    }
+
+    public String getRichest_life() {
+        return richest_life;
+    }
+
+    public void setRichest_life(String richest_life) {
+        this.richest_life = richest_life;
+    }
 
     public String getNotifications() {
         return notifications;
@@ -1183,5 +1302,21 @@ public class LanguageResponseData {
 
     public void setAll(String all) {
         this.all = all;
+    }
+
+    public String getPublished() {
+        return published;
+    }
+
+    public void setPublished(String published) {
+        this.published = published;
+    }
+
+    public String getRejected() {
+        return rejected;
+    }
+
+    public void setRejected(String rejected) {
+        this.rejected = rejected;
     }
 }

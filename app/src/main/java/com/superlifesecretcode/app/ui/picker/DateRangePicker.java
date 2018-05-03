@@ -64,7 +64,7 @@ public class DateRangePicker extends Dialog implements View.OnClickListener {
             textViewLabelEndDate.setText(conversionData.getEnd_date());
             textViewFromDate.setHint(conversionData.getSelect_date_label());
             textViewToDate.setHint(conversionData.getSelect_date_label());
-            buttonOk.setText("OK");
+            buttonOk.setText(conversionData.getOk());
 
         }
     }

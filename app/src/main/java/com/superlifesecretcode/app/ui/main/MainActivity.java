@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private TextView textView1, textView2, textView3, textView4;
     LinearLayout tab1, tab2, tab3, tab4;
     ImageView imageView1, imageView2, imageView3, imageView4;
+    private TextView textViewTitle;
 
 
     @Override
@@ -90,9 +91,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void initializeView() {
-        setUpToolbar();
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        setUpToolbar();
         tab1 = findViewById(R.id.tab_1);
         tab2 = findViewById(R.id.tab_2);
         tab3 = findViewById(R.id.tab_3);
@@ -226,6 +227,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
             SuperLifeSecretPreferences.getInstance().clearAllCategories();
             setUpBottomBar2();
+            textViewTitle.setText(conversionData.getRichest_life());
         }
         if (BOTTOM_BAR_CHANGED) {
             setUpBottomBar2();
@@ -318,6 +320,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void setUpToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
+        textViewTitle = findViewById(R.id.textView_title);
+        textViewTitle.setText(conversionData.getRichest_life());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);

@@ -33,8 +33,9 @@
             android:id="@+id/textView_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
             android:layout_gravity="center_vertical"
-            android:drawableTop="@drawable/country_globe"
+            android:drawableTop="@drawable/filter"
             android:gravity="center"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
@@ -62,6 +63,12 @@
         app:tabSelectedTextColor="@color/colorWhite"
         app:tabTextAppearance="@style/Base.TextAppearance.AppCompat.Small"
         app:tabTextColor="@color/colorPrimary">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/tab_today"

@@ -211,6 +211,11 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
         setUpData(data);
     }
 
+    @Override
+    public void setCities(List<CountryResponseData> data) {
+
+    }
+
     private void setUpData(final CountryActivityInfoModel countryActivityInfoModel) {
         if (countryActivityInfoModel != null) {
             this.countryActivityInfoModel = countryActivityInfoModel;

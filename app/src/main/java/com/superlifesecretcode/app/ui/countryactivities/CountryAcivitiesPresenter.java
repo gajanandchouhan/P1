@@ -32,7 +32,7 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
     }
 
     @Override
-    protected void setView(CountryActivitiesView newsView) {
+    public void setView(CountryActivitiesView newsView) {
         view = newsView;
     }
 
@@ -193,4 +193,37 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
             }
         }, params, headers);
     }
+
+    public void getCities(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_GET_CITIES, new ResponseHandler<CountryResponseModel>() {
+            @Override
+            public void onResponse(CountryResponseModel countryResponseModel) {
+                view.hideProgress();
+                if (countryResponseModel != null) {
+                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setCities(countryResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
+    }
+
 }

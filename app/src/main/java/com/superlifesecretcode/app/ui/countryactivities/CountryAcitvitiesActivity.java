@@ -31,6 +31,7 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DateRangePicker;
+import com.superlifesecretcode.app.ui.picker.FilterPicker;
 import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -96,8 +97,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         countryActivityAapter = new CountryActivityAapter(list, this, conversionData);
         recyclerView.setAdapter(countryActivityAapter);
         tabLayout.addOnTabSelectedListener(listener);
-        tabLayout.getTabAt(0).setText(conversionData.getToday());
-        tabLayout.getTabAt(1).setText(conversionData.getUpcoming());
+        tabLayout.getTabAt(0).setText(conversionData.getAll());
+        tabLayout.getTabAt(1).setText(conversionData.getToday());
+        tabLayout.getTabAt(2).setText(conversionData.getUpcoming());
         countryId = userData.getCountry();
         getEvents("", "", "", true);
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -164,6 +166,18 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getPosition()) {
                 case 0:
+                    imageViewDate.setVisibility(View.VISIBLE);
+                    list.clear();
+                    if (todayList != null) {
+                        list.addAll(todayList);
+                    }
+                    if (upcomingList != null) {
+                        list.addAll(upcomingList);
+                    }
+                    countryActivityAapter.setToday(false);
+                    countryActivityAapter.notifyDataSetChanged();
+                    break;
+                case 1:
                     imageViewDate.setVisibility(View.GONE);
                     list.clear();
                     if (todayList != null) {
@@ -172,7 +186,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                     countryActivityAapter.setToday(true);
                     countryActivityAapter.notifyDataSetChanged();
                     break;
-                case 1:
+                case 2:
                     imageViewDate.setVisibility(View.VISIBLE);
                     list.clear();
                     if (upcomingList != null) {
@@ -227,10 +241,9 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     @Override
     public void onUpdateInteresed() {
         list.get(position).setUserIntrested(interested);
-        if (interested.equalsIgnoreCase("1")){
+        if (interested.equalsIgnoreCase("1")) {
             setAlarm(list.get(position));
-        }
-        else{
+        } else {
             removeAlarm(list.get(position));
         }
         countryActivityAapter.notifyDataSetChanged();
@@ -238,6 +251,11 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
 
     @Override
     public void setActivtyDetails(CountryActivityInfoModel data) {
+
+    }
+
+    @Override
+    public void setCities(List<CountryResponseData> data) {
 
     }
 
@@ -277,6 +295,17 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
             upcomingList = data.getUpcoming();
             list.clear();
             if (tabLayout.getSelectedTabPosition() == 0) {
+                if (todayList != null) {
+                    list.addAll(todayList);
+                    countryActivityAapter.setToday(false);
+                    countryActivityAapter.notifyDataSetChanged();
+                }
+                if (upcomingList != null) {
+                    list.addAll(upcomingList);
+                    countryActivityAapter.setToday(false);
+                    countryActivityAapter.notifyDataSetChanged();
+                }
+            } else if (tabLayout.getSelectedTabPosition() == 1) {
                 if (todayList != null) {
                     list.addAll(todayList);
                     countryActivityAapter.setToday(true);
@@ -332,7 +361,13 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                 showDateRnagePicker();
                 break;
             case R.id.textView_country:
-                getCountry();
+                new FilterPicker(this, new FilterPicker.PickerListner() {
+                    @Override
+                    public void onPick(CountryResponseData country) {
+
+                    }
+                }).show();
+//                getCountry();
                 break;
         }
     }
@@ -372,6 +407,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
             }
         }
     }
+
     private void setAlarm(CountryActivityInfoModel eventsInfoModel) {
         String dateTime = eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time();
         long timeInMilis = CommonUtils.getTimeInMilis(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.INPUT_DATE_TIME_FORMATE, dateTime, true, eventsInfoModel.getTimezone()));

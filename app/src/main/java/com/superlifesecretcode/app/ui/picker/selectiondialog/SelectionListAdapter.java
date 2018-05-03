@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.WeekDayModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseData;
 
 import java.util.List;
@@ -40,9 +41,12 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Object object = list.get(position);
-       if (object instanceof StandardEventResponseData) {
+        if (object instanceof StandardEventResponseData) {
             StandardEventResponseData standardEventResponseData = (StandardEventResponseData) object;
             holder.textViewTitle.setText(standardEventResponseData.getTitle());
+        } else if (object instanceof WeekDayModel) {
+            WeekDayModel weekDayModel = (WeekDayModel) object;
+            holder.textViewTitle.setText(weekDayModel.getDay());
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

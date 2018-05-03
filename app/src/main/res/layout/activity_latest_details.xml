@@ -100,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:ellipsize="end"
+                    android:autoLink="all"
                     android:fontFamily="@font/reguler"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis accumsan lorem, sit amet euismod mi placerat nec. Etiam pharetra condimentum risus at volutpat. Vivamus id nunc magna. Fusce pretium sollicitudin turpis, in tincidunt magna posuere vel. Integer at turpis ultricies, viverra metus eu, rhoncus lacus. Maecenas nisl velit, tempus a gravida laoreet, consectetur non sem. Duis id consequat arcu. Phasellus id dapibus elit. Sed porta accumsan velit, congue pretium metus fringilla sit amet. Phasellus sit amet suscipit massa. Suspendisse tristique mauris id volutpat elementum. Integer vehicula magna et purus porta, aliquet faucibus nulla tincidunt. Nulla augue lorem, fringilla at dictum sit amet, imperdiet sollicitudin diam."
                     android:textColor="@color/colorLightBlack"

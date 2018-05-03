@@ -89,7 +89,12 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
 
-
+            case REQ_GET_CITIES:
+                Observable<CountryResponseModel> cityObservable = apiInterface.getCities(requestParams);
+                cityObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
+                break;
             case REQ_LOGIN:
                 Observable<UserDetailResponseModel> loginObservable = apiInterface.loginUser(requestParams);
                 loginObservable.subscribeOn(Schedulers.io())
