@@ -68,6 +68,8 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     private CountryStatePicker countryStatePicker;
     private String stateId = "";
     private String countryId = "";
+    private String cityId = "";
+    private String day = "";
 
     @Override
     protected int getContentView() {
@@ -85,7 +87,6 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         textViewCountry.setOnClickListener(this);
         textViewCountry.setText(userData.getCountry_code().toUpperCase());
         imageViewDate.setOnClickListener(this);
-        imageViewDate.setVisibility(View.GONE);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         title = bundle.getString("title");
         isStudyGroup = bundle.getBoolean("isStudyGroup");
@@ -269,6 +270,8 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         params.put("endDate", endDate);
         params.put("country_id", countryId);
         params.put("state_id", stateId);
+        params.put("city_id", cityId);
+        params.put("day", day);
         presenter.getAcivities(params, headers, showProgress);
     }
 
@@ -363,9 +366,14 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
             case R.id.textView_country:
                 new FilterPicker(this, new FilterPicker.PickerListner() {
                     @Override
-                    public void onPick(CountryResponseData country) {
-
+                    public void onPick(String countryId, String stateId, String cityId, String day) {
+                        CountryAcitvitiesActivity.this.countryId = countryId;
+                        CountryAcitvitiesActivity.this.stateId = stateId;
+                        CountryAcitvitiesActivity.this.cityId = cityId;
+                        CountryAcitvitiesActivity.this.day = day;
+                        getEvents("", "", "", true);
                     }
+
                 }).show();
 //                getCountry();
                 break;

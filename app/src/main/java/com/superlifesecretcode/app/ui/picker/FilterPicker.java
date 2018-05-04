@@ -129,6 +129,12 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
             @Override
             public void onPick(CountryResponseData country) {
                 textViewCountry.setText(country.getName());
+                if (!country.getId().equalsIgnoreCase(FilterPicker.this.country)) {
+                    textViewState.setText("");
+                    textViewCity.setText("");
+                    state = "";
+                    city = "";
+                }
                 FilterPicker.this.country = country.getId();
                 countryStatePicker.dismiss();
             }
@@ -143,6 +149,11 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
             public void onPick(CountryResponseData country) {
                 countryStatePicker.dismiss();
                 textViewState.setText(country.getName());
+
+                if (!country.getId().equalsIgnoreCase(FilterPicker.this.state)) {
+                    textViewCity.setText("");
+                    city = "";
+                }
                 state = country.getId();
             }
         }, data);
@@ -203,11 +214,15 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
             case R.id.textView_day:
                 showWeekDayPicker();
                 break;
+            case R.id.button_ok:
+                dismiss();
+                pickerListner.onPick(country, state, city, day);
+                break;
         }
     }
 
     public interface PickerListner {
-        void onPick(CountryResponseData country);
+        void onPick(String countryId, String stateId, String cityId, String day);
     }
 
     private void showWeekDayPicker() {
@@ -216,7 +231,7 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
                 @Override
                 public void onSelected(int position, WeekDayModel object) {
                     textViewDay.setText(object.getDay());
-                    day = object.getDay();
+                    day = object.getIndex();
                 }
             });
         }
