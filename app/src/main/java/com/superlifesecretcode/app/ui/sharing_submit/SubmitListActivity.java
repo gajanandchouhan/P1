@@ -70,7 +70,7 @@ public class SubmitListActivity extends BaseActivity implements ShareListView {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
-        textViewTitle.setText(conversionData != null ? conversionData.getSubmit() : "Submit");
+        textViewTitle.setText(conversionData != null ? conversionData.getShare_submit() : "Submit");
     }
 
     @Override

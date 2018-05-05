@@ -58,7 +58,7 @@ public class PoupupWindowListAdapter extends RecyclerView.Adapter<PoupupWindowLi
             if (window != null) {
                 window.dismiss();
             }
-            lislner.onSelected(list.get(getAdapterPosition()));
+            lislner.onSelected(list.get(getAdapterPosition()),getAdapterPosition());
         }
     }
 }

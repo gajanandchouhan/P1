@@ -16,4 +16,6 @@ interface RegisterView extends BaseView {
     void setStateData(List<CountryResponseData> data);
 
     void setUserData(UserDetailResponseData data);
+
+    void setCities(List<CountryResponseData> data);
 }

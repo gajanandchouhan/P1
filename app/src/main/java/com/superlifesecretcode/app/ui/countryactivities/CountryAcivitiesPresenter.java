@@ -209,7 +209,7 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
                     if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.setCities(countryResponseModel.getData());
                     } else {
-                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                        CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getNo_city());
                     }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));

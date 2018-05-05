@@ -47,6 +47,6 @@ public class DropDownWindow {
     }
 
     public interface SelectedListner{
-        void onSelected(String value);
+        void onSelected(String value,int position);
     }
 }

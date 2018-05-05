@@ -63,11 +63,11 @@ public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityA
         if (isToday) {
             holder.textViewDate.setText(coversionData.getToday());
         } else {
-            holder.textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getActivity_date(),true,eventsInfoModel.getTimezone()));
+            holder.textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE,
+                    ConstantLib.OUTPUT_DATE_FORMATE, eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time(), true, eventsInfoModel.getTimezone()));
         }
 
-        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "hh:mm a", eventsInfoModel.getActivity_date()+" "+eventsInfoModel.getActivity_time(),true,eventsInfoModel.getTimezone()));
+        holder.textViewTitme.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "hh:mm a", eventsInfoModel.getActivity_date() + " " + eventsInfoModel.getActivity_time(), true, eventsInfoModel.getTimezone()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(eventsInfoModel.getDescription(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);

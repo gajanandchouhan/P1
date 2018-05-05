@@ -6,16 +6,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
@@ -24,14 +19,11 @@ import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CounActivtyResponseData;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityInfoModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
-import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
-import com.superlifesecretcode.app.ui.adapter.CountryStateListAdapter;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcivitiesPresenter;
 import com.superlifesecretcode.app.ui.countryactivities.CountryActivitiesView;
 import com.superlifesecretcode.app.ui.picker.selectiondialog.SelectionListDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
-import com.superlifesecretcode.app.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,18 +39,22 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
     private EditText editText;
     private ProgressDialog progressDialog;
     private CountryAcivitiesPresenter presenter;
-    TextView textViewCountry, textViewState, textViewCity, textViewDay, textViewTitle;
-    private String country = "", state = "", city = "", day = "";
+    TextView textViewCountry, textViewState, textViewCity, textViewDay,
+            textViewTitle;
+    private String country = "", state = "", city = "", day = "", countryCode, contryName;
     private LanguageResponseData languageResponseData;
     private Button buttonDone;
     private ArrayList<WeekDayModel> weekDayModelList;
     private SelectionListDialog dialog;
     private CountryStatePicker countryStatePicker;
 
-    public FilterPicker(@NonNull Context context, PickerListner pickerListner) {
+    public FilterPicker(@NonNull Context context, PickerListner pickerListner, String countryId, String countryCode, String countryName) {
         super(context, R.style.AppTheme);
         this.context = context;
         this.pickerListner = pickerListner;
+        this.country = countryId;
+        this.countryCode = countryCode;
+        this.contryName = countryName;
         init(context);
     }
 
@@ -76,6 +72,7 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
         textViewDay = findViewById(R.id.textView_day);
         textViewTitle = findViewById(R.id.textView_title);
         buttonDone = findViewById(R.id.button_ok);
+        textViewCountry.setText(contryName);
         buttonDone.setOnClickListener(this);
         textViewDay.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
@@ -124,7 +121,7 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
     }
 
     @Override
-    public void setCountryData(List<CountryResponseData> data) {
+    public void setCountryData(final List<CountryResponseData> data) {
         countryStatePicker = new CountryStatePicker(context, new CountryStatePicker.PickerListner() {
             @Override
             public void onPick(CountryResponseData country) {
@@ -136,6 +133,8 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
                     city = "";
                 }
                 FilterPicker.this.country = country.getId();
+                countryCode = country.getCountrycode();
+                contryName = country.getName();
                 countryStatePicker.dismiss();
             }
         }, data);
@@ -216,13 +215,13 @@ public class FilterPicker extends Dialog implements CountryActivitiesView, View.
                 break;
             case R.id.button_ok:
                 dismiss();
-                pickerListner.onPick(country, state, city, day);
+                pickerListner.onPick(country, state, city, day, contryName, countryCode);
                 break;
         }
     }
 
     public interface PickerListner {
-        void onPick(String countryId, String stateId, String cityId, String day);
+        void onPick(String countryId, String stateId, String cityId, String day, String cName, String cCode);
     }
 
     private void showWeekDayPicker() {

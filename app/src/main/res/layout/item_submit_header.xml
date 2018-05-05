@@ -17,8 +17,8 @@
         android:maxLines="2"
         android:minLines="2"
         android:padding="@dimen/_10sdp"
-        android:textColor="@android:color/holo_red_dark"
-        android:textColorHint="@android:color/holo_red_dark" />
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorLightBlack" />
 
     <ImageView
         android:id="@+id/imageView_upload"

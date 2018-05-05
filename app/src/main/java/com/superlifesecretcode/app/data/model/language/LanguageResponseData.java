@@ -151,6 +151,33 @@ public class LanguageResponseData {
     private String filter;
     private String done;
     private String ok;
+    private String share_submit;
+    private String agree_tc;
+    private String no_city;
+
+    public String getNo_city() {
+        return no_city;
+    }
+
+    public void setNo_city(String no_city) {
+        this.no_city = no_city;
+    }
+
+    public String getAgree_tc() {
+        return agree_tc;
+    }
+
+    public void setAgree_tc(String agree_tc) {
+        this.agree_tc = agree_tc;
+    }
+
+    public String getShare_submit() {
+        return share_submit;
+    }
+
+    public void setShare_submit(String share_submit) {
+        this.share_submit = share_submit;
+    }
 
     public String getFilter() {
         return filter;

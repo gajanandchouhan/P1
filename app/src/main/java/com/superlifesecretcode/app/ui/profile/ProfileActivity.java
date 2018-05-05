@@ -58,7 +58,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private String languageId;
     private ProfilePresenter presenter;
     private TextView textViewNameLabel, textViewGenderLabel, textViewMobileLabel,
-            textViewCountryLabel, textViewStateLabel, textViewLanguageLabel, textViewEmailLabel;
+            textViewCountryLabel, textViewStateLabel, textViewLanguageLabel,
+            textViewEmailLabel, textViewCity, textViewCityLabel;
     private boolean isEnabled;
     String countryId, stateId, dialCode, countryCode;
     private String imagePath;
@@ -68,6 +69,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private boolean lanuguageChanged;
     private Button buttonCustomize;
     ImageView imageViewCamera;
+    private String gender;
+    private String city = "";
 
     @Override
     protected int getContentView() {
@@ -85,6 +88,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewGender = findViewById(R.id.textView_gender);
         textViewCountry = findViewById(R.id.textView_country);
         textViewState = findViewById(R.id.textView_state);
+        textViewCity = findViewById(R.id.textView_city);
         textViewLanguage = findViewById(R.id.textView_language);
         textViewName = findViewById(R.id.textView_name);
         textViewDialCode = findViewById(R.id.textView_phonecode);
@@ -96,6 +100,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewGenderLabel = findViewById(R.id.textView_gender_label);
         textViewCountryLabel = findViewById(R.id.textView_country_label);
         textViewStateLabel = findViewById(R.id.textView_state_label);
+        textViewCityLabel = findViewById(R.id.textView_city_label);
         textViewLanguageLabel = findViewById(R.id.textView_language_label);
         editTextEmail = findViewById(R.id.edit_text_email);
         textViewEmailLabel = findViewById(R.id.textView_email_label);
@@ -106,6 +111,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewDialCode.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         textViewState.setOnClickListener(this);
+        textViewCity.setOnClickListener(this);
         buttonCustomize = findViewById(R.id.customize_bar);
         buttonCustomize.setOnClickListener(this);
         if (conversionData != null) {
@@ -144,6 +150,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewEmailLabel.setText(conversionData.getEmail());
         editTextEmail.setHint(conversionData.getEmail());
         buttonCustomize.setText(conversionData.getCustmize_bar());
+        textViewCityLabel.setText(conversionData.getCity());
     }
 
     private void setUpUi() {
@@ -158,12 +165,15 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     textViewDialCode.setText(dialCode);
                 }
             }
+            gender = userDetailResponseData.getGender();
+            city = userDetailResponseData.getCity();
             editTextName.setText(userDetailResponseData.getUsername());
             textViewName.setText(userDetailResponseData.getUsername());
             editTextMobileNumber.setText(userDetailResponseData.getMobile());
             textViewCountry.setText(userDetailResponseData.getCountryName());
             textViewState.setText(userDetailResponseData.getStateName());
-            textViewGender.setText(userDetailResponseData.getGender());
+            textViewCity.setText(userDetailResponseData.getCityName());
+            textViewGender.setText(userDetailResponseData.getGender().equalsIgnoreCase("1") ? conversionData.getMale() : conversionData.getFemale());
             countryId = userDetailResponseData.getCountry();
             stateId = userDetailResponseData.getState();
             editTextEmail.setText(userDetailResponseData.getEmail());
@@ -223,8 +233,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private void showgGenderSelection() {
         DropDownWindow.show(this, textViewGender, genderList, new DropDownWindow.SelectedListner() {
             @Override
-            public void onSelected(String value) {
+            public void onSelected(String value, int position) {
                 textViewGender.setText(value);
+                gender = String.valueOf(position + 1);
             }
         });
     }
@@ -232,7 +243,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private void showLanguageSelection() {
         DropDownWindow.show(this, textViewLanguage, langauageList, new DropDownWindow.SelectedListner() {
             @Override
-            public void onSelected(String value) {
+            public void onSelected(String value, int position) {
                 if (!value.equalsIgnoreCase(currentLanguag)) {
                     textViewLanguage.setText(value);
                     currentLanguag = value;
@@ -290,7 +301,13 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 }
                 getState();
                 break;
-
+            case R.id.textView_city:
+                if (stateId == null) {
+                    CommonUtils.showSnakeBar(this, conversionData.getSelect_state());
+                    return;
+                }
+                getCity();
+                break;
             case R.id.imageView_user:
                 if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
                     pickImage();
@@ -299,6 +316,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 }
                 break;
         }
+    }
+
+    private void getCity() {
+        HashMap<String, String> map = new HashMap();
+        map.put("state_id", stateId);
+        presenter.getCities(map);
     }
 
     private void updateProfile() {
@@ -344,7 +367,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
         HashMap<String, String> body = new HashMap<>();
         body.put("name", name);
-        body.put("gender", gender);
+        body.put("gender", this.gender);
         body.put("mobile", mobileNumber.startsWith("0") ? mobileNumber : "0" + mobileNumber);
         body.put("country_id", countryId);
         body.put("state_id", stateId);
@@ -352,6 +375,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         body.put("email", email);
         body.put("country_code", countryCode.toLowerCase());
         body.put("user_id", userDetailResponseData.getUser_id());
+        body.put("city_id", city != null ? city : "");
         HashMap<String, File> fileParams = null;
         if (imagePath != null) {
             File file = new File(imagePath);
@@ -381,6 +405,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewGender.setEnabled(enbale);
         textViewCountry.setEnabled(enbale);
         textViewState.setEnabled(enbale);
+        textViewCity.setEnabled(enbale);
         textViewLanguage.setEnabled(enbale);
     }
 
@@ -446,6 +471,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onPick(CountryResponseData country) {
                 textViewCountry.setText(country.getName());
+                if (!country.getId().equalsIgnoreCase(countryId)) {
+                    stateId = null;
+                    city = "";
+                    textViewCity.setText("");
+                    textViewState.setText("");
+                }
                 countryId = country.getId();
                 countryCode = country.getCountrycode();
                 dialCode = "+" + country.getPhonecode();
@@ -464,6 +495,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onPick(CountryResponseData country) {
                 textViewState.setText(country.getName());
+                if (!country.getId().equalsIgnoreCase(city)) {
+                    city = "";
+                    textViewCity.setText("");
+                }
                 countryStatePicker.dismiss();
                 stateId = country.getId();
             }
@@ -493,6 +528,19 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             }*/
             finish();
         }
+    }
+
+    @Override
+    public void setCities(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewCity.setText(country.getName());
+                city = country.getId();
+                countryStatePicker.dismiss();
+            }
+        }, data);
+        countryStatePicker.show();
     }
 
   /*  private void upadateContent(SubcategoryModel subcategoryModel) {

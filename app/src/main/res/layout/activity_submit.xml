@@ -19,8 +19,8 @@
         android:maxLines="4"
         android:minLines="4"
         android:padding="@dimen/_10sdp"
-        android:textColor="@android:color/holo_red_dark"
-        android:textColorHint="@android:color/holo_red_dark"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorLightBlack"
         android:textSize="@dimen/_13sdp" />
 
     <RelativeLayout

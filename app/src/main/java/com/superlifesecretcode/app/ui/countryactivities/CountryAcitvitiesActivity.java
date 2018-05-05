@@ -70,6 +70,8 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
     private String countryId = "";
     private String cityId = "";
     private String day = "";
+    String countryName;
+    private String countryCode = "";
 
     @Override
     protected int getContentView() {
@@ -85,7 +87,10 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         imageViewDate = findViewById(R.id.imageView_date);
         textViewCountry = findViewById(R.id.textView_country);
         textViewCountry.setOnClickListener(this);
-        textViewCountry.setText(userData.getCountry_code().toUpperCase());
+        countryName = userData.getCountryName();
+        countryCode = userData.getCountry_code().toUpperCase();
+        countryId = userData.getCountry();
+        textViewCountry.setText(countryCode.toUpperCase());
         imageViewDate.setOnClickListener(this);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         title = bundle.getString("title");
@@ -101,7 +106,6 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         tabLayout.getTabAt(0).setText(conversionData.getAll());
         tabLayout.getTabAt(1).setText(conversionData.getToday());
         tabLayout.getTabAt(2).setText(conversionData.getUpcoming());
-        countryId = userData.getCountry();
         getEvents("", "", "", true);
         editTextSearch.addTextChangedListener(new TextWatcher() {
             private Timer timer = new Timer();
@@ -167,7 +171,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getPosition()) {
                 case 0:
-                    imageViewDate.setVisibility(View.VISIBLE);
+                    imageViewDate.setVisibility(View.GONE);
                     list.clear();
                     if (todayList != null) {
                         list.addAll(todayList);
@@ -188,7 +192,7 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
                     countryActivityAapter.notifyDataSetChanged();
                     break;
                 case 2:
-                    imageViewDate.setVisibility(View.VISIBLE);
+                    imageViewDate.setVisibility(View.GONE);
                     list.clear();
                     if (upcomingList != null) {
                         list.addAll(upcomingList);
@@ -366,15 +370,18 @@ public class CountryAcitvitiesActivity extends BaseActivity implements CountryAc
             case R.id.textView_country:
                 new FilterPicker(this, new FilterPicker.PickerListner() {
                     @Override
-                    public void onPick(String countryId, String stateId, String cityId, String day) {
+                    public void onPick(String countryId, String stateId, String cityId, String day, String cName, String cCode) {
                         CountryAcitvitiesActivity.this.countryId = countryId;
                         CountryAcitvitiesActivity.this.stateId = stateId;
                         CountryAcitvitiesActivity.this.cityId = cityId;
                         CountryAcitvitiesActivity.this.day = day;
+                        countryName = cName;
+                        countryCode = cCode;
+                        textViewCountry.setText(cCode.toUpperCase());
                         getEvents("", "", "", true);
                     }
 
-                }).show();
+                }, countryId, countryCode, countryName).show();
 //                getCountry();
                 break;
         }

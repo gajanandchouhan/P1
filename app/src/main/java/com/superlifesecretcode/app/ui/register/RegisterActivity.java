@@ -29,6 +29,7 @@ import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
+import com.superlifesecretcode.app.ui.picker.FilterPicker;
 import com.superlifesecretcode.app.ui.webview.TcWebViewActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -52,6 +53,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     TextView textViewLabel;
     TextView textViewGender;
     TextView textState;
+    TextView textViewCity;
     TextView textViewAlreadyAccount;
     EditText editTextName;
     EditText editTextMobileNumber;
@@ -73,6 +75,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private CountryStatePicker countryStatePicker;
     private String countryId;
     private String stateId;
+    private String gender;
+    private String city = "";
 
     @Override
     protected int getContentView() {
@@ -91,6 +95,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         textState = findViewById(R.id.textView_state);
         textViewLabel = findViewById(R.id.textView_label);
         buttonRegister = findViewById(R.id.button_register);
+        textViewCity = findViewById(R.id.textView_city);
         editTextMobileNumber = findViewById(R.id.edi_text_phone);
         textViewSiginCotinue = findViewById(R.id.textView_siginin);
         checkBoxTOS = findViewById(R.id.checkbox_tc);
@@ -105,6 +110,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         textState.setOnClickListener(this);
         textViewCountry.setOnClickListener(this);
         textViewTermsOfServices.setOnClickListener(this);
+        textViewCity.setOnClickListener(this);
         setUpConversion();
         Typeface typeface = ResourcesCompat.getFont(this, R.font.reguler);
         checkBoxTOS.setTypeface(typeface);
@@ -116,11 +122,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (conversionData != null) {
             textViewLabel.setText(conversionData.getSignup());
             editTextName.setHint(conversionData.getName());
-            editTextMobileNumber.setHint(conversionData.getMobile_no()+"(Ex. 012345678)");
+            editTextMobileNumber.setHint(conversionData.getMobile_no() + "(Ex. 012345678)");
             textViewGender.setHint(conversionData.getGender());
             textViewCountry.setHint(conversionData.getCountry());
             textState.setHint(conversionData.getState());
             editTextPassword.setHint(conversionData.getPassword());
+            textViewCity.setHint(conversionData.getCity());
             buttonRegister.setText(conversionData.getRegister());
             textViewAlreadyAccount.setText(String.format("%s ", conversionData.getAlready_account()));
             textViewSiginCotinue.setText(conversionData.getSigin_in_cotinue());
@@ -185,6 +192,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 getState();
                 break;
+
+            case R.id.textView_city:
+                if (stateId == null) {
+                    CommonUtils.showSnakeBar(this, SuperLifeSecretPreferences.getInstance().
+                            getConversionData().getSelect_state());
+                    return;
+                }
+                getCity();
+                break;
             case R.id.textView_tc:
                 Bundle bundle = new Bundle();
                 bundle.putString("title", "Terms Of Services");
@@ -197,6 +213,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     }
 
+    private void getCity() {
+        HashMap<String, String> map = new HashMap();
+        map.put("state_id", stateId);
+        presenter.getCities(map);
+    }
+
     private void getCountry() {
         presenter.getCountry();
     }
@@ -205,8 +227,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         DropDownWindow.show(this, textViewGender, genderList, new DropDownWindow.SelectedListner() {
             @Override
-            public void onSelected(String value) {
+            public void onSelected(String value, int position) {
                 textViewGender.setText(value);
+                gender = String.valueOf(position + 1);
             }
         });
     }
@@ -253,20 +276,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return;
         }
         if (!checkBoxTOS.isChecked()) {
-            CommonUtils.showSnakeBar(this, "Please agree to terms of services.");
+            CommonUtils.showSnakeBar(this, SuperLifeSecretPreferences.getInstance().getConversionData().getAgree_tc());
             return;
         }
         HashMap<String, String> body = new HashMap<>();
         body.put("name", name);
-        body.put("gender", gender);
-        body.put("mobile", mobileNumber.startsWith("0")?mobileNumber:"0"+mobileNumber);
+        body.put("gender", this.gender);
+        body.put("mobile", mobileNumber.startsWith("0") ? mobileNumber : "0" + mobileNumber);
         body.put("country_id", countryId);
         body.put("state_id", stateId);
+        body.put("city_id", city);
         body.put("password", password);
         body.put("phone_code", dialCode);
         body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
         body.put("country_code", countryCode.toLowerCase());
-        body.put("device_type","1");
+        body.put("device_type", "1");
         body.put("email", email);
         HashMap<String, File> fileParams = null;
         if (imagePath != null) {
@@ -331,8 +355,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onPick(CountryResponseData country) {
                 textViewCountry.setText(country.getName());
+                if (!country.getId().equalsIgnoreCase(countryId)) {
+                    stateId = null;
+                    city="";
+                    textState.setText("");
+                    textViewCity.setText("");
+                }
                 countryId = country.getId();
-                countryCode=country.getCountrycode();
+                countryCode = country.getCountrycode();
                 countryStatePicker.dismiss();
             }
         }, data);
@@ -345,6 +375,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onPick(CountryResponseData country) {
                 textState.setText(country.getName());
+                if (!country.getId().equalsIgnoreCase(stateId)) {
+                    city = "";
+                    textViewCity.setText("");
+                }
                 countryStatePicker.dismiss();
                 stateId = country.getId();
             }
@@ -358,6 +392,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             SuperLifeSecretPreferences.getInstance().setUserDetails(data);
             CommonUtils.startActivity(this, MainActivity.class, null, true);
         }
+    }
+
+    @Override
+    public void setCities(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewCity.setText(country.getName());
+                city = country.getId();
+                countryStatePicker.dismiss();
+            }
+        }, data);
+        countryStatePicker.show();
     }
 
     private void getState() {

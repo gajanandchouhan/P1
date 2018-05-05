@@ -169,6 +169,22 @@
                 android:textColorHint="@color/colorOrange"
                 android:textSize="@dimen/_13sdp" />
 
+            <TextView
+                android:id="@+id/textView_city"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/text_box_bg"
+                android:drawableRight="@drawable/arrow_drop_down"
+                android:fontFamily="@font/reguler"
+                android:gravity="center_vertical"
+                android:hint="City"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:textColor="@color/colorOrange"
+                android:textColorHint="@color/colorOrange"
+                android:textSize="@dimen/_13sdp" />
+
             <EditText
                 android:id="@+id/edit_text_email"
                 style="@style/EdiTextStyle"

@@ -18,4 +18,6 @@ interface ProfileView extends LanguageView {
     void setStateData(List<CountryResponseData> data);
 
     void setUserData(UserDetailResponseData data);
+
+    void setCities(List<CountryResponseData> data);
 }
