@@ -7,7 +7,6 @@ import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityDetailResponseModel;
-import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
@@ -106,7 +105,7 @@ public class CountryAcivitiesPresenter extends BasePresenter<CountryActivitiesVi
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callGet(mContext, RequestType.REQ_GET_COUNTRY, new ResponseHandler<CountryResponseModel>() {
+        apiController.callGet(mContext, RequestType.REQ_GET_EVENT_COUNTRIES, new ResponseHandler<CountryResponseModel>() {
             @Override
             public void onResponse(CountryResponseModel countryResponseModel) {
                 view.hideProgress();

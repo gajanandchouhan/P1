@@ -249,4 +249,7 @@ public interface ApiInterface {
     @POST("getDisclosure")
     Observable<DisclosureResponseModel> getDisclosure(@PartMap() Map<String, RequestBody> params);
 
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("getEventCountry")
+    Observable<CountryResponseModel> getEventCountry();
 }

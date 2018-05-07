@@ -1,9 +1,7 @@
 package com.superlifesecretcode.app.data.netcomm;
 
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
@@ -153,6 +151,7 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BannerResponseModel>(handler));
                 break;
+
         }
 
 
@@ -357,6 +356,12 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
+            case REQ_GET_EVENT_COUNTRIES:
+                Observable<CountryResponseModel> countryEventObservable = apiInterface.getEventCountry();
+                countryEventObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
+                break;
         }
 
     }
@@ -375,6 +380,7 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<ShareListResponseModel>(handler));
                 break;
+
         }
 
     }
