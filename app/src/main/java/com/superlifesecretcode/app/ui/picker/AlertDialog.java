@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 /**
@@ -47,6 +48,8 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
         buttonPositive = findViewById(R.id.button_positive);
         buttonNegative = findViewById(R.id.button_negative);
         textViewMessage = findViewById(R.id.textView_message);
+        TextView textViewTitle = findViewById(R.id.textView_title);
+        textViewTitle.setText(SuperLifeSecretPreferences.getInstance().getConversionData().getRichest_life());
         layoutPositiveNegative = findViewById(R.id.layout_positive_negative);
         buttonNeutral = findViewById(R.id.button_neutral);
         buttonPositive.setOnClickListener(this);
