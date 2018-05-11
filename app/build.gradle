@@ -30,7 +30,7 @@ android {
             buildConfigField "boolean", 'showLog', 'true'
         }
         staging {
-            buildConfigField "String", 'BASE_URL', '"http://stag.myserver.com"'
+            buildConfigField "String", 'BASE_URL', '"http://52.24.209.230/api/"'
             buildConfigField "boolean", 'showLog', 'false'
         }
     }
