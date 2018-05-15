@@ -156,7 +156,6 @@ public class WebViewActivity extends BaseActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
         if (webView.canGoBack()) {
