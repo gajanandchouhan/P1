@@ -173,7 +173,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             textViewCountry.setText(userDetailResponseData.getCountryName());
             textViewState.setText(userDetailResponseData.getStateName());
             textViewCity.setText(userDetailResponseData.getCityName());
-            textViewGender.setText(userDetailResponseData.getGender().equalsIgnoreCase("1") ? conversionData.getMale() : conversionData.getFemale());
+            if (userDetailResponseData.getGender() != null)
+                textViewGender.setText(userDetailResponseData.getGender().equalsIgnoreCase("1") ? conversionData.getMale() : conversionData.getFemale());
             countryId = userDetailResponseData.getCountry();
             stateId = userDetailResponseData.getState();
             editTextEmail.setText(userDetailResponseData.getEmail());
