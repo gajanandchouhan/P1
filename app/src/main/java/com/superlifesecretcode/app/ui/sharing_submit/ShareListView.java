@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.sharing_submit;
 
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.ui.base.BaseView;
 
@@ -13,4 +14,6 @@ public interface ShareListView extends BaseView {
     void setShareListData(List<ShareListResponseData> listData);
 
     void onLiked();
+
+    void setCountryData(List<CountryResponseData> data);
 }

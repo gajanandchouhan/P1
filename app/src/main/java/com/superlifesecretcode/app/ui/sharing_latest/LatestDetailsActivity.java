@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.shares.FileResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
@@ -241,5 +242,10 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         textViewLike.setText(String.format("%s Likes", data.getLiked_by()));
         imageViewLike.setSelected(data.getLiked_by_user().equalsIgnoreCase("1"));
         LatestActivity.isUpdated = true;
+    }
+
+    @Override
+    public void setCountryData(List<CountryResponseData> data) {
+
     }
 }

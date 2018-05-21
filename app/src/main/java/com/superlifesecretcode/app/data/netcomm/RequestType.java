@@ -43,4 +43,5 @@ public interface RequestType {
     byte REQ_GET_DISCLOSURE = 34;
     byte REQ_GET_CITIES = 35;
     byte REQ_GET_EVENT_COUNTRIES = 36;
+    byte GET_SHARE_COUNTRY=37;
 }

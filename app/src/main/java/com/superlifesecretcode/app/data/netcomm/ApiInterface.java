@@ -34,6 +34,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Query;
 
 /**
  * Created by JAIN COMPUTERS on 11/18/2017.
@@ -135,7 +136,7 @@ public interface ApiInterface {
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("latest")
-    Observable<ShareListResponseModel> getAllShareList(@HeaderMap Map<String, String> headers);
+    Observable<ShareListResponseModel> getAllShareList(@HeaderMap Map<String, String> headers, @Query("country_id") String countryId);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
@@ -252,4 +253,8 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("getEventCountry")
     Observable<CountryResponseModel> getEventCountry();
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("getUserSharedCountry")
+    Observable<CountryResponseModel> getShareCountry();
 }

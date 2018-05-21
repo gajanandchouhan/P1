@@ -7,18 +7,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.sharing_submit.ShareListPresenter;
 import com.superlifesecretcode.app.ui.sharing_submit.ShareListView;
 import com.superlifesecretcode.app.util.CommonUtils;
-import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LatestActivity extends BaseActivity implements ShareListView {
+public class LatestActivity extends BaseActivity implements ShareListView, View.OnClickListener {
 
 
     private LatestAapter latestAapter;
@@ -37,6 +40,9 @@ public class LatestActivity extends BaseActivity implements ShareListView {
     private int position;
     private String like;
     public static boolean isUpdated = false;
+    private ImageView imageViewProfile;
+    private String countryId = "";
+    CountryStatePicker countryStatePicker;
 
     @Override
     protected int getContentView() {
@@ -54,6 +60,10 @@ public class LatestActivity extends BaseActivity implements ShareListView {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar();
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        imageViewProfile = findViewById(R.id.imageView_profile);
+        imageViewProfile.setVisibility(View.VISIBLE);
+        imageViewProfile.setImageResource(R.drawable.filter);
+        imageViewProfile.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         shareList = new ArrayList<>();
         latestAapter = new LatestAapter(shareList, this, conversionData);
@@ -73,7 +83,7 @@ public class LatestActivity extends BaseActivity implements ShareListView {
     private void getAllLatestShare() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-        presenter.getAllLatestShare(headers);
+        presenter.getAllLatestShare(headers,countryId);
     }
 
     private void setUpToolbar() {
@@ -140,6 +150,23 @@ public class LatestActivity extends BaseActivity implements ShareListView {
         latestAapter.notifyDataSetChanged();
     }
 
+
+
+    @Override
+    public void setCountryData(List<CountryResponseData> data) {
+        if (data != null) {
+            countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+                @Override
+                public void onPick(CountryResponseData country) {
+                    countryId=country.getId();
+                    countryStatePicker.dismiss();
+                    getAllLatestShare();
+                }
+            }, data);
+            countryStatePicker.show();
+        }
+    }
+
     public void shareImage(String file) {
         if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
             CommonUtils.shareImage(file, this);
@@ -148,6 +175,7 @@ public class LatestActivity extends BaseActivity implements ShareListView {
         }
 
     }
+
     public void shareImageAndText(String image, String text) {
         if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_PROFILE)) {
             CommonUtils.shareImageWithContent(image, text, this);
@@ -165,6 +193,15 @@ public class LatestActivity extends BaseActivity implements ShareListView {
                     return;
                 }
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imageView_profile:
+                presenter.getCountry();
+                break;
         }
     }
 }

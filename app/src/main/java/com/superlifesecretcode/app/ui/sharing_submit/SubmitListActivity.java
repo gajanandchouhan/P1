@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -98,6 +99,11 @@ public class SubmitListActivity extends BaseActivity implements ShareListView {
 
     @Override
     public void onLiked() {
+
+    }
+
+    @Override
+    public void setCountryData(List<CountryResponseData> data) {
 
     }
 }

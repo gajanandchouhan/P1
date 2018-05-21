@@ -362,12 +362,17 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
+            case GET_SHARE_COUNTRY:
+                Observable<CountryResponseModel> countryShareObservable = apiInterface.getShareCountry();
+                countryShareObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
+                break;
         }
 
     }
 
-    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> headers) {
-
+    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> headers, String countryId) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -375,7 +380,7 @@ public class ApiController implements RequestType {
         ApiClient.ADD_LOG = true;
         switch (reqTyoe) {
             case REQ_GET_ALL_LATEST:
-                Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers);
+                Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers,countryId);
                 countryObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<ShareListResponseModel>(handler));
