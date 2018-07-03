@@ -107,6 +107,7 @@ public class AddNewEventCalendarActivity extends BaseActivity implements View.On
         setUpLocalData();
         if (conversionData != null) {
             textViewEventTitleLabel.setText(conversionData.getEvent_title());
+            textViewWhen.setText(conversionData.getWhen());
             textViewTitleLable.setText(conversionData.getEnter_event_details());
             textViewSelect.setText(conversionData.getSelect());
             textViewDate.setHint(conversionData.getDate());
