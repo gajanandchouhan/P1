@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorWhite"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_toLeftOf="@+id/imageView_remind"
+                android:layout_toStartOf="@+id/imageView_remind"
+                android:ellipsize="end"
+                android:fontFamily="@font/bold"
+                android:maxLines="1"
+                android:text="Title"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/_13sdp" />
+
+            <ImageView
+                android:id="@+id/imageView_remind"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_toLeftOf="@+id/imageView_share"
+                android:layout_toStartOf="@+id/imageView_share"
+                android:scaleType="centerCrop"
+                android:src="@drawable/time"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imageView_share"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/share_green" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_event_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_title">
+
+            <ImageView
+                android:id="@+id/imageView_event"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_placeholder" />
+
+            <TextView
+                android:id="@+id/textView_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView_event"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/reguler"
+                android:text="31 march, 2018"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="@dimen/_13sdp"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_desc"
+            android:fontFamily="@font/reguler"
+            android:text="time"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/textView_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_title"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/layout_event_image"
+            android:layout_toRightOf="@+id/layout_event_image"
+            android:ellipsize="end"
+            android:fontFamily="@font/reguler"
+            android:maxLines="4"
+            android:minLines="4"
+            android:text="Sed pellentesque dolor in ligula scelerisque, ut vehicula metus dignissim. Duis nec interdum lorem. Quisque eleifend arcu ac risus faucibus, eget sollicitudin nibh vestibulum. Integer ultrices tortor mauris, quis viverra ipsum rutrum tempus. Aliquam sit amet nisi ante. Aenean diam erat, faucibus quis dui et, elementum eleifend arcu. Nullam rhoncus tellus ex, vitae viverra ex lacinia id."
+            android:textSize="@dimen/_13sdp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView_time"
+            >
+
+            <ImageView
+                android:id="@+id/imageView_addr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/location" />
+
+
+            <TextView
+                android:id="@+id/textView_addr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/imageView_addr"
+                android:layout_toLeftOf="@+id/button_interested"
+                android:layout_toRightOf="@+id/imageView_addr"
+                android:layout_toStartOf="@+id/button_interested"
+                android:ellipsize="end"
+                android:fontFamily="@font/reguler"
+                android:text="160-161 , 2nd floor, PU-4, Scheme No.54, A.B. Road, (Behind C-21 Mall &amp; above Amway office), Indore, MP – 452010"
+                android:textSize="@dimen/_11sdp" />
+
+            <RelativeLayout
+                android:id="@+id/button_interested"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView_addr"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/red_selecer"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp">
+
+                <TextView
+                    android:id="@+id/textVew_interested"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/iterested_selector"
+                    android:fontFamily="@font/reguler"
+                    android:gravity="center"
+                    android:text="Interested"
+                    android:textColor="@color/interested_color"
+                    android:textSize="@dimen/_12sdp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

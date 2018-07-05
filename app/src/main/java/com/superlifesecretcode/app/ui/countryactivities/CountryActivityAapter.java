@@ -50,7 +50,7 @@ public class CountryActivityAapter extends RecyclerView.Adapter<CountryActivityA
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event, parent, false));
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_country_activies, parent, false));
     }
 
     @Override
