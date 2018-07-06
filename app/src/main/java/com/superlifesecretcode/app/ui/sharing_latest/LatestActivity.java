@@ -1,11 +1,13 @@
 package com.superlifesecretcode.app.ui.sharing_latest;
 
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +24,7 @@ import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.sharing_submit.ShareListPresenter;
 import com.superlifesecretcode.app.ui.sharing_submit.ShareListView;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.OnLoadMoreListener;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.util.ArrayList;
@@ -43,6 +46,8 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
     private ImageView imageViewProfile;
     private String countryId = "";
     CountryStatePicker countryStatePicker;
+    private boolean isLoadMore = false;
+    private RecyclerView recyclerView;
 
     @Override
     protected int getContentView() {
@@ -59,7 +64,7 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar();
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         imageViewProfile = findViewById(R.id.imageView_profile);
         imageViewProfile.setVisibility(View.VISIBLE);
         imageViewProfile.setImageResource(R.drawable.filter);
@@ -68,7 +73,16 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
         shareList = new ArrayList<>();
         latestAapter = new LatestAapter(shareList, this, conversionData);
         recyclerView.setAdapter(latestAapter);
-        getAllLatestShare();
+        latestAapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                isLoadMore = true;
+                shareList.add(null);
+                latestAapter.notifyItemInserted(shareList.size() - 1);
+                getAllLatestShare(shareList.size());
+            }
+        });
+        getAllLatestShare(0);
     }
 
     @Override
@@ -76,14 +90,15 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
         super.onResume();
         if (isUpdated) {
             isUpdated = false;
-            getAllLatestShare();
+            isLoadMore = false;
+            getAllLatestShare(0);
         }
     }
 
-    private void getAllLatestShare() {
+    private void getAllLatestShare(int index) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-        presenter.getAllLatestShare(headers,countryId);
+        presenter.getAllLatestShare(headers, countryId, isLoadMore);
     }
 
     private void setUpToolbar() {
@@ -125,7 +140,13 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
     @Override
     public void setShareListData(List<ShareListResponseData> listData) {
         if (listData != null) {
-            shareList.clear();
+            if (isLoadMore) {
+                latestAapter.setLoaded();
+                shareList.remove(shareList.size() - 1);
+            } else {
+                shareList.clear();
+                latestAapter.setUpLoadMore(recyclerView);
+            }
             shareList.addAll(listData);
             latestAapter.notifyDataSetChanged();
         }
@@ -151,16 +172,16 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
     }
 
 
-
     @Override
     public void setCountryData(List<CountryResponseData> data) {
         if (data != null) {
             countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
                 @Override
                 public void onPick(CountryResponseData country) {
-                    countryId=country.getId();
+                    countryId = country.getId();
                     countryStatePicker.dismiss();
-                    getAllLatestShare();
+                    isLoadMore = false;
+                    getAllLatestShare(0);
                 }
             }, data);
             countryStatePicker.show();

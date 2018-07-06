@@ -38,13 +38,6 @@ public class BannerPagerAdapter extends PagerAdapter {
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.item_banner, collection, false);
         ImageView imageView = layout.findViewById(R.id.imageView);
         ImageLoadUtils.loadImage(bannerList.get(position).getImage(), imageView);
-        TextView textViewJoin=layout.findViewById(R.id.text_view_join);
-        textViewJoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         collection.addView(layout);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,7 @@ public class BannerModel implements Serializable {
     private String transition_time;
     private String country;
     private String country_name;
+    private String id;
 
     public String getTitle() {
         return title;
@@ -60,5 +61,13 @@ public class BannerModel implements Serializable {
 
     public void setCountry_name(String country_name) {
         this.country_name = country_name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

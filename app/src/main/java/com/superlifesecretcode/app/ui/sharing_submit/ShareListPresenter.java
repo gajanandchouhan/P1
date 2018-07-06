@@ -66,17 +66,19 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
         }, params, headers);
     }
 
-    public void getAllLatestShare(Map<String, String> headers,String countryId) {
+    public void getAllLatestShare(Map<String, String> headers, String countryId, final boolean isLoadMore) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
-        view.showProgress();
+        if (!isLoadMore)
+            view.showProgress();
         ApiController apiController = ApiController.getInstance();
         apiController.callGetWithHeader(mContext, RequestType.REQ_GET_ALL_LATEST, new ResponseHandler<ShareListResponseModel>() {
             @Override
             public void onResponse(ShareListResponseModel shareListResponseModel) {
-                view.hideProgress();
+                if (!isLoadMore)
+                    view.hideProgress();
                 if (shareListResponseModel != null) {
                     if (shareListResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.setShareListData(shareListResponseModel.getData());
@@ -90,11 +92,12 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
 
             @Override
             public void onError() {
-                view.hideProgress();
+                if (!isLoadMore)
+                    view.hideProgress();
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        }, headers,countryId);
+        }, headers, countryId);
     }
 
     public void likeShare(HashMap<String, String> params, Map<String, String> headers) {
