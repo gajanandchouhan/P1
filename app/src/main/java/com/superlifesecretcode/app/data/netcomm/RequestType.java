@@ -44,4 +44,5 @@ public interface RequestType {
     byte REQ_GET_CITIES = 35;
     byte REQ_GET_EVENT_COUNTRIES = 36;
     byte GET_SHARE_COUNTRY=37;
+    byte REQ_CREATE_LEAD=38;
 }

@@ -14,6 +14,15 @@ public class BannerModel implements Serializable {
     private String country;
     private String country_name;
     private String id;
+    private String show_join;
+
+    public String getShow_join() {
+        return show_join;
+    }
+
+    public void setShow_join(String show_join) {
+        this.show_join = show_join;
+    }
 
     public String getTitle() {
         return title;

@@ -152,6 +152,13 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<BannerResponseModel>(handler));
                 break;
 
+            case REQ_CREATE_LEAD:
+                Observable<BaseResponseModel> createLeadObservable = apiInterface.createLead(requestParams);
+                createLeadObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                break;
+
         }
 
 

@@ -21,13 +21,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 
-public class WebViewActivity extends BaseActivity {
+import java.util.HashMap;
+
+public class WebViewActivity extends BaseActivity implements LeadView {
     private WebView webView;
     private ProgressBar progressBar;
     LinearLayout layoutJoin;
     private String bannerId;
+    private boolean showJoin;
+    private LeadPresenter presenter;
 
     @Override
     protected int getContentView() {
@@ -38,11 +44,14 @@ public class WebViewActivity extends BaseActivity {
     protected void initializeView() {
         String title = getIntent().getBundleExtra("bundle").getString("title");
         boolean isLink = getIntent().getBundleExtra("bundle").getBoolean("is_link");
-        bannerId=getIntent().getBundleExtra("bundle").getString("id");
+        bannerId = getIntent().getBundleExtra("bundle").getString("id");
+        showJoin = getIntent().getBundleExtra("bundle").getBoolean("join");
         setUpToolbar(title);
         webView = findViewById(R.id.webview);
         progressBar = findViewById(R.id.progress_bar);
         layoutJoin = findViewById(R.id.layout_join);
+        if (showJoin)
+            layoutJoin.setVisibility(View.VISIBLE);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
@@ -61,6 +70,16 @@ public class WebViewActivity extends BaseActivity {
                 startActivity(i);
             }
         });
+
+        layoutJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, String> body = new HashMap<>();
+                body.put("banner_id", bannerId);
+                body.put("user_id", SuperLifeSecretPreferences.getInstance().getUserData().getUser_id());
+                presenter.joinLead(body);
+            }
+        });
     }
 
     private void setUpToolbar(String title) {
@@ -76,6 +95,8 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initializePresenter() {
+        presenter = new LeadPresenter(this);
+        presenter.setView(this);
 
     }
 
@@ -104,6 +125,10 @@ public class WebViewActivity extends BaseActivity {
         webView.destroy();
         webView = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onLeadJoined() {
     }
 
 

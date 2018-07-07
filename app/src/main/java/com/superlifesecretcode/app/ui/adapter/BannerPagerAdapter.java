@@ -46,6 +46,7 @@ public class BannerPagerAdapter extends PagerAdapter {
                 bundle.putString("title", bannerList.get(position).getTitle());
                 bundle.putString("url", bannerList.get(position).getLink());
                 bundle.putString("id", bannerList.get(position).getId());
+                bundle.putBoolean("join", bannerList.get(position).getShow_join().equalsIgnoreCase("1"));
                 CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
             }
         });
