@@ -219,7 +219,7 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    public void setShareListData(List<ShareListResponseData> listData) {
+    public void setShareListData(List<ShareListResponseData> listData,String next) {
 
     }
 

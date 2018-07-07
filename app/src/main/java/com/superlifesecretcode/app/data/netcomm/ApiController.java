@@ -372,7 +372,7 @@ public class ApiController implements RequestType {
 
     }
 
-    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> headers, String countryId) {
+    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> headers, String countryId,String page) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -380,7 +380,7 @@ public class ApiController implements RequestType {
         ApiClient.ADD_LOG = true;
         switch (reqTyoe) {
             case REQ_GET_ALL_LATEST:
-                Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers,countryId);
+                Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers,countryId,page);
                 countryObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<ShareListResponseModel>(handler));

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
@@ -46,6 +45,7 @@ public class BannerPagerAdapter extends PagerAdapter {
                 bundle.putBoolean("is_link", true);
                 bundle.putString("title", bannerList.get(position).getTitle());
                 bundle.putString("url", bannerList.get(position).getLink());
+                bundle.putString("id", bannerList.get(position).getId());
                 CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
             }
         });

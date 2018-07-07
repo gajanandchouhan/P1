@@ -48,7 +48,7 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
                 view.hideProgress();
                 if (shareListResponseModel != null) {
                     if (shareListResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.setShareListData(shareListResponseModel.getData());
+                        view.setShareListData(shareListResponseModel.getData(),shareListResponseModel.getNextPageUrl());
                     } else
                         CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getNo_sharing());
                 } else {
@@ -66,7 +66,7 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
         }, params, headers);
     }
 
-    public void getAllLatestShare(Map<String, String> headers, String countryId, final boolean isLoadMore) {
+    public void getAllLatestShare(Map<String, String> headers, String countryId, final boolean isLoadMore, String page) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -81,7 +81,7 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
                     view.hideProgress();
                 if (shareListResponseModel != null) {
                     if (shareListResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.setShareListData(shareListResponseModel.getData());
+                        view.setShareListData(shareListResponseModel.getData(),shareListResponseModel.getNextPageUrl());
                     } else
                         CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getNo_sharing());
                 } else {
@@ -97,7 +97,7 @@ public class ShareListPresenter extends BasePresenter<ShareListView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        }, headers, countryId);
+        }, headers, countryId,page);
     }
 
     public void likeShare(HashMap<String, String> params, Map<String, String> headers) {

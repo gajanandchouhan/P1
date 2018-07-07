@@ -9,6 +9,7 @@ import java.util.List;
  */
 
 public class ShareListResponseModel extends BaseResponseModel {
+    private String nextPageUrl;
     private List<ShareListResponseData> data;
 
     public void setData(List<ShareListResponseData> data) {
@@ -17,5 +18,13 @@ public class ShareListResponseModel extends BaseResponseModel {
 
     public List<ShareListResponseData> getData() {
         return data;
+    }
+
+    public String getNextPageUrl() {
+        return nextPageUrl;
+    }
+
+    public void setNextPageUrl(String nextPageUrl) {
+        this.nextPageUrl = nextPageUrl;
     }
 }

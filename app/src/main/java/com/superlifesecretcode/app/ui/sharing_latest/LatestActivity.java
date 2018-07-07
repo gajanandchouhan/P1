@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.ui.sharing_latest;
 
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -48,6 +49,7 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
     CountryStatePicker countryStatePicker;
     private boolean isLoadMore = false;
     private RecyclerView recyclerView;
+    private int nextPage;
 
     @Override
     protected int getContentView() {
@@ -76,13 +78,21 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
         latestAapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                isLoadMore = true;
-                shareList.add(null);
-                latestAapter.notifyItemInserted(shareList.size() - 1);
-                getAllLatestShare(shareList.size());
+                if (nextPage != -1) {
+                    isLoadMore = true;
+                    shareList.add(null);
+                    recyclerView.post(new Runnable() {
+                        public void run() {
+                            latestAapter.notifyItemInserted(shareList.size() - 1);
+                            getAllLatestShare(nextPage);
+                        }
+                    });
+
+                }
             }
         });
-        getAllLatestShare(0);
+        nextPage = 1;
+        getAllLatestShare(nextPage);
     }
 
     @Override
@@ -91,14 +101,15 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
         if (isUpdated) {
             isUpdated = false;
             isLoadMore = false;
-            getAllLatestShare(0);
+            nextPage = 1;
+            getAllLatestShare(nextPage);
         }
     }
 
     private void getAllLatestShare(int index) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-        presenter.getAllLatestShare(headers, countryId, isLoadMore);
+        presenter.getAllLatestShare(headers, countryId, isLoadMore, String.valueOf(index));
     }
 
     private void setUpToolbar() {
@@ -138,12 +149,19 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
     }
 
     @Override
-    public void setShareListData(List<ShareListResponseData> listData) {
+    public void setShareListData(List<ShareListResponseData> listData, String nextPage) {
         if (listData != null) {
+            if (nextPage != null) {
+                this.nextPage = Integer.parseInt(Uri.parse(nextPage).getQueryParameter("page"));
+            } else {
+                this.nextPage = -1;
+            }
             if (isLoadMore) {
                 latestAapter.setLoaded();
                 shareList.remove(shareList.size() - 1);
+                latestAapter.notifyItemRemoved(shareList.size());
             } else {
+                latestAapter.setLoaded();
                 shareList.clear();
                 latestAapter.setUpLoadMore(recyclerView);
             }
@@ -181,6 +199,7 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
                     countryId = country.getId();
                     countryStatePicker.dismiss();
                     isLoadMore = false;
+                    nextPage = 1;
                     getAllLatestShare(0);
                 }
             }, data);

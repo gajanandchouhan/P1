@@ -136,7 +136,7 @@ public interface ApiInterface {
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("latest")
-    Observable<ShareListResponseModel> getAllShareList(@HeaderMap Map<String, String> headers, @Query("country_id") String countryId);
+    Observable<ShareListResponseModel> getAllShareList(@HeaderMap Map<String, String> headers, @Query("country_id") String countryId,@Query("page") String page);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})

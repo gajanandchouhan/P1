@@ -89,7 +89,7 @@ public class SubmitListActivity extends BaseActivity implements ShareListView {
     }
 
     @Override
-    public void setShareListData(List<ShareListResponseData> listData) {
+    public void setShareListData(List<ShareListResponseData> listData,String nextPage) {
         if (listData != null) {
             shareList.clear();
             shareList.addAll(listData);

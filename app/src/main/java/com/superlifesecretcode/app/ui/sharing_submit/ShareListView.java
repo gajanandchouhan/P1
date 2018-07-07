@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public interface ShareListView extends BaseView {
-    void setShareListData(List<ShareListResponseData> listData);
+    void setShareListData(List<ShareListResponseData> listData,String nextPageUrl);
 
     void onLiked();
 

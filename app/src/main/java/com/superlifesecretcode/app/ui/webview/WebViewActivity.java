@@ -16,6 +16,7 @@ import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,6 +26,8 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 public class WebViewActivity extends BaseActivity {
     private WebView webView;
     private ProgressBar progressBar;
+    LinearLayout layoutJoin;
+    private String bannerId;
 
     @Override
     protected int getContentView() {
@@ -35,10 +38,11 @@ public class WebViewActivity extends BaseActivity {
     protected void initializeView() {
         String title = getIntent().getBundleExtra("bundle").getString("title");
         boolean isLink = getIntent().getBundleExtra("bundle").getBoolean("is_link");
-
+        bannerId=getIntent().getBundleExtra("bundle").getString("id");
         setUpToolbar(title);
         webView = findViewById(R.id.webview);
         progressBar = findViewById(R.id.progress_bar);
+        layoutJoin = findViewById(R.id.layout_join);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
