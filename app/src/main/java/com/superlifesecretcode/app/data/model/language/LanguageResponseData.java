@@ -154,6 +154,33 @@ public class LanguageResponseData {
     private String share_submit;
     private String agree_tc;
     private String no_city;
+    private String join;
+    private String join_success;
+    private String already_join;
+
+    public String getJoin() {
+        return join;
+    }
+
+    public void setJoin(String join) {
+        this.join = join;
+    }
+
+    public String getJoin_success() {
+        return join_success;
+    }
+
+    public void setJoin_success(String join_success) {
+        this.join_success = join_success;
+    }
+
+    public String getAlready_join() {
+        return already_join;
+    }
+
+    public void setAlready_join(String already_join) {
+        this.already_join = already_join;
+    }
 
     public String getNo_city() {
         return no_city;

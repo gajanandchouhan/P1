@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -34,6 +35,8 @@ public class WebViewActivity extends BaseActivity implements LeadView {
     private String bannerId;
     private boolean showJoin;
     private LeadPresenter presenter;
+    private TextView textViewJoin;
+    private LanguageResponseData conversionData;
 
     @Override
     protected int getContentView() {
@@ -50,6 +53,7 @@ public class WebViewActivity extends BaseActivity implements LeadView {
         webView = findViewById(R.id.webview);
         progressBar = findViewById(R.id.progress_bar);
         layoutJoin = findViewById(R.id.layout_join);
+        textViewJoin = findViewById(R.id.text_view_join);
         if (showJoin)
             layoutJoin.setVisibility(View.VISIBLE);
         WebSettings webSettings = webView.getSettings();
@@ -80,6 +84,8 @@ public class WebViewActivity extends BaseActivity implements LeadView {
                 presenter.joinLead(body);
             }
         });
+        conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        textViewJoin.setText(conversionData != null ? conversionData.getJoin() : "Join");
     }
 
     private void setUpToolbar(String title) {
@@ -128,7 +134,12 @@ public class WebViewActivity extends BaseActivity implements LeadView {
     }
 
     @Override
-    public void onLeadJoined() {
+    public void onLeadJoined(String already) {
+        if (already != null && already.equalsIgnoreCase("1")) {
+            CommonUtils.showSnakeBar(this, conversionData.getAlready_join());
+        } else {
+            CommonUtils.showSnakeBar(this, conversionData.getJoin_success());
+        }
     }
 
 

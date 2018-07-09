@@ -7,6 +7,15 @@ package com.superlifesecretcode.app.data.model;
 public class BaseResponseModel {
     private String status;
     private String message;
+    private String already_joined;
+
+    public String getAlready_joined() {
+        return already_joined;
+    }
+
+    public void setAlready_joined(String already_joined) {
+        this.already_joined = already_joined;
+    }
 
     public String getStatus() {
         return status;

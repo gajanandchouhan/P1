@@ -39,9 +39,8 @@ public class LeadPresenter extends BasePresenter<LeadView> {
                 view.hideProgress();
                 if (baseResponseModel != null) {
                     if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.onLeadJoined();
+                        view.onLeadJoined(baseResponseModel.getAlready_joined());
                     }
-                    CommonUtils.showToast(mContext, baseResponseModel.getMessage());
                 } else {
                     CommonUtils.showToast(mContext, mContext.getString(R.string.server_error));
                 }
