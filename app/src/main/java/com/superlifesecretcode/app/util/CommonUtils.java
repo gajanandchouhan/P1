@@ -62,31 +62,26 @@ import static android.text.format.DateUtils.getRelativeTimeSpanString;
 public class CommonUtils {
 
     public static void showSnakeBar(Context mContext, String message) {
-        if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.server_error))) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getWent_wrong();
-        } else if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.no_internet))) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getNo_internet();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_EXISTS)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getMobile_exists();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_EXISTS)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_exists();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_PASS_INVALID)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_mobile_pass();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.RESET_CODE_SENT)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getCode_sent_to_mail();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.WORNG_CODE_ENTERED)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_code_entered();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.DEACTIVATED_USER)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getDeactivate_user();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_NOT_REG)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_not_registerted();
+        if (SuperLifeSecretPreferences.getInstance().getConversionData() != null) {
+            if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.server_error))) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getWent_wrong();
+            } else if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.no_internet))) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getNo_internet();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_EXISTS)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getMobile_exists();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_EXISTS)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_exists();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_PASS_INVALID)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_mobile_pass();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.RESET_CODE_SENT)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getCode_sent_to_mail();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.WORNG_CODE_ENTERED)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_code_entered();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.DEACTIVATED_USER)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getDeactivate_user();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_NOT_REG)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_not_registerted();
+            }
         }
         Snackbar.make(((AppCompatActivity) mContext).findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
@@ -278,33 +273,27 @@ public class CommonUtils {
     }
 
     public static void showToast(Context mContext, String message) {
-        if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.server_error))) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getWent_wrong();
-        } else if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.no_internet))) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getNo_internet();
+        if (SuperLifeSecretPreferences.getInstance().getConversionData() != null) {
+            if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.server_error))) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getWent_wrong();
+            } else if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.no_internet))) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getNo_internet();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_EXISTS)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getMobile_exists();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_EXISTS)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_exists();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_PASS_INVALID)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_mobile_pass();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.RESET_CODE_SENT)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getCode_sent_to_mail();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.WORNG_CODE_ENTERED)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_code_entered();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.DEACTIVATED_USER)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getDeactivate_user();
+            } else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_NOT_REG)) {
+                message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_not_registerted();
+            }
         }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_EXISTS)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getMobile_exists();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_EXISTS)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_exists();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.MOBILE_PASS_INVALID)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_mobile_pass();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.RESET_CODE_SENT)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getCode_sent_to_mail();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.WORNG_CODE_ENTERED)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getInvalid_code_entered();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.DEACTIVATED_USER)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getDeactivate_user();
-        }
-        else if (message != null && message.equalsIgnoreCase(ConstantLib.EMAIL_NOT_REG)) {
-            message = SuperLifeSecretPreferences.getInstance().getConversionData().getEmail_not_registerted();
-        }
-
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 

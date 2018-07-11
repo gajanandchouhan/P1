@@ -43,3 +43,19 @@
 
 -dontwarn okio.**
 -keep class com.superlifesecretcode.app.** { *; }
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep public class * extends android.app.Fragment {
+    <init>(...);
+}
+-keep public class * extends android.support.v4.app.Fragment {
+    <init>(...);
+}
+-keep class  android.support.v7.** { *; }
+-keep public class com.superlifesecretcode.app.**
+-keep public class com.superlifesecretcode.app.** {
+  public protected *;
+}
