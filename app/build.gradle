@@ -36,7 +36,9 @@ android {
     flavorDimensions "SERVER_TYPE"
     productFlavors {//http://dev.tekzee.com/dining_hour/
         development {
-            buildConfigField "String", 'BASE_URL', '"http://13.250.249.116/richestlife/api/"'
+
+            buildConfigField "String", 'BASE_URL', '"http://dev.tekzee.in/richestlife/api/"'
+//            buildConfigField "String", 'BASE_URL', '"http://13.250.249.116/richestlife/api/"'
             buildConfigField "boolean", 'showLog', 'true'
         }
         staging {

@@ -5,7 +5,6 @@
     <string name="fb_login_protocol_scheme">fb907727359385638</string>
     <string name="com.twitter.sdk.android.CONSUMER_KEY">oi1g7ATSx1L9vgSWWMfGiuKe9</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">mBeSvnW2E3heVGo2C07sH8pgF3ptTjnFz5cPJiF7wck6VrBdaG</string>
-
     <string name="no_internet">Network error, please check your internet connection.</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="country_activities">Country Activities</string>
@@ -29,4 +28,9 @@
     <string name="richestlife">RichestLife</string>
     <string name="server_error">Something went wrong, Please try again later.</string>
     <string name="title_activity_image_viewer">ImageViewerActivity</string>
+
+    <string name="skip">Skip</string>
+    <string name="continuee">Continue</string>
+    <string name="signup">Sign Up</string>
+    <string name="skip_and_signup">Skip &amp; Signup</string>
 </resources>

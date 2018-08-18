@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 interface RegisterView extends BaseView {
+
     void setCountryData(List<CountryResponseData> data);
 
     void setStateData(List<CountryResponseData> data);
@@ -18,4 +19,8 @@ interface RegisterView extends BaseView {
     void setUserData(UserDetailResponseData data);
 
     void setCities(List<CountryResponseData> data);
+
+    void onCountryCodeSuccess();
+
+    void setCountryDataPicker(List<CountryResponseData> data);
 }

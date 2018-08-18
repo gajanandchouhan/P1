@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.login;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
@@ -93,5 +94,37 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
             }
         }, requestBody);
+    }
+
+    public void getCountry() {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGet(mContext, RequestType.REQ_GET_COUNTRY, new ResponseHandler<CountryResponseModel>() {
+            @Override
+            public void onResponse(CountryResponseModel countryResponseModel) {
+                view.hideProgress();
+                if (countryResponseModel != null) {
+                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setCountryData(countryResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        });
     }
 }

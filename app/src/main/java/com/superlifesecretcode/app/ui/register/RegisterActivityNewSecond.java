@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,14 +24,11 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.login.LoginActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
-import com.superlifesecretcode.app.ui.picker.FilterPicker;
 import com.superlifesecretcode.app.ui.webview.TcWebViewActivity;
-import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -45,99 +42,71 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterView {
+public class RegisterActivityNewSecond extends BaseActivity implements View.OnClickListener, RegisterView {
 
     private String countryCode = "us";
-    TextView textViewDialCode;
-    TextView textViewCountry;
     TextView textViewLabel;
     TextView textViewGender;
-    TextView textState;
-    TextView textViewCity;
     TextView textViewAlreadyAccount;
     EditText editTextName;
-    EditText editTextMobileNumber;
-    EditText editTextPassword;
     EditText editTextEmail;
-    Button buttonRegister;
+    Button buttonRegister, buttonSkipandRegister;
     CheckBox checkBoxTOS;
     TextView textViewTermsOfServices;
-    ImageView imageViewFlag;
     private CountryPicker countryPicker;
     private TextView textViewSiginCotinue;
     private ImageView imageViewprofile;
     private String imagePath;
-    private String enterName, selectGender, selecrCountry,
-            selectState, eneterMobileNo, passLength, enterEmail, enterValidEmail;
+    private String enterName, selectGender,
+            passLength, enterEmail, enterValidEmail;
     private List<String> genderList;
     private RegisterPresenter presenter;
-
-    private CountryStatePicker countryStatePicker;
-    private String countryId;
-    private String stateId;
-    private String gender;
+    private String gender="";
     private String city = "";
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_register;
+        return R.layout.activity_register_new2;
     }
 
     @Override
     protected void initializeView() {
-        findViewById(R.id.layoout_dial_code).setOnClickListener(this);
-        imageViewFlag = findViewById(R.id.imageView_flag);
-        textViewDialCode = findViewById(R.id.textView_dial_code);
-        textViewCountry = findViewById(R.id.textView_country);
         editTextName = findViewById(R.id.edi_text_name);
-        editTextPassword = findViewById(R.id.edit_text_password);
         textViewGender = findViewById(R.id.textView_gender);
-        textState = findViewById(R.id.textView_state);
         textViewLabel = findViewById(R.id.textView_label);
         buttonRegister = findViewById(R.id.button_register);
-        textViewCity = findViewById(R.id.textView_city);
-        editTextMobileNumber = findViewById(R.id.edi_text_phone);
         textViewSiginCotinue = findViewById(R.id.textView_siginin);
         checkBoxTOS = findViewById(R.id.checkbox_tc);
         textViewTermsOfServices = findViewById(R.id.textView_tc);
         textViewAlreadyAccount = findViewById(R.id.textview_allready_account);
         editTextEmail = findViewById(R.id.edit_text_email);
+        buttonSkipandRegister = findViewById(R.id.button_skipand_register);
         textViewSiginCotinue.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
         imageViewprofile = findViewById(R.id.imageView_profile);
         imageViewprofile.setOnClickListener(this);
         textViewGender.setOnClickListener(this);
-        textState.setOnClickListener(this);
-        textViewCountry.setOnClickListener(this);
         textViewTermsOfServices.setOnClickListener(this);
-        textViewCity.setOnClickListener(this);
+        buttonSkipandRegister.setOnClickListener(this);
         setUpConversion();
         Typeface typeface = ResourcesCompat.getFont(this, R.font.reguler);
         checkBoxTOS.setTypeface(typeface);
-
     }
 
     private void setUpConversion() {
         LanguageResponseData conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
             textViewLabel.setText(conversionData.getSignup());
+            buttonSkipandRegister.setText(conversionData.getStart_app());
             editTextName.setHint(conversionData.getName());
-            editTextMobileNumber.setHint(conversionData.getMobile_no() + "(Ex. 012345678)");
             textViewGender.setHint(conversionData.getGender());
-            textViewCountry.setHint(conversionData.getCountry());
-            textState.setHint(conversionData.getState());
-            editTextPassword.setHint(conversionData.getPassword());
-            textViewCity.setHint(conversionData.getCity());
-            buttonRegister.setText(conversionData.getRegister());
+            buttonRegister.setText(conversionData.getSignup());
             textViewAlreadyAccount.setText(String.format("%s ", conversionData.getAlready_account()));
             textViewSiginCotinue.setText(conversionData.getSigin_in_cotinue());
             editTextEmail.setHint(conversionData.getEmail());
             enterName = conversionData.getEnter_name();
             passLength = conversionData.getPassword_length();
-            eneterMobileNo = conversionData.getEnter_mobile_number();
             selectGender = conversionData.getSelect_gender();
-            selecrCountry = conversionData.getSelect_country();
-            selectState = conversionData.getSelect_state();
             enterEmail = conversionData.getEnter_email();
             enterValidEmail = conversionData.getEnter_valid_email();
             genderList = new ArrayList<>();
@@ -162,12 +131,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layoout_dial_code:
-                showDialCodePicker();
-                break;
             case R.id.button_register:
-//                CommonUtils.startActivity(this, MainActivity.class, null, true);
-                validateAndRegister();
+                validateAndRegister(1);
+                break;
+            case R.id.button_skipand_register:
+                validateAndRegister(2);
                 break;
             case R.id.textView_siginin:
                 onBackPressed();
@@ -179,27 +147,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_PROFILE, PermissionConstant.CODE_PROFILE);
                 }
                 break;
-            case R.id.textView_country:
-                getCountry();
-                break;
+
             case R.id.textView_gender:
                 showgGenderSelection();
-                break;
-            case R.id.textView_state:
-                if (countryId == null) {
-                    CommonUtils.showSnakeBar(this, selecrCountry);
-                    return;
-                }
-                getState();
-                break;
-
-            case R.id.textView_city:
-                if (stateId == null) {
-                    CommonUtils.showSnakeBar(this, SuperLifeSecretPreferences.getInstance().
-                            getConversionData().getSelect_state());
-                    return;
-                }
-                getCity();
                 break;
             case R.id.textView_tc:
                 Bundle bundle = new Bundle();
@@ -213,16 +163,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-    private void getCity() {
-        HashMap<String, String> map = new HashMap();
-        map.put("state_id", stateId);
-        presenter.getCities(map);
-    }
-
-    private void getCountry() {
-        presenter.getCountry();
-    }
-
     private void showgGenderSelection() {
 
         DropDownWindow.show(this, textViewGender, genderList, new DropDownWindow.SelectedListner() {
@@ -234,64 +174,71 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-    private void validateAndRegister() {
+    private void validateAndRegister(int check) {
         String name = editTextName.getText().toString().trim();
-        String dialCode = textViewDialCode.getText().toString();
-        String mobileNumber = editTextMobileNumber.getText().toString().trim();
         String gender = textViewGender.getText().toString().trim();
-        String country = textViewCountry.getText().toString().trim();
-        String state = textState.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        if (name.isEmpty()) {
-            editTextName.setError(enterName);
-            return;
+        HashMap<String, String> body = new HashMap<>();
+        if (check==1){
+            if (name.isEmpty()) {
+                editTextName.setError(enterName);
+                return;
+            }
+            if (gender.isEmpty()) {
+                CommonUtils.showSnakeBar(this, selectGender);
+                return;
+            }
+            if (email.isEmpty()) {
+                editTextEmail.setError(enterEmail);
+                return;
+            }
+            if (!CommonUtils.isValidEmail(email)) {
+                editTextEmail.setError(enterValidEmail);
+                return;
+            }
+            body.put("name", name);
+            body.put("email", email);
+            body.put("gender", gender);
+        }else {
+            body.put("name", "");
+            body.put("email", "");
+            body.put("gender", "");
         }
-        if (mobileNumber.isEmpty()) {
-            editTextMobileNumber.setError(eneterMobileNo);
-            return;
-        }
-        if (gender.isEmpty()) {
-            CommonUtils.showSnakeBar(this, selectGender);
-            return;
-        }
-        if (country.isEmpty()) {
-            CommonUtils.showSnakeBar(this, selecrCountry);
-            return;
-        }
-        if (state.isEmpty()) {
-            CommonUtils.showSnakeBar(this, selectState);
-            return;
-        }
-        if (email.isEmpty()) {
-            editTextEmail.setError(enterEmail);
-            return;
-        }
-        if (!CommonUtils.isValidEmail(email)) {
-            editTextEmail.setError(enterValidEmail);
-            return;
-        }
-        if (password.isEmpty() || password.length() < 6) {
-            editTextPassword.setError(passLength);
-            return;
-        }
+
         if (!checkBoxTOS.isChecked()) {
             CommonUtils.showSnakeBar(this, SuperLifeSecretPreferences.getInstance().getConversionData().getAgree_tc());
             return;
         }
-        HashMap<String, String> body = new HashMap<>();
-        body.put("name", name);
-        body.put("gender", this.gender);
-        body.put("mobile", mobileNumber.startsWith("0") ? mobileNumber : "0" + mobileNumber);
+        String mobileNumber = getIntent().getStringExtra("mobile");
+        String countryId = getIntent().getStringExtra("country_id");
+        String password = getIntent().getStringExtra("password");
+        String phone_code = getIntent().getStringExtra("phone_code");
+        String country_code = getIntent().getStringExtra("country_code");
+        String state_id = getIntent().getStringExtra("state_id");
+        String city_id = getIntent().getStringExtra("city_id");
+
+
+        if (state_id!=null)
+        body.put("state_id", state_id);
+        else
+            body.put("state_id", "");
+        if (city_id!=null)
+        body.put("city_id", city_id);
+        else
+            body.put("city_id","");
+
+        //Toast.makeText(this, "cityid--"+city_id+"   stateid--"+state_id, Toast.LENGTH_SHORT).show();
+        body.put("mobile", mobileNumber);
         body.put("country_id", countryId);
-        body.put("state_id", stateId);
-        body.put("city_id", city);
         body.put("password", password);
-        body.put("phone_code", dialCode);
+        body.put("phone_code", phone_code);
         body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
-        body.put("country_code", countryCode.toLowerCase());
+        body.put("country_code", country_code);
         body.put("device_type", "1");
-        body.put("email", email);
+
+
+        Log.e("body",body.toString());
+//
         HashMap<String, File> fileParams = null;
         if (imagePath != null) {
             File file = new File(imagePath);
@@ -299,19 +246,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             fileParams.put("image", file);
         }
         presenter.registerUser(body, fileParams);
-    }
-
-    private void showDialCodePicker() {
-        countryPicker = new CountryPicker(this, new CountryPicker.PickerListner() {
-            @Override
-            public void onPick(Country country) {
-                textViewDialCode.setText(country.getDialCode());
-                imageViewFlag.setImageResource(country.getFlag());
-//                countryCode = country.getCode().toLowerCase();
-                countryPicker.dismiss();
-            }
-        });
-        countryPicker.show();
     }
 
     @Override
@@ -328,8 +262,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void pickImage() {
         CropImage.activity()
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                .start(this);
+                 .start(this);
 
     }
 
@@ -351,39 +284,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void setCountryData(List<CountryResponseData> data) {
-        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
-            @Override
-            public void onPick(CountryResponseData country) {
-                textViewCountry.setText(country.getName());
-                if (!country.getId().equalsIgnoreCase(countryId)) {
-                    stateId = null;
-                    city="";
-                    textState.setText("");
-                    textViewCity.setText("");
-                }
-                countryId = country.getId();
-                countryCode = country.getCountrycode();
-                countryStatePicker.dismiss();
-            }
-        }, data);
-        countryStatePicker.show();
     }
-
     @Override
     public void setStateData(List<CountryResponseData> data) {
-        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
-            @Override
-            public void onPick(CountryResponseData country) {
-                textState.setText(country.getName());
-                if (!country.getId().equalsIgnoreCase(stateId)) {
-                    city = "";
-                    textViewCity.setText("");
-                }
-                countryStatePicker.dismiss();
-                stateId = country.getId();
-            }
-        }, data);
-        countryStatePicker.show();
     }
 
     @Override
@@ -393,35 +296,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             CommonUtils.startActivity(this, MainActivity.class, null, true);
         }
     }
-
     @Override
     public void setCities(List<CountryResponseData> data) {
-        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
-            @Override
-            public void onPick(CountryResponseData country) {
-                textViewCity.setText(country.getName());
-                city = country.getId();
-                countryStatePicker.dismiss();
-            }
-        }, data);
-        countryStatePicker.show();
     }
-
     @Override
     public void onCountryCodeSuccess() {
-
     }
 
     @Override
     public void setCountryDataPicker(List<CountryResponseData> data) {
 
     }
-
-    private void getState() {
-        HashMap<String, String> body = new HashMap<>();
-        body.put("country_id", countryId);
-        presenter.getStates(body);
-    }
-
-
 }

@@ -1,10 +1,12 @@
 package com.superlifesecretcode.app.data.model.country;
 
+import java.io.Serializable;
+
 /**
  * Created by Divya on 01-03-2018.
  */
 
-public class CountryResponseData {
+public class CountryResponseData implements Serializable{
     private String id;
     private String countrycode;
     private String name;

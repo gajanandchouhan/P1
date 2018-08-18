@@ -22,7 +22,8 @@ public class GeoCoderUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+
+                    Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
                 try {
                     List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
                     if (addresses!=null&&addresses.size()>0){
@@ -36,37 +37,31 @@ public class GeoCoderUtils {
                         add = add + "\n" + obj.getLocality();
                         add = add + "\n" + obj.getSubThoroughfare();
                         Log.v("IGA", "Address" + add);
+
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run(){
-                                listner.onGetCode(obj.getCountryCode());
+                                listner.onGetCode(obj.getCountryName(),obj.getCountryCode(),obj.getAdminArea(),obj.getLocality());
                                 show.dismiss();
-                                //manage your edittext and Other UIs here
                             }
                         });
-
                     }
                     else{
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run(){
-                                listner.onGetCode(null);
+                                listner.onGetCode(null,null,null,null);
                                 //manage your edittext and Other UIs here
                                 show.dismiss();
                             }
                         });
                     }
 
-
-                    // Toast.makeText(this, "Address=>" + add,
-                    // Toast.LENGTH_SHORT).show();
-
-                    // TennisAppActivity.showDialog(add);
                 } catch (IOException e) {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run(){
-                            listner.onGetCode(null);
+                            listner.onGetCode(null,null,null,null);
                             //manage your edittext and Other UIs here
                             show.dismiss();
                         }
@@ -80,6 +75,6 @@ public class GeoCoderUtils {
     }
 
     public interface GeocoderListner {
-        void onGetCode(String countryCode);
+        void onGetCode(String countryName,String countryCode,String stateName,String cityName);
     }
 }

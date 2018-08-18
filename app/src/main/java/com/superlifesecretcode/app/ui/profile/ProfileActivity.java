@@ -3,9 +3,11 @@ package com.superlifesecretcode.app.ui.profile;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +18,6 @@ import android.widget.Toast;
 
 import com.dining.countrypicker.Country;
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -43,7 +44,6 @@ import java.util.Map;
 
 public class ProfileActivity extends BaseActivity implements View.OnClickListener, ProfileView {
 
-
     private ImageView imageViewProfile;
     private EditText editTextName;
     private EditText editTextMobileNumber, editTextEmail;
@@ -59,7 +59,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private ProfilePresenter presenter;
     private TextView textViewNameLabel, textViewGenderLabel, textViewMobileLabel,
             textViewCountryLabel, textViewStateLabel, textViewLanguageLabel,
-            textViewEmailLabel, textViewCity, textViewCityLabel;
+            textViewEmailLabel, textViewCity, textViewCityLabel, textViewStar,
+            textViewStarCity, textViewStarState;
     private boolean isEnabled;
     String countryId, stateId, dialCode, countryCode;
     private String imagePath;
@@ -103,6 +104,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewCityLabel = findViewById(R.id.textView_city_label);
         textViewLanguageLabel = findViewById(R.id.textView_language_label);
         editTextEmail = findViewById(R.id.edit_text_email);
+        textViewStar = findViewById(R.id.textView_star);
+        textViewStarCity = findViewById(R.id.textView_country);
+        textViewStarState = findViewById(R.id.textView_state);
         textViewEmailLabel = findViewById(R.id.textView_email_label);
         textViewGender.setOnClickListener(this);
         textViewLanguage.setOnClickListener(this);
@@ -126,7 +130,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         setUpLocalConversion();
         setUpUi();
         enableDisableView(false);
-
     }
 
     private void setUpLocalConversion() {
@@ -154,7 +157,18 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setUpUi() {
+
         if (userDetailResponseData != null) {
+
+            if (SuperLifeSecretPreferences.getInstance().getLocationData().getPhone_code()!=null) {
+                String countrCode = SuperLifeSecretPreferences.getInstance().getLocationData().getCountry_code().toLowerCase();
+                if (!countrCode.isEmpty()) {
+                    int id = getResources().getIdentifier("flag_" + countrCode, "drawable", getPackageName());
+                    imageViewFlag.setImageResource(id);
+                    textViewDialCode.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getPhone_code());
+                }
+            }
+
             if (userDetailResponseData.getCountry_code() != null) {
                 String countrCode = userDetailResponseData.getCountry_code().toLowerCase();
                 if (!countrCode.isEmpty()) {
@@ -165,17 +179,43 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     textViewDialCode.setText(dialCode);
                 }
             }
+
             gender = userDetailResponseData.getGender();
             city = userDetailResponseData.getCity();
             editTextName.setText(userDetailResponseData.getUsername());
             textViewName.setText(userDetailResponseData.getUsername());
             editTextMobileNumber.setText(userDetailResponseData.getMobile());
-            textViewCountry.setText(userDetailResponseData.getCountryName());
-            textViewState.setText(userDetailResponseData.getStateName());
-            textViewCity.setText(userDetailResponseData.getCityName());
+
+            if (userDetailResponseData.getCountryName().equals("") || userDetailResponseData.getCountryName().equals("null") || userDetailResponseData.getCountryName() == null || userDetailResponseData.getCountryName().equals(null)) {
+                textViewCountry.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getCountryName());
+            } else {
+                textViewCountry.setText(userDetailResponseData.getCountryName());
+            }
+
+            if (userDetailResponseData.getStateName().equals("") || userDetailResponseData.getStateName().equals("null") || userDetailResponseData.getStateName() == null || userDetailResponseData.getStateName().equals(null)) {
+                textViewState.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getStateName());
+            } else {
+                textViewState.setText(userDetailResponseData.getStateName());
+            }
+
+            if (userDetailResponseData.getCityName().equals("") || userDetailResponseData.getCityName().equals("null") || userDetailResponseData.getCityName() == null || userDetailResponseData.getCityName().equals(null)) {
+                textViewCity.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getCityName());
+            } else {
+                textViewCity.setText("" + userDetailResponseData.getCityName());
+            }
+
             if (userDetailResponseData.getGender() != null)
                 textViewGender.setText(userDetailResponseData.getGender().equalsIgnoreCase("1") ? conversionData.getMale() : conversionData.getFemale());
-            countryId = userDetailResponseData.getCountry();
+            if (userDetailResponseData.getCountry()!=null || !userDetailResponseData.getCountry().equals(""))
+            {
+                countryId = userDetailResponseData.getCountry();
+            }
+            else{
+                countryId = SuperLifeSecretPreferences.getInstance().getLocationData().getCountry();
+                //Toast.makeText(this, "getInstance"+countryId, Toast.LENGTH_SHORT).show();
+            }
+
+            //Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
             stateId = userDetailResponseData.getState();
             editTextEmail.setText(userDetailResponseData.getEmail());
             languageId = SuperLifeSecretPreferences.getInstance().getLanguageId();
@@ -183,7 +223,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             textViewLanguage.setText(currentLanguag);
             ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
         }
-
     }
 
     private String getLanguage(String languageId) {
@@ -397,17 +436,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             imageViewProfile.setImageResource(R.drawable.edit);
             imageViewCamera.setVisibility(View.GONE);
         }
-        editTextName.setEnabled(enbale);
+        // editTextName.setEnabled(enbale);
         imageViewUser.setEnabled(enbale);
         imageViewFlag.setEnabled(enbale);
         textViewDialCode.setEnabled(enbale);
-        editTextMobileNumber.setEnabled(enbale && editTextMobileNumber.getText().toString().isEmpty());
-        editTextEmail.setEnabled(enbale && editTextEmail.getText().toString().isEmpty());
-        textViewGender.setEnabled(enbale);
-        textViewCountry.setEnabled(enbale);
-        textViewState.setEnabled(enbale);
-        textViewCity.setEnabled(enbale);
-        textViewLanguage.setEnabled(enbale);
+        //editTextMobileNumber.setEnabled(enbale && editTextMobileNumber.getText().toString().isEmpty());
+        //editTextEmail.setEnabled(enbale && editTextEmail.getText().toString().isEmpty());
+        // textViewGender.setEnabled(enbale);
+        //textViewCountry.setEnabled(enbale);
+        // textViewState.setEnabled(enbale);
+        // textViewCity.setEnabled(enbale);
+        // textViewLanguage.setEnabled(enbale);
     }
 
 

@@ -18,6 +18,7 @@ import com.superlifesecretcode.app.ui.language.LanguageActivity;
 import com.superlifesecretcode.app.ui.login.LoginActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.register.RegisterActivity;
+import com.superlifesecretcode.app.ui.register.RegisterActivityNewFirst;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.GeoCoderUtils;
 
@@ -71,7 +72,7 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.button_accept:
                 SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.DISCLOSE_ACCEPTED, true);
-                CommonUtils.startActivity(DiscolsureActivity.this, LoginActivity.class);
+                CommonUtils.startActivity(DiscolsureActivity.this, RegisterActivityNewFirst.class);
                 finish();
                 break;
             case R.id.button_reject:
@@ -99,7 +100,7 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
             public void onLocationSuccess(Location location) {
                 GeoCoderUtils.getCountryCode(location.getLatitude(), location.getLongitude(), DiscolsureActivity.this, new GeoCoderUtils.GeocoderListner() {
                     @Override
-                    public void onGetCode(String countryCode) {
+                    public void onGetCode(String countryName,String countryCode,String state,String city) {
                         if (countryCode != null) {
                             CommonUtils.showLog(TAG, "Code is :" + countryCode);
                             SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.DISCLOSE_ACCEPTED, true);

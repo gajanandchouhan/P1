@@ -16,7 +16,6 @@
         android:layout_marginTop="@dimen/_40sdp"
         android:src="@drawable/logo2" />
 
-
     <TextView
         android:id="@+id/textView_label"
         android:layout_width="wrap_content"
@@ -24,11 +23,113 @@
         android:layout_below="@+id/imageView_icon"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:padding="@dimen/_5sdp"
         android:fontFamily="@font/reguler"
+        android:padding="@dimen/_5sdp"
         android:text="Select Language"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_16sdp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_30sdp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_transparent_black"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_lang_simplified"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/reguler"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp"
+                android:text="簡化中文"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_15sdp" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imageViewSimplified"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:src="@drawable/check" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorWhite"></LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_lang_traditional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/reguler"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp"
+                android:text="繁體中文"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_15sdp" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imageViewTraditional"
+
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:src="@drawable/check" />
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorWhite"></LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_lang_english"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/reguler"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp"
+                android:text="English"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_15sdp" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imageViewEnglish"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:src="@drawable/check" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +138,8 @@
         android:layout_marginTop="@dimen/_30sdp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/_30sdp"
-        android:paddingRight="@dimen/_30sdp">
+        android:paddingRight="@dimen/_30sdp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imageView_previous"
@@ -61,21 +163,21 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/_10sdp"
-            android:src="@drawable/right_arrow"/>
+            android:src="@drawable/right_arrow" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/button_next"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:fontFamily="@font/reguler"
-        android:layout_marginRight="@dimen/_40sdp"
-        android:layout_marginLeft="@dimen/_40sdp"
-        android:layout_marginEnd="@dimen/_40sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginRight="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_40sdp"
         android:background="@drawable/button_white"
+        android:fontFamily="@font/reguler"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
         android:text="Next"

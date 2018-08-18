@@ -49,6 +49,14 @@
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 
+            <TextView
+                android:id="@+id/textview_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:text="minimum 6 characters"
+                android:textSize="@dimen/_12sdp" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,65 +112,56 @@
 
                 <TextView
                     android:id="@+id/textView_signup"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/reguler"
                     android:text=" Sign Up"
                     android:textColor="@color/colorLightBlack"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_13sdp"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/layout_signup"
-            android:gravity="bottom">
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_below="@+id/layout_signup"-->
+        <!--android:gravity="bottom">-->
 
-            <TextView
-                android:id="@+id/textView_login_with"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="@font/reguler"
-                android:text="LOGIN WITH"
-                android:textColor="@color/colorLightBlack"
-                android:textSize="@dimen/_13sdp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_login_with"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal">
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/textView_login_with"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="@dimen/_10sdp"-->
+        <!--android:layout_marginTop="@dimen/_10sdp"-->
+        <!--android:orientation="horizontal">-->
 
-                <ImageView
-                    android:id="@+id/imageView_t"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/twitter" />
+        <!--<ImageView-->
+        <!--android:id="@+id/imageView_t"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/twitter" />-->
 
-                <ImageView
-                    android:id="@+id/imageView_f"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:src="@drawable/fb" />
+        <!--<ImageView-->
+        <!--android:id="@+id/imageView_f"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/_10sdp"-->
+        <!--android:src="@drawable/fb" />-->
 
-                <ImageView
-                    android:id="@+id/imageView_g"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:src="@drawable/gmail" />
-            </LinearLayout>
-        </RelativeLayout>
+        <!--<ImageView-->
+        <!--android:id="@+id/imageView_g"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/_10sdp"-->
+        <!--android:src="@drawable/gmail" />-->
+        <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
     </RelativeLayout>
 
 </ScrollView>

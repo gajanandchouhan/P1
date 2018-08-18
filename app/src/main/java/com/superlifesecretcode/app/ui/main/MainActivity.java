@@ -8,11 +8,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
@@ -247,16 +249,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void getMainCategories() {
-        if (userDetailResponseData.getCountry() != null && !userDetailResponseData.getCountry().isEmpty()) {
+
+        if (userDetailResponseData.getCountry() == null || userDetailResponseData.getCountry().equals("null") || userDetailResponseData.getCountry().isEmpty()
+                || userDetailResponseData.getCity() == null || userDetailResponseData.getCity().equals("null") || userDetailResponseData.getCity().isEmpty()
+                || userDetailResponseData.getState() == null || userDetailResponseData.getState().equals("null") || userDetailResponseData.getState().isEmpty()) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("update", true);
+//            Bundle  bundle3 = getIntent().getBundleExtra("bundle");
+//            if (bundle3!=null){
+//                boolean islogin = bundle3.getBoolean("isFromLogin");
+//                if (islogin){
+//                    bundle.putBoolean("isFromLogin", true);
+//                }
+//            }
+            CommonUtils.startActivity(this, ProfileActivity.class, bundle, false);
+            finish();
+        } else {
             HashMap<String, String> body = new HashMap<>();
             body.put("country_id", userDetailResponseData.getCountry());
             body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
             presenter.getHomeCategories(body);
-        } else {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("update", true);
-            CommonUtils.startActivity(this, ProfileActivity.class, bundle, false);
-            finish();
         }
 
     }
@@ -289,7 +301,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         autoScrollViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override

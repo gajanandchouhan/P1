@@ -102,6 +102,19 @@ public class SuperLifeSecretPreferences {
     }
 
 
+    public void setLocationData(UserDetailResponseData data) {
+        editer.putString("location_data", new Gson().toJson(data)).commit();
+    }
+
+    public UserDetailResponseData getLocationData() {
+        String masterData = preferences.getString("location_data", "");
+        if (masterData.length() > 0) {
+            return new Gson().fromJson(masterData, UserDetailResponseData.class);
+        }
+        return null;
+    }
+
+
     public void setAlertAccepted(AlertModel alertModel) {
         List<AlertModel> acceptedIds = getAcceptedIds();
         acceptedIds.add(alertModel);

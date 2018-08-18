@@ -2,7 +2,6 @@ package com.superlifesecretcode.app.data.netcomm;
 
 
 import android.content.Context;
-
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
@@ -39,8 +38,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
-
-
 /**
  * Created by JAIN COMPUTERS on 11/18/2017.
  */

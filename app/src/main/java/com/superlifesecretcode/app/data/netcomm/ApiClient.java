@@ -1,6 +1,8 @@
 package com.superlifesecretcode.app.data.netcomm;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.superlifesecretcode.app.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -29,10 +31,14 @@ public class ApiClient {
                     .readTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS);
             if (ADD_LOG)
-                httpClient.addInterceptor(logging);  // <-- this is the important line!
+                httpClient.addInterceptor(logging);
+            // <-- this is the important line!
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
             retrofit = new Retrofit.Builder()
                     .baseUrl(BuildConfig.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(httpClient.build())
                     .build();

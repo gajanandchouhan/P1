@@ -158,6 +158,62 @@ public class LanguageResponseData {
     private String join_success;
     private String already_join;
 
+    private String skip;
+    private String continuee;
+    private String skip_and_signup;
+    private String start_app;
+    private String existing_user;
+    private String min_password_character;
+
+
+    public String getMin_password_character() {
+        return min_password_character;
+    }
+
+    public void setMin_password_character(String min_password_character) {
+        this.min_password_character = min_password_character;
+    }
+
+    public String getStart_app() {
+        return start_app;
+    }
+
+    public void setStart_app(String start_app) {
+        this.start_app = start_app;
+    }
+
+    public String getExisting_user() {
+        return existing_user;
+    }
+
+    public void setExisting_user(String existing_user) {
+        this.existing_user = existing_user;
+    }
+
+    public String getSkip() {
+        return skip;
+    }
+
+    public void setSkip(String skip) {
+        this.skip = skip;
+    }
+
+    public String getContinuee() {
+        return continuee;
+    }
+
+    public void setContinuee(String continuee) {
+        this.continuee = continuee;
+    }
+
+    public String getSkip_and_signup() {
+        return skip_and_signup;
+    }
+
+    public void setSkip_and_signup(String skip_and_signup) {
+        this.skip_and_signup = skip_and_signup;
+    }
+
     public String getJoin() {
         return join;
     }

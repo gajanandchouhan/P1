@@ -65,6 +65,38 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         });
     }
 
+    public void getCountryPicker() {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGet(mContext, RequestType.REQ_GET_COUNTRY, new ResponseHandler<CountryResponseModel>() {
+            @Override
+            public void onResponse(CountryResponseModel countryResponseModel) {
+                view.hideProgress();
+                if (countryResponseModel != null) {
+                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setCountryDataPicker(countryResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        });
+    }
+
     public void getStates(HashMap requestBody) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
@@ -96,7 +128,6 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
             }
         }, requestBody);
     }
-
 
     public void registerUser(HashMap<String,String> params, HashMap<String,File> files) {
         if (!CheckNetworkState.isOnline(mContext)) {
@@ -146,6 +177,38 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
                         view.setCities(countryResponseModel.getData());
                     } else {
                         CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getNo_city());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
+    }
+
+    public void loginSocialUser(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_SOCIAL_LOGIN, new ResponseHandler<UserDetailResponseModel>() {
+            @Override
+            public void onResponse(UserDetailResponseModel userDetailResponseModel) {
+                view.hideProgress();
+                if (userDetailResponseModel != null) {
+                    if (userDetailResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setUserData(userDetailResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, userDetailResponseModel.getMessage());
                     }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
