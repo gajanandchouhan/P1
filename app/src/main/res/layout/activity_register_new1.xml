@@ -109,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:text="minimum 6 characters"
                 android:textSize="@dimen/_12sdp"
+
                 android:layout_marginLeft="@dimen/_2sdp"
                 android:layout_height="wrap_content" />
 

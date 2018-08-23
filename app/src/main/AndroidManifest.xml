@@ -198,6 +198,11 @@
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".ui.player.PLayerPopupActivityYesNO"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Dialog" />
     </application>
 
 </manifest>

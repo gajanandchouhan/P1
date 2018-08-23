@@ -36,7 +36,7 @@ public class GeoCoderUtils {
                         add = add + "\n" + obj.getSubAdminArea();
                         add = add + "\n" + obj.getLocality();
                         add = add + "\n" + obj.getSubThoroughfare();
-                        Log.v("IGA", "Address" + add);
+                        Log.v("IGA", "Address" + obj.getPhone());
 
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override

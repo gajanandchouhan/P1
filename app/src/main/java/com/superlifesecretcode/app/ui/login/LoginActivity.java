@@ -93,7 +93,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         textViewDontHaveAnAccount.setOnClickListener(this);
         textViewForgot.setOnClickListener(this);
         setUpConversion();
-
     }
 
     private void setUpConversion() {
@@ -163,6 +162,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         body.put("password", password);
         body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
         body.put("device_type", "1");
+        body.put("lang_id",SuperLifeSecretPreferences.getInstance().getLanguageId());
         presenter.loginUser(body);
     }
 

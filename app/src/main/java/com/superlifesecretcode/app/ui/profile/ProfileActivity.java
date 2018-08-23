@@ -159,14 +159,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private void setUpUi() {
 
         if (userDetailResponseData != null) {
-
-            if (SuperLifeSecretPreferences.getInstance().getLocationData().getPhone_code()!=null) {
-                String countrCode = SuperLifeSecretPreferences.getInstance().getLocationData().getCountry_code().toLowerCase();
-                if (!countrCode.isEmpty()) {
-                    int id = getResources().getIdentifier("flag_" + countrCode, "drawable", getPackageName());
-                    imageViewFlag.setImageResource(id);
-                    textViewDialCode.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getPhone_code());
+            try {
+                if (!SuperLifeSecretPreferences.getInstance().getLocationData().getCountry_code().equals("")) {
+                    countryCode = SuperLifeSecretPreferences.getInstance().getLocationData().getCountry_code().toLowerCase();
+                    if (!countryCode.isEmpty()) {
+                        int id = getResources().getIdentifier("flag_" + countryCode, "drawable", getPackageName());
+                        imageViewFlag.setImageResource(id);
+                        textViewDialCode.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getPhone_code());
+                    }
                 }
+            } catch (NullPointerException e) {
+                Log.e("e", "" + e);
             }
 
             if (userDetailResponseData.getCountry_code() != null) {
@@ -204,13 +207,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 textViewCity.setText("" + userDetailResponseData.getCityName());
             }
 
+            Toast.makeText(this, "first gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
+            Log.e("before",textViewGender.getText().toString());
             if (userDetailResponseData.getGender() != null)
                 textViewGender.setText(userDetailResponseData.getGender().equalsIgnoreCase("1") ? conversionData.getMale() : conversionData.getFemale());
-            if (userDetailResponseData.getCountry()!=null || !userDetailResponseData.getCountry().equals(""))
-            {
+            Toast.makeText(this, "second gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
+            Log.e("after",textViewGender.getText().toString());
+
+            if (userDetailResponseData.getCountry() != null || !userDetailResponseData.getCountry().equals("")) {
                 countryId = userDetailResponseData.getCountry();
-            }
-            else{
+            } else {
                 countryId = SuperLifeSecretPreferences.getInstance().getLocationData().getCountry();
                 //Toast.makeText(this, "getInstance"+countryId, Toast.LENGTH_SHORT).show();
             }
@@ -376,10 +382,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             editTextName.setError(conversionData.getEnter_name());
             return;
         }
-        if (dialCode == null || countryCode == null) {
-            CommonUtils.showSnakeBar(this, "Please select dial code.");
-            return;
-        }
+//        if (dialCode == null || countryCode == null) {
+//            CommonUtils.showSnakeBar(this, "");
+//            return;
+//        }
 
         if (mobileNumber.isEmpty()) {
             editTextMobileNumber.setError(conversionData.getEnter_mobile_number());
@@ -407,15 +413,42 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
         HashMap<String, String> body = new HashMap<>();
         body.put("name", name);
-        body.put("gender", this.gender);
+        if (gender==null || gender.equals("")){
+            body.put("gender", "1");
+        }else {
+            body.put("gender", gender);
+        }
+
         body.put("mobile", mobileNumber.startsWith("0") ? mobileNumber : "0" + mobileNumber);
-        body.put("country_id", countryId);
-        body.put("state_id", stateId);
-        body.put("phone_code", dialCode);
+
+        if (countryId==null || countryId.equals("")){
+            body.put("country_id", SuperLifeSecretPreferences.getInstance().getLocationData().getCountry());
+        }else {
+            body.put("country_id", countryId);
+        }
+
+        if(stateId==null || stateId.equals("")){
+            body.put("state_id", SuperLifeSecretPreferences.getInstance().getLocationData().getState());
+        }else {
+            body.put("state_id", stateId);
+        }
+        if (dialCode==null || dialCode.equals("")){
+            body.put("phone_code", textViewDialCode.getText().toString().replace("+",""));
+        }else {
+            body.put("phone_code", dialCode);
+        }
+
         body.put("email", email);
         body.put("country_code", countryCode.toLowerCase());
         body.put("user_id", userDetailResponseData.getUser_id());
-        body.put("city_id", city != null ? city : "");
+        if (city==null || city.equals("")){
+            body.put("city_id", SuperLifeSecretPreferences.getInstance().getLocationData().getCity());
+        }else {
+            body.put("city_id", city != null ? city : "");
+        }
+
+        body.put("lang_id", languageId);
+//        body.put("lang_id",SuperLifeSecretPreferences.getInstance().getLanguageId());
         HashMap<String, File> fileParams = null;
         if (imagePath != null) {
             File file = new File(imagePath);
@@ -424,6 +457,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
+        Log.e("body",body.toString());
         presenter.updateUser(body, fileParams, headers);
     }
 
@@ -486,7 +520,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         CropImage.activity()
                 .setCropShape(CropImageView.CropShape.OVAL)
                 .start(this);
-
     }
 
     @Override
@@ -559,13 +592,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             if (isUpdate) {
                 CommonUtils.startActivity(this, MainActivity.class);
             }
-          /*  if (lanuguageChanged) {
-                List<SubcategoryModel> subMenuList = SuperLifeSecretPreferences.getInstance().getSubMenuList();
-                for (SubcategoryModel subcategoryModel : subMenuList) {
-                    upadateContent(subcategoryModel);
-                }
-                SuperLifeSecretPreferences.getInstance().setSubMenuList(subMenuList);
-            }*/
             finish();
         }
     }
@@ -583,38 +609,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         countryStatePicker.show();
     }
 
-  /*  private void upadateContent(SubcategoryModel subcategoryModel) {
-        switch (subcategoryModel.getType()) {
-            case ConstantLib.TYPE_HOME:
-                subcategoryModel.setTitle(conversionData.getHome());
-                break;
-            case ConstantLib.TYPE_NEWS:
-                subcategoryModel.setTitle(conversionData.getNews_update());
-                break;
-            case ConstantLib.TYPE_EVENT:
-                subcategoryModel.setTitle(conversionData.getEvent_activity());
-                break;
-            case ConstantLib.TYPE_LATEST:
-                subcategoryModel.setTitle(conversionData.getLatest());
-                break;
-            case ConstantLib.TYPE_SUBMIT:
-                subcategoryModel.setTitle(conversionData.getSubmit());
-                break;
-            case ConstantLib.TYPE_PERSONAL_CALENDAR:
-                subcategoryModel.setTitle(conversionData.getPersonal_cal());
-                break;
-            case ConstantLib.TYPE_EVENT_CALENDAR:
-                subcategoryModel.setTitle(conversionData.getEvent_cal());
-                break;
-            case ConstantLib.TYPE_STUDY_GROUP:
-                subcategoryModel.setTitle(conversionData.getStudy_group());
-                break;
-            case ConstantLib.TYPE_ONSITE:
-                subcategoryModel.setTitle(conversionData.getOnsite());
-                break;
-        }
-    }*/
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PermissionConstant.CODE_PROFILE) {
@@ -626,5 +620,4 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             pickImage();
         }
     }
-
 }

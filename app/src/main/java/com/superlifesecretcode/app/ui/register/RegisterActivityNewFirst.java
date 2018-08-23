@@ -269,8 +269,22 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
 
             case R.id.textView_siginin:
                 UserDetailResponseData userDetailResponseData = new UserDetailResponseData();
+                dialCode = textViewDialCode.getText().toString();
+                Log.e("countryCode",countryCode);
+                Log.e("countryId",countryId);
+                Log.e("countryName",countryName);
+                Log.e("dialCode",dialCode);
+                Log.e("stateId",stateId);
+                Log.e("cityId",cityId);
+                Log.e("matchedCityName",matchedCityName);
+
                 userDetailResponseData.setCountry_code(countryCode);
-                userDetailResponseData.setCountry(countryId);
+                if (countryId==null || countryId.equals("")){
+                    userDetailResponseData.setCountry(SuperLifeSecretPreferences.getInstance().getConversionData().getCountry());
+                }else {
+                    userDetailResponseData.setCountry(countryId);
+                }
+
                 userDetailResponseData.setCountryName(countryName);
                 userDetailResponseData.setPhone_code(dialCode);
                 if(stateId==null || stateId.equals("") || stateId.equals(null) || stateId.equals("null")){
@@ -463,8 +477,9 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
 //                            GeoCoderUtils.getCountryCode(3.152194, 101.778446, RegisterActivityNewFirst.this, new GeoCoderUtils.GeocoderListner() {
 //                            GeoCoderUtils.getCountryCode(location.getLatitude(), location.getLongitude(), RegisterActivityNewFirst.this, new GeoCoderUtils.GeocoderListner() {
 
-//                            GeoCoderUtils.getCountryCode(location.getLatitude(), location.getLongitude(), RegisterActivityNewFirst.this, new GeoCoderUtils.GeocoderListner() {
- GeoCoderUtils.getCountryCode(25.105497, 121.597366, RegisterActivityNewFirst.this, new GeoCoderUtils.GeocoderListner() {
+                            GeoCoderUtils.getCountryCode(location.getLatitude(), location.getLongitude(), RegisterActivityNewFirst.this, new GeoCoderUtils.GeocoderListner() {
+// GeoCoderUtils.getCountryCode(25.105497, 121.597366, RegisterActivityNewFirst.this, new GeoCoderUtils.GeocoderListner() {
+//                     malasia           GeoCoderUtils.getCountryCode(3.152194, 101.778446, RegisterActivityNewFirst.this, new GeoCoderUtils.GeocoderListner() {
                                 @Override
                                 public void onGetCode(String country_name,String country_code, String stateNamefromeo, String cityNamefrogeo) {
 
@@ -670,15 +685,11 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
         body.put("state_id", stateId);
         else
             body.put("state_id",stateNamefromGeo);
-        Log.e("state_id",""+stateId);
-
         if (countryCode!=null && !countryCode.isEmpty())
         body.put("country_code",countryCode);
-        Log.e("country_code",""+countryCode);
-
         if (dialCode!=null && !dialCode.isEmpty())
         body.put("phone_code",dialCode);
-        Log.e("phone_code",""+dialCode);
+        body.put("lang_id",SuperLifeSecretPreferences.getInstance().getLanguageId());
 
         presenter.loginSocialUser(body);
     }

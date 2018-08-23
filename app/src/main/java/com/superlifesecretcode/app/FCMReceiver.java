@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.superlifesecretcode.app.ui.player.MessagePopupActivity;
 import com.superlifesecretcode.app.ui.player.PLayerPopupActivity;
+import com.superlifesecretcode.app.ui.player.PLayerPopupActivityYesNO;
 import com.superlifesecretcode.app.util.ConstantLib;
 
 /**
@@ -18,6 +19,8 @@ public class FCMReceiver extends BroadcastReceiver {
         Class clazz = PLayerPopupActivity.class;
         if (intent.getExtras().getString("type").equalsIgnoreCase(ConstantLib.NOTIFICATION_INSTANCE)) {
             clazz = MessagePopupActivity.class;
+        }else if (intent.getExtras().getString("type").equalsIgnoreCase(ConstantLib.NOTIFICATION_AGAIN)){
+            clazz = PLayerPopupActivityYesNO.class;
         }
         Intent intent1 = new Intent(context, clazz);
         intent1.putExtra("bundle", intent.getExtras());

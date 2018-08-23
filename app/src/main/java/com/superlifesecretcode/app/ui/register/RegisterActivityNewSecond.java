@@ -217,7 +217,6 @@ public class RegisterActivityNewSecond extends BaseActivity implements View.OnCl
         String state_id = getIntent().getStringExtra("state_id");
         String city_id = getIntent().getStringExtra("city_id");
 
-
         if (state_id!=null)
         body.put("state_id", state_id);
         else
@@ -235,7 +234,7 @@ public class RegisterActivityNewSecond extends BaseActivity implements View.OnCl
         body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
         body.put("country_code", country_code);
         body.put("device_type", "1");
-
+        body.put("lang_id",SuperLifeSecretPreferences.getInstance().getLanguageId());
 
         Log.e("body",body.toString());
 //

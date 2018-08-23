@@ -39,6 +39,7 @@ public interface ConstantLib {
     String NOTIFICATION_EVENT = "2";
     String NOTIFICATION_COUNTY_ACTIVITY = "3";
     String NOTIFICATION_INSTANCE = "4";
+    String NOTIFICATION_AGAIN = "5";
 
     String TYPE_ANNOUNCEMENT_EVENT = "1";
     String TYPE_COUNTRY_ACTIVITY_EVENT = "2";

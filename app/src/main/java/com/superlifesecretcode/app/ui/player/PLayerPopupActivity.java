@@ -1,7 +1,9 @@
 package com.superlifesecretcode.app.ui.player;
 
+import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -14,7 +16,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
@@ -28,6 +32,7 @@ public class PLayerPopupActivity extends AppCompatActivity {
     TextView textViewTitle;
     TextView textViewMessage;
     private KeyguardManager myKM;
+    LinearLayout linearLayout;
 //    private PowerManager powerManager;
 
     @Override
@@ -37,6 +42,7 @@ public class PLayerPopupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_popup);
         textViewMessage = findViewById(R.id.textView_message);
         textViewTitle = findViewById(R.id.textView_title);
+        linearLayout = findViewById(R.id.linearlayout);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         LanguageResponseData responseData = SuperLifeSecretPreferences.getInstance().getConversionData();
         if (bundle != null) {
@@ -61,7 +67,7 @@ public class PLayerPopupActivity extends AppCompatActivity {
         buttonDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+             onBackPressed();
             }
         });
         myKM = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);

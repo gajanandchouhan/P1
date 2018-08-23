@@ -22,6 +22,7 @@ import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
+import com.superlifesecretcode.app.ui.book.first.BookList;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.io.File;
@@ -156,9 +157,8 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                 break;
 
+
         }
-
-
     }
 
     public void callMultipart(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, File> files) {
@@ -203,6 +203,7 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<UserDetailResponseModel>(handler));
                     break;
+
 
             }
         } catch (Exception e) {
@@ -340,6 +341,13 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<NotificationResponseModel>(handler));
                     break;
+
+                case REQ_GET_BOOK_LIST:
+                    Observable<BookList> bookObservable = apiInterface.getBookList(stringMultipartParamsParams, header);
+                    bookObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BookList>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -372,6 +380,7 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
+
         }
 
     }
@@ -388,6 +397,13 @@ public class ApiController implements RequestType {
                 countryObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<ShareListResponseModel>(handler));
+                break;
+
+            case REQ_UPDATE_PROFILE_REMAINDER:
+                Observable<BaseResponseModel> updateObservable = apiInterface.getUpdateProfileRemainder(headers);
+                updateObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                 break;
 
         }
