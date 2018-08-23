@@ -270,13 +270,6 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
             case R.id.textView_siginin:
                 UserDetailResponseData userDetailResponseData = new UserDetailResponseData();
                 dialCode = textViewDialCode.getText().toString();
-                Log.e("countryCode",countryCode);
-                Log.e("countryId",countryId);
-                Log.e("countryName",countryName);
-                Log.e("dialCode",dialCode);
-                Log.e("stateId",stateId);
-                Log.e("cityId",cityId);
-                Log.e("matchedCityName",matchedCityName);
 
                 userDetailResponseData.setCountry_code(countryCode);
                 if (countryId==null || countryId.equals("")){
@@ -296,10 +289,8 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
 
                 if(cityId==null || cityId.equals("") || cityId.equals(null) || cityId.equals("null")){
                     userDetailResponseData.setCity(cityNameFromGeo);
-                    //Toast.makeText(this, "cityNameFromGeo"+"------- "+cityNameFromGeo, Toast.LENGTH_SHORT).show();
                 }else {
                     userDetailResponseData.setCity(cityId);
-                    //Toast.makeText(this, "matchedCityName"+"------- "+matchedCityName, Toast.LENGTH_SHORT).show();
                     userDetailResponseData.setCityName(matchedCityName);
                 }
                 SuperLifeSecretPreferences.getInstance().setLocationData(userDetailResponseData);
@@ -337,12 +328,90 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
                 CommonUtils.startActivity(this, TcWebViewActivity.class, bundleSign, false);
                 break;
             case R.id.imageView_f:
+                UserDetailResponseData userDetailResponseData2 = new UserDetailResponseData();
+                dialCode = textViewDialCode.getText().toString();
+
+                userDetailResponseData2.setCountry_code(countryCode);
+                if (countryId==null || countryId.equals("")){
+                    userDetailResponseData2.setCountry(SuperLifeSecretPreferences.getInstance().getConversionData().getCountry());
+                }else {
+                    userDetailResponseData2.setCountry(countryId);
+                }
+
+                userDetailResponseData2.setCountryName(countryName);
+                userDetailResponseData2.setPhone_code(dialCode);
+                if(stateId==null || stateId.equals("") || stateId.equals(null) || stateId.equals("null")){
+                    userDetailResponseData2.setState(stateNamefromGeo);
+                }else {
+                    userDetailResponseData2.setState(stateId);
+                    userDetailResponseData2.setStateName(matchedStateName);
+                }
+
+                if(cityId==null || cityId.equals("") || cityId.equals(null) || cityId.equals("null")){
+                    userDetailResponseData2.setCity(cityNameFromGeo);
+                }else {
+                    userDetailResponseData2.setCity(cityId);
+                    userDetailResponseData2.setCityName(matchedCityName);
+                }
+                SuperLifeSecretPreferences.getInstance().setLocationData(userDetailResponseData2);
                 loginWithFb();
                 break;
             case R.id.imageView_g:
+                UserDetailResponseData userDetailResponseData3 = new UserDetailResponseData();
+                dialCode = textViewDialCode.getText().toString();
+
+                userDetailResponseData3.setCountry_code(countryCode);
+                if (countryId==null || countryId.equals("")){
+                    userDetailResponseData3.setCountry(SuperLifeSecretPreferences.getInstance().getConversionData().getCountry());
+                }else {
+                    userDetailResponseData3.setCountry(countryId);
+                }
+
+                userDetailResponseData3.setCountryName(countryName);
+                userDetailResponseData3.setPhone_code(dialCode);
+                if(stateId==null || stateId.equals("") || stateId.equals(null) || stateId.equals("null")){
+                    userDetailResponseData3.setState(stateNamefromGeo);
+                }else {
+                    userDetailResponseData3.setState(stateId);
+                    userDetailResponseData3.setStateName(matchedStateName);
+                }
+
+                if(cityId==null || cityId.equals("") || cityId.equals(null) || cityId.equals("null")){
+                    userDetailResponseData3.setCity(cityNameFromGeo);
+                }else {
+                    userDetailResponseData3.setCity(cityId);
+                    userDetailResponseData3.setCityName(matchedCityName);
+                }
+                SuperLifeSecretPreferences.getInstance().setLocationData(userDetailResponseData3);
                 signInWithGoogle();
                 break;
             case R.id.imageView_t:
+                UserDetailResponseData userDetailResponseData4 = new UserDetailResponseData();
+                dialCode = textViewDialCode.getText().toString();
+
+                userDetailResponseData4.setCountry_code(countryCode);
+                if (countryId==null || countryId.equals("")){
+                    userDetailResponseData4.setCountry(SuperLifeSecretPreferences.getInstance().getConversionData().getCountry());
+                }else {
+                    userDetailResponseData4.setCountry(countryId);
+                }
+
+                userDetailResponseData4.setCountryName(countryName);
+                userDetailResponseData4.setPhone_code(dialCode);
+                if(stateId==null || stateId.equals("") || stateId.equals(null) || stateId.equals("null")){
+                    userDetailResponseData4.setState(stateNamefromGeo);
+                }else {
+                    userDetailResponseData4.setState(stateId);
+                    userDetailResponseData4.setStateName(matchedStateName);
+                }
+
+                if(cityId==null || cityId.equals("") || cityId.equals(null) || cityId.equals("null")){
+                    userDetailResponseData4.setCity(cityNameFromGeo);
+                }else {
+                    userDetailResponseData4.setCity(cityId);
+                    userDetailResponseData4.setCityName(matchedCityName);
+                }
+                SuperLifeSecretPreferences.getInstance().setLocationData(userDetailResponseData4);
                 signinWithTwitter();
                 break;
         }

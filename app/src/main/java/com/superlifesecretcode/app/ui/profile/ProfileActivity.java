@@ -207,11 +207,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 textViewCity.setText("" + userDetailResponseData.getCityName());
             }
 
-            Toast.makeText(this, "first gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "first gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
             Log.e("before",textViewGender.getText().toString());
             if (userDetailResponseData.getGender() != null)
                 textViewGender.setText(userDetailResponseData.getGender().equalsIgnoreCase("1") ? conversionData.getMale() : conversionData.getFemale());
-            Toast.makeText(this, "second gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "second gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
             Log.e("after",textViewGender.getText().toString());
 
             if (userDetailResponseData.getCountry() != null || !userDetailResponseData.getCountry().equals("")) {
