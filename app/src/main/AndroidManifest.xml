@@ -203,6 +203,18 @@
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".ui.book.first.FirstBookActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.book.second.SecondBookActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.book.third.ThirsBookActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

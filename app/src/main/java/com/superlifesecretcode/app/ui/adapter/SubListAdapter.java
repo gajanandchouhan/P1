@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
@@ -30,9 +32,7 @@ import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
-
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Divya on 26-02-2018.
@@ -207,6 +207,16 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     bundle2.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getOnsite());
                     bundle2.putBoolean("isStudyGroup", false);
                     CommonUtils.startActivity((AppCompatActivity) mContext, CountryAcitvitiesActivity.class, bundle2, false);
+                    break;
+                case ConstantLib.TYPE_PRINT_BOOK:
+                    Bundle bundle3 = new Bundle();
+                    bundle3.putString("type", "1");
+                    CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
+                    break;
+                case ConstantLib.TYPE_BUY_BOOK:
+                    Bundle bundle4 = new Bundle();
+                    bundle4.putString("type", "2");
+                    CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
                     break;
             }
         }

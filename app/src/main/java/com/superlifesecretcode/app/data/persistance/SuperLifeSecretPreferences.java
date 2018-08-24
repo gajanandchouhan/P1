@@ -11,6 +11,7 @@ import com.superlifesecretcode.app.data.model.SubcategoryModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+import com.superlifesecretcode.app.ui.book.first.BookBean;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -143,6 +144,38 @@ public class SuperLifeSecretPreferences {
             Type type = new TypeToken<List<SubcategoryModel>>() {
             }.getType();
             List<SubcategoryModel> list = new Gson().fromJson(subMneus, type);
+            return list;
+        }
+        return null;
+    }
+
+
+    public void setSelectedBooks(ArrayList<String> list) {
+        editer.putString("selected_books", new Gson().toJson(list)).commit();
+    }
+
+    public ArrayList<String> getSelectedBooks() {
+        String subMneus = preferences.getString("selected_books", "");
+        if (subMneus.length() > 0) {
+            Type type = new TypeToken<ArrayList<String>>() {
+            }.getType();
+            ArrayList<String> list = new Gson().fromJson(subMneus, type);
+            return list;
+        }
+        return null;
+    }
+
+
+    public void setSelectedBooksList(ArrayList<BookBean> list) {
+        editer.putString("selected_books_list", new Gson().toJson(list)).commit();
+    }
+
+    public ArrayList<BookBean> getSelectedBooksList() {
+        String subMneus = preferences.getString("selected_books_list", "");
+        if (subMneus.length() > 0) {
+            Type type = new TypeToken<ArrayList<BookBean>>() {
+            }.getType();
+            ArrayList<BookBean> list = new Gson().fromJson(subMneus, type);
             return list;
         }
         return null;

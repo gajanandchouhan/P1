@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
@@ -25,6 +26,7 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.SubListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
@@ -208,7 +210,6 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         autoScrollViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -234,9 +235,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
             case R.id.tab_4:
                 handleBottomClick((AllMenuResponseData) view.getTag());
                 break;
-
         }
-
     }
 
     private void handleBottomClick(AllMenuResponseData tag) {
@@ -248,6 +247,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     }
 
     private void handleSubCaetgoryClicked(AllMenuResponseData tag) {
+        Toast.makeText(this, "f"+tag.getType(), Toast.LENGTH_SHORT).show();
         if (tag != null && tag.getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();
             alertModel.setCount(Integer.parseInt(tag.getAlert_count()));
@@ -295,6 +295,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
     }
 
     public void handleMainCategoryClicked(AllMenuResponseData data) {
+
         if (data.getAlert() != null && data.getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();
             alertModel.setCount(Integer.parseInt(data.getAlert_count()));
@@ -365,6 +366,7 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
                     bundle2.putBoolean("isStudyGroup", false);
                     CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle2, false);
                     break;
+
             }
         }
     }

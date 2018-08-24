@@ -26,6 +26,19 @@
         <item name="android:textSize">@dimen/_13sdp</item>
     </style>
 
+
+    <style name="EdiTextStyle2" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/reguler</item>
+        <item name="android:background">@drawable/text_box_bg</item>
+        <item name="android:paddingLeft">@dimen/_12sdp</item>
+        <item name="android:paddingRight">@dimen/_12sdp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/colorOrange</item>
+        <item name="android:textColorHint">@color/colorOrange</item>
+        <item name="android:textSize">@dimen/_13sdp</item>
+    </style>
+
+
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />
         <attr name="civ_border_color" format="color" />

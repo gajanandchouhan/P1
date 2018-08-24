@@ -1,27 +1,44 @@
 package com.superlifesecretcode.app.ui.book.first;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.book.second.SecondBookActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
+
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FirstBookActivity extends BaseActivity implements FirstBookView {
+
     RecyclerView bookrecyclerview;
-    TextView textview_select;
+    EditText edittext_enteramount;
+    TextView textview_select, textview_back, textview_next;
     FirstBookPresenter firstBookPresenter;
     private UserDetailResponseData userDetailResponseData;
     BookAapter bookAapter;
-    List<BookBean> booksList;
+    public ArrayList<BookBean> booksList;
+    public ArrayList<BookBean> selectedBookArrayList;
+    ArrayList<String> selectedBooks;
 
     @Override
     protected int getContentView() {
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        String type = bundle.getString("type");
         return R.layout.activity_book_first;
     }
 
@@ -29,19 +46,55 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     protected void initializeView() {
         bookrecyclerview = findViewById(R.id.bookrecyclerview);
         textview_select = findViewById(R.id.textview_select);
+        textview_back = findViewById(R.id.textview_back);
+        edittext_enteramount = findViewById(R.id.edittext_enteramount);
+        textview_next = findViewById(R.id.textview_next);
+
         booksList = new ArrayList<>();
+        if (SuperLifeSecretPreferences.getInstance().getSelectedBooks() == null) {
+            selectedBooks = new ArrayList<>();
+        } else {
+            selectedBooks = SuperLifeSecretPreferences.getInstance().getSelectedBooks();
+        }
+
+        if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList() == null) {
+            selectedBookArrayList = new ArrayList<>();
+        } else {
+            selectedBookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
+        }
+
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
-        bookrecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        bookAapter = new BookAapter(booksList,this);
-        bookrecyclerview.setAdapter(bookAapter);
         getBookList();
+        bookrecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        bookAapter = new BookAapter(booksList, this, new BookSelectedListener());
+        bookrecyclerview.setAdapter(bookAapter);
+
+        textview_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().setSelectedBooks(selectedBooks);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("selected_booklist",booksList);
+                Intent intent = new Intent(FirstBookActivity.this, SecondBookActivity.class);
+                intent.putExtra("selected_booklist", selectedBookArrayList);
+                startActivity(intent);
+            }
+        });
+
+        textview_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     private void getBookList() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("book_type", "2");
+        params.put("book_type", "1");
         firstBookPresenter.getBookList(params, headers);
     }
 
@@ -52,9 +105,37 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     }
 
     @Override
-    public void getBookList(BookList bookList) {
+    public void getBookList(BookList bookData) {
+
+        ArrayList<BookBean> finalBooklist = bookData.getData();
         booksList.clear();
-        booksList.addAll(bookList.getData());
+        if (selectedBooks != null) {
+            for (int i = 0; i < finalBooklist.size(); i++) {
+                for (int j = 0; j < selectedBooks.size(); j++) {
+                    //Log.e("seselectedBooks", "" + selectedBooks.get(j));
+                    //Log.e("finalbookId", "" + finalBooklist.get(i).getId());
+                    if (selectedBooks.contains(finalBooklist.get(i).getId())) {
+                        finalBooklist.get(i).setSelected(true);
+                    }
+                }
+            }
+        }
+        booksList.addAll(finalBooklist);
         bookAapter.notifyDataSetChanged();
+    }
+
+    public class BookSelectedListener {
+        public void onSelected(int i, boolean status) {
+            if (status == true) {
+                selectedBookArrayList.add(booksList.get(i));
+                selectedBooks.add("" + booksList.get(i).getId());
+            } else {
+                selectedBookArrayList.remove(booksList.get(i));
+                selectedBooks.remove(booksList.get(i).getId());
+            }
+           SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
+            booksList.get(i).setSelected(status);
+            bookAapter.notifyItemChanged(i);
+        }
     }
 }
