@@ -50,4 +50,8 @@ public interface ConstantLib {
     String EMAIL_NOT_REG = "Email address not registered.";
     String RESET_CODE_SENT = "A password reset code is sent to the given email address.";
     String WORNG_CODE_ENTERED = "You entered a wrong password reset code.";
+
+
+    String COMETCHAT_LICENSE_KEY = "COMETCHAT-UY0G8-4PGBJ-VQ3CL-7JUTT";
+    String COMET_CHAT_API_KEY = "51462x2c751943dc1b06a7c7ec3aad70f1def8";
 }

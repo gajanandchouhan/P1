@@ -11,6 +11,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -27,6 +28,9 @@ import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.Map;
 
+import fm.icelink.IFileStream;
+import utils.CCNotificationHelper;
+
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
 
@@ -42,25 +46,28 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
-
         if (remoteMessage.getData().size() > 0) {
-            Intent intent = new Intent(this, FCMReceiver.class);
-            intent.putExtra("title", remoteMessage.getData().get("title"));
-            intent.putExtra("body", remoteMessage.getData().get("body"));
-            intent.putExtra("type", remoteMessage.getData().get("notification_type"));
-            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (remoteMessage.getData().get("notification_type")!=null){
+                Intent intent = new Intent(this, FCMReceiver.class);
+                intent.putExtra("title", remoteMessage.getData().get("title"));
+                intent.putExtra("body", remoteMessage.getData().get("body"));
+                intent.putExtra("type", remoteMessage.getData().get("notification_type"));
+                // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            try {
-                pendingIntent.send();
-            } catch (PendingIntent.CanceledException e) {
-                e.printStackTrace();
-            }
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+                        intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                try {
+                    pendingIntent.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
 //            sendNotification(remoteMessage.getData());
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-        }
+                Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            }else{
+                CCNotificationHelper.processCCNotificationData(this, remoteMessage, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+            }
 
+        }
         if (remoteMessage.getNotification() != null) {
 //            sendNotification(remoteMessage.getNotification());
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
@@ -94,7 +101,7 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            notificationBuilder.setColor(getColor(R.color.colorPrimary));
+            notificationBuilder.setColor(ContextCompat.getColor(this,R.color.colorPrimary));
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
         } else {
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);

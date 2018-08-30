@@ -16,7 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.inscripts.interfaces.Callbacks;
+import com.inscripts.interfaces.LaunchCallbacks;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.DrawerItem;
@@ -50,10 +53,16 @@ import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cometchat.inscripts.com.cometchatcore.coresdk.CometChat;
+
+import static cometchat.inscripts.com.readyui.CCReadyUI.launchCometChat;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
@@ -409,6 +418,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
+        if (list.get(clickedPostion).getType().equals("3")) {
+            createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
+            return;
+        }
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();
             alertModel.setCount(Integer.parseInt(list.get(clickedPostion).getAlert_count()));
@@ -667,4 +680,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
     }
+
+
 }

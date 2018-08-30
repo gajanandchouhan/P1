@@ -19,6 +19,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+        repositories {
+            maven{
+                url 'https://dl.bintray.com/cometchat/CometChat'
+            }
+        }
         maven { url 'https://dl.bintray.com/drummer-aidan/maven' }
     }
 }
