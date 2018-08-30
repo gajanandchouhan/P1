@@ -745,19 +745,20 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
         body.put("device_token", SuperLifeSecretPreferences.getInstance().getDeviceToken());
         body.put("device_type", "1");
         if (cityId!=null && !city.isEmpty())
-        body.put("city_id", cityId);
+        body.put("city", cityId);
         else
-            body.put("city_id",cityNameFromGeo);
+            body.put("city",cityNameFromGeo);
         Log.e("city_id",""+cityId);
 
         if (stateId!=null && !stateId.isEmpty())
-        body.put("state_id", stateId);
+        body.put("state", stateId);
         else
-            body.put("state_id",stateNamefromGeo);
+            body.put("state",stateNamefromGeo);
         if (countryCode!=null && !countryCode.isEmpty())
         body.put("country_code",countryCode);
         if (dialCode!=null && !dialCode.isEmpty())
         body.put("phone_code",dialCode);
+        body.put("country",countryId);
         body.put("lang_id",SuperLifeSecretPreferences.getInstance().getLanguageId());
 
         presenter.loginSocialUser(body);

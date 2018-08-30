@@ -60,7 +60,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:src="@drawable/check" />
+                android:src="@drawable/right" />
         </RelativeLayout>
 
         <LinearLayout
@@ -92,7 +92,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:src="@drawable/check" />
+                android:src="@drawable/right" />
         </RelativeLayout>
 
 
@@ -126,7 +126,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:src="@drawable/check" />
+                android:src="@drawable/right" />
         </RelativeLayout>
 
     </LinearLayout>

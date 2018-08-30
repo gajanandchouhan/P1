@@ -1,4 +1,4 @@
-package com.superlifesecretcode.app.ui.book.first;
+package com.superlifesecretcode.app.ui.book.forth;
 
 import android.content.Context;
 
@@ -8,39 +8,41 @@ import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
 import com.superlifesecretcode.app.data.netcomm.ResponseHandler;
 import com.superlifesecretcode.app.ui.base.BasePresenter;
+import com.superlifesecretcode.app.ui.book.first.BookList;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FirstBookPresenter extends BasePresenter<FirstBookView> {
+public class ForthBookPresneter extends BasePresenter<ForthBookView> {
 
-    FirstBookView view;
+    ForthBookView view;
 
-    public FirstBookPresenter(Context mContext) {
+    public ForthBookPresneter(Context mContext) {
         super(mContext);
     }
 
     @Override
-    protected void setView(FirstBookView view) {
-        this.view = view;
+    protected void setView(ForthBookView forthBookView) {
+        view=forthBookView;
     }
 
-    public void getBookList(HashMap<String, String> params, Map<String, String> headers) {
+
+    public void getStores(HashMap<String, String> params, Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callWithHeader(mContext, RequestType.REQ_GET_BOOK_LIST, new ResponseHandler<BookList>() {
+        apiController.callGet(mContext, RequestType.REQ_GET_STORES_BOOK_FORTH, new ResponseHandler<StoreBean>() {
             @Override
-            public void onResponse(BookList categoryResponseModel) {
+            public void onResponse(StoreBean categoryResponseModel) {
                 view.hideProgress();
                 if (categoryResponseModel != null) {
                     if (categoryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS))
-                        view.getBookList(categoryResponseModel);
+                        view.getStores(categoryResponseModel);
                     else {
                         CommonUtils.showSnakeBar(mContext, categoryResponseModel.getMessage());
                     }
@@ -56,9 +58,6 @@ public class FirstBookPresenter extends BasePresenter<FirstBookView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        }, params, headers);
+        });
     }
-
-
 }
-

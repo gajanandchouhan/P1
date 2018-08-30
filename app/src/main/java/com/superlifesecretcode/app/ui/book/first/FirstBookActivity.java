@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,13 +13,11 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.base.BaseView;
 import com.superlifesecretcode.app.ui.book.second.SecondBookActivity;
-import com.superlifesecretcode.app.util.CommonUtils;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FirstBookActivity extends BaseActivity implements FirstBookView {
@@ -34,11 +31,12 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     public ArrayList<BookBean> booksList;
     public ArrayList<BookBean> selectedBookArrayList;
     ArrayList<String> selectedBooks;
+    public String book_type;
 
     @Override
     protected int getContentView() {
         Bundle bundle = getIntent().getBundleExtra("bundle");
-        String type = bundle.getString("type");
+        book_type = bundle.getString("type");
         return R.layout.activity_book_first;
     }
 
@@ -94,7 +92,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("book_type", "1");
+        params.put("book_type", book_type);
         firstBookPresenter.getBookList(params, headers);
     }
 
@@ -133,7 +131,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                 selectedBookArrayList.remove(booksList.get(i));
                 selectedBooks.remove(booksList.get(i).getId());
             }
-           SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
+            SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
             booksList.get(i).setSelected(status);
             bookAapter.notifyItemChanged(i);
         }

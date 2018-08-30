@@ -23,6 +23,7 @@ import com.superlifesecretcode.app.data.model.standardevent.StandardEventRespons
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.ui.book.first.BookList;
+import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.io.File;
@@ -379,6 +380,20 @@ public class ApiController implements RequestType {
                 countryShareObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
+                break;
+
+            case REQ_GET_ADDRESSES_BOOK_FORTH:
+                Observable<CountryResponseModel> addressObservable = apiInterface.getAddress();
+                addressObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
+                break;
+
+            case REQ_GET_STORES_BOOK_FORTH:
+                Observable<StoreBean> storeObservable = apiInterface.getStores();
+                storeObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<StoreBean>(handler));
                 break;
 
         }

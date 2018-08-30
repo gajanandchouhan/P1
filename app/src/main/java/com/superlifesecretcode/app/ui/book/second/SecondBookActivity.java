@@ -27,6 +27,7 @@ public class SecondBookActivity extends BaseActivity {
     TextView textview_totalamount, textview_next, textview_back;
     EditText edittext_enteramount;
     ArrayList<BookBean> bookArrayList;
+    double TOTAL_AMOUNT, REMAINING_AMOUNT;
 
     @Override
     protected int getContentView() {
@@ -73,10 +74,24 @@ public class SecondBookActivity extends BaseActivity {
         textview_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getBookAmount();
-                Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
-                intent.putExtra("selected_booklist", bookArrayList);
-                startActivity(intent);
+                if (amount_linear.getVisibility() == View.GONE) {
+                    //getBookAmount();
+                    Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
+                    intent.putExtra("selected_booklist", bookArrayList);
+                    intent.putExtra("total_amount", bookArrayList);
+                    intent.putExtra("remaminder", bookArrayList);
+                    startActivity(intent);
+                } else {
+                    getBookAmount();
+                    if (TOTAL_AMOUNT != 0.0) {
+                        Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
+                        intent.putExtra("selected_booklist", bookArrayList);
+                        intent.putExtra("total_amount", ""+TOTAL_AMOUNT);
+                        intent.putExtra("remaminder", ""+REMAINING_AMOUNT);
+                        startActivity(intent);
+                    }
+
+                }
             }
         });
         textview_back.setOnClickListener(new View.OnClickListener() {
@@ -85,9 +100,7 @@ public class SecondBookActivity extends BaseActivity {
                 finish();
             }
         });
-
     }
-
 
     public void getBookAmount() {
 
@@ -95,8 +108,8 @@ public class SecondBookActivity extends BaseActivity {
         Log.e("AMOUNT_ENTERED", "" + AMOUNT_ENTERED);
         Log.e("bookArrayList SIZE", "" + bookArrayList.size());
         double AMOUNT_TOTAL = 0.0;
-        double DIVIDED = 0.0;
-        int increased_quantity=0;
+        double DIVID_REMAINDER = 0.0;
+        int increased_quantity = 0;
 
         for (int i = 0; i < bookArrayList.size(); i++) {
             Log.e("unsortedprice", "" + bookArrayList.get(i).getPrice());
@@ -105,23 +118,32 @@ public class SecondBookActivity extends BaseActivity {
         Log.e("AMOUNT_TOTAL", "" + AMOUNT_TOTAL);
 
         if (AMOUNT_ENTERED > AMOUNT_TOTAL) {
-             DIVIDED = AMOUNT_ENTERED % AMOUNT_TOTAL;
-             increased_quantity = (int) ( AMOUNT_ENTERED / AMOUNT_TOTAL);
-            Log.e("DIVIDED", "" + DIVIDED);
+            DIVID_REMAINDER = AMOUNT_ENTERED % AMOUNT_TOTAL;
+            increased_quantity = (int) (AMOUNT_ENTERED / AMOUNT_TOTAL);
+            for (int p = 0; p < bookArrayList.size(); p++) {
+                bookArrayList.get(p).setQuantity(increased_quantity);
+            }
+            TOTAL_AMOUNT = (AMOUNT_ENTERED - DIVID_REMAINDER);
+            REMAINING_AMOUNT = DIVID_REMAINDER;
+            Log.e("DIVID_REMAINDER", "" + DIVID_REMAINDER);
         } else {
             Toast.makeText(this, "amount is insufficient!!!", Toast.LENGTH_SHORT).show();
-        }
-
-        for (int p = 0 ; p < bookArrayList.size() ; p++){
-            bookArrayList.get(p).setQuantity(increased_quantity);
+            return;
         }
 
         Collections.sort(bookArrayList, BookBean.PriceComparater);
         for (int i = 0; i < bookArrayList.size(); i++) {
             Log.e("sortedprice", "" + bookArrayList.get(i).getPrice());
-            if (bookArrayList.get(i).getPrice()>DIVIDED){
+            if (bookArrayList.get(i).getPrice() > DIVID_REMAINDER) {
+                DIVID_REMAINDER = DIVID_REMAINDER % bookArrayList.get(i).getPrice();
+                increased_quantity = (int) (DIVID_REMAINDER / bookArrayList.get(i).getPrice());
+                bookArrayList.get(i).setQuantity(increased_quantity);
 
-            }else {
+                TOTAL_AMOUNT = (AMOUNT_ENTERED - DIVID_REMAINDER);
+                REMAINING_AMOUNT = DIVID_REMAINDER;
+            } else {
+                TOTAL_AMOUNT = (AMOUNT_ENTERED - DIVID_REMAINDER);
+                REMAINING_AMOUNT = DIVID_REMAINDER;
                 return;
             }
         }

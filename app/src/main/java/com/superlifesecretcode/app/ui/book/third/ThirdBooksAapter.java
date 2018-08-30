@@ -37,7 +37,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_bookprice.setText("$" + list.get(position).getPrice());
-
+        holder.edittext_quantity.setText(""+list.get(position).getQuantity());
     }
 
     @Override
@@ -47,17 +47,18 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ImageView plus, minus;
+//        ImageView plus, minus;
         TextView textview_book_name;
-        TextView textview_bookprice;
+        TextView textview_bookprice , edittext_quantity;
         //LinearLayout linear_select;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            plus = itemView.findViewById(R.id.plus);
-            minus = itemView.findViewById(R.id.minus);
+//            plus = itemView.findViewById(R.id.plus);
+//            minus = itemView.findViewById(R.id.minus);
             textview_book_name = itemView.findViewById(R.id.textview_book_name);
             textview_bookprice = itemView.findViewById(R.id.textview_bookprice);
+            edittext_quantity = itemView.findViewById(R.id.edittext_quantity);
             //linear_select = itemView.findViewById(R.id.linear_select);
         }
 

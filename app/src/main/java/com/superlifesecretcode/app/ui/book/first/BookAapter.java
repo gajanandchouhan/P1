@@ -54,6 +54,7 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
             @Override
             public void onClick(View v) {
                 if (list.get(position).isSelected()) {
+
                     bookSelectedListener.onSelected(position, false);
                 } else {
                     bookSelectedListener.onSelected(position, true);
