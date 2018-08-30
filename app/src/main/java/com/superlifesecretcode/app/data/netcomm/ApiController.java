@@ -2,6 +2,7 @@ package com.superlifesecretcode.app.data.netcomm;
 
 
 import android.content.Context;
+
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
@@ -40,6 +41,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
+
 /**
  * Created by JAIN COMPUTERS on 11/18/2017.
  */
@@ -400,7 +402,7 @@ public class ApiController implements RequestType {
 
     }
 
-    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> headers, String countryId,String page) {
+    public void callGetWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> headers, String countryId, String page) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -408,7 +410,7 @@ public class ApiController implements RequestType {
         ApiClient.ADD_LOG = true;
         switch (reqTyoe) {
             case REQ_GET_ALL_LATEST:
-                Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers,countryId,page);
+                Observable<ShareListResponseModel> countryObservable = apiInterface.getAllShareList(headers, countryId, page);
                 countryObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<ShareListResponseModel>(handler));
@@ -426,11 +428,16 @@ public class ApiController implements RequestType {
     }
 
     public HashMap<String, RequestBody> getRequestParams(Map<String, String> stringParams) {
+
         HashMap<String, RequestBody> params = new HashMap<>();
-        for (Map.Entry<String, String> entry : stringParams.entrySet()) {
-            RequestBody requestBody = RequestBody.create(
-                    MultipartBody.FORM, entry.getValue());
-            params.put(entry.getKey(), requestBody);
+        try {
+            for (Map.Entry<String, String> entry : stringParams.entrySet()) {
+                RequestBody requestBody = RequestBody.create(
+                        MultipartBody.FORM, entry.getValue());
+                params.put(entry.getKey(), requestBody);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return params;
     }

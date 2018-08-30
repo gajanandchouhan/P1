@@ -1,1 +1,1 @@
-include ':app', ':countrypicker', ':calendarmodule'
+include ':app', ':countrypicker', ':calendarmodule', ':cometchatui'
