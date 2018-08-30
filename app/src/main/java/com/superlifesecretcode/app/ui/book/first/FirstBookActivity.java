@@ -30,7 +30,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     BookAapter bookAapter;
     public ArrayList<BookBean> booksList;
     public ArrayList<BookBean> selectedBookArrayList;
-    ArrayList<String> selectedBooks;
+    public ArrayList<String> selectedBooks;
     public String book_type;
 
     @Override

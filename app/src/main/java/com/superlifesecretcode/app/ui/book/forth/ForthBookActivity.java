@@ -62,7 +62,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 view_printforown.setBackgroundColor(getResources().getColor(R.color.transparent));
                 view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 linear_contact_id.setVisibility(View.VISIBLE);
-                //
+
             }
         });
 

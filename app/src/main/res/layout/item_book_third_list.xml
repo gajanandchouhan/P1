@@ -51,13 +51,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textview_book_name"
                     android:fontFamily="@font/bold"
-                    android:text="$90"
                     android:textColor="@color/red_bg"
                     android:textSize="@dimen/_12sdp" />
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -68,41 +67,34 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/delete_iamge"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/delete"
                     android:tint="@color/colorPrimary" />
 
                 <EditText
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/delete_iamge"
                     android:id="@+id/edittext_quantity"
-                    android:layout_width="@dimen/_50sdp"
+                    android:layout_width="@dimen/_80sdp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="0"
+                    android:gravity="right"
+                    android:background="@null"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/edittext_quantity"
                     android:background="@color/colorPrimary"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_1sdp"></LinearLayout>
 
-                <!--<EditText-->
-                <!--android:id="@+id/edittext_quantity"-->
-                <!--android:layout_width="@dimen/_30sdp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center"-->
-                <!--android:hint="0"-->
-                <!--android:textColor="@color/colorPrimary"-->
-                <!--android:textSize="@dimen/_12sdp" />-->
 
-                <!--<LinearLayout-->
-                <!--android:layout_width="@dimen/_25sdp"-->
-                <!--android:layout_height="2dp"-->
-                <!--android:background="@color/colorPrimary"></LinearLayout>-->
-
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

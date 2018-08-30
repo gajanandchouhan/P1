@@ -38,7 +38,6 @@ public class SecondBookActivity extends BaseActivity {
     protected void initializeView() {
 
         bookArrayList = (ArrayList<BookBean>) getIntent().getSerializableExtra("selected_booklist");
-        Toast.makeText(this, "" + bookArrayList.size(), Toast.LENGTH_SHORT).show();
 
         linearlayout_book_quality = findViewById(R.id.linearlayout_book_quality);
         linearlayout_affortdability = findViewById(R.id.linearlayout_affortdability);
@@ -53,7 +52,7 @@ public class SecondBookActivity extends BaseActivity {
         edittext_enteramount = findViewById(R.id.edittext_enteramount);
         textview_next = findViewById(R.id.textview_next);
         textview_back = findViewById(R.id.textview_back);
-
+        amount_linear.setVisibility(View.GONE);
         linearlayout_book_quality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +85,9 @@ public class SecondBookActivity extends BaseActivity {
                     if (TOTAL_AMOUNT != 0.0) {
                         Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
                         intent.putExtra("selected_booklist", bookArrayList);
+                        for (int p = 0; p < bookArrayList.size(); p++) {
+                            Log.e("quaadddd"+p,""+bookArrayList.get(p).getQuantity());
+                        }
                         intent.putExtra("total_amount", ""+TOTAL_AMOUNT);
                         intent.putExtra("remaminder", ""+REMAINING_AMOUNT);
                         startActivity(intent);
@@ -122,6 +124,7 @@ public class SecondBookActivity extends BaseActivity {
             increased_quantity = (int) (AMOUNT_ENTERED / AMOUNT_TOTAL);
             for (int p = 0; p < bookArrayList.size(); p++) {
                 bookArrayList.get(p).setQuantity(increased_quantity);
+                Log.e("qua"+p,""+bookArrayList.get(p).getQuantity());
             }
             TOTAL_AMOUNT = (AMOUNT_ENTERED - DIVID_REMAINDER);
             REMAINING_AMOUNT = DIVID_REMAINDER;
@@ -131,21 +134,26 @@ public class SecondBookActivity extends BaseActivity {
             return;
         }
 
+        double NEXT_REMAINDER=0.0;
         Collections.sort(bookArrayList, BookBean.PriceComparater);
+        int setquantity=0;
         for (int i = 0; i < bookArrayList.size(); i++) {
-            Log.e("sortedprice", "" + bookArrayList.get(i).getPrice());
-            if (bookArrayList.get(i).getPrice() > DIVID_REMAINDER) {
-                DIVID_REMAINDER = DIVID_REMAINDER % bookArrayList.get(i).getPrice();
-                increased_quantity = (int) (DIVID_REMAINDER / bookArrayList.get(i).getPrice());
-                bookArrayList.get(i).setQuantity(increased_quantity);
-
-                TOTAL_AMOUNT = (AMOUNT_ENTERED - DIVID_REMAINDER);
-                REMAINING_AMOUNT = DIVID_REMAINDER;
-            } else {
-                TOTAL_AMOUNT = (AMOUNT_ENTERED - DIVID_REMAINDER);
-                REMAINING_AMOUNT = DIVID_REMAINDER;
-                return;
+            if (bookArrayList.get(i).getPrice() <= DIVID_REMAINDER) {
+                NEXT_REMAINDER = DIVID_REMAINDER % bookArrayList.get(i).getPrice();
+                Log.e("DIVID_REMAINDER_new"+DIVID_REMAINDER, "" + bookArrayList.get(i).getPrice());
+                setquantity = (int) (DIVID_REMAINDER / bookArrayList.get(i).getPrice());
+                if (setquantity!=0){
+                    bookArrayList.get(i).setQuantity((setquantity + bookArrayList.get(i).getQuantity()));
+                    TOTAL_AMOUNT = (AMOUNT_ENTERED - NEXT_REMAINDER);
+                    REMAINING_AMOUNT = NEXT_REMAINDER;
+                    DIVID_REMAINDER = DIVID_REMAINDER - bookArrayList.get(i).getPrice();
+                }
             }
+//            else {
+//                TOTAL_AMOUNT = (AMOUNT_ENTERED - DIVID_REMAINDER);
+//                REMAINING_AMOUNT = DIVID_REMAINDER;
+//                return;
+//            }
         }
     }
 
