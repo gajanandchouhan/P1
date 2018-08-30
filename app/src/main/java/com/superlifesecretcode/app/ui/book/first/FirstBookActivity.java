@@ -71,21 +71,22 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
             @Override
             public void onClick(View v) {
                 SuperLifeSecretPreferences.getInstance().setSelectedBooks(selectedBooks);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("selected_booklist",booksList);
-                Intent intent = new Intent(FirstBookActivity.this, SecondBookActivity.class);
-                intent.putExtra("selected_booklist", selectedBookArrayList);
-                startActivity(intent);
+
+                if(selectedBooks.size()!=0){
+                    Intent intent = new Intent(FirstBookActivity.this, SecondBookActivity.class);
+                    intent.putExtra("selected_booklist", selectedBookArrayList);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(FirstBookActivity.this, "Please selct atleast one item.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
         textview_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
     }
 
     private void getBookList() {
