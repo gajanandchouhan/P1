@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by Divya on 26-02-2018.
  */
-
+@Deprecated
 public class SubacategoryListAdapter extends RecyclerView.Adapter<SubacategoryListAdapter.ItemViewHolder> {
     private final List<SubcategoryModel> list;
     private final String colorCode;

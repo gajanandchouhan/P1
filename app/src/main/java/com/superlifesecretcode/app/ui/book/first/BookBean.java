@@ -1,8 +1,32 @@
 package com.superlifesecretcode.app.ui.book.first;
 
-public class BookBean {
+import android.support.annotation.NonNull;
 
-    String author_name,description,id,image,name,price,stock;
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class BookBean implements Serializable{
+
+    String author_name,description,id,image,name,stock;
+    double price;
+    boolean selected  = false;
+    int quantity=0;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     public String getAuthor_name() {
         return author_name;
@@ -44,11 +68,11 @@ public class BookBean {
         this.name = name;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -59,6 +83,20 @@ public class BookBean {
     public void setStock(String stock) {
         this.stock = stock;
     }
+
+    /*Comparator for sorting the list by price no*/
+    public static Comparator<BookBean> PriceComparater = new Comparator<BookBean>() {
+        public int compare(BookBean s1, BookBean s2) {
+
+            int price1 = (int) s1.getPrice();
+            int price2 = (int) s2.getPrice();
+
+            /*For ascending order*/
+//            return rollno1-rollno2;
+
+            /*For descending order*/
+           return price2-price1;
+        }};
 }
 
 

@@ -208,11 +208,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             }
 
             //Toast.makeText(this, "first gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
-            Log.e("before",textViewGender.getText().toString());
-            if (userDetailResponseData.getGender() != null)
-                textViewGender.setText(userDetailResponseData.getGender().equalsIgnoreCase("1") ? conversionData.getMale() : conversionData.getFemale());
+            Log.e("before", textViewGender.getText().toString());
+            if (userDetailResponseData.getGender() != null) {
+                if (userDetailResponseData.getGender().equals("1")) {
+                    textViewGender.setText(conversionData.getMale());
+                } else if (userDetailResponseData.getGender().equals("2")) {
+                    textViewGender.setText(conversionData.getFemale());
+                }
+            }
+
             //Toast.makeText(this, "second gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
-            Log.e("after",textViewGender.getText().toString());
+            Log.e("after", textViewGender.getText().toString());
 
             if (userDetailResponseData.getCountry() != null || !userDetailResponseData.getCountry().equals("")) {
                 countryId = userDetailResponseData.getCountry();
@@ -413,37 +419,38 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
         HashMap<String, String> body = new HashMap<>();
         body.put("name", name);
-        if (gender==null || gender.equals("")){
+        body.put("gender", this.gender);
+        /*if (gender==null || gender.equals("")){
             body.put("gender", "1");
         }else {
             body.put("gender", gender);
-        }
+        }*/
 
         body.put("mobile", mobileNumber.startsWith("0") ? mobileNumber : "0" + mobileNumber);
 
-        if (countryId==null || countryId.equals("")){
+        if (countryId == null || countryId.equals("")) {
             body.put("country_id", SuperLifeSecretPreferences.getInstance().getLocationData().getCountry());
-        }else {
+        } else {
             body.put("country_id", countryId);
         }
 
-        if(stateId==null || stateId.equals("")){
+        if (stateId == null || stateId.equals("")) {
             body.put("state_id", SuperLifeSecretPreferences.getInstance().getLocationData().getState());
-        }else {
+        } else {
             body.put("state_id", stateId);
         }
-        if (dialCode==null || dialCode.equals("")){
-            body.put("phone_code", textViewDialCode.getText().toString().replace("+",""));
-        }else {
+        if (dialCode == null || dialCode.equals("")) {
+            body.put("phone_code", textViewDialCode.getText().toString().replace("+", ""));
+        } else {
             body.put("phone_code", dialCode);
         }
 
         body.put("email", email);
         body.put("country_code", countryCode.toLowerCase());
         body.put("user_id", userDetailResponseData.getUser_id());
-        if (city==null || city.equals("")){
+        if (city == null || city.equals("")) {
             body.put("city_id", SuperLifeSecretPreferences.getInstance().getLocationData().getCity());
-        }else {
+        } else {
             body.put("city_id", city != null ? city : "");
         }
 
@@ -457,7 +464,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userDetailResponseData.getApi_token());
-        Log.e("body",body.toString());
+        Log.e("body", body.toString());
         presenter.updateUser(body, fileParams, headers);
     }
 

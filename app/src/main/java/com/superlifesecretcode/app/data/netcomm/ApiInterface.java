@@ -21,6 +21,7 @@ import com.superlifesecretcode.app.data.model.standardevent.StandardEventRespons
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.ui.book.first.BookList;
+import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 
 import java.util.Map;
 
@@ -273,5 +274,13 @@ public interface ApiInterface {
     @POST("books")
     Observable<BookList> getBookList(@PartMap() Map<String, RequestBody> partMap,
                                      @HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("oldAddresses")
+    Observable<CountryResponseModel> getAddress();
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("stores")
+    Observable<StoreBean> getStores();
 
 }

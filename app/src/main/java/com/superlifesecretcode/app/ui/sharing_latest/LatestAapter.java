@@ -208,7 +208,7 @@ public class LatestAapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public ProgressViewHolder(View v) {
             super(v);
-            progressBar =  v.findViewById(R.id.progressBar1);
+            progressBar = v.findViewById(R.id.progressBar1);
         }
     }
 

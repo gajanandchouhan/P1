@@ -198,7 +198,7 @@ public class RegisterActivityNewSecond extends BaseActivity implements View.OnCl
             }
             body.put("name", name);
             body.put("email", email);
-            body.put("gender", gender);
+            body.put("gender", this.gender);
         }else {
             body.put("name", "");
             body.put("email", "");

@@ -47,4 +47,6 @@ public interface RequestType {
     byte REQ_CREATE_LEAD=38;
     byte REQ_UPDATE_PROFILE_REMAINDER=39;
     byte REQ_GET_BOOK_LIST=40;
+    byte REQ_GET_ADDRESSES_BOOK_FORTH=41;
+    byte REQ_GET_STORES_BOOK_FORTH=42;
 }

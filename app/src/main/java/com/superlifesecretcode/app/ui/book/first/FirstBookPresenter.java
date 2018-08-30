@@ -3,13 +3,11 @@ package com.superlifesecretcode.app.ui.book.first;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
 import com.superlifesecretcode.app.data.netcomm.ResponseHandler;
 import com.superlifesecretcode.app.ui.base.BasePresenter;
-import com.superlifesecretcode.app.ui.book.first.FirstBookView;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
