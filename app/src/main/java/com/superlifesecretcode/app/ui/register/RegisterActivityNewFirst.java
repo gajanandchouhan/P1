@@ -747,13 +747,13 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
         if (cityId!=null && !city.isEmpty())
         body.put("city", cityId);
         else
-            body.put("city",cityNameFromGeo);
+            body.put("city",cityNameFromGeo!=null?cityNameFromGeo:"");
         Log.e("city_id",""+cityId);
 
         if (stateId!=null && !stateId.isEmpty())
         body.put("state", stateId);
         else
-            body.put("state",stateNamefromGeo);
+            body.put("state",stateNamefromGeo!=null?stateNamefromGeo:"");
         if (countryCode!=null && !countryCode.isEmpty())
         body.put("country_code",countryCode);
         if (dialCode!=null && !dialCode.isEmpty())
