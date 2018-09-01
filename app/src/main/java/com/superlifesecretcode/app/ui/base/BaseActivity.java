@@ -282,4 +282,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        hideProgress();
+        super.onDestroy();
+    }
 }
