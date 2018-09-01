@@ -415,12 +415,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             CommonUtils.showSnakeBar(this, conversionData.getSelect_gender());
             return;
         }
-        if (countryId == null) {
+        if (countryId == null||countryId.isEmpty()) {
             CommonUtils.showSnakeBar(this, conversionData.getSelect_country());
             return;
         }
-        if (stateId == null) {
+        if (stateId == null||stateId.isEmpty()) {
             CommonUtils.showSnakeBar(this, conversionData.getSelect_state());
+            return;
+        }
+        if (city==null||city.isEmpty()){
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_city());
             return;
         }
         HashMap<String, String> body = new HashMap<>();

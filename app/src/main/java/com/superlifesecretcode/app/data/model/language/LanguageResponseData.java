@@ -164,7 +164,15 @@ public class LanguageResponseData {
     private String start_app;
     private String existing_user;
     private String min_password_character;
+    private String select_city;
 
+    public String getSelect_city() {
+        return select_city;
+    }
+
+    public void setSelect_city(String select_city) {
+        this.select_city = select_city;
+    }
 
     public String getMin_password_character() {
         return min_password_character;
