@@ -419,7 +419,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
         if (list.get(clickedPostion).getType().equals("3")) {
-            createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
+            createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id(), userDetailResponseData.getImage());
             return;
         }
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {

@@ -82,38 +82,8 @@ public class DiscolsureActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    protected void showInternetAlert() {
-        CommonUtils.showAlert(this, getString(R.string.no_internet), "OK", "CANCEL", new AlertDialog.OnClickListner() {
-            @Override
-            public void onPositiveClick() {
-            }
 
-            @Override
-            public void onNegativeClick() {
-            }
-        });
-    }
 
-    private void accept() {
-        getCurrentLocation(new LocationCallBack() {
-            @Override
-            public void onLocationSuccess(Location location) {
-                GeoCoderUtils.getCountryCode(location.getLatitude(), location.getLongitude(), DiscolsureActivity.this, new GeoCoderUtils.GeocoderListner() {
-                    @Override
-                    public void onGetCode(String countryName,String countryCode,String state,String city) {
-                        if (countryCode != null) {
-                            CommonUtils.showLog(TAG, "Code is :" + countryCode);
-                            SuperLifeSecretPreferences.getInstance().putBoolean(SuperLifeSecretPreferences.DISCLOSE_ACCEPTED, true);
-                            CommonUtils.startActivity(DiscolsureActivity.this, RegisterActivity.class);
-                            finish();
-                        } else {
-                            showInternetAlert();
-                        }
-                    }
-                });
-            }
-        });
-    }
 
     @Override
     protected void onPause() {

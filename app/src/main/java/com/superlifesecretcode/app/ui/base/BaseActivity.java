@@ -21,6 +21,7 @@ import com.inscripts.interfaces.Callbacks;
 import com.inscripts.interfaces.LaunchCallbacks;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.MyLocationManager;
@@ -167,31 +168,36 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected abstract void initializePresenter();
 
 
-    protected void createCometChatUser(String name, final String uid) {
+    protected void createCometChatUser(String name, final String uid, String image) {
+
         CometChat cometChatInstance = SuperLifeSecretCodeApp.getCometChatInstance();
         if (cometChatInstance == null) {
             CommonUtils.showToast(this, getString(R.string.server_error));
             return;
         }
+        String cometChaUserId = SuperLifeSecretPreferences.getInstance().getCometChaUserId();
+        if (cometChaUserId.equals(uid)) {
+            launch(cometChatInstance);
+            return;
+        }
         showProgress();
-        cometChatInstance.createUser(this, uid, name, "", "", "", new Callbacks() {
+        cometChatInstance.createUser(this, uid, name, image != null ? image : "", "", "", new Callbacks() {
             @Override
             public void successCallback(JSONObject jsonObject) {
                 Log.v("COMET CHAT", "Register Success :" + jsonObject.toString());
-                JSONObject success = jsonObject.optJSONObject("success");
                 login(uid);
-
             }
 
             @Override
             public void failCallback(JSONObject jsonObject) {
                 Log.v("COMET CHAT", "Register Failed :" + jsonObject.toString());
-                login(uid);
+                hideProgress();
+                CommonUtils.showToast(BaseActivity.this, getString(R.string.server_error));
             }
         });
     }
 
-    private void login(String uid) {
+    private void login(final String uid) {
         final CometChat cometChatInstance = SuperLifeSecretCodeApp.getCometChatInstance();
         if (cometChatInstance == null)
             return;
@@ -199,6 +205,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             @Override
             public void successCallback(JSONObject jsonObject) {
                 Log.v("COMET CHAT", "Login Success :" + jsonObject.toString());
+                SuperLifeSecretPreferences.getInstance().setCometChatUserId(uid);
                 launch(cometChatInstance);
                 hideProgress();
             }
@@ -214,7 +221,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
 
-    private void launch(CometChat cometChat) {
+    protected void launch(CometChat cometChat) {
         boolean isFullScrenn = true;
         cometChat.launchCometChat(this, isFullScrenn, new LaunchCallbacks() {
             @Override

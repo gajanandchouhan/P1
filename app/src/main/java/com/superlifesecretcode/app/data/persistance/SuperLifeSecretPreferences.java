@@ -224,7 +224,16 @@ public class SuperLifeSecretPreferences {
         return null;
     }
 
-    public void clearAllCategories(){
+    public void clearAllCategories() {
         editer.putString("all_menu", "").commit();
+    }
+
+    public String getCometChaUserId() {
+        return preferences.getString("comet_chat_user_id", "");
+    }
+
+
+    public void setCometChatUserId(String uid) {
+        editer.putString("comet_chat_user_id", uid).commit();
     }
 }
