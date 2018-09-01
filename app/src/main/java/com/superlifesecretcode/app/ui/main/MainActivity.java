@@ -184,6 +184,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mainAdapter = new MainListAdapter(list, this);
         recyclerViewMain.setAdapter(mainAdapter);
         recyclerViewMain.addItemDecoration(new SpacesItemDecorationGridLayout(3, 25, true));
+        HashMap<String, String> body = new HashMap<>();
+        body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
+        presenter.getConversion(body);
         setUpBottomBar2();
     }
 
@@ -511,6 +514,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 setUpBottomBar2();
             }
         }
+    }
+
+    @Override
+    public void setConversionContent(LanguageResponseData data) {
+        conversionData = data;
+        SuperLifeSecretPreferences.getInstance().setConversionData(data);
     }
 
     private void showAlert(final String alert_text, final int clikedPostion, final AlertModel alertModel1, final List<AlertModel> alertModelList) {
