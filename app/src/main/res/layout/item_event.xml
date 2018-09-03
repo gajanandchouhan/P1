@@ -74,29 +74,29 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/default_placeholder" />
 
-            <TextView
-                android:id="@+id/textView_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView_event"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/reguler"
-                android:text="31 march, 2018"
-                android:textColor="@color/colorLightBlack"
-                android:textSize="@dimen/_13sdp" />
 
-            <TextView
-                android:id="@+id/textView_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_date"
-                android:fontFamily="@font/reguler"
-                android:text="time"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_13sdp" />
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_event_image"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/reguler"
+            android:text="31 march, 2018"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
 
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_date"
+            android:fontFamily="@font/reguler"
+            android:text="time"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_13sdp" />
         <TextView
             android:id="@+id/textView_desc"
             android:layout_width="match_parent"
@@ -114,10 +114,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/layout_event_image"
+            android:layout_below="@+id/textView_time"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/layout_event_image"
-            android:layout_toRightOf="@+id/layout_event_image">
+        >
 
             <ImageView
                 android:id="@+id/imageView_addr"
@@ -140,7 +139,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/reguler"
                 android:maxLines="2"
-                android:text="160-161 , 2nd floor, PU-4, Scheme No.54, A.B. Road, (Behind C-21 Mall &amp; above Amway office), Indore, MP – 452010"
+                android:text="160-161 , "
                 android:textSize="@dimen/_11sdp" />
 
             <RelativeLayout
