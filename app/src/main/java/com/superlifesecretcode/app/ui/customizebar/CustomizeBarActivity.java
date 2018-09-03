@@ -98,9 +98,11 @@ public class CustomizeBarActivity extends BaseActivity {
 
     private boolean isValid(List<AllMenuResponseData> list) {
         int count = 0;
-        for (AllMenuResponseData subcategoryModel : list) {
-            if (subcategoryModel.isSelected()) {
-                count = count + 1;
+        if (list!=null) {
+            for (AllMenuResponseData subcategoryModel : list) {
+                if (subcategoryModel.isSelected()) {
+                    count = count + 1;
+                }
             }
         }
         return count == 3;

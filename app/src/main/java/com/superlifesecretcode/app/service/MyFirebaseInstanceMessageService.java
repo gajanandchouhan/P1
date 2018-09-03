@@ -18,18 +18,12 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.superlifesecretcode.app.FCMReceiver;
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
-import com.superlifesecretcode.app.ui.splash.SplashActivity;
-import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.Map;
-
-import fm.icelink.IFileStream;
-import utils.CCNotificationHelper;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
@@ -63,8 +57,6 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
                 }
 //            sendNotification(remoteMessage.getData());
                 Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            }else{
-                CCNotificationHelper.processCCNotificationData(this, remoteMessage, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
             }
 
         }

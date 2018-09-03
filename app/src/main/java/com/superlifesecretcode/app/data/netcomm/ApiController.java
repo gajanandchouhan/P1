@@ -432,9 +432,11 @@ public class ApiController implements RequestType {
         HashMap<String, RequestBody> params = new HashMap<>();
         try {
             for (Map.Entry<String, String> entry : stringParams.entrySet()) {
-                RequestBody requestBody = RequestBody.create(
-                        MultipartBody.FORM, entry.getValue());
-                params.put(entry.getKey(), requestBody);
+                if (entry.getValue()!=null){
+                    RequestBody requestBody = RequestBody.create(
+                            MultipartBody.FORM, entry.getValue());
+                    params.put(entry.getKey(), requestBody);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

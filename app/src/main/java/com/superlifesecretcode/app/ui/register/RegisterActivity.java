@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Deprecated
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterView {
 
     private String countryCode = "us";
@@ -357,7 +358,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 textViewCountry.setText(country.getName());
                 if (!country.getId().equalsIgnoreCase(countryId)) {
                     stateId = null;
-                    city="";
+                    city = "";
                     textState.setText("");
                     textViewCity.setText("");
                 }

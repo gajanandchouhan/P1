@@ -150,17 +150,31 @@ public class WebViewActivity extends BaseActivity implements LeadView {
                 return false;
             } else if (url.startsWith("zoomus:")) {
                 if (appInstalledOrNot("us.zoom.videomeetings")) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+
+                    } catch (Exception e) {
+
+                    }
                     return true;
                 } else {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=us.zoom.videomeetings"));
-                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=us.zoom.videomeetings"));
+                        startActivity(intent);
+                    } catch (Exception e) {
+
+                    }
+
                     return true;
                 }
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } catch (Exception e) {
+
+                }
                 return true;
             }
         }

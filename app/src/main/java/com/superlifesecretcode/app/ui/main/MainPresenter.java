@@ -6,6 +6,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
 import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
@@ -152,6 +153,31 @@ public class MainPresenter extends BasePresenter<MainView> {
             public void onError() {
                 view.hideProgress();
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
+    }
+
+
+    public void getConversion(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_CONVERSION, new ResponseHandler<LanguageResponseModel>() {
+            @Override
+            public void onResponse(LanguageResponseModel languageResponseModel) {
+                if (languageResponseModel != null) {
+                    if (languageResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setConversionContent(languageResponseModel.getData());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError() {
 
             }
         }, requestBody);

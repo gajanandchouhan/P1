@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.main;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.category.BannerModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCounData;
 import com.superlifesecretcode.app.ui.base.BaseView;
 
@@ -21,4 +22,6 @@ interface MainView extends BaseView {
     void setBanners(List<BannerModel> banners);
 
     void setAllCaetgoryData(List<AllMenuResponseData> data);
+
+    void setConversionContent(LanguageResponseData data);
 }

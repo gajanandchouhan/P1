@@ -333,7 +333,7 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
 
                 userDetailResponseData2.setCountry_code(countryCode);
                 if (countryId==null || countryId.equals("")){
-                    userDetailResponseData2.setCountry(SuperLifeSecretPreferences.getInstance().getConversionData().getCountry());
+                    userDetailResponseData2.setCountry("");
                 }else {
                     userDetailResponseData2.setCountry(countryId);
                 }
@@ -362,7 +362,7 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
 
                 userDetailResponseData3.setCountry_code(countryCode);
                 if (countryId==null || countryId.equals("")){
-                    userDetailResponseData3.setCountry(SuperLifeSecretPreferences.getInstance().getConversionData().getCountry());
+                    userDetailResponseData3.setCountry("");
                 }else {
                     userDetailResponseData3.setCountry(countryId);
                 }
@@ -391,7 +391,7 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
 
                 userDetailResponseData4.setCountry_code(countryCode);
                 if (countryId==null || countryId.equals("")){
-                    userDetailResponseData4.setCountry(SuperLifeSecretPreferences.getInstance().getConversionData().getCountry());
+                    userDetailResponseData4.setCountry("");
                 }else {
                     userDetailResponseData4.setCountry(countryId);
                 }
@@ -758,7 +758,7 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
         body.put("country_code",countryCode);
         if (dialCode!=null && !dialCode.isEmpty())
         body.put("phone_code",dialCode);
-        body.put("country",countryId);
+        body.put("country",countryId!=null?countryId:"");
         body.put("lang_id",SuperLifeSecretPreferences.getInstance().getLanguageId());
 
         presenter.loginSocialUser(body);

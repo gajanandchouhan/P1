@@ -10,28 +10,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.inscripts.interfaces.Callbacks;
-import com.inscripts.interfaces.LaunchCallbacks;
-import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.MyLocationManager;
 import com.superlifesecretcode.app.util.PermissionConstant;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cometchat.inscripts.com.cometchatcore.coresdk.CometChat;
-import io.sentry.util.Util;
-import utils.CCNotificationHelper;
 
 /**
  * Created by Divya on 21-02-2018.
@@ -167,112 +154,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected abstract void initializePresenter();
 
 
-    protected void createCometChatUser(String name, final String uid) {
-        CometChat cometChatInstance = SuperLifeSecretCodeApp.getCometChatInstance();
-        if (cometChatInstance == null) {
-            CommonUtils.showToast(this, getString(R.string.server_error));
-            return;
-        }
-        showProgress();
-        cometChatInstance.createUser(this, uid, name, "", "", "", new Callbacks() {
-            @Override
-            public void successCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "Register Success :" + jsonObject.toString());
-                JSONObject success = jsonObject.optJSONObject("success");
-                login(uid);
-
-            }
-
-            @Override
-            public void failCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "Register Failed :" + jsonObject.toString());
-                login(uid);
-            }
-        });
-    }
-
-    private void login(String uid) {
-        final CometChat cometChatInstance = SuperLifeSecretCodeApp.getCometChatInstance();
-        if (cometChatInstance == null)
-            return;
-        cometChatInstance.loginWithUID(this, uid, new Callbacks() {
-            @Override
-            public void successCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "Login Success :" + jsonObject.toString());
-                launch(cometChatInstance);
-                hideProgress();
-            }
-
-            @Override
-            public void failCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "Login Failed :" + jsonObject.toString());
-                hideProgress();
-            }
-        });
 
 
-    }
-
-
-    private void launch(CometChat cometChat) {
-        boolean isFullScrenn = true;
-        cometChat.launchCometChat(this, isFullScrenn, new LaunchCallbacks() {
-            @Override
-            public void successCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "Success " + jsonObject.toString());
-            }
-
-            @Override
-            public void failCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "Failed " + jsonObject.toString());
-            }
-
-            @Override
-            public void userInfoCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "UserInfo " + jsonObject.toString());
-                try {
-                    FirebaseMessaging.getInstance().subscribeToTopic(jsonObject.getString("push_channel"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                //To enable the notification for announcements
-                try {
-                    FirebaseMessaging.getInstance().subscribeToTopic(jsonObject.getString("push_an_channel"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void chatroomInfoCallback(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "Chat Roo Info " + jsonObject.toString());
-                try {
-                    CCNotificationHelper.subscribe(true, jsonObject.getString("push_channel"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onMessageReceive(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "On Message " + jsonObject.toString());
-            }
-
-            @Override
-            public void error(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "On Error " + jsonObject.toString());
-            }
-
-            @Override
-            public void onWindowClose(JSONObject jsonObject) {
-                Log.v("COMET CHAT", "onWindowClose" + jsonObject.toString());
-            }
-
-            @Override
-            public void onLogout() {
-                Log.v("COMET CHAT", "onLogout");
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        hideProgress();
+        super.onDestroy();
     }
 }

@@ -6,8 +6,8 @@ android {
         applicationId "com.superlifesecretcode.app"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 6
-        versionName "1.4.1"
+        versionCode 7
+        versionName "1.4.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -93,7 +93,7 @@ dependencies {
     // image loader
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-    implementation 'com.facebook.android:facebook-login:4.34.0'
+    implementation 'com.facebook.android:facebook-login:4.36.0'
     // facebook
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     // twitter
