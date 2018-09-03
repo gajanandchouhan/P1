@@ -37,6 +37,7 @@ public interface ConstantLib {
     String TYPE_ONSITE = "10";
     String TYPE_PRINT_BOOK = "11";
     String TYPE_BUY_BOOK = "12";
+    String TYPE_MY_ANNOUNCEMENT = "14";
     String NOTIFICATION_PERSONAL = "1";
     String NOTIFICATION_EVENT = "2";
     String NOTIFICATION_COUNTY_ACTIVITY = "3";
@@ -56,4 +57,5 @@ public interface ConstantLib {
 
     String COMETCHAT_LICENSE_KEY = "COMETCHAT-UY0G8-4PGBJ-VQ3CL-7JUTT";
     String COMET_CHAT_API_KEY = "51462x2c751943dc1b06a7c7ec3aad70f1def8";
+
 }

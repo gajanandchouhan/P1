@@ -23,6 +23,7 @@ import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.Interested
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
+import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
@@ -217,6 +218,9 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     Bundle bundle4 = new Bundle();
                     bundle4.putString("type", "2");
                     CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
+                    break;
+                case ConstantLib.TYPE_MY_ANNOUNCEMENT:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, MyAnnouncementActivity.class);
                     break;
             }
         }

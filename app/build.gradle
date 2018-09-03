@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation project(':countrypicker')
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     // image picker and cropper
