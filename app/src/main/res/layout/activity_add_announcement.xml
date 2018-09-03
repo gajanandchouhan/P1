@@ -74,6 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
+                    android:inputType="textPersonName"
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
                     android:textSize="@dimen/_11sdp"
@@ -95,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/reguler"
                     android:hint="CC Email"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
                     android:textSize="@dimen/_11sdp"
@@ -180,16 +182,17 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:orientation="vertical"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/text_view_start_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:gravity="center_vertical"
                         android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
                         android:hint="Start Date"
                         android:maxLines="1"
                         android:padding="@dimen/_8sdp"
@@ -206,19 +209,20 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:orientation="vertical"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/text_view_start_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
                         android:hint="Start Time"
                         android:maxLines="1"
-                        android:gravity="center_vertical"
                         android:padding="@dimen/_8sdp"
                         android:textColor="@color/colorPurple"
                         android:textColorHint="@color/colorLightPurple"
@@ -230,6 +234,7 @@
                         android:background="@color/colorLightPurple" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -238,17 +243,18 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:orientation="vertical"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/text_view_end_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
                         android:ellipsize="end"
-                        android:gravity="center_vertical"
                         android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
                         android:hint="End Date"
                         android:maxLines="1"
                         android:padding="@dimen/_8sdp"
@@ -265,19 +271,20 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:orientation="vertical"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/text_view_end_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:fontFamily="@font/reguler"
+                        android:gravity="center_vertical"
                         android:hint="End Time"
                         android:maxLines="1"
-                        android:gravity="center_vertical"
                         android:padding="@dimen/_8sdp"
                         android:textColor="@color/colorPurple"
                         android:textColorHint="@color/colorLightPurple"

@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static Retrofit retrofit;
-    public static boolean ADD_LOG = true;
+    public static boolean ADD_LOG = BuildConfig.showLog;
 
     static Retrofit getClient() {
         if (retrofit == null) {

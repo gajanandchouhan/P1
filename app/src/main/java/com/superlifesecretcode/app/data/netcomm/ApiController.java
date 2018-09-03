@@ -66,7 +66,6 @@ public class ApiController implements RequestType {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
-        ApiClient.ADD_LOG = true;
         HashMap requestParams = getRequestParams(body);
         switch (reqTyoe) {
             case REQ_CONVERSION:
@@ -165,7 +164,7 @@ public class ApiController implements RequestType {
     }
 
     public void callMultipart(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, File> files) {
-        ApiClient.ADD_LOG = false;
+        
         try {
             if (!CheckNetworkState.isOnline(mContext)) {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
@@ -217,7 +216,6 @@ public class ApiController implements RequestType {
 
     public void callWithHeader(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, String> header) {
         try {
-            ApiClient.ADD_LOG = true;
             if (!CheckNetworkState.isOnline(mContext)) {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
                 return;
@@ -422,6 +420,12 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                 break;
+            case REQ_GET_MY_ANNOUCMENT:
+                Observable<BaseResponseModel> getMyAnnouncementObservable = apiInterface.getMyAnnouncement(headers);
+                getMyAnnouncementObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                break;
 
         }
 
@@ -467,6 +471,12 @@ public class ApiController implements RequestType {
             case REQ_ADD_SHARE:
                 Observable<BaseResponseModel> addShareObservable = apiInterface.addShare(fileParams, headers);
                 addShareObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
+                break;
+            case REQ_ADD_ANNOUNCMENT:
+                Observable<BaseResponseModel> addAnnoucmentObserver = apiInterface.addAnnouncement(fileParams, headers);
+                addAnnoucmentObserver.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
                 break;

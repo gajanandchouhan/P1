@@ -283,4 +283,11 @@ public interface ApiInterface {
     @GET("stores")
     Observable<StoreBean> getStores();
 
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("addAnnouncement")
+    Observable<BaseResponseModel> addAnnouncement(@Body RequestBody body, @HeaderMap() Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("myAnnouncements")
+    Observable<BaseResponseModel> getMyAnnouncement(@HeaderMap Map<String, String> headers);
 }

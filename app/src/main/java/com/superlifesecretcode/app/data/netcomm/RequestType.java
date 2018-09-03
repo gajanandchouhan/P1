@@ -49,4 +49,6 @@ public interface RequestType {
     byte REQ_GET_BOOK_LIST=40;
     byte REQ_GET_ADDRESSES_BOOK_FORTH=41;
     byte REQ_GET_STORES_BOOK_FORTH=42;
+    byte REQ_ADD_ANNOUNCMENT = 43;
+    byte REQ_GET_MY_ANNOUCMENT =44 ;
 }

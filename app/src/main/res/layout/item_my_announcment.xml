@@ -26,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_toEndOf="@+id/imageView_news"
-            android:layout_toLeftOf="@+id/imageView_share"
+            android:layout_toLeftOf="@+id/image_view_delete"
             android:layout_toRightOf="@+id/imageView_news"
-            android:layout_toStartOf="@+id/imageView_share"
+            android:layout_toStartOf="@+id/image_view_delete"
             android:ellipsize="end"
             android:fontFamily="@font/bold"
             android:maxLines="1"
@@ -36,6 +36,13 @@
             android:textColor="@color/colorLightBlack"
             android:textSize="@dimen/_13sdp" />
 
+        <ImageView
+            android:id="@+id/image_view_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_delete_24dp" />
 
         <TextView
             android:id="@+id/textView_desc"
@@ -73,10 +80,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:paddingBottom="@dimen/_2sdp"
             android:layout_below="@+id/textView_desc"
             android:background="@drawable/bg_pending"
             android:fontFamily="@font/reguler"
+            android:paddingBottom="@dimen/_2sdp"
             android:paddingLeft="@dimen/_15sdp"
             android:paddingRight="@dimen/_15sdp"
             android:text="Pending"

@@ -30,7 +30,7 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
 
 
     public AlertDialog(@NonNull Context context, String message, String positive, String negative, OnClickListner clickListner) {
-        super(context);
+        super(context,R.style.DialogSlideAnim);
         this.context = context;
         this.message = message;
         this.positive = positive;

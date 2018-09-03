@@ -174,7 +174,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             return;
         }
         String cometChaUserId = SuperLifeSecretPreferences.getInstance().getCometChaUserId();
-        if (cometChaUserId != null || !cometChaUserId.isEmpty()) {
+        if (cometChaUserId != null && !cometChaUserId.isEmpty()) {
             launch(cometChatInstance);
             return;
         }

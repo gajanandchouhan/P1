@@ -16,16 +16,20 @@ import com.superlifesecretcode.app.ui.myannouncement.addannouncement.AddAnnounce
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class MyAnnouncementActivity extends BaseActivity implements View.OnClickListener {
+public class MyAnnouncementActivity extends BaseActivity implements View.OnClickListener, MyAnnouncementView {
 
+    public static boolean shouldRefresh = false;
     private UserDetailResponseData userData;
     private LanguageResponseData conversionData;
     private RecyclerView recyclerView;
 
     private List<Object> announcementList;
     private MyAnnouncementAdapter adapter;
+    private MyAnnouncementPresenter presenter;
 
 
     @Override
@@ -42,7 +46,7 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         announcementList = new ArrayList<>();
-        adapter = new MyAnnouncementAdapter(announcementList);
+        adapter = new MyAnnouncementAdapter(announcementList, this);
         recyclerView.setAdapter(adapter);
         findViewById(R.id.text_view_add).setOnClickListener(this);
     }
@@ -60,7 +64,8 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new MyAnnouncementPresenter(this);
+        presenter.setView(this);
     }
 
     @Override
@@ -71,6 +76,20 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (shouldRefresh) {
+            getMyAnnoucement();
+            shouldRefresh = false;
+        }
+    }
+
+    private void getMyAnnoucement() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        presenter.getMyAnnoucement(headers);
+    }
 
     @Override
     public void onClick(View v) {

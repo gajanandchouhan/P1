@@ -7,4 +7,6 @@ import java.util.List;
 
 interface AddAnnouncementView extends BaseView {
     void setCountryData(List<CountryResponseData> data);
+
+    void onAdded();
 }
