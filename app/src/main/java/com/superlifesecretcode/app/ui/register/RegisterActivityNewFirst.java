@@ -196,7 +196,6 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
                         try {
                             status.startResolutionForResult(RegisterActivityNewFirst.this, REQUEST_CHECK_SETTINGS);
                         } catch (IntentSender.SendIntentException e) {
-                            Log.i("pending intent", "PendingIntent unable to execute request.");
                         }
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
@@ -251,8 +250,6 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
                 bundle.putExtra("country_code", "" + countryCode.toLowerCase());
                 bundle.putExtra("password", "" + password);
                 bundle.putExtra("phone_code", "" + dialCode);
-                Log.e("stateId",""+stateId);
-                Log.e("city_id",""+cityId);
             if (stateId!=null )
                 bundle.putExtra("state_id", "" + stateId);
             else
@@ -602,20 +599,17 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        Log.v("FACEBOOK", "Suceess" + loginResult.getAccessToken().getToken());
                         setFacebookData(loginResult);
                     }
 
                     @Override
                     public void onCancel() {
                         // App code
-                        Log.v("FACEBOOK", "Cancel");
                     }
 
                     @Override
                     public void onError(FacebookException exc) {
                         // App code
-                        Log.v("ERROR", "ERROR" + exc.getMessage());
                     }
                 });
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
@@ -632,7 +626,6 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
                         // Application code
                         hideProgress();
                         try {
-                            Log.i("Response", response.toString());
                             String email = "";
                             if (response.getJSONObject().has("email")) {
                                 email = response.getJSONObject().getString("email");
@@ -662,7 +655,6 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
-            Log.v("Google", acct.getDisplayName());
             String fullame = acct.getDisplayName();
             String email = acct.getEmail();
             String id = acct.getId();
@@ -748,7 +740,6 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
         body.put("city", cityId);
         else
             body.put("city",cityNameFromGeo!=null?cityNameFromGeo:"");
-        Log.e("city_id",""+cityId);
 
         if (stateId!=null && !stateId.isEmpty())
         body.put("state", stateId);
