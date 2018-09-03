@@ -353,14 +353,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 getCountry();
                 break;
             case R.id.textView_state:
-                if (countryId == null) {
+                if (countryId == null||countryId.isEmpty()) {
                     CommonUtils.showSnakeBar(this, conversionData.getSelect_country());
                     return;
                 }
                 getState();
                 break;
             case R.id.textView_city:
-                if (stateId == null) {
+                if (stateId == null||stateId.isEmpty()) {
                     CommonUtils.showSnakeBar(this, conversionData.getSelect_state());
                     return;
                 }
