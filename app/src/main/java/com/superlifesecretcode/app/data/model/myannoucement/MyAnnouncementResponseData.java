@@ -2,9 +2,10 @@ package com.superlifesecretcode.app.data.model.myannoucement;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MyAnnouncementResponseData {
+public class MyAnnouncementResponseData implements Serializable{
     private String announcement_id;
     private String user_id;
     private String announcement_type;
@@ -152,7 +153,7 @@ public class MyAnnouncementResponseData {
         return announcement_images;
     }
 
-    public class ImageData {
+    public class ImageData implements Serializable {
         private String id;
         @SerializedName("announcement_image")
         private String image;

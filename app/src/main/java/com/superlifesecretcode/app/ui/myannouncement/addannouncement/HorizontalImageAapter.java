@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 
 public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageAapter.ItemViewHolder> {
-    private final List<String> list;
+    private final List list;
     private Context mContext;
 
 
@@ -33,8 +34,14 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        String s = list.get(position);
-        ImageLoadUtils.loadImage(s, holder.imageView);
+        Object s = list.get(position);
+        if (s instanceof String) {
+            ImageLoadUtils.loadImage(s.toString(), holder.imageView);
+        } else if (s instanceof MyAnnouncementResponseData.ImageData) {
+            MyAnnouncementResponseData.ImageData imageData = (MyAnnouncementResponseData.ImageData) s;
+            ImageLoadUtils.loadImage(imageData.getImage(), holder.imageView);
+        }
+
     }
 
     @Override

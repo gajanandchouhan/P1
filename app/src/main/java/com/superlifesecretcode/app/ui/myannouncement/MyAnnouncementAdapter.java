@@ -2,7 +2,9 @@ package com.superlifesecretcode.app.ui.myannouncement;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
+import com.superlifesecretcode.app.ui.myannouncement.addannouncement.AddAnnouncementActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -99,6 +102,7 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
             imageViewDelete = itemView.findViewById(R.id.image_view_delete);
             textViewStatus = itemView.findViewById(R.id.text_view_status);
             imageViewDelete.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -107,6 +111,11 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
                 case R.id.image_view_delete:
                     showDeleteAlert();
                     break;
+                    default:
+                        Bundle bundle=new Bundle();
+                        bundle.putSerializable("data",list.get(getAdapterPosition()));
+                        CommonUtils.startActivity((AppCompatActivity) mContext, AddAnnouncementActivity.class,bundle,false);
+                        break;
             }
         }
     }

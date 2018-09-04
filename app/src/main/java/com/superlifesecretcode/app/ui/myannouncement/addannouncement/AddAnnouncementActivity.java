@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -26,6 +27,7 @@ import com.kbeanie.multipicker.api.entity.ChosenImage;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -33,6 +35,7 @@ import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.PermissionConstant;
 
 import java.io.File;
@@ -72,8 +75,10 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     private Button button;
     private String countryId;
     private String announcmentType;
+    private List<Object> remoteImageList;
 
     TextInputLayout venueInputLayout;
+    MyAnnouncementResponseData data;
 
 
     @Override
@@ -85,6 +90,10 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     protected void initializeView() {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        if (bundle != null && bundle.getSerializable("data") != null) {
+            data = (MyAnnouncementResponseData) bundle.getSerializable("data");
+        }
         setUpToolbar();
         textViewViewCountry = findViewById(R.id.text_view_country);
         textViewAnnounType = findViewById(R.id.text_view_announcment_type);
@@ -112,12 +121,44 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         announceTypeList.add(conversionData.getEvent_activity());
         announceTypeList.add(conversionData.getNews_update());
         imageList = new ArrayList<>();
+        remoteImageList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        submitAapter = new HorizontalImageAapter(imageList, this);
+        submitAapter = new HorizontalImageAapter(remoteImageList, this);
         recyclerView.setAdapter(submitAapter);
         announcmentType = "1";
         textViewAnnounType.setText(conversionData.getEvent_activity());
+        if (data != null) {
+            setUpUi();
+        }
         setUpVisibilityOfFields();
+    }
+
+    private void setUpUi() {
+        button.setText("Update Announcement");
+        announcmentType = data.getAnnouncement_type();
+        countryId = data.getCountry();
+        fromDate = data.getStart_date();
+        toDate = data.getEnd_date();
+        startTime = data.getStart_time();
+        endTime = data.getEnd_time();
+        remoteImageList.addAll(data.getAnnouncement_images());
+        if (remoteImageList.size() > 0) {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+        submitAapter.notifyDataSetChanged();
+        textViewViewCountry.setText(data.getCountryName());
+        textViewAnnounType.setText(announcmentType != null && announcmentType.equals("1") ? conversionData.getEvent_activity() : conversionData.getNews_update());
+        editTextName.append(data.getAnnouncement_name());
+        editTextDesc.append(data.getAnnouncement_description());
+        if (announcmentType != null && announcmentType.equals("1")) {
+            textViewStartDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, fromDate, false, null));
+            textViewStartTime.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", startTime, false, null));
+            if (toDate != null && !toDate.isEmpty()) {
+                textViewEndDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, toDate, false, null));
+                textViewEndTime.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", endTime, false, null));
+            }
+        }
+
     }
 
     @Override
@@ -158,7 +199,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
 
     @Override
     public void onAdded() {
-        MyAnnouncementActivity.shouldRefresh=true;
+        MyAnnouncementActivity.shouldRefresh = true;
         onBackPressed();
     }
 
@@ -296,10 +337,11 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
                 String path = uri.getOriginalPath();
                 if (path != null) {
                     imageList.add(path);
+                    remoteImageList.add(path);
                 }
             }
         }
-        if (imageList != null) {
+        if (remoteImageList != null && remoteImageList.size() > 0) {
             submitAapter.notifyDataSetChanged();
             recyclerView.setVisibility(View.VISIBLE);
         }
@@ -381,15 +423,14 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             CommonUtils.showSnakeBar(this, "Please enter description");
             return;
         }
-        if (imageList == null || imageList.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please select at least one image");
-            return;
+        if (!(remoteImageList!=null&&remoteImageList.size()>0)){
+            if (imageList == null || imageList.isEmpty()) {
+                CommonUtils.showSnakeBar(this, "Please select at least one image");
+                return;
+            }
         }
-        if (imageList.size() > 5) {
-            CommonUtils.showSnakeBar(this, "You can upload maximum 5 images");
-            return;
-        }
-        if (imageList.size() > 5) {
+
+        if ((imageList.size() + (remoteImageList != null ? remoteImageList.size() : 0)) > 5) {
             CommonUtils.showSnakeBar(this, "You can upload maximum 5 images");
             return;
         }
@@ -424,6 +465,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         builder.addFormDataPart("announcement_name", name);
         builder.addFormDataPart("announcement_description", desc);
         builder.addFormDataPart("announcement_country", countryId);
+        builder.addFormDataPart("announcement_id", data != null ? data.getAnnouncement_id() : "");
         if (announcmentType.equals("1")) {
             builder.addFormDataPart("announcement_date", fromDate);
             builder.addFormDataPart("announcement_time", startTime);
