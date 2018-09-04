@@ -62,8 +62,15 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.imageView_remove) {
-                list.remove(getAdapterPosition());
-                notifyDataSetChanged();
+                Object o = list.get(getAdapterPosition());
+                if (o instanceof MyAnnouncementResponseData.ImageData) {
+                    ((AddAnnouncementActivity) mContext).deleteImage(getAdapterPosition());
+
+                } else {
+                    list.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                }
+
             }
             if (mContext instanceof AddAnnouncementActivity) {
                 if (list == null || list.isEmpty()) {

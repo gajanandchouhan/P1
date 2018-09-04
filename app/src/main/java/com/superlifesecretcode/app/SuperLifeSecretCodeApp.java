@@ -1,6 +1,8 @@
 package com.superlifesecretcode.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.inscripts.interfaces.Callbacks;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
@@ -53,5 +55,12 @@ public class SuperLifeSecretCodeApp extends Application {
 
     public static CometChat getCometChatInstance() {
         return cometChatInstance;
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

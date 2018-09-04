@@ -9,4 +9,6 @@ interface AddAnnouncementView extends BaseView {
     void setCountryData(List<CountryResponseData> data);
 
     void onAdded();
+
+    void imageDelete();
 }

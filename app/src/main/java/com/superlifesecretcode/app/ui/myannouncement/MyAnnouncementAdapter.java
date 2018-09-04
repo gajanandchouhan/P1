@@ -109,21 +109,22 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.image_view_delete:
-                    showDeleteAlert();
+                    showDeleteAlert(getAdapterPosition());
                     break;
-                    default:
-                        Bundle bundle=new Bundle();
-                        bundle.putSerializable("data",list.get(getAdapterPosition()));
-                        CommonUtils.startActivity((AppCompatActivity) mContext, AddAnnouncementActivity.class,bundle,false);
-                        break;
+                default:
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("data", list.get(getAdapterPosition()));
+                    CommonUtils.startActivity((AppCompatActivity) mContext, AddAnnouncementActivity.class, bundle, false);
+                    break;
             }
         }
     }
 
-    private void showDeleteAlert() {
+    private void showDeleteAlert(final int position) {
         CommonUtils.showAlert(mContext, "Are you sure, want to delete?", "Ok", "Cancel", new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
+                ((MyAnnouncementActivity) mContext).deleteAnnouncement(position);
 
             }
 

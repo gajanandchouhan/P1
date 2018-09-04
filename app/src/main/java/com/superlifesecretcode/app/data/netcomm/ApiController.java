@@ -350,6 +350,19 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BookList>(handler));
                     break;
+                case REQ_DELETE_MY_ANNOUNCEMENT:
+                    Observable<BaseResponseModel> deleteObservable = apiInterface.deleteAnnouncement(stringMultipartParamsParams, header);
+                    deleteObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
+
+                case REQ_DELETE_MY_AANOUCNE_IMAGE:
+                    Observable<BaseResponseModel> removeAnnouncementImageObs = apiInterface.removeAnnouncementImage(stringMultipartParamsParams, header);
+                    removeAnnouncementImageObs.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

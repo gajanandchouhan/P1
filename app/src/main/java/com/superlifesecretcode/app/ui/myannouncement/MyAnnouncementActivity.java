@@ -31,6 +31,7 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     private List<MyAnnouncementResponseData> announcementList;
     private MyAnnouncementAdapter adapter;
     private MyAnnouncementPresenter presenter;
+    private int position;
 
 
     @Override
@@ -109,5 +110,21 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
             announcementList.addAll(data);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void deleted() {
+        announcementList.remove(position);
+        adapter.notifyItemRemoved(position);
+    }
+
+
+    public void deleteAnnouncement(int position) {
+        this.position = position;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", announcementList.get(position).getAnnouncement_id());
+        presenter.deleteAnnouncement(params, headers);
     }
 }

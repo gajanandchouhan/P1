@@ -13,6 +13,7 @@ import com.superlifesecretcode.app.ui.base.BasePresenter;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MyAnnouncementPresenter extends BasePresenter<MyAnnouncementView> {
@@ -55,5 +56,37 @@ public class MyAnnouncementPresenter extends BasePresenter<MyAnnouncementView> {
 
             }
         },headers, null, null);
+    }
+
+
+    public void deleteAnnouncement(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_MY_ANNOUNCEMENT, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel baseResponseModel) {
+                view.hideProgress();
+                if (baseResponseModel != null) {
+                    if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.deleted();
+                    } else
+                        CommonUtils.showToast(mContext, baseResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
     }
 }

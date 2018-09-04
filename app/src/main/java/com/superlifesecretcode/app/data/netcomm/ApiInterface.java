@@ -291,4 +291,18 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("myAnnouncements")
     Observable<MyAnnoucmenntResponseModel> getMyAnnouncement(@HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("deleteAnnouncement")
+    Observable<BaseResponseModel> deleteAnnouncement(@PartMap() Map<String, RequestBody> partMap,
+                                     @HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("removeAnnouncementImage")
+    Observable<BaseResponseModel> removeAnnouncementImage(@PartMap() Map<String, RequestBody> partMap,
+                                                     @HeaderMap Map<String, String> headers);
+
+
 }

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface MyAnnouncementView extends BaseView{
     void setAnnouncementList(List<MyAnnouncementResponseData> data);
+
+    void deleted();
 }

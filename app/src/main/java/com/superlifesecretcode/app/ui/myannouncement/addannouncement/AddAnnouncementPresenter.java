@@ -13,6 +13,7 @@ import com.superlifesecretcode.app.ui.base.BasePresenter;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -76,6 +77,38 @@ public class AddAnnouncementPresenter extends BasePresenter<AddAnnouncementView>
                 if (baseResponseModel != null) {
                     if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.onAdded();
+                    } else
+                        CommonUtils.showToast(mContext, baseResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
+
+
+    public void deleteAnnouncement(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_MY_AANOUCNE_IMAGE, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel baseResponseModel) {
+                view.hideProgress();
+                if (baseResponseModel != null) {
+                    if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.imageDelete();
                     } else
                         CommonUtils.showToast(mContext, baseResponseModel.getMessage());
                 } else {

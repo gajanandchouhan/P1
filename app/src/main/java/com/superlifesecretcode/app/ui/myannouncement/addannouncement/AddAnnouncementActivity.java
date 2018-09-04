@@ -79,6 +79,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
 
     TextInputLayout venueInputLayout;
     MyAnnouncementResponseData data;
+    private int position;
 
 
     @Override
@@ -151,6 +152,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         editTextName.append(data.getAnnouncement_name());
         editTextDesc.append(data.getAnnouncement_description());
         if (announcmentType != null && announcmentType.equals("1")) {
+            editTextVenue.setText(data.getVenue());
             textViewStartDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, fromDate, false, null));
             textViewStartTime.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", startTime, false, null));
             if (toDate != null && !toDate.isEmpty()) {
@@ -201,6 +203,12 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     public void onAdded() {
         MyAnnouncementActivity.shouldRefresh = true;
         onBackPressed();
+    }
+
+    @Override
+    public void imageDelete() {
+        remoteImageList.remove(position);
+        submitAapter.notifyItemRemoved(position);
     }
 
     private void showCountryPicker() {
@@ -279,16 +287,12 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     private void setUpVisibilityOfFields() {
         if (announcmentType != null && announcmentType.equals("1")) {
             venueInputLayout.setVisibility(View.VISIBLE);
-            textViewStartDate.setVisibility(View.VISIBLE);
-            textViewEndDate.setVisibility(View.VISIBLE);
-            textViewStartTime.setVisibility(View.VISIBLE);
-            textViewEndTime.setVisibility(View.VISIBLE);
+            findViewById(R.id.layout_start_date).setVisibility(View.VISIBLE);
+            findViewById(R.id.layout_end_date).setVisibility(View.VISIBLE);
         } else {
             venueInputLayout.setVisibility(View.GONE);
-            textViewStartDate.setVisibility(View.GONE);
-            textViewEndDate.setVisibility(View.GONE);
-            textViewStartTime.setVisibility(View.GONE);
-            textViewEndTime.setVisibility(View.GONE);
+            findViewById(R.id.layout_start_date).setVisibility(View.GONE);
+            findViewById(R.id.layout_end_date).setVisibility(View.GONE);
         }
     }
 
@@ -423,14 +427,14 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             CommonUtils.showSnakeBar(this, "Please enter description");
             return;
         }
-        if (!(remoteImageList!=null&&remoteImageList.size()>0)){
+        if (!(remoteImageList != null && remoteImageList.size() > 0)) {
             if (imageList == null || imageList.isEmpty()) {
                 CommonUtils.showSnakeBar(this, "Please select at least one image");
                 return;
             }
         }
 
-        if ((imageList.size() + (remoteImageList != null ? remoteImageList.size() : 0)) > 5) {
+        if (remoteImageList.size() > 5) {
             CommonUtils.showSnakeBar(this, "You can upload maximum 5 images");
             return;
         }
@@ -494,5 +498,19 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         RequestBody finalRequestBody = builder.build();
         presenter.addAnnouncement(finalRequestBody, headers);
+    }
+
+    public void deleteImage(int position) {
+        this.position = position;
+        Object o = remoteImageList.get(position);
+        if (o instanceof MyAnnouncementResponseData.ImageData) {
+            MyAnnouncementResponseData.ImageData image= (MyAnnouncementResponseData.ImageData) o;
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Authorization", "Bearer " + userData.getApi_token());
+            HashMap<String, String> params = new HashMap<>();
+            params.put("id", image.getId());
+            presenter.deleteAnnouncement(params, headers);
+
+        }
     }
 }
