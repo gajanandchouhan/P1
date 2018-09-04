@@ -286,7 +286,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void setUpUserdetails() {
         if (userDetailResponseData != null) {
             textViewName.setText(userDetailResponseData.getUsername());
-            ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
+            if (!isFinishing())
+                ImageLoadUtils.loadImage(userDetailResponseData.getImage(), imageViewUser);
         }
     }
 
