@@ -54,7 +54,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:scaleType="fitXY"
             android:src="@drawable/default_placeholder" />
-
+<!--
         <TextView
             android:id="@+id/textView_desc"
             android:layout_width="match_parent"
@@ -63,7 +63,12 @@
             android:fontFamily="@font/reguler"
             android:text="Description"
             android:textColor="@color/colorLightBlack"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_13sdp" />-->
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -62,16 +62,18 @@ public class EventPagerAdapter extends PagerAdapter {
             textViewTime.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, ConstantLib.OUTPUT_DATE_TIME_FORMATE, newsList.get(position).getAnnouncement_date() + " " + newsList.get(position).getAnnouncement_time(), true,newsList.get(position).getTimezone()));
         }
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
-        TextView textViewDesc = layout.findViewById(R.id.textView_desc);
+       // TextView textViewDesc = layout.findViewById(R.id.textView_desc);
         textViewAddr.setText(newsList.get(position).getVenue());
         textViewInterested.setText(conversionData.getInterested());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        WebView webView = layout.findViewById(R.id.webview);
+        webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html", "utf-8");
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(newsList.get(position).getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             textViewDesc.setText(spanned);
         } else {
             Spanned spanned = Html.fromHtml(newsList.get(position).getAnnouncement_description());
             textViewDesc.setText(spanned);
-        }
+        }*/
         relativeLayout.setSelected(newsList.get(position).getUserIntrested() != null && newsList.get(position).getUserIntrested().equalsIgnoreCase("1"));
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
