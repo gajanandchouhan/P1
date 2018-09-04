@@ -55,7 +55,7 @@ public class NewsPagerAdapter extends PagerAdapter {
         textViewLikeCount.setText(String.format("%s "+conversionData.getLikes(), newsList.get(position).getLiked_by()));
         ImageLoadUtils.loadImage(newsList.get(position).getImage(), imageView);
         WebView webView = layout.findViewById(R.id.webview);
-        webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html", "utf-8");
+        webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html; charset=utf-8", "utf-8");
         scrollView.fullScroll(ScrollView.FOCUS_UP);
         scrollView.smoothScrollBy(0,0);
         imageViewShare.setOnClickListener(new View.OnClickListener() {

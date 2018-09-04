@@ -66,7 +66,7 @@ public class EventPagerAdapter extends PagerAdapter {
         textViewAddr.setText(newsList.get(position).getVenue());
         textViewInterested.setText(conversionData.getInterested());
         WebView webView = layout.findViewById(R.id.webview);
-        webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html", "utf-8");
+        webView.loadData(newsList.get(position).getAnnouncement_description(), "text/html; charset=utf-8", "utf-8");
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(newsList.get(position).getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
             textViewDesc.setText(spanned);
