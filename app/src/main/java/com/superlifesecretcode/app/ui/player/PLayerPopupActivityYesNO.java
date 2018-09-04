@@ -2,6 +2,7 @@ package com.superlifesecretcode.app.ui.player;
 
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.media.AudioManager;
@@ -9,6 +10,8 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,13 +24,12 @@ import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
-import com.superlifesecretcode.app.ui.base.BaseActivity;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PLayerPopupActivityYesNO extends BaseActivity implements PlayerView {
+public class PLayerPopupActivityYesNO extends AppCompatActivity implements PlayerView {
 
     private MediaPlayer mediaPlayer;
     TextView textViewTitle;
@@ -36,17 +38,16 @@ public class PLayerPopupActivityYesNO extends BaseActivity implements PlayerView
     LinearLayout linearLayout;
     PlayerPresenter presenter;
     private UserDetailResponseData userData;
+    private ProgressDialog progressDialog;
 
 //    private PowerManager powerManager;
 
     @Override
-    protected int getContentView() {
-        getWindow().setBackgroundDrawableResource(R.drawable.alert_bg);
-        return R.layout.activity_player_popup2;
-    }
-
-    @Override
-    protected void initializeView() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_player_popup2);
+        presenter = new PlayerPresenter(this);
+        presenter.setView(this);
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         textViewMessage = findViewById(R.id.textView_message);
         textViewTitle = findViewById(R.id.textView_title);
@@ -101,14 +102,8 @@ public class PLayerPopupActivityYesNO extends BaseActivity implements PlayerView
         });
         myKM = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         boolean isPhoneLocked = myKM.inKeyguardRestrictedInputMode();
-//        powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
     }
 
-    @Override
-    protected void initializePresenter() {
-        presenter = new PlayerPresenter(this);
-        presenter.setView(this);
-    }
 
     private boolean isScreenOn() {
 //        return (Build.VERSION.SDK_INT < 20 ? powerManager.isScreenOn() : powerManager.isInteractive());
@@ -134,12 +129,13 @@ public class PLayerPopupActivityYesNO extends BaseActivity implements PlayerView
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        hideProgress();
+        super.onDestroy();
     }
 
 
@@ -148,4 +144,22 @@ public class PLayerPopupActivityYesNO extends BaseActivity implements PlayerView
         onBackPressed();
         Toast.makeText(this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
     }
+
+
+    @Override
+    public void showProgress() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
 }
