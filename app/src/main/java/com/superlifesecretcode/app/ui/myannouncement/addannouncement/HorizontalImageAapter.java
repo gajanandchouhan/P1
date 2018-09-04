@@ -1,6 +1,8 @@
 package com.superlifesecretcode.app.ui.myannouncement.addannouncement;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
+import com.superlifesecretcode.app.ui.sharing_submit.ImageViewerActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
@@ -61,8 +65,9 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
 
         @Override
         public void onClick(View v) {
+            Object o = list.get(getAdapterPosition());
             if (v.getId() == R.id.imageView_remove) {
-                Object o = list.get(getAdapterPosition());
+
                 if (o instanceof MyAnnouncementResponseData.ImageData) {
                     ((AddAnnouncementActivity) mContext).deleteImage(getAdapterPosition());
 
@@ -70,12 +75,19 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
                     list.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                 }
-
-            }
-            if (mContext instanceof AddAnnouncementActivity) {
-                if (list == null || list.isEmpty()) {
-                    ((AddAnnouncementActivity) mContext).hideReccylerView();
+                if (mContext instanceof AddAnnouncementActivity) {
+                    if (list == null || list.isEmpty()) {
+                        ((AddAnnouncementActivity) mContext).hideReccylerView();
+                    }
                 }
+            } else {
+                Bundle bundle = new Bundle();
+                if (o instanceof MyAnnouncementResponseData.ImageData) {
+                    bundle.putString("image", ((MyAnnouncementResponseData.ImageData) o).getImage());
+                } else {
+                    bundle.putString("image", o.toString());
+                }
+                CommonUtils.startActivity((AppCompatActivity) mContext, ImageViewerActivity.class, bundle, false);
             }
         }
     }
