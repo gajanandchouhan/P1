@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
+import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
@@ -33,13 +34,13 @@ public class MyAnnouncementPresenter extends BasePresenter<MyAnnouncementView> {
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_MY_ANNOUCMENT, new ResponseHandler<BaseResponseModel>() {
+        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_MY_ANNOUCMENT, new ResponseHandler<MyAnnoucmenntResponseModel>() {
             @Override
-            public void onResponse(BaseResponseModel shareListResponseModel) {
+            public void onResponse(MyAnnoucmenntResponseModel annoucmenntResponseModel) {
                 view.hideProgress();
-                if (shareListResponseModel != null) {
-                    if (shareListResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-
+                if (annoucmenntResponseModel != null) {
+                    if (annoucmenntResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                    view.setAnnouncementList(annoucmenntResponseModel.getData());
                     }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));

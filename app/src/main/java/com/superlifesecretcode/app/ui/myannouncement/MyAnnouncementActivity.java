@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -27,7 +28,7 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     private LanguageResponseData conversionData;
     private RecyclerView recyclerView;
 
-    private List<Object> announcementList;
+    private List<MyAnnouncementResponseData> announcementList;
     private MyAnnouncementAdapter adapter;
     private MyAnnouncementPresenter presenter;
 
@@ -49,6 +50,7 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
         adapter = new MyAnnouncementAdapter(announcementList, this);
         recyclerView.setAdapter(adapter);
         findViewById(R.id.text_view_add).setOnClickListener(this);
+        getMyAnnoucement();
     }
 
     private void setUpToolbar() {
@@ -97,6 +99,15 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
             case R.id.text_view_add:
                 CommonUtils.startActivity(this, AddAnnouncementActivity.class);
                 break;
+        }
+    }
+
+    @Override
+    public void setAnnouncementList(List<MyAnnouncementResponseData> data) {
+        if (data != null && data.size() > 0) {
+            announcementList.clear();
+            announcementList.addAll(data);
+            adapter.notifyDataSetChanged();
         }
     }
 }

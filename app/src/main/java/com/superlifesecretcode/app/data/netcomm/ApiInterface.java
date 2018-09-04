@@ -12,6 +12,7 @@ import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseModel
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
+import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.notifications.NotificationResponseModel;
@@ -289,5 +290,5 @@ public interface ApiInterface {
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("myAnnouncements")
-    Observable<BaseResponseModel> getMyAnnouncement(@HeaderMap Map<String, String> headers);
+    Observable<MyAnnoucmenntResponseModel> getMyAnnouncement(@HeaderMap Map<String, String> headers);
 }

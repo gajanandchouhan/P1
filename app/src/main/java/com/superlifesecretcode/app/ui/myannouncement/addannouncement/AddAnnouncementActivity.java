@@ -393,11 +393,12 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             CommonUtils.showSnakeBar(this, "You can upload maximum 5 images");
             return;
         }
-        if (venue.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter venue details");
-            return;
-        }
+
         if (announcmentType.equals("1")) {
+            if (venue.isEmpty()) {
+                CommonUtils.showSnakeBar(this, "Please enter venue details");
+                return;
+            }
             if (fromDate == null || fromDate.isEmpty()) {
                 CommonUtils.showSnakeBar(this, "Please select start date.");
                 return;

@@ -15,6 +15,7 @@ import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseModel
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
+import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.notifications.NotificationResponseModel;
@@ -421,10 +422,10 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                 break;
             case REQ_GET_MY_ANNOUCMENT:
-                Observable<BaseResponseModel> getMyAnnouncementObservable = apiInterface.getMyAnnouncement(headers);
+                Observable<MyAnnoucmenntResponseModel> getMyAnnouncementObservable = apiInterface.getMyAnnouncement(headers);
                 getMyAnnouncementObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                        .subscribe(new ResponseObserver<MyAnnoucmenntResponseModel>(handler));
                 break;
 
         }
