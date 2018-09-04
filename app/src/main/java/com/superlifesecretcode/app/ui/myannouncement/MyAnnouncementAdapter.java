@@ -50,10 +50,10 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
         }
         if (myAnnouncementResponseData.getAnnouncement_type().equals("1")) {
             holder.textViewDateTime.setText(String.format("%s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, myAnnouncementResponseData.getStart_date() + " " + myAnnouncementResponseData.getStart_time(), false, null)));
+                    ConstantLib.OUTPUT_DATE_TIME_FORMATE, myAnnouncementResponseData.getStart_date() + " " + myAnnouncementResponseData.getStart_time(), false, null)));
         } else {
             holder.textViewDateTime.setText(String.format("%s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE,
-                    ConstantLib.OUTPUT_DATE_FORMATE, myAnnouncementResponseData.getCreated_at(), false, null)));
+                    ConstantLib.OUTPUT_DATE_TIME_FORMATE, myAnnouncementResponseData.getCreated_at(), false, null)));
         }
 
         switch (myAnnouncementResponseData.getApproval_status()) {
@@ -70,10 +70,10 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_declined);
                 break;
         }
-        holder.textViewStatus.setPadding(15, 0, 15, 5);
+        holder.textViewStatus.setPadding(25, 0, 25, 5);
         List<MyAnnouncementResponseData.ImageData> announcement_images = myAnnouncementResponseData.getAnnouncement_images();
         if (announcement_images != null && announcement_images.size() > 0) {
-            ImageLoadUtils.loadImage(announcement_images.get(position).getImage(), holder.imageView);
+            ImageLoadUtils.loadImage(announcement_images.get(0).getImage(), holder.imageView);
         }
     }
 
