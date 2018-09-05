@@ -25,8 +25,12 @@ import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
+import com.superlifesecretcode.app.ui.book.detail.DetailBean;
 import com.superlifesecretcode.app.ui.book.first.BookList;
+import com.superlifesecretcode.app.ui.book.five.BankBean;
+import com.superlifesecretcode.app.ui.book.forth.AddressBean;
 import com.superlifesecretcode.app.ui.book.forth.StoreBean;
+import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.io.File;
@@ -166,7 +170,7 @@ public class ApiController implements RequestType {
     }
 
     public void callMultipart(Context mContext, byte reqTyoe, ResponseHandler handler, Map<String, String> params, Map<String, File> files) {
-        
+
         try {
             if (!CheckNetworkState.isOnline(mContext)) {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
@@ -364,6 +368,13 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                     break;
+
+                case REQ_GET_ORDER_DETAIL_BOOK:
+                    Observable<DetailBean> detailObservable = apiInterface.orderDetail(stringMultipartParamsParams, header);
+                    detailObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<DetailBean>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -397,19 +408,6 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
 
-            case REQ_GET_ADDRESSES_BOOK_FORTH:
-                Observable<CountryResponseModel> addressObservable = apiInterface.getAddress();
-                addressObservable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
-                break;
-
-            case REQ_GET_STORES_BOOK_FORTH:
-                Observable<StoreBean> storeObservable = apiInterface.getStores();
-                storeObservable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ResponseObserver<StoreBean>(handler));
-                break;
 
         }
 
@@ -453,6 +451,33 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<MyCountryActivityResponseModel>(handler));
                 break;
+
+            case REQ_GET_ADDRESSES_BOOK_FORTH:
+                Observable<AddressBean> addressObservable = apiInterface.getAddress(headers);
+                addressObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<AddressBean>(handler));
+                break;
+
+            case REQ_GET_STORES_BOOK_FORTH:
+                Observable<StoreBean> storeObservable = apiInterface.getStores(headers);
+                storeObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<StoreBean>(handler));
+                break;
+            case REQ_GET_BANKLIST_BOOK_FIFTH:
+                Observable<BankBean> bankObservable = apiInterface.getBankList(headers);
+                bankObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BankBean>(handler));
+                break;
+            case REQ_GET_ORDER_LIST_BOOK:
+                Observable<MyOrderBean> myOrderObservable = apiInterface.getMyOrderList(headers);
+                myOrderObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<MyOrderBean>(handler));
+                break;
+
         }
 
     }
@@ -509,6 +534,13 @@ public class ApiController implements RequestType {
             case REQ_ADD_COUNTRY_ACTIVITY:
                 Observable<BaseResponseModel> addCountryActivityObservable = apiInterface.addCountryActivity(fileParams, headers);
                 addCountryActivityObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
+                break;
+
+            case REQ_BOOK_ORDER:
+                Observable<BaseResponseModel> bookOrderObservable = apiInterface.bookOrder(fileParams, headers);
+                bookOrderObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
                 break;

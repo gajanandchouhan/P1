@@ -146,7 +146,6 @@
                 </LinearLayout>
 
                 <TextView
-
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:background="@drawable/whitecircle_grayborder"
@@ -170,7 +169,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/linear_printofbehalf"
+                        android:id="@+id/linear_print_for_own"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -199,7 +198,7 @@
                         android:layout_height="wrap_content"></LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linear_printfordistribution"
+                        android:id="@+id/linear_print_onBehalf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -243,15 +242,15 @@
                         android:textSize="@dimen/_10sdp" />
 
                     <EditText
-                        android:id="@+id/edittext_enteramount"
+                        android:id="@+id/edittext_fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:background="@drawable/edittext_round"
-                        android:hint="Enter Full Name"
-                        android:inputType="number"
                         android:fontFamily="@font/reguler"
+                        android:hint="Enter Full Name"
+                        android:inputType="text"
                         android:paddingBottom="@dimen/_6sdp"
                         android:paddingLeft="@dimen/_8sdp"
                         android:paddingRight="@dimen/_6sdp"
@@ -260,19 +259,19 @@
                         android:textSize="@dimen/_10sdp" />
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/linear_contact_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/textview_contact_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:text="Contact Number"
                             android:fontFamily="@font/reguler"
+                            android:text="Contact Number"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
 
@@ -283,9 +282,9 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round"
+                            android:fontFamily="@font/reguler"
                             android:hint="Enter Contact Number"
                             android:inputType="number"
-                            android:fontFamily="@font/reguler"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
@@ -298,8 +297,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:text="Email id"
                             android:fontFamily="@font/reguler"
+                            android:text="Email id"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
 
@@ -310,9 +309,9 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round"
-                            android:hint="Enter Email id"
-                            android:inputType="number"
                             android:fontFamily="@font/reguler"
+                            android:hint="Enter Email id"
+                            android:inputType="textEmailAddress"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
@@ -325,14 +324,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_3sdp"
-                        android:text="Order Type"
                         android:fontFamily="@font/reguler"
+                        android:text="Order Type"
                         android:textColor="@color/red_bg"
                         android:textSize="@dimen/_10sdp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerview_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_ordertype"
+                            android:layout_marginTop="@dimen/_5sdp" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerview_storelist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_ordertype"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@+id/linear_ordertype"
@@ -349,8 +364,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_22sdp"
-                                android:padding="@dimen/_10sdp"
                                 android:fontFamily="@font/reguler"
+                                android:padding="@dimen/_10sdp"
                                 android:text="Books at a Designated Location"
                                 android:textColor="@color/dark_gray"
                                 android:textSize="@dimen/_10sdp" />
@@ -364,12 +379,13 @@
                                 android:id="@+id/textview_other_destribution"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/_10sdp"
                                 android:fontFamily="@font/reguler"
-                                android:text="Select Order Type"
+                                android:padding="@dimen/_10sdp"
+                                android:text="Let Other to Distribute the Books"
                                 android:textColor="@color/dark_gray"
                                 android:textSize="@dimen/_10sdp" />
                         </LinearLayout>
+
 
                         <TextView
                             android:id="@+id/tv_ordertype"
@@ -378,52 +394,63 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round_whitelbg"
                             android:drawableRight="@drawable/arrow_drop_down"
-                            android:text="Pick up Books at the desiginated location"
+                            android:fontFamily="@font/reguler"
                             android:inputType="number"
                             android:paddingBottom="@dimen/_6sdp"
-                            android:fontFamily="@font/reguler"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
+                            android:text="Select Order Type"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_10sdp" />
 
                     </RelativeLayout>
 
-
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/linear_address"
-                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tv_add_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="center"
+                            android:padding="@dimen/_10sdp"
                             android:text="Add Address"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_12sdp" />
 
-                        <TextView
-                            android:id="@+id/tv_saved_address"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:fontFamily="@font/reguler"
-                            android:text="Saved Address"
-                            android:textColor="@color/red_bg"
-                            android:textSize="@dimen/_12sdp" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/tv_saved_address"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:fontFamily="@font/reguler"-->
+                        <!--android:gravity="center"-->
+                        <!--android:padding="@dimen/_10sdp"-->
+                        <!--android:text="Saved Address"-->
+                        <!--android:textColor="@color/red_bg"-->
+                        <!--android:textSize="@dimen/_12sdp" />-->
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/textview_noaddressfound"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_30sdp"
+                        android:fontFamily="@font/reguler"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="Address Not Found!"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_10sdp"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -437,8 +464,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="Address"
                             android:fontFamily="@font/reguler"
+                            android:text="Address"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
 
@@ -449,16 +476,13 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:background="@drawable/edittext_round"
                             android:hint="23 2 karobag delhi india"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
                             android:textSize="@dimen/_10sdp" />
-
-
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:id="@+id/add_address_Layout"
@@ -473,8 +497,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="Delivery Address"
                             android:fontFamily="@font/reguler"
+                            android:text="Delivery Address"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
 
@@ -484,9 +508,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:background="@drawable/edittext_round"
-                            android:hint="Enter Address"
-                            android:inputType="number"
                             android:fontFamily="@font/reguler"
+                            android:hint="Enter Address"
+                            android:inputType="text"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
@@ -498,8 +522,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:text="Postcode"
                             android:fontFamily="@font/reguler"
+                            android:text="Postcode"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
 
@@ -510,9 +534,9 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round"
+                            android:fontFamily="@font/reguler"
                             android:hint="Enter Postcode"
                             android:inputType="number"
-                            android:fontFamily="@font/reguler"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
@@ -524,8 +548,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:text="State"
                             android:fontFamily="@font/reguler"
+                            android:text="State"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
 
@@ -536,9 +560,12 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round"
-                            android:hint="Enter State"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:fontFamily="@font/reguler"
-                            android:inputType="number"
+                            android:hint="Enter State"
+                            android:inputType="text"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
@@ -550,8 +577,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:text="City"
                             android:fontFamily="@font/reguler"
+                            android:text="City"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
 
@@ -562,9 +589,12 @@
                             android:layout_marginBottom="@dimen/_20sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round"
-                            android:hint="Enter City"
-                            android:inputType="number"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:fontFamily="@font/reguler"
+                            android:hint="Enter City"
+                            android:inputType="text"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
@@ -580,9 +610,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="#eee9e9"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/textview_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="TOTAL"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp" />
 
+        <TextView
+            android:id="@+id/textview_total_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/reguler"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:text="288"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_16sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textview_back"

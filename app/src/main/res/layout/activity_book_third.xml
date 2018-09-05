@@ -195,9 +195,10 @@
                     android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:text="TOTAL"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_8sdp"
+                    android:textSize="@dimen/_14sdp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_15sdp" />
+                    />
 
                 <TextView
                     android:id="@+id/textview_total_price"

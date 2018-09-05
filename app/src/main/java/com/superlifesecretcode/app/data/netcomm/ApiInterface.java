@@ -22,8 +22,12 @@ import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
+import com.superlifesecretcode.app.ui.book.detail.DetailBean;
 import com.superlifesecretcode.app.ui.book.first.BookList;
+import com.superlifesecretcode.app.ui.book.five.BankBean;
+import com.superlifesecretcode.app.ui.book.forth.AddressBean;
 import com.superlifesecretcode.app.ui.book.forth.StoreBean;
+import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
 
 import java.util.Map;
 
@@ -279,11 +283,29 @@ public interface ApiInterface {
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("oldAddresses")
-    Observable<CountryResponseModel> getAddress();
+    Observable<AddressBean> getAddress(@HeaderMap Map<String, String> headers);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("stores")
-    Observable<StoreBean> getStores();
+    Observable<StoreBean> getStores(@HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("accounts")
+    Observable<BankBean> getBankList(@HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("bookOrder")
+    Observable<BaseResponseModel> bookOrder(@Body RequestBody file, @HeaderMap() Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("myOrders")
+    Observable<MyOrderBean> getMyOrderList(@HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("myOrderDetail")
+    Observable<DetailBean> orderDetail(@PartMap() Map<String, RequestBody> partMap,
+                                                         @HeaderMap Map<String, String> headers);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("addAnnouncement")

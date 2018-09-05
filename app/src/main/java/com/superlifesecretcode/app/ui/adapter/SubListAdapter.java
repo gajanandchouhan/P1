@@ -17,7 +17,9 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
+import com.superlifesecretcode.app.ui.book.myorder_book.OrderBookActivity;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
@@ -34,6 +36,8 @@ import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -183,41 +187,71 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                 case ConstantLib.TYPE_NEWS:
                     CommonUtils.startActivity((AppCompatActivity) mContext, NewsActivity.class);
                     break;
+
                 case ConstantLib.TYPE_EVENT:
                     CommonUtils.startActivity((AppCompatActivity) mContext, EventActivity.class);
                     break;
+
                 case ConstantLib.TYPE_LATEST:
                     CommonUtils.startActivity((AppCompatActivity) mContext, LatestActivity.class);
                     break;
+
                 case ConstantLib.TYPE_SUBMIT:
                     CommonUtils.startActivity((AppCompatActivity) mContext, SubmitListActivity.class);
                     break;
                 case ConstantLib.TYPE_PERSONAL_CALENDAR:
                     CommonUtils.startActivity((AppCompatActivity) mContext, PersonalEventCalendarActivity.class);
                     break;
+
                 case ConstantLib.TYPE_EVENT_CALENDAR:
                     CommonUtils.startActivity((AppCompatActivity) mContext, InterestedEventCalendarActivity.class);
                     break;
+
                 case ConstantLib.TYPE_STUDY_GROUP:
                     Bundle bundle = new Bundle();
                     bundle.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getStudy_group());
                     bundle.putBoolean("isStudyGroup", true);
                     CommonUtils.startActivity((AppCompatActivity) mContext, CountryAcitvitiesActivity.class, bundle, false);
                     break;
+
                 case ConstantLib.TYPE_ONSITE:
                     Bundle bundle2 = new Bundle();
                     bundle2.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getOnsite());
                     bundle2.putBoolean("isStudyGroup", false);
                     CommonUtils.startActivity((AppCompatActivity) mContext, CountryAcitvitiesActivity.class, bundle2, false);
                     break;
+
                 case ConstantLib.TYPE_PRINT_BOOK:
                     Bundle bundle3 = new Bundle();
                     bundle3.putString("type", "1");
+                    SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
+                    SuperLifeSecretPreferences.getInstance().putString("book_print_status", "1");
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                    SuperLifeSecretPreferences.getInstance().putString("total_amount","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_address","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_full_name","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_mobile","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_email","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_state","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_city","");
                     CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
                     break;
+
                 case ConstantLib.TYPE_BUY_BOOK:
                     Bundle bundle4 = new Bundle();
                     bundle4.putString("type", "2");
+                    SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
+                    SuperLifeSecretPreferences.getInstance().putString("book_print_status", "2");
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                    SuperLifeSecretPreferences.getInstance().putString("total_amount","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_address","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_full_name","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_mobile","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_email","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_state","");
+                    SuperLifeSecretPreferences.getInstance().putString("book_city","");
                     CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
                     break;
                 case ConstantLib.TYPE_MY_ANNOUNCEMENT:
@@ -225,6 +259,14 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     break;
                 case ConstantLib.TYPE_MY_COUNTRY_ACTIVITIES:
                     CommonUtils.startActivity((AppCompatActivity) mContext, MyCountryActivity.class);
+                    break;
+
+                case ConstantLib.TYPE_BOOK_ORDER_HISTORY:
+
+                    Bundle bundle5 = new Bundle();
+                    bundle5.putString("title","My Order");
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                    CommonUtils.startActivity((AppCompatActivity) mContext, OrderBookActivity.class, bundle5, false);
                     break;
             }
         }

@@ -3,10 +3,12 @@ package com.superlifesecretcode.app.ui.book.forth;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
 import com.superlifesecretcode.app.data.netcomm.ResponseHandler;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BasePresenter;
 import com.superlifesecretcode.app.ui.book.first.BookList;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -25,18 +27,18 @@ public class ForthBookPresneter extends BasePresenter<ForthBookView> {
 
     @Override
     protected void setView(ForthBookView forthBookView) {
-        view=forthBookView;
+        view = forthBookView;
     }
 
 
-    public void getStores(HashMap<String, String> params, Map<String, String> headers) {
+    public void getStores(Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callGet(mContext, RequestType.REQ_GET_STORES_BOOK_FORTH, new ResponseHandler<StoreBean>() {
+        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_STORES_BOOK_FORTH, new ResponseHandler<StoreBean>() {
             @Override
             public void onResponse(StoreBean categoryResponseModel) {
                 view.hideProgress();
@@ -58,6 +60,100 @@ public class ForthBookPresneter extends BasePresenter<ForthBookView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        });
+        }, headers, "", "");
     }
+
+    public void getOldAddresses(Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_ADDRESSES_BOOK_FORTH, new ResponseHandler<AddressBean>() {
+            @Override
+            public void onResponse(AddressBean categoryResponseModel) {
+                view.hideProgress();
+                if (categoryResponseModel != null) {
+                    if (categoryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS))
+                        view.getOldAddress(categoryResponseModel);
+                    else {
+                        CommonUtils.showSnakeBar(mContext, categoryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, headers, "", "");
+    }
+
+    public void getStates(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_GET_STATE, new ResponseHandler<CountryResponseModel>() {
+            @Override
+            public void onResponse(CountryResponseModel countryResponseModel) {
+                view.hideProgress();
+                if (countryResponseModel != null) {
+                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setStateData(countryResponseModel.getData());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, requestBody);
+    }
+
+    public void getCities(HashMap requestBody) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.call(mContext, RequestType.REQ_GET_CITIES, new ResponseHandler<CountryResponseModel>() {
+            @Override
+            public void onResponse(CountryResponseModel countryResponseModel) {
+                view.hideProgress();
+                if (countryResponseModel != null) {
+                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setCities(countryResponseModel.getData());
+                    } else {
+                        CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getNo_city());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+            }
+        }, requestBody);
+    }
+
 }

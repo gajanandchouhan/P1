@@ -1,11 +1,20 @@
 package com.superlifesecretcode.app.ui.book.first;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,10 +23,16 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.base.BaseView;
+import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
+import com.superlifesecretcode.app.ui.book.forth.ForthBookActivity;
 import com.superlifesecretcode.app.ui.book.second.SecondBookActivity;
+import com.superlifesecretcode.app.ui.book.third.ThirsBookActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class FirstBookActivity extends BaseActivity implements FirstBookView {
@@ -28,10 +43,16 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     FirstBookPresenter firstBookPresenter;
     private UserDetailResponseData userDetailResponseData;
     BookAapter bookAapter;
-    public ArrayList<BookBean> booksList;
-    public ArrayList<BookBean> selectedBookArrayList;
-    public ArrayList<String> selectedBooks;
-    public String book_type;
+    ArrayList<BookBean> booksList;
+    ArrayList<BookBean> selectedBookArrayList;
+    ArrayList<String> selectedBooks;
+    String book_type;
+    ImageView back_image;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected int getContentView() {
@@ -42,11 +63,23 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
 
     @Override
     protected void initializeView() {
+        Locale current = getResources().getConfiguration().locale;
+        Log.i("locale", Currency.getInstance(current).getSymbol());
+        SuperLifeSecretPreferences.getInstance().putString("book_currency",""+Currency.getInstance(current).getSymbol());
+
         bookrecyclerview = findViewById(R.id.bookrecyclerview);
         textview_select = findViewById(R.id.textview_select);
         textview_back = findViewById(R.id.textview_back);
         edittext_enteramount = findViewById(R.id.edittext_enteramount);
         textview_next = findViewById(R.id.textview_next);
+        back_image = findViewById(R.id.back_image);
+
+        back_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         booksList = new ArrayList<>();
         if (SuperLifeSecretPreferences.getInstance().getSelectedBooks() == null) {
@@ -70,13 +103,12 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         textview_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SuperLifeSecretPreferences.getInstance().setSelectedBooks(selectedBooks);
-
-                if(selectedBooks.size()!=0){
+                if (selectedBooks.size() != 0) {
+                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no","1");
                     Intent intent = new Intent(FirstBookActivity.this, SecondBookActivity.class);
-                    intent.putExtra("selected_booklist", selectedBookArrayList);
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(FirstBookActivity.this, "Please selct atleast one item.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -87,6 +119,13 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                 finish();
             }
         });
+
+        String stack = SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no");
+        if (stack!=null && !stack.equals("")){
+            if (Integer.parseInt(stack)>=1){
+                CommonUtils.startActivity(FirstBookActivity.this,SecondBookActivity.class);
+            }
+        }
     }
 
     private void getBookList() {
@@ -126,15 +165,39 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     public class BookSelectedListener {
         public void onSelected(int i, boolean status) {
             if (status == true) {
-                selectedBookArrayList.add(booksList.get(i));
-                selectedBooks.add("" + booksList.get(i).getId());
+                if (!selectedBooks.contains(booksList.get(i).getId())) {
+                    Log.e("selectedBokArayListBEF", "" + selectedBookArrayList.size());
+                    Log.e("selectedBooks_BEF", "" + selectedBookArrayList.size());
+                    selectedBookArrayList.add(booksList.get(i));
+                    selectedBooks.add("" + booksList.get(i).getId());
+                    Log.e("selectedBokArayListAAF", "" + selectedBookArrayList.size());
+                    Log.e("selectedBooks_AAF", "" + selectedBookArrayList.size());
+
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(selectedBooks);
+                    booksList.get(i).setSelected(status);
+                    bookAapter.notifyItemChanged(i);
+                }
             } else {
-                selectedBookArrayList.remove(booksList.get(i));
+                Log.e("selectedBokArayListBEF", "" + selectedBookArrayList.size());
+                Log.e("selectedBooks_BEF", "" + selectedBooks.size());
+                selectedBookArrayList.clear();
+                booksList.get(i).setSelected(status);
+                for (int p = 0; p < booksList.size(); p++) {
+                    if (booksList.get(p).isSelected()) {
+                        selectedBookArrayList.add(booksList.get(p));
+                    }
+                }
+                //selectedBookArrayList.remove(i);
                 selectedBooks.remove(booksList.get(i).getId());
+                SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
+                SuperLifeSecretPreferences.getInstance().setSelectedBooks(selectedBooks);
+                bookAapter.notifyItemChanged(i);
+                Log.e("selectedBokArayListAAF", "" + selectedBookArrayList.size());
+                Log.e("selectedBooks_AAF", "" + selectedBooks.size());
             }
-            SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
-            booksList.get(i).setSelected(status);
-            bookAapter.notifyItemChanged(i);
         }
     }
+
+
 }

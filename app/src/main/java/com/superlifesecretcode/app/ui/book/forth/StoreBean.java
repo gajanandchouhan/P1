@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class StoreBean extends BaseResponseModel{
 
-    ArrayList<Stores> stores;
+    ArrayList<Stores> data;
 
     public ArrayList<Stores> getStores() {
-        return stores;
+        return data;
     }
 
     public void setStores(ArrayList<Stores> stores) {
-        this.stores = stores;
+        this.data = data;
     }
 }
