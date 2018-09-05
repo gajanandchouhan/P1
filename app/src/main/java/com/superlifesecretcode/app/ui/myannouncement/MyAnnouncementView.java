@@ -5,8 +5,14 @@ import com.superlifesecretcode.app.ui.base.BaseView;
 
 import java.util.List;
 
-public interface MyAnnouncementView extends BaseView{
+public interface MyAnnouncementView extends BaseView {
     void setAnnouncementList(List<MyAnnouncementResponseData> data);
 
     void deleted();
+
+    void onPermissionStatus(String permissionStatus);
+
+    void onRequestSuccess();
+
+    void onRequestFailed();
 }

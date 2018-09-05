@@ -65,6 +65,7 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
             buttonNeutral.setText(positive);
         }
         textViewMessage.setText(message);
+        setCancelable(false);
     }
 
     @Override

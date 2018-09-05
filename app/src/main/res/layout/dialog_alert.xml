@@ -70,6 +70,8 @@
         android:layout_margin="@dimen/_10sdp"
         android:background="@drawable/rounded_gray"
         android:text="Ok"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
         android:textAllCaps="false"
         android:textColor="@color/colorLightBlack"
         android:textSize="@dimen/_13sdp"

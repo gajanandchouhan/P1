@@ -23,6 +23,7 @@ public class MyAnnouncementResponseData implements Serializable{
     private String end_date;
     private String end_time;
     private List<ImageData> announcement_images;
+    private String reason;
 
     public String getAnnouncement_id() {
         return announcement_id;
@@ -152,7 +153,13 @@ public class MyAnnouncementResponseData implements Serializable{
     public List<ImageData> getAnnouncement_images() {
         return announcement_images;
     }
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
+    public String getReason() {
+        return reason;
+    }
     public class ImageData implements Serializable {
         private String id;
         @SerializedName("announcement_image")
@@ -174,4 +181,6 @@ public class MyAnnouncementResponseData implements Serializable{
             this.image = image;
         }
     }
+
+
 }

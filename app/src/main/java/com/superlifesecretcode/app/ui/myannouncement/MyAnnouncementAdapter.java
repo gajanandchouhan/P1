@@ -63,14 +63,17 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
             case "0":
                 holder.textViewStatus.setText("Pending");
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_pending);
+                holder.textViewReason.setVisibility(View.GONE);
                 break;
             case "1":
                 holder.textViewStatus.setText("Published");
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_published);
+                holder.textViewReason.setVisibility(View.GONE);
                 break;
             case "2":
                 holder.textViewStatus.setText("Declined");
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_declined);
+                holder.textViewReason.setVisibility(View.VISIBLE);
                 break;
         }
         holder.textViewStatus.setPadding(25, 0, 25, 5);
@@ -92,6 +95,7 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
         TextView textViewDesc;
         ImageView imageViewDelete;
         TextView textViewStatus;
+        TextView textViewReason;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -101,7 +105,9 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
             textViewDesc = itemView.findViewById(R.id.textView_desc);
             imageViewDelete = itemView.findViewById(R.id.image_view_delete);
             textViewStatus = itemView.findViewById(R.id.text_view_status);
+            textViewReason = itemView.findViewById(R.id.text_view_reason);
             imageViewDelete.setOnClickListener(this);
+            textViewReason.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
@@ -111,6 +117,9 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
                 case R.id.image_view_delete:
                     showDeleteAlert(getAdapterPosition());
                     break;
+                case R.id.text_view_reason:
+                    showReasonAlert(list.get(getAdapterPosition()).getReason());
+                    break;
                 default:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("data", list.get(getAdapterPosition()));
@@ -118,6 +127,20 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
                     break;
             }
         }
+    }
+
+    private void showReasonAlert(String reason) {
+        CommonUtils.showAlert(mContext, reason, "OK", null, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
     }
 
     private void showDeleteAlert(final int position) {

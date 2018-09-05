@@ -14,7 +14,9 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.myannouncement.addannouncement.AddAnnouncementActivity;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +34,7 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     private MyAnnouncementAdapter adapter;
     private MyAnnouncementPresenter presenter;
     private int position;
+    private String permisionStatus = ConstantLib.PERMISSION_DEFAULT;
 
 
     @Override
@@ -98,7 +101,16 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.text_view_add:
-                CommonUtils.startActivity(this, AddAnnouncementActivity.class);
+                if (permisionStatus.equals(ConstantLib.PERMISSION_DEFAULT)) {
+                    showRequestAlert("You have not permission to add Events, Are you want to send request for submission event?");
+                } else if (permisionStatus.equals(ConstantLib.PERMISSION_DECLINED)) {
+                    showMessageAlert("You have not permission to add any event.");
+                } else if (permisionStatus.equals(ConstantLib.PERMISSION_PENDING)) {
+                    showMessageAlert("You event submission request pending for approval, we will update you soon.");
+                } else {
+                    CommonUtils.startActivity(this, AddAnnouncementActivity.class);
+                }
+
                 break;
         }
     }
@@ -116,6 +128,62 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     public void deleted() {
         announcementList.remove(position);
         adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onPermissionStatus(String permissionStatus) {
+        this.permisionStatus = permissionStatus;
+        if (permissionStatus.equals(ConstantLib.PERMISSION_DEFAULT)) {
+            showRequestAlert("You have not permission to add Events, Are you want to send request for submission event?");
+        } else if (permissionStatus.equals(ConstantLib.PERMISSION_DECLINED)) {
+            showMessageAlert("You have not permission to add any event.");
+        } else if (permissionStatus.equals(ConstantLib.PERMISSION_PENDING)) {
+            showMessageAlert("You event submission request pending for approval, we will update you soon.");
+        }
+    }
+
+    @Override
+    public void onRequestSuccess() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onRequestFailed() {
+        onBackPressed();
+    }
+
+    private void showMessageAlert(String message) {
+        CommonUtils.showAlert(this, message, conversionData.getOk(), null, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+                onBackPressed();
+            }
+
+            @Override
+            public void onNegativeClick() {
+                onBackPressed();
+            }
+        });
+    }
+
+    private void showRequestAlert(String message) {
+        CommonUtils.showAlert(this, message, conversionData.getYes(), conversionData.getNo(), new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+                sendRequest();
+            }
+
+            @Override
+            public void onNegativeClick() {
+                onBackPressed();
+            }
+        });
+    }
+
+    private void sendRequest() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        presenter.sendEventAddRequest(headers);
     }
 
 

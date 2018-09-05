@@ -303,6 +303,7 @@ public interface ApiInterface {
     @POST("removeAnnouncementImage")
     Observable<BaseResponseModel> removeAnnouncementImage(@PartMap() Map<String, RequestBody> partMap,
                                                      @HeaderMap Map<String, String> headers);
-
-
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("announcementAddRequest")
+    Observable<BaseResponseModel> sendReq(@HeaderMap Map<String, String> headers);
 }

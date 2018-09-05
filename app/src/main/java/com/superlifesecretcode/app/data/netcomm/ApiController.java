@@ -440,7 +440,12 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<MyAnnoucmenntResponseModel>(handler));
                 break;
-
+            case REQ_SEND_EVENT_REQ:
+                Observable<BaseResponseModel> sendReqObservable = apiInterface.sendReq(headers);
+                sendReqObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                break;
         }
 
     }

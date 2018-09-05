@@ -33,4 +33,5 @@
     <string name="continuee">Continue</string>
     <string name="signup">Sign Up</string>
     <string name="skip_and_signup">Skip &amp; Signup</string>
+    <string name="que">\?</string>
 </resources>

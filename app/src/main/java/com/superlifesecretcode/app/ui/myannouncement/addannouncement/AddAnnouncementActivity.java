@@ -209,6 +209,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     public void imageDelete() {
         remoteImageList.remove(position);
         submitAapter.notifyItemRemoved(position);
+        MyAnnouncementActivity.shouldRefresh = true;
     }
 
     private void showCountryPicker() {
@@ -504,7 +505,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         this.position = position;
         Object o = remoteImageList.get(position);
         if (o instanceof MyAnnouncementResponseData.ImageData) {
-            MyAnnouncementResponseData.ImageData image= (MyAnnouncementResponseData.ImageData) o;
+            MyAnnouncementResponseData.ImageData image = (MyAnnouncementResponseData.ImageData) o;
             Map<String, String> headers = new HashMap<>();
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             HashMap<String, String> params = new HashMap<>();

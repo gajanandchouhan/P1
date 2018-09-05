@@ -41,7 +41,10 @@ public class MyAnnouncementPresenter extends BasePresenter<MyAnnouncementView> {
                 view.hideProgress();
                 if (annoucmenntResponseModel != null) {
                     if (annoucmenntResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                    view.setAnnouncementList(annoucmenntResponseModel.getData());
+                        view.setAnnouncementList(annoucmenntResponseModel.getData());
+                        view.onPermissionStatus(annoucmenntResponseModel.getPermissionStatus());
+                    } else {
+                        view.onPermissionStatus(annoucmenntResponseModel.getPermissionStatus());
                     }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
@@ -55,7 +58,7 @@ public class MyAnnouncementPresenter extends BasePresenter<MyAnnouncementView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        },headers, null, null);
+        }, headers, null, null);
     }
 
 
@@ -88,5 +91,38 @@ public class MyAnnouncementPresenter extends BasePresenter<MyAnnouncementView> {
 
             }
         }, params, headers);
+    }
+
+
+    public void sendEventAddRequest(Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGetWithHeader(mContext, RequestType.REQ_SEND_EVENT_REQ, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel annoucmenntResponseModel) {
+                view.hideProgress();
+                if (annoucmenntResponseModel != null) {
+                    if (annoucmenntResponseModel.getStatus().equals(ConstantLib.RESPONSE_SUCCESS))
+                        view.onRequestSuccess();
+                    else
+                        view.onRequestFailed();
+                    CommonUtils.showToast(mContext, annoucmenntResponseModel.getMessage());
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, headers, null, null);
     }
 }
