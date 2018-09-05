@@ -628,11 +628,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             }
         } else {
-            Toast.makeText(this, "title "+data.getTitle(), Toast.LENGTH_SHORT).show();
             Bundle bundle = new Bundle();
             bundle.putString("title", data.getTitle());
-            Log.e("title",""+data.getTitle());
-            Log.e("parent_id",""+data.getId());
             bundle.putString("parent_id", data.getId());
             bundle.putString("color", data.getColor());
             CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
