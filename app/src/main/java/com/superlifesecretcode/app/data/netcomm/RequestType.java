@@ -5,6 +5,7 @@ package com.superlifesecretcode.app.data.netcomm;
  */
 
 public interface RequestType {
+
     byte REQ_CONVERSION = 1;
     byte REQ_GET_COUNTRY = 2;
     byte REQ_GET_STATE = 3;
@@ -49,4 +50,8 @@ public interface RequestType {
     byte REQ_GET_BOOK_LIST=40;
     byte REQ_GET_ADDRESSES_BOOK_FORTH=41;
     byte REQ_GET_STORES_BOOK_FORTH=42;
+    byte REQ_GET_BANKLIST_BOOK_FIFTH=43;
+    byte REQ_BOOK_ORDER=44;
+    byte REQ_GET_ORDER_LIST_BOOK=45;
+    byte REQ_GET_ORDER_DETAIL_BOOK=46;
 }

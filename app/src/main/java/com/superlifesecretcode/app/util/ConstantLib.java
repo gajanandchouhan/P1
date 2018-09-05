@@ -37,6 +37,7 @@ public interface ConstantLib {
     String TYPE_ONSITE = "10";
     String TYPE_PRINT_BOOK = "11";
     String TYPE_BUY_BOOK = "12";
+    String TYPE_BOOK_ORDER_HISTORY = "13";
     String NOTIFICATION_PERSONAL = "1";
     String NOTIFICATION_EVENT = "2";
     String NOTIFICATION_COUNTY_ACTIVITY = "3";

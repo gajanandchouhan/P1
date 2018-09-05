@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.notifications.NotificationResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -42,8 +43,8 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_auther_name.setText(list.get(position).getAuthor_name());
         holder.textview_book_descrption.setText(list.get(position).getDescription());
-        holder.textview_bookprice.setText("$" + list.get(position).getPrice());
-        //ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
+        holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+ list.get(position).getPrice());
+        ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
 
         if (list.get(position).isSelected()) {
             holder.checkbox.setImageDrawable(mContext.getResources().getDrawable(R.drawable.check));
@@ -54,7 +55,6 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
             @Override
             public void onClick(View v) {
                 if (list.get(position).isSelected()) {
-
                     bookSelectedListener.onSelected(position, false);
                 } else {
                     bookSelectedListener.onSelected(position, true);

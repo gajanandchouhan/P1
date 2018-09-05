@@ -158,9 +158,7 @@ public class RegisterActivityNewSecond extends BaseActivity implements View.OnCl
                 bundle.putBoolean("is_link", true);
                 CommonUtils.startActivity(this, TcWebViewActivity.class, bundle, false);
                 break;
-
         }
-
     }
 
     private void showgGenderSelection() {

@@ -149,7 +149,6 @@ public class SuperLifeSecretPreferences {
         return null;
     }
 
-
     public void setSelectedBooks(ArrayList<String> list) {
         editer.putString("selected_books", new Gson().toJson(list)).commit();
     }

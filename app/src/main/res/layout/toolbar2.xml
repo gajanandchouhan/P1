@@ -16,7 +16,7 @@
         app:elevation="@dimen/_10sdp">
 
         <ImageView
-            android:id="@+id/imageView_notification"
+            android:id="@+id/back_image"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_gravity="left"
