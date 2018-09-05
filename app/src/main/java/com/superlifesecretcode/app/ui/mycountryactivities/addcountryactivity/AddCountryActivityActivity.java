@@ -1,4 +1,4 @@
-package com.superlifesecretcode.app.ui.myannouncement.addannouncement;
+package com.superlifesecretcode.app.ui.mycountryactivities.addcountryactivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -20,11 +20,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.facebook.internal.Utility;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.kbeanie.multipicker.api.ImagePicker;
 import com.kbeanie.multipicker.api.Picker;
 import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
 import com.kbeanie.multipicker.api.entity.ChosenImage;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.WeekDayModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
@@ -32,8 +39,10 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
+import com.superlifesecretcode.app.ui.myannouncement.addannouncement.HorizontalImageAapter;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
+import com.superlifesecretcode.app.ui.picker.selectiondialog.SelectionListDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.PermissionConstant;
@@ -49,7 +58,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class AddAnnouncementActivity extends BaseActivity implements AddAnnouncementView, View.OnClickListener {
+public class AddCountryActivityActivity extends BaseActivity implements AddCountryActivityView, View.OnClickListener {
 
 
     private LanguageResponseData conversionData;
@@ -58,33 +67,38 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     private List<CountryResponseData> countryList;
 
     private TextView textViewViewCountry, textViewAnnounType, textViewPickImage;
-    private TextView textViewStartDate, textViewEndDate, textViewStartTime, textViewEndTime;
+    private TextView textViewState, textViewCity, textViewDay, textViewLocation;
+    private TextView textViewStartDate, textViewStartTime;
 
-    private EditText editTextName, editTextCCMail, editTextDesc, editTextVenue;
-    private AddAnnouncementPresenter presenter;
+    private EditText editTextName, editTextCCMail, editTextDesc, editTextVenue, editTextContactName, edittextContactNumber, editTextContatEmail;
+    private AddCountryActivityPresenter presenter;
 
     List<String> announceTypeList;
     private List<String> imageList;
     private HorizontalImageAapter submitAapter;
     private RecyclerView recyclerView;
     private ImagePicker imagePicker;
-    private String toDate;
     private String fromDate;
     private String startTime;
-    private String endTime;
     private Button button;
     private String countryId;
     private String announcmentType;
     private List<Object> remoteImageList;
 
-    TextInputLayout venueInputLayout;
     MyAnnouncementResponseData data;
     private int position;
+    private SelectionListDialog dialog;
+    private List<WeekDayModel> weekDayModelList;
+    private String day;
+    private String stateId;
+    private String city;
 
+    int PLACE_PICKER_REQUEST = 1;
+    private LatLng latLng;
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_add_announcement;
+        return R.layout.activity_add_country_activities;
     }
 
     @Override
@@ -99,39 +113,56 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         textViewViewCountry = findViewById(R.id.text_view_country);
         textViewAnnounType = findViewById(R.id.text_view_announcment_type);
         textViewPickImage = findViewById(R.id.text_view_pick_image);
+        textViewState = findViewById(R.id.text_view_state);
+        textViewCity = findViewById(R.id.text_view_city);
+        textViewDay = findViewById(R.id.text_view_day);
+        textViewLocation = findViewById(R.id.text_view_location);
         recyclerView = findViewById(R.id.recycler_view);
         textViewStartDate = findViewById(R.id.text_view_start_date);
-        textViewEndDate = findViewById(R.id.text_view_end_date);
         textViewStartTime = findViewById(R.id.text_view_start_time);
-        textViewEndTime = findViewById(R.id.text_view_end_time);
         editTextName = findViewById(R.id.input_name);
         editTextCCMail = findViewById(R.id.input_ccmail);
         editTextDesc = findViewById(R.id.input_desc);
         editTextVenue = findViewById(R.id.input_venue);
-        venueInputLayout = findViewById(R.id.input_layout_venue);
+        editTextContactName = findViewById(R.id.input_contact_name);
+        edittextContactNumber = findViewById(R.id.input_contact_no);
+        editTextContatEmail = findViewById(R.id.input_contact_email);
         button = findViewById(R.id.button_add);
         button.setOnClickListener(this);
         textViewViewCountry.setOnClickListener(this);
         textViewPickImage.setOnClickListener(this);
         textViewAnnounType.setOnClickListener(this);
         textViewStartDate.setOnClickListener(this);
-        textViewEndDate.setOnClickListener(this);
         textViewStartTime.setOnClickListener(this);
-        textViewEndTime.setOnClickListener(this);
+        textViewState.setOnClickListener(this);
+        textViewCity.setOnClickListener(this);
+        textViewDay.setOnClickListener(this);
+        textViewLocation.setOnClickListener(this);
         announceTypeList = new ArrayList<>();
-        announceTypeList.add(conversionData.getEvent_activity());
-        announceTypeList.add(conversionData.getNews_update());
+        announceTypeList.add(conversionData.getStudy_group());
+        announceTypeList.add(conversionData.getOnsite());
         imageList = new ArrayList<>();
         remoteImageList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         submitAapter = new HorizontalImageAapter(remoteImageList, this);
         recyclerView.setAdapter(submitAapter);
         announcmentType = "1";
-        textViewAnnounType.setText(conversionData.getEvent_activity());
+        textViewAnnounType.setText(conversionData.getStudy_group());
+        setWeekDayList();
         if (data != null) {
             setUpUi();
         }
-        setUpVisibilityOfFields();
+    }
+
+    private void setWeekDayList() {
+        weekDayModelList = new ArrayList<>();
+        weekDayModelList.add(new WeekDayModel(conversionData.getMon(), "2"));
+        weekDayModelList.add(new WeekDayModel(conversionData.getTue(), "3"));
+        weekDayModelList.add(new WeekDayModel(conversionData.getWed(), "4"));
+        weekDayModelList.add(new WeekDayModel(conversionData.getThu(), "5"));
+        weekDayModelList.add(new WeekDayModel(conversionData.getFri(), "6"));
+        weekDayModelList.add(new WeekDayModel(conversionData.getSat(), "7"));
+        weekDayModelList.add(new WeekDayModel(conversionData.getSun(), "1"));
     }
 
     private void setUpUi() {
@@ -139,9 +170,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         announcmentType = data.getAnnouncement_type();
         countryId = data.getCountry();
         fromDate = data.getStart_date();
-        toDate = data.getEnd_date();
         startTime = data.getStart_time();
-        endTime = data.getEnd_time();
         remoteImageList.addAll(data.getAnnouncement_images());
         if (remoteImageList.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
@@ -154,18 +183,13 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         if (announcmentType != null && announcmentType.equals("1")) {
             editTextVenue.setText(data.getVenue());
             textViewStartDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, fromDate, false, null));
-            textViewStartTime.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", startTime, false, null));
-            if (toDate != null && !toDate.isEmpty()) {
-                textViewEndDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, toDate, false, null));
-                textViewEndTime.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", endTime, false, null));
-            }
         }
 
     }
 
     @Override
     protected void initializePresenter() {
-        presenter = new AddAnnouncementPresenter(this);
+        presenter = new AddCountryActivityPresenter(this);
         presenter.setView(this);
 
     }
@@ -178,7 +202,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
         if (conversionData != null)
-            textViewTitle.setText(conversionData.getAnnouncement());
+            textViewTitle.setText(conversionData.getCountry_activities());
     }
 
     @Override
@@ -216,6 +240,12 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
             @Override
             public void onPick(CountryResponseData country) {
+                if (!country.getId().equalsIgnoreCase(countryId)) {
+                    stateId = null;
+                    city = "";
+                    textViewCity.setText("");
+                    textViewState.setText("");
+                }
                 textViewViewCountry.setText(country.getName());
                 countryStatePicker.dismiss();
                 countryId = country.getId();
@@ -234,6 +264,31 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
                     presenter.getCountry();
                 }
                 break;
+            case R.id.text_view_state:
+                if (countryId == null || countryId.isEmpty()) {
+                    CommonUtils.showSnakeBar(this, conversionData.getSelect_country());
+                    return;
+                }
+                getState();
+                break;
+            case R.id.text_view_city:
+                if (stateId == null || stateId.isEmpty()) {
+                    CommonUtils.showSnakeBar(this, conversionData.getSelect_state());
+                    return;
+                }
+                getCity();
+                break;
+            case R.id.text_view_day:
+                showWeekDayPicker();
+                break;
+            case R.id.text_view_location:
+                if (CommonUtils.hasPermissions(this, PermissionConstant.PERMISSION_LOCATION)) {
+                    openPlacePicker();
+                } else {
+                    ActivityCompat.requestPermissions(this, PermissionConstant.PERMISSION_LOCATION, PermissionConstant.CODE_LOCATION);
+                }
+
+                break;
             case R.id.text_view_announcment_type:
                 showTypePicker();
                 break;
@@ -246,25 +301,13 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
                 break;
 
             case R.id.text_view_start_date:
-                if (toDate != null) {
-                    textViewEndDate.setText("");
-                    toDate = null;
-                }
-                showDatePicker(textViewStartDate, 1, fromDate == null ? System.currentTimeMillis() - 1000 : CommonUtils.getDateInMilis(fromDate));
+                showDatePicker(textViewStartDate, 1, System.currentTimeMillis() - 1000);
                 break;
-            case R.id.text_view_end_date:
-                if (fromDate == null) {
-                    CommonUtils.showToast(this, "Please select start date.");
-                    return;
-                }
-                showDatePicker(textViewEndDate, 2, CommonUtils.getDateInMilis(fromDate));
-                break;
+
             case R.id.text_view_start_time:
                 showTimePicker(1);
                 break;
-            case R.id.text_view_end_time:
-                showTimePicker(2);
-                break;
+
 
             case R.id.button_add:
                 addAnnouncement();
@@ -280,21 +323,8 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             public void onSelected(String value, int position) {
                 textViewAnnounType.setText(value);
                 announcmentType = String.valueOf(position + 1);
-                setUpVisibilityOfFields();
             }
         });
-    }
-
-    private void setUpVisibilityOfFields() {
-        if (announcmentType != null && announcmentType.equals("1")) {
-            venueInputLayout.setVisibility(View.VISIBLE);
-            findViewById(R.id.layout_start_date).setVisibility(View.VISIBLE);
-            findViewById(R.id.layout_end_date).setVisibility(View.VISIBLE);
-        } else {
-            venueInputLayout.setVisibility(View.GONE);
-            findViewById(R.id.layout_start_date).setVisibility(View.GONE);
-            findViewById(R.id.layout_end_date).setVisibility(View.GONE);
-        }
     }
 
 
@@ -307,6 +337,14 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
                 }
             }
             pickImage();
+        }
+        if (requestCode == PermissionConstant.CODE_LOCATION) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
+            openPlacePicker();
         }
     }
 
@@ -359,6 +397,15 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         if (requestCode == Picker.PICK_IMAGE_DEVICE) {
             imagePicker.submit(data);
         }
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                if (place != null) {
+                    latLng = place.getLatLng();
+                }
+
+            }
+        }
 
     }
 
@@ -372,8 +419,6 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 if (type == 1) {
                     fromDate = CommonUtils.getAppendedDate(i, i1, i2);
-                } else {
-                    toDate = CommonUtils.getAppendedDate(i, i1, i2);
                 }
                 textView.setText(CommonUtils.getFromatttedDate(i, i1, i2));
             }
@@ -390,11 +435,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
                 if (type == 1) {
                     textViewStartTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false, null));
                     startTime = CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false, null);
-                } else {
-                    textViewEndTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false, null));
-                    endTime = CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", t, false, null);
                 }
-
 
             }
         });
@@ -440,29 +481,19 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             return;
         }
 
-        if (announcmentType.equals("1")) {
-            if (venue.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please enter venue details");
-                return;
-            }
-            if (fromDate == null || fromDate.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please select start date.");
-                return;
-            }
-            if (startTime == null || startTime.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please select start time.");
-                return;
-            }
-
-            if (toDate != null && !toDate.isEmpty()) {
-                if (endTime == null || endTime.isEmpty()) {
-                    CommonUtils.showSnakeBar(this, "Please select end time.");
-                    return;
-                }
-
-            }
-
+        if (venue.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "Please enter venue details");
+            return;
         }
+        if (fromDate == null || fromDate.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "Please select start date.");
+            return;
+        }
+        if (startTime == null || startTime.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "Please select start time.");
+            return;
+        }
+
 
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
@@ -471,16 +502,9 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         builder.addFormDataPart("announcement_description", desc);
         builder.addFormDataPart("announcement_country", countryId);
         builder.addFormDataPart("announcement_id", data != null ? data.getAnnouncement_id() : "");
-        if (announcmentType.equals("1")) {
-            builder.addFormDataPart("announcement_date", fromDate);
-            builder.addFormDataPart("announcement_time", startTime);
-            builder.addFormDataPart("announcement_venue", venue);
-
-            if (toDate != null && !toDate.isEmpty()) {
-                builder.addFormDataPart("announcement_end_date", toDate);
-                builder.addFormDataPart("announcement_end_time", endTime);
-            }
-        }
+        builder.addFormDataPart("announcement_date", fromDate);
+        builder.addFormDataPart("announcement_time", startTime);
+        builder.addFormDataPart("announcement_venue", venue);
 
 
         for (int i = 0; i < imageList.size(); i++) {
@@ -498,7 +522,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         RequestBody finalRequestBody = builder.build();
-        presenter.addAnnouncement(finalRequestBody, headers);
+        presenter.addCountryActivity(finalRequestBody, headers);
     }
 
     public void deleteImage(int position) {
@@ -510,7 +534,78 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             HashMap<String, String> params = new HashMap<>();
             params.put("id", image.getId());
-            presenter.deleteAnnouncementImage(params, headers);
+            presenter.deleleteCountryActivityImage(params, headers);
+
         }
     }
+
+    private void showWeekDayPicker() {
+        if (dialog == null) {
+            dialog = new SelectionListDialog(this, weekDayModelList, new SelectionListDialog.SelectedListner<WeekDayModel>() {
+                @Override
+                public void onSelected(int position, WeekDayModel object) {
+                    textViewDay.setText(object.getDay());
+                    day = object.getIndex();
+                }
+            });
+        }
+        dialog.show();
+    }
+
+    private void getState() {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("country_id", countryId);
+        presenter.getStates(body);
+    }
+
+
+    private void getCity() {
+        HashMap<String, String> map = new HashMap();
+        map.put("state_id", stateId);
+        presenter.getCities(map);
+    }
+
+
+    @Override
+    public void setCities(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewCity.setText(country.getName());
+                city = country.getId();
+                countryStatePicker.dismiss();
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    @Override
+    public void setStateData(List<CountryResponseData> data) {
+        countryStatePicker = new CountryStatePicker(this, new CountryStatePicker.PickerListner() {
+            @Override
+            public void onPick(CountryResponseData country) {
+                textViewState.setText(country.getName());
+                if (!country.getId().equalsIgnoreCase(city)) {
+                    city = "";
+                    textViewCity.setText("");
+                }
+                countryStatePicker.dismiss();
+                stateId = country.getId();
+            }
+        }, data);
+        countryStatePicker.show();
+    }
+
+    private void openPlacePicker() {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -54,4 +54,6 @@ public interface RequestType {
     byte REQ_DELETE_MY_ANNOUNCEMENT = 45;
     byte REQ_DELETE_MY_AANOUCNE_IMAGE = 46;
     byte REQ_SEND_EVENT_REQ = 47;
+    byte REQ_GET_MY_COUNTRY_ACTIVITY = 48;
+    byte REQ_ADD_COUNTRY_ACTIVITY = 49;
 }

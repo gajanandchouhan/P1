@@ -24,6 +24,7 @@ import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEven
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
+import com.superlifesecretcode.app.ui.mycountryactivities.MyCountryActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
@@ -221,6 +222,9 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     break;
                 case ConstantLib.TYPE_MY_ANNOUNCEMENT:
                     CommonUtils.startActivity((AppCompatActivity) mContext, MyAnnouncementActivity.class);
+                    break;
+                case ConstantLib.TYPE_MY_COUNTRY_ACTIVITIES:
+                    CommonUtils.startActivity((AppCompatActivity) mContext, MyCountryActivity.class);
                     break;
             }
         }

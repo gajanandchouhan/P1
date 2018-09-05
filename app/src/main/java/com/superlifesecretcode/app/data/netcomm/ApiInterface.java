@@ -13,6 +13,7 @@ import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
+import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.notifications.NotificationResponseModel;
@@ -306,4 +307,12 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("announcementAddRequest")
     Observable<BaseResponseModel> sendReq(@HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("myCountryActivities")
+    Observable<MyCountryActivityResponseModel> getMyCountryActivity(@HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("addCountryActivity")
+    Observable<BaseResponseModel> addCountryActivity(@Body RequestBody body, @HeaderMap() Map<String, String> headers);
 }

@@ -1,52 +1,52 @@
-package com.superlifesecretcode.app.ui.myannouncement.addannouncement;
+package com.superlifesecretcode.app.ui.mycountryactivities;
 
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
-import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
+import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
+import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
 import com.superlifesecretcode.app.data.netcomm.ResponseHandler;
 import com.superlifesecretcode.app.ui.base.BasePresenter;
+import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementView;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.RequestBody;
+public class MyCountryActivitityPresenter extends BasePresenter<MyCountryActivityView> {
+    private MyCountryActivityView view;
 
-public class AddAnnouncementPresenter extends BasePresenter<AddAnnouncementView> {
-    private AddAnnouncementView view;
-
-    public AddAnnouncementPresenter(Context mContext) {
+    public MyCountryActivitityPresenter(Context mContext) {
         super(mContext);
     }
 
     @Override
-    protected void setView(AddAnnouncementView addAnnouncementView) {
-          this.view=addAnnouncementView;
+    protected void setView(MyCountryActivityView myAnnouncementView) {
+        view = myAnnouncementView;
     }
 
-
-    public void getCountry() {
+    public void getMyCountryActivity(Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callGet(mContext, RequestType.REQ_GET_COUNTRY, new ResponseHandler<CountryResponseModel>() {
+        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_MY_COUNTRY_ACTIVITY, new ResponseHandler<MyCountryActivityResponseModel>() {
             @Override
-            public void onResponse(CountryResponseModel countryResponseModel) {
+            public void onResponse(MyCountryActivityResponseModel annoucmenntResponseModel) {
                 view.hideProgress();
-                if (countryResponseModel != null) {
-                    if (countryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.setCountryData(countryResponseModel.getData());
+                if (annoucmenntResponseModel != null) {
+                    if (annoucmenntResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setCountryActivties(annoucmenntResponseModel.getData());
+                        view.onPermissionStatus(annoucmenntResponseModel.getPermissionStatus());
                     } else {
-                        CommonUtils.showSnakeBar(mContext, countryResponseModel.getMessage());
+                        view.onPermissionStatus(annoucmenntResponseModel.getPermissionStatus());
                     }
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
@@ -60,23 +60,24 @@ public class AddAnnouncementPresenter extends BasePresenter<AddAnnouncementView>
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        });
+        }, headers, null, null);
     }
 
-    public void addAnnouncement(RequestBody params, Map<String, String> headers) {
+
+    public void deleteAnnouncement(HashMap<String, String> params, Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callMultpleFileUpload(RequestType.REQ_ADD_ANNOUNCMENT, new ResponseHandler<BaseResponseModel>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_MY_ANNOUNCEMENT, new ResponseHandler<BaseResponseModel>() {
             @Override
             public void onResponse(BaseResponseModel baseResponseModel) {
                 view.hideProgress();
                 if (baseResponseModel != null) {
                     if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.onAdded();
+                        view.deleted();
                     } else
                         CommonUtils.showToast(mContext, baseResponseModel.getMessage());
                 } else {
@@ -95,22 +96,23 @@ public class AddAnnouncementPresenter extends BasePresenter<AddAnnouncementView>
     }
 
 
-    public void deleteAnnouncementImage(HashMap<String, String> params, Map<String, String> headers) {
+    public void sendEventAddRequest(Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_MY_AANOUCNE_IMAGE, new ResponseHandler<BaseResponseModel>() {
+        apiController.callGetWithHeader(mContext, RequestType.REQ_SEND_EVENT_REQ, new ResponseHandler<BaseResponseModel>() {
             @Override
-            public void onResponse(BaseResponseModel baseResponseModel) {
+            public void onResponse(BaseResponseModel annoucmenntResponseModel) {
                 view.hideProgress();
-                if (baseResponseModel != null) {
-                    if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.imageDelete();
-                    } else
-                        CommonUtils.showToast(mContext, baseResponseModel.getMessage());
+                if (annoucmenntResponseModel != null) {
+                    if (annoucmenntResponseModel.getStatus().equals(ConstantLib.RESPONSE_SUCCESS))
+                        view.onRequestSuccess();
+                    else
+                        view.onRequestFailed();
+                    CommonUtils.showToast(mContext, annoucmenntResponseModel.getMessage());
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }
@@ -123,6 +125,6 @@ public class AddAnnouncementPresenter extends BasePresenter<AddAnnouncementView>
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        }, params, headers);
+        }, headers, null, null);
     }
 }

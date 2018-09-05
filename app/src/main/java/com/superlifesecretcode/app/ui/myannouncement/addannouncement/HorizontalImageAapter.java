@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
+import com.superlifesecretcode.app.ui.mycountryactivities.addcountryactivity.AddCountryActivityActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.ImageViewerActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -76,8 +77,13 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
                     notifyItemRemoved(getAdapterPosition());
                 }
                 if (mContext instanceof AddAnnouncementActivity) {
-                    if (list == null || list.isEmpty()) {
+                    if (list.isEmpty()) {
                         ((AddAnnouncementActivity) mContext).hideReccylerView();
+                    }
+                }
+                if (mContext instanceof AddCountryActivityActivity) {
+                    if (list.isEmpty()) {
+                        ((AddCountryActivityActivity) mContext).hideReccylerView();
                     }
                 }
             } else {

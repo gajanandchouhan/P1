@@ -16,6 +16,7 @@ import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
+import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseModel;
 import com.superlifesecretcode.app.data.model.news.NewsResponseModel;
 import com.superlifesecretcode.app.data.model.news.SingleNewsResponseModel;
 import com.superlifesecretcode.app.data.model.notifications.NotificationResponseModel;
@@ -446,6 +447,12 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                 break;
+            case REQ_GET_MY_COUNTRY_ACTIVITY:
+                Observable<MyCountryActivityResponseModel> myCountryActivtyObservable = apiInterface.getMyCountryActivity(headers);
+                myCountryActivtyObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<MyCountryActivityResponseModel>(handler));
+                break;
         }
 
     }
@@ -496,6 +503,12 @@ public class ApiController implements RequestType {
             case REQ_ADD_ANNOUNCMENT:
                 Observable<BaseResponseModel> addAnnoucmentObserver = apiInterface.addAnnouncement(fileParams, headers);
                 addAnnoucmentObserver.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
+                break;
+            case REQ_ADD_COUNTRY_ACTIVITY:
+                Observable<BaseResponseModel> addCountryActivityObservable = apiInterface.addCountryActivity(fileParams, headers);
+                addCountryActivityObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
                 break;
