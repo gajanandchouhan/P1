@@ -422,7 +422,16 @@ public class CommonUtils {
         datePickerDialog.show();
     }
 
-
+    public static void showDatePickerWithMax(Context activity, DatePickerDialog.OnDateSetListener listener, long max) {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                activity, listener, year, month, day);
+        datePickerDialog.getDatePicker().setMaxDate(max);
+        datePickerDialog.show();
+    }
     public static void showTimePicker(Context mContext, TimePickerDialog.OnTimeSetListener listner) {
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);

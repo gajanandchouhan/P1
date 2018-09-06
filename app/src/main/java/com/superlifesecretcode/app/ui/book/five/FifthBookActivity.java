@@ -202,7 +202,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
     }
 
     private void showDatePicker(final TextView textView, long minDate) {
-        CommonUtils.showDatePicker(this, new DatePickerDialog.OnDateSetListener() {
+        CommonUtils.showDatePickerWithMax(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 payment_date = CommonUtils.getAppendedDate(i, i1, i2);
