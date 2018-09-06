@@ -35,7 +35,7 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
     public MyAnnouncementAdapter(List list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
-        languageResponseData= SuperLifeSecretPreferences.getInstance().getConversionData();
+        languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
 
     }
 
@@ -64,7 +64,7 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
                     ConstantLib.OUTPUT_DATE_TIME_FORMATE, myAnnouncementResponseData.getCreated_at(), false, null)));
         }
 
-        switch (myAnnouncementResponseData.getApproval_status()) {
+        switch (myAnnouncementResponseData.getApproval_status() != null ? myAnnouncementResponseData.getApproval_status() : "0") {
             case "0":
                 holder.textViewStatus.setText(languageResponseData.getPending());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_pending);
