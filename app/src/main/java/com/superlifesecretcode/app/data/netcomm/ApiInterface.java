@@ -335,6 +335,6 @@ public interface ApiInterface {
     Observable<MyCountryActivityResponseModel> getMyCountryActivity(@HeaderMap Map<String, String> headers);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
-    @POST("addCountryActivity")
+    @POST("addActivity")
     Observable<BaseResponseModel> addCountryActivity(@Body RequestBody body, @HeaderMap() Map<String, String> headers);
 }

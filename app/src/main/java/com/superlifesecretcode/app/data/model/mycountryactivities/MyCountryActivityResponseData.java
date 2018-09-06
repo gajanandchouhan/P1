@@ -162,7 +162,7 @@ public class MyCountryActivityResponseData implements Serializable{
     }
     public class ImageData implements Serializable {
         private String id;
-        @SerializedName("announcement_image")
+        @SerializedName("activity_image")
         private String image;
 
         public String getId() {

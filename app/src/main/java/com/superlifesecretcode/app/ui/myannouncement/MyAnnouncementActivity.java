@@ -101,14 +101,19 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.text_view_add:
-                if (permisionStatus.equals(ConstantLib.PERMISSION_DEFAULT)) {
-                    showRequestAlert("You have not permission to add Events, Are you want to send request for submission event?");
-                } else if (permisionStatus.equals(ConstantLib.PERMISSION_DECLINED)) {
-                    showMessageAlert("You have not permission to add any event.");
-                } else if (permisionStatus.equals(ConstantLib.PERMISSION_PENDING)) {
-                    showMessageAlert("You event submission request pending for approval, we will update you soon.");
-                } else {
-                    CommonUtils.startActivity(this, AddAnnouncementActivity.class);
+                switch (permisionStatus) {
+                    case ConstantLib.PERMISSION_DEFAULT:
+                        showRequestAlert(conversionData.getSubmit_req_msg());
+                        break;
+                    case ConstantLib.PERMISSION_DECLINED:
+                        showMessageAlert(conversionData.getSubmit_req_declined_msg());
+                        break;
+                    case ConstantLib.PERMISSION_PENDING:
+                        showMessageAlert(conversionData.getSubmit_req_pending_msg());
+                        break;
+                    default:
+                        CommonUtils.startActivity(this, AddAnnouncementActivity.class);
+                        break;
                 }
 
                 break;
@@ -133,12 +138,16 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     @Override
     public void onPermissionStatus(String permissionStatus) {
         this.permisionStatus = permissionStatus;
-        if (permissionStatus.equals(ConstantLib.PERMISSION_DEFAULT)) {
-            showRequestAlert("You have not permission to add Events, Are you want to send request for submission event?");
-        } else if (permissionStatus.equals(ConstantLib.PERMISSION_DECLINED)) {
-            showMessageAlert("You have not permission to add any event.");
-        } else if (permissionStatus.equals(ConstantLib.PERMISSION_PENDING)) {
-            showMessageAlert("You event submission request pending for approval, we will update you soon.");
+        switch (permisionStatus) {
+            case ConstantLib.PERMISSION_DEFAULT:
+                showRequestAlert(conversionData.getSubmit_req_msg());
+                break;
+            case ConstantLib.PERMISSION_DECLINED:
+                showMessageAlert(conversionData.getSubmit_req_declined_msg());
+                break;
+            case ConstantLib.PERMISSION_PENDING:
+                showMessageAlert(conversionData.getSubmit_req_pending_msg());
+                break;
         }
     }
 

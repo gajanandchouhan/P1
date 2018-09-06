@@ -166,6 +166,27 @@ public class LanguageResponseData {
     private String min_password_character;
     private String select_city;
 
+    private String pending;
+    private String announcement_type;
+    private String description;
+    private String image;
+    private String venue;
+    private String start_time;
+    private String end_time;
+    private String enter_event_name;
+    private String enter_event_desc;
+    private String select_image;
+    private String enter_venue;
+    private String select_start_time;
+    private String select_end_time;
+    private String add_announcement;
+    private String update_announcement;
+    private String delete_alert;
+    private String submit_req_msg;
+    private String submit_req_declined_msg;
+    private String submit_req_pending_msg;
+    private String max_upload_msg;
+
     public String getSelect_city() {
         return select_city;
     }
@@ -1436,5 +1457,166 @@ public class LanguageResponseData {
 
     public void setRejected(String rejected) {
         this.rejected = rejected;
+    }
+
+
+    public String getPending() {
+        return pending;
+    }
+
+    public void setPending(String pending) {
+        this.pending = pending;
+    }
+
+    public String getAnnouncement_type() {
+        return announcement_type;
+    }
+
+    public void setAnnouncement_type(String announcement_type) {
+        this.announcement_type = announcement_type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
+
+    public String getEnter_event_name() {
+        return enter_event_name;
+    }
+
+    public void setEnter_event_name(String enter_event_name) {
+        this.enter_event_name = enter_event_name;
+    }
+
+    public String getEnter_event_desc() {
+        return enter_event_desc;
+    }
+
+    public void setEnter_event_desc(String enter_event_desc) {
+        this.enter_event_desc = enter_event_desc;
+    }
+
+    public String getSelect_image() {
+        return select_image;
+    }
+
+    public void setSelect_image(String select_image) {
+        this.select_image = select_image;
+    }
+
+    public String getEnter_venue() {
+        return enter_venue;
+    }
+
+    public void setEnter_venue(String enter_venue) {
+        this.enter_venue = enter_venue;
+    }
+
+    public String getSelect_start_time() {
+        return select_start_time;
+    }
+
+    public void setSelect_start_time(String select_start_time) {
+        this.select_start_time = select_start_time;
+    }
+
+    public String getSelect_end_time() {
+        return select_end_time;
+    }
+
+    public void setSelect_end_time(String select_end_time) {
+        this.select_end_time = select_end_time;
+    }
+
+    public String getAdd_announcement() {
+        return add_announcement;
+    }
+
+    public void setAdd_announcement(String add_announcement) {
+        this.add_announcement = add_announcement;
+    }
+
+    public String getUpdate_announcement() {
+        return update_announcement;
+    }
+
+    public void setUpdate_announcement(String update_announcement) {
+        this.update_announcement = update_announcement;
+    }
+
+    public String getDelete_alert() {
+        return delete_alert;
+    }
+
+    public void setDelete_alert(String delete_alert) {
+        this.delete_alert = delete_alert;
+    }
+
+    public String getSubmit_req_msg() {
+        return submit_req_msg;
+    }
+
+    public void setSubmit_req_msg(String submit_req_msg) {
+        this.submit_req_msg = submit_req_msg;
+    }
+
+    public String getSubmit_req_declined_msg() {
+        return submit_req_declined_msg;
+    }
+
+    public void setSubmit_req_declined_msg(String submit_req_declined_msg) {
+        this.submit_req_declined_msg = submit_req_declined_msg;
+    }
+
+    public String getSubmit_req_pending_msg() {
+        return submit_req_pending_msg;
+    }
+
+    public void setSubmit_req_pending_msg(String submit_req_pending_msg) {
+        this.submit_req_pending_msg = submit_req_pending_msg;
+    }
+
+    public String getMax_upload_msg() {
+        return max_upload_msg;
+    }
+
+    public void setMax_upload_msg(String max_upload_msg) {
+        this.max_upload_msg = max_upload_msg;
     }
 }

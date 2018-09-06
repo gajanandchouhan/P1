@@ -128,14 +128,29 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         recyclerView.setAdapter(submitAapter);
         announcmentType = "1";
         textViewAnnounType.setText(conversionData.getEvent_activity());
+        setUpConversion();
         if (data != null) {
             setUpUi();
         }
         setUpVisibilityOfFields();
     }
 
+    private void setUpConversion() {
+        textViewViewCountry.setHint(conversionData.getCountry());
+        textViewAnnounType.setHint(conversionData.getAnnouncement_type());
+        editTextName.setHint(conversionData.getName());
+        editTextDesc.setHint(conversionData.getDescription());
+        editTextVenue.setHint(conversionData.getVenue());
+        textViewPickImage.setHint(conversionData.getImage());
+        textViewStartDate.setHint(conversionData.getStart_date());
+        textViewEndDate.setHint(conversionData.getEnd_date());
+        textViewStartTime.setHint(conversionData.getStart_time());
+        textViewEndTime.setHint(conversionData.getEnd_time());
+        button.setText(conversionData.getAdd_announcement());
+    }
+
     private void setUpUi() {
-        button.setText("Update Announcement");
+        button.setText(conversionData.getUpdate_announcement());
         announcmentType = data.getAnnouncement_type();
         countryId = data.getCountry();
         fromDate = data.getStart_date();
@@ -417,7 +432,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             return;
         }
         if (name.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter event name");
+            CommonUtils.showSnakeBar(this, conversionData.getEnter_name());
             return;
         }
         if (!ccEmail.isEmpty() && !CommonUtils.isValidEmail(ccEmail)) {
@@ -425,38 +440,38 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             return;
         }
         if (desc.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter description");
+            CommonUtils.showSnakeBar(this, conversionData.getEnter_event_desc());
             return;
         }
         if (!(remoteImageList != null && remoteImageList.size() > 0)) {
             if (imageList == null || imageList.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please select at least one image");
+                CommonUtils.showSnakeBar(this, conversionData.getSelect_image());
                 return;
             }
         }
 
         if (remoteImageList.size() > 5) {
-            CommonUtils.showSnakeBar(this, "You can upload maximum 5 images");
+            CommonUtils.showSnakeBar(this, conversionData.getMax_upload_msg());
             return;
         }
 
         if (announcmentType.equals("1")) {
             if (venue.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please enter venue details");
+                CommonUtils.showSnakeBar(this, conversionData.getEnter_venue());
                 return;
             }
             if (fromDate == null || fromDate.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please select start date.");
+                CommonUtils.showSnakeBar(this, conversionData.getSelect_start_date());
                 return;
             }
             if (startTime == null || startTime.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please select start time.");
+                CommonUtils.showSnakeBar(this, conversionData.getSelect_start_time());
                 return;
             }
 
             if (toDate != null && !toDate.isEmpty()) {
                 if (endTime == null || endTime.isEmpty()) {
-                    CommonUtils.showSnakeBar(this, "Please select end time.");
+                    CommonUtils.showSnakeBar(this, conversionData.getSelect_end_time());
                     return;
                 }
 

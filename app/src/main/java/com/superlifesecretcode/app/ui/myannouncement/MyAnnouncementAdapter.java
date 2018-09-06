@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.myannouncement.addannouncement.AddAnnouncementActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -28,10 +30,13 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
 
     private final Context mContext;
     private List<MyAnnouncementResponseData> list;
+    private LanguageResponseData languageResponseData;
 
     public MyAnnouncementAdapter(List list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
+        languageResponseData= SuperLifeSecretPreferences.getInstance().getConversionData();
+
     }
 
     @NonNull
@@ -61,17 +66,17 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
 
         switch (myAnnouncementResponseData.getApproval_status()) {
             case "0":
-                holder.textViewStatus.setText("Pending");
+                holder.textViewStatus.setText(languageResponseData.getPending());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_pending);
                 holder.textViewReason.setVisibility(View.GONE);
                 break;
             case "1":
-                holder.textViewStatus.setText("Published");
+                holder.textViewStatus.setText(languageResponseData.getPublished());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_published);
                 holder.textViewReason.setVisibility(View.GONE);
                 break;
             case "2":
-                holder.textViewStatus.setText("Declined");
+                holder.textViewStatus.setText(languageResponseData.getRejected());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_declined);
                 holder.textViewReason.setVisibility(View.VISIBLE);
                 break;
@@ -144,7 +149,7 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
     }
 
     private void showDeleteAlert(final int position) {
-        CommonUtils.showAlert(mContext, "Are you sure, want to delete?", "Ok", "Cancel", new AlertDialog.OnClickListner() {
+        CommonUtils.showAlert(mContext, languageResponseData.getDelete_alert(), languageResponseData.getYes(), languageResponseData.getNo(), new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
                 ((MyAnnouncementActivity) mContext).deleteAnnouncement(position);

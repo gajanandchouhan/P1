@@ -94,7 +94,8 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     private String city;
 
     int PLACE_PICKER_REQUEST = 1;
-    private LatLng latLng;
+    private String lat;
+    private String lon;
 
     @Override
     protected int getContentView() {
@@ -310,7 +311,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
 
 
             case R.id.button_add:
-                addAnnouncement();
+                addContryActivity();
                 break;
 
         }
@@ -401,7 +402,8 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(this, data);
                 if (place != null) {
-                    latLng = place.getLatLng();
+                    lat = String.valueOf(place.getLatLng().latitude);
+                    lon = String.valueOf(place.getLatLng().longitude);
                 }
 
             }
@@ -442,27 +444,20 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     }
 
 
-    private void addAnnouncement() {
+    private void addContryActivity() {
         String name = editTextName.getText().toString().trim();
-        String ccEmail = editTextCCMail.getText().toString().trim();
         String desc = editTextDesc.getText().toString().trim();
         String venue = editTextVenue.getText().toString().trim();
-
-        if (countryId == null || countryId.isEmpty()) {
-            CommonUtils.showSnakeBar(this, conversionData.getSelect_country());
-            return;
-        }
-
+        String contactName = editTextContactName.getText().toString().trim();
+        String contactNo = edittextContactNumber.getText().toString().trim();
+        String contanctEmail = editTextContatEmail.getText().toString().trim();
         if (announcmentType == null || announcmentType.isEmpty()) {
             CommonUtils.showSnakeBar(this, "Please select type");
             return;
         }
+
         if (name.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter event name");
-            return;
-        }
-        if (!ccEmail.isEmpty() && !CommonUtils.isValidEmail(ccEmail)) {
-            CommonUtils.showSnakeBar(this, conversionData.getEnter_valid_email());
+            CommonUtils.showSnakeBar(this, "Please enter event title");
             return;
         }
         if (desc.isEmpty()) {
@@ -480,39 +475,78 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
             CommonUtils.showSnakeBar(this, "You can upload maximum 5 images");
             return;
         }
+        if (contactName.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "Please enter contact person name");
+            return;
+        }
+        if (contactNo.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "Please enter contact person number");
+            return;
+        }
+        if (!contanctEmail.isEmpty()) {
+            if (!CommonUtils.isValidEmail(contanctEmail)) {
+                CommonUtils.showSnakeBar(this, conversionData.getEnter_valid_email());
+                return;
+            }
+        }
+        if (countryId == null || countryId.isEmpty()) {
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_country());
+            return;
+        }
 
+        if (stateId == null || stateId.isEmpty()) {
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_state());
+            return;
+        }
+        if (city == null || city.isEmpty()) {
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_city());
+            return;
+        }
         if (venue.isEmpty()) {
             CommonUtils.showSnakeBar(this, "Please enter venue details");
             return;
         }
         if (fromDate == null || fromDate.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please select start date.");
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_date());
             return;
         }
         if (startTime == null || startTime.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please select start time.");
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_time());
             return;
         }
-
-
+        if (day == null || day.isEmpty()) {
+            CommonUtils.showSnakeBar(this, "Please select day");
+            return;
+        }
+        if (lat == null || lat.isEmpty() || lat.equals("0.0") | lon == null || lon.isEmpty() || lon.equals("0.0")) {
+            CommonUtils.showSnakeBar(this, "Please select map location");
+            return;
+        }
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
-        builder.addFormDataPart("announcement_type", announcmentType);
-        builder.addFormDataPart("announcement_name", name);
-        builder.addFormDataPart("announcement_description", desc);
-        builder.addFormDataPart("announcement_country", countryId);
-        builder.addFormDataPart("announcement_id", data != null ? data.getAnnouncement_id() : "");
-        builder.addFormDataPart("announcement_date", fromDate);
-        builder.addFormDataPart("announcement_time", startTime);
-        builder.addFormDataPart("announcement_venue", venue);
-
+        builder.addFormDataPart("activity_type", announcmentType);
+        builder.addFormDataPart("activity_title", name);
+        builder.addFormDataPart("activity_discription", desc);
+        builder.addFormDataPart("activity_contact_number", contactNo);
+        builder.addFormDataPart("activity_contact_name", contactName);
+        builder.addFormDataPart("activity_contact_email", contanctEmail);
+        builder.addFormDataPart("activity_country", countryId);
+        builder.addFormDataPart("activity_id", data != null ? data.getAnnouncement_id() : "");
+        builder.addFormDataPart("activity_date", fromDate);
+        builder.addFormDataPart("activity_time", startTime);
+        builder.addFormDataPart("activity_venue", venue);
+        builder.addFormDataPart("activity_state", stateId);
+        builder.addFormDataPart("activity_city", city);
+        builder.addFormDataPart("activity_day", day);
+        builder.addFormDataPart("activity_location_lat", lat);
+        builder.addFormDataPart("activity_location_long", lon);
 
         for (int i = 0; i < imageList.size(); i++) {
             try {
                 if (imageList.get(i) != null) {
                     File file = new File(imageList.get(i));
                     RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    builder.addFormDataPart("announcement_images[]", file.getName(), requestBody);
+                    builder.addFormDataPart("activity_images[]", file.getName(), requestBody);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
