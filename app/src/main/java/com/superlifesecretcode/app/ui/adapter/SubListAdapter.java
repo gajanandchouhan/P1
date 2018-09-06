@@ -226,6 +226,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     bundle3.putString("type", "1");
                     SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
                     SuperLifeSecretPreferences.getInstance().putString("book_print_status", "1");
+                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
                     SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
                     SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
                     SuperLifeSecretPreferences.getInstance().putString("total_amount","");
@@ -241,6 +242,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                 case ConstantLib.TYPE_BUY_BOOK:
                     Bundle bundle4 = new Bundle();
                     bundle4.putString("type", "2");
+                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
                     SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
                     SuperLifeSecretPreferences.getInstance().putString("book_print_status", "2");
                     SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());

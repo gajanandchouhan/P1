@@ -255,7 +255,7 @@
                         android:paddingLeft="@dimen/_8sdp"
                         android:paddingRight="@dimen/_6sdp"
                         android:paddingTop="@dimen/_6sdp"
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_10sdp" />
 
                     <LinearLayout
@@ -263,7 +263,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <TextView
                             android:id="@+id/textview_contact_number"
@@ -289,7 +289,7 @@
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_10sdp" />
 
                         <TextView
@@ -314,6 +314,7 @@
                             android:inputType="textEmailAddress"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
+                            android:textColor="@color/colorBlack"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
                             android:textSize="@dimen/_10sdp" />
