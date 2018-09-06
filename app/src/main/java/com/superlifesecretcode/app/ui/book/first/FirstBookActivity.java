@@ -56,8 +56,9 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
 
     @Override
     protected int getContentView() {
-        Bundle bundle = getIntent().getBundleExtra("bundle");
-        book_type = bundle.getString("type");
+//        Bundle bundle = getIntent().getBundleExtra("bundle");
+//        book_type = bundle.getString("type");
+        book_type = SuperLifeSecretPreferences.getInstance().getString("book_type");
         return R.layout.activity_book_first;
     }
 
@@ -82,13 +83,16 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         });
 
         booksList = new ArrayList<>();
-        if (SuperLifeSecretPreferences.getInstance().getSelectedBooks() == null) {
+        selectedBooks = new ArrayList<>();
+//        if (SuperLifeSecretPreferences.getInstance().getSelectedBooks() == null) {
+            if (SuperLifeSecretPreferences.getInstance().getSelectedBooks().size()==0){
             selectedBooks = new ArrayList<>();
         } else {
             selectedBooks = SuperLifeSecretPreferences.getInstance().getSelectedBooks();
         }
-
-        if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList() == null) {
+//        selectedBookArrayList = new ArrayList<>();
+        if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList().size() == 0) {
+//        if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList() == null) {
             selectedBookArrayList = new ArrayList<>();
         } else {
             selectedBookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
@@ -199,5 +203,8 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

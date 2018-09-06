@@ -1,7 +1,10 @@
 package com.superlifesecretcode.app.ui.book.first;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +45,7 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_auther_name.setText(list.get(position).getAuthor_name());
-        holder.textview_book_descrption.setText(list.get(position).getDescription());
+//        holder.textview_book_descrption.setText(list.get(position).getDescription());
         holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+ list.get(position).getPrice());
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
 
@@ -61,6 +64,14 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
                 }
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Spanned spanned = Html.fromHtml(list.get(position).getDescription(), Html.FROM_HTML_MODE_LEGACY);
+            holder.textview_book_descrption.setText(spanned);
+        } else {
+            Spanned spanned = Html.fromHtml(list.get(position).getDescription());
+            holder.textview_book_descrption.setText(spanned);
+        }
     }
 
     @Override

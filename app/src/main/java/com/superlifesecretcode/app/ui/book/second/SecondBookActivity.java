@@ -71,6 +71,14 @@ public class SecondBookActivity extends BaseActivity {
             }
         });
 
+
+        if(SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")){
+            linearlayout_affortdability.setVisibility(View.GONE);
+        }else{
+            linearlayout_affortdability.setVisibility(View.VISIBLE);
+        }
+
+
         amount_linear.setVisibility(View.GONE);
         linearlayout_book_quality.setOnClickListener(new View.OnClickListener() {
             @Override

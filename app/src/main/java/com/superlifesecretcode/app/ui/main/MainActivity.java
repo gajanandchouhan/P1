@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
@@ -29,6 +30,7 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
@@ -77,7 +79,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     LinearLayout tab1, tab2, tab3, tab4;
     ImageView imageView1, imageView2, imageView3, imageView4;
     private TextView textViewTitle;
-
 
     @Override
     protected void onPause() {
@@ -149,20 +150,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mDrawerLayout.bringChildToFront(drawerView);
                 mDrawerLayout.requestLayout();
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
-
             }
-
             @Override
             public void onDrawerClosed(View drawerView) {
-
             }
-
             @Override
             public void onDrawerStateChanged(int newState) {
-
             }
         });
         setUpBanner();
@@ -271,7 +266,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
             presenter.getHomeCategories(body);
         }
-
     }
 
     private void getAnnouementCount() {
@@ -416,7 +410,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             return;
         }
 
-
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();
             alertModel.setCount(Integer.parseInt(list.get(clickedPostion).getAlert_count()));
@@ -438,20 +431,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     bundle.putSerializable("banner", bannerList);
                     CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
                 }
-
             }
         } else {
-            Bundle bundle = new Bundle();
-            bundle.putString("title", title);
-            bundle.putInt("pos", position);
-            bundle.putString("parent_id", parentId);
-            bundle.putString("color", color);
-            bundle.putSerializable("banner", bannerList);
-            CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("title", title);
+                bundle.putInt("pos", position);
+                bundle.putString("parent_id", parentId);
+                bundle.putString("color", color);
+                bundle.putSerializable("banner", bannerList);
+                CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+
+
         }
-
     }
-
 
     @Override
     public void setHomeData(CategoryResponseModel categoryResponseModel) {
@@ -595,6 +588,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void handleMainCategoryClicked(AllMenuResponseData data) {
+        Toast.makeText(this, "dfs", Toast.LENGTH_SHORT).show();
         if (data.getAlert() != null && data.getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();
             alertModel.setCount(Integer.parseInt(data.getAlert_count()));
