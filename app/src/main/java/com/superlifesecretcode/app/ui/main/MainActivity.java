@@ -41,6 +41,7 @@ import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
+import com.superlifesecretcode.app.ui.studygroup.StudyGroupActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -150,12 +151,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mDrawerLayout.bringChildToFront(drawerView);
                 mDrawerLayout.requestLayout();
             }
+
             @Override
             public void onDrawerOpened(View drawerView) {
             }
+
             @Override
             public void onDrawerClosed(View drawerView) {
             }
+
             @Override
             public void onDrawerStateChanged(int newState) {
             }
@@ -405,8 +409,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
-        if (list.get(clickedPostion).getType().equals("3")) {
+        if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_CHAT)) {
             createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
+            return;
+        }
+        if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_STUDY_GROUP)) {
+            CommonUtils.startActivity(this, StudyGroupActivity.class);
             return;
         }
 
@@ -434,13 +442,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         } else {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("title", title);
-                bundle.putInt("pos", position);
-                bundle.putString("parent_id", parentId);
-                bundle.putString("color", color);
-                bundle.putSerializable("banner", bannerList);
-                CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
+            Bundle bundle = new Bundle();
+            bundle.putString("title", title);
+            bundle.putInt("pos", position);
+            bundle.putString("parent_id", parentId);
+            bundle.putString("color", color);
+            bundle.putSerializable("banner", bannerList);
+            CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
 
 
         }

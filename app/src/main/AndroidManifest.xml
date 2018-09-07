@@ -252,24 +252,28 @@
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity
             android:name=".ui.book.six.SixthBookActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity
             android:name=".ui.book.myorder_book.OrderBookActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity
             android:name=".ui.book.detail.MyOrderDetailActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.studygroup.StudyGroupActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.studygroup.studygroupdetails.StudyGroupDetailsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

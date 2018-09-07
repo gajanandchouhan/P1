@@ -37,9 +37,10 @@ public interface ConstantLib {
     String TYPE_ONSITE = "10";
     String TYPE_PRINT_BOOK = "11";
     String TYPE_BUY_BOOK = "12";
+    String TYPE_BOOK_ORDER_HISTORY = "13";
     String TYPE_MY_ANNOUNCEMENT = "14";
     String TYPE_MY_COUNTRY_ACTIVITIES = "15";
-    String TYPE_BOOK_ORDER_HISTORY = "13";
+
     String NOTIFICATION_PERSONAL = "1";
     String NOTIFICATION_EVENT = "2";
     String NOTIFICATION_COUNTY_ACTIVITY = "3";
@@ -64,5 +65,9 @@ public interface ConstantLib {
     String PERMISSION_ALLOWED = "1";
     String PERMISSION_PENDING = "2";
     String PERMISSION_DECLINED = "3";
+
+
+    String MAIN_MENU_CHAT = "3";
+    String MAIN_MENU_STUDY_GROUP = "4";
 }
 
