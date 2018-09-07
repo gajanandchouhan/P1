@@ -64,14 +64,14 @@ public class MyCountryActivitityPresenter extends BasePresenter<MyCountryActivit
     }
 
 
-    public void deleteAnnouncement(HashMap<String, String> params, Map<String, String> headers) {
+    public void deleteActivity(HashMap<String, String> params, Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_MY_ANNOUNCEMENT, new ResponseHandler<BaseResponseModel>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_ACTIVITY, new ResponseHandler<BaseResponseModel>() {
             @Override
             public void onResponse(BaseResponseModel baseResponseModel) {
                 view.hideProgress();

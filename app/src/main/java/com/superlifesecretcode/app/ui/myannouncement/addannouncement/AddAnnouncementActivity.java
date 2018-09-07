@@ -157,6 +157,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         toDate = data.getEnd_date();
         startTime = data.getStart_time();
         endTime = data.getEnd_time();
+        remoteImageList.clear();
         remoteImageList.addAll(data.getAnnouncement_images());
         if (remoteImageList.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
@@ -224,6 +225,9 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     public void imageDelete() {
         remoteImageList.remove(position);
         submitAapter.notifyItemRemoved(position);
+        if (remoteImageList.isEmpty()) {
+            hideReccylerView();
+        }
         MyAnnouncementActivity.shouldRefresh = true;
     }
 

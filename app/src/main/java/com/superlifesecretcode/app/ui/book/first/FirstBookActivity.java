@@ -91,7 +91,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
             selectedBooks = SuperLifeSecretPreferences.getInstance().getSelectedBooks();
         }
 //        selectedBookArrayList = new ArrayList<>();
-        if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList().size() == 0) {
+        if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList()==null||SuperLifeSecretPreferences.getInstance().getSelectedBooksList().size() == 0) {
 //        if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList() == null) {
             selectedBookArrayList = new ArrayList<>();
         } else {

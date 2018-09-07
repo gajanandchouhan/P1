@@ -39,7 +39,7 @@ public class MyCountryActivity extends BaseActivity implements View.OnClickListe
     private MyCountryActivityAdapter adapter;
     private MyCountryActivitityPresenter presenter;
     private int position;
-    private String permisionStatus ="1";// ConstantLib.PERMISSION_DEFAULT;
+    private String permisionStatus = "1";// ConstantLib.PERMISSION_DEFAULT;
 
 
     @Override
@@ -197,7 +197,7 @@ public class MyCountryActivity extends BaseActivity implements View.OnClickListe
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", countryActivityList.get(position).getAnnouncement_id());
-        presenter.deleteAnnouncement(params, headers);
+        params.put("id", countryActivityList.get(position).getActivity_id());
+        presenter.deleteActivity(params, headers);
     }
 }

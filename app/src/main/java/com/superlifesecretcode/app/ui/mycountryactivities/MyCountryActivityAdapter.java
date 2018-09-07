@@ -15,10 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
 import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseData;
-import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
-import com.superlifesecretcode.app.ui.myannouncement.addannouncement.AddAnnouncementActivity;
 import com.superlifesecretcode.app.ui.mycountryactivities.addcountryactivity.AddCountryActivityActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -46,23 +43,18 @@ public class MyCountryActivityAdapter extends RecyclerView.Adapter<MyCountryActi
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         MyCountryActivityResponseData myAnnouncementResponseData = list.get(position);
-        holder.textViewTitle.setText(myAnnouncementResponseData.getAnnouncement_name());
+        holder.textViewTitle.setText(myAnnouncementResponseData.getActivity_title());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Spanned spanned = Html.fromHtml(myAnnouncementResponseData.getAnnouncement_description(), Html.FROM_HTML_MODE_LEGACY);
+            Spanned spanned = Html.fromHtml(myAnnouncementResponseData.getActivity_discription(), Html.FROM_HTML_MODE_LEGACY);
             holder.textViewDesc.setText(spanned);
         } else {
-            Spanned spanned = Html.fromHtml(myAnnouncementResponseData.getAnnouncement_description());
+            Spanned spanned = Html.fromHtml(myAnnouncementResponseData.getActivity_discription());
             holder.textViewDesc.setText(spanned);
         }
-        if (myAnnouncementResponseData.getAnnouncement_type().equals("1")) {
-            holder.textViewDateTime.setText(String.format("%s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE,
-                    ConstantLib.OUTPUT_DATE_TIME_FORMATE, myAnnouncementResponseData.getStart_date() + " " + myAnnouncementResponseData.getStart_time(), false, null)));
-        } else {
-            holder.textViewDateTime.setText(String.format("%s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE,
-                    ConstantLib.OUTPUT_DATE_TIME_FORMATE, myAnnouncementResponseData.getCreated_at(), false, null)));
-        }
+        holder.textViewDateTime.setText(String.format("%s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE,
+                ConstantLib.OUTPUT_DATE_TIME_FORMATE, myAnnouncementResponseData.getActivity_date() + " " + myAnnouncementResponseData.getActivity_time(), false, null)));
 
-        switch (myAnnouncementResponseData.getApproval_status()) {
+        switch (myAnnouncementResponseData.getStatus()) {
             case "0":
                 holder.textViewStatus.setText("Pending");
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_pending);
@@ -80,9 +72,12 @@ public class MyCountryActivityAdapter extends RecyclerView.Adapter<MyCountryActi
                 break;
         }
         holder.textViewStatus.setPadding(25, 0, 25, 5);
-        List<MyCountryActivityResponseData.ImageData> announcement_images = myAnnouncementResponseData.getAnnouncement_images();
+        List<MyCountryActivityResponseData.ImageData> announcement_images = myAnnouncementResponseData.getActivity_images();
         if (announcement_images != null && announcement_images.size() > 0) {
             ImageLoadUtils.loadImage(announcement_images.get(0).getImage(), holder.imageView);
+        }
+        else{
+            holder.imageView.setImageResource(R.drawable.default_placeholder);
         }
     }
 

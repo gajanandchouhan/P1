@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,12 +19,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.facebook.internal.Utility;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.model.LatLng;
 import com.kbeanie.multipicker.api.ImagePicker;
 import com.kbeanie.multipicker.api.Picker;
 import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
@@ -35,11 +32,13 @@ import com.superlifesecretcode.app.data.model.WeekDayModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
+import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
 import com.superlifesecretcode.app.ui.myannouncement.addannouncement.HorizontalImageAapter;
+import com.superlifesecretcode.app.ui.mycountryactivities.MyCountryActivity;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
 import com.superlifesecretcode.app.ui.picker.selectiondialog.SelectionListDialog;
@@ -85,7 +84,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     private String announcmentType;
     private List<Object> remoteImageList;
 
-    MyAnnouncementResponseData data;
+    MyCountryActivityResponseData data;
     private int position;
     private SelectionListDialog dialog;
     private List<WeekDayModel> weekDayModelList;
@@ -108,7 +107,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         Bundle bundle = getIntent().getBundleExtra("bundle");
         if (bundle != null && bundle.getSerializable("data") != null) {
-            data = (MyAnnouncementResponseData) bundle.getSerializable("data");
+            data = (MyCountryActivityResponseData) bundle.getSerializable("data");
         }
         setUpToolbar();
         textViewViewCountry = findViewById(R.id.text_view_country);
@@ -167,25 +166,45 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     }
 
     private void setUpUi() {
-        button.setText("Update Announcement");
-        announcmentType = data.getAnnouncement_type();
-        countryId = data.getCountry();
-        fromDate = data.getStart_date();
-        startTime = data.getStart_time();
-        remoteImageList.addAll(data.getAnnouncement_images());
+        button.setText("Update Activity");
+        announcmentType = data.getActivity_type();
+        countryId = data.getActivity_country_id();
+        stateId = data.getActivity_state_id();
+        city = data.getActivity_city_id();
+        day = data.getActivity_day();
+        fromDate = data.getActivity_date();
+        startTime = data.getActivity_time();
+        lat = data.getActivity_location_lat();
+        lon = data.getActivity_location_long();
+        remoteImageList.clear();
+        remoteImageList.addAll(data.getActivity_images());
         if (remoteImageList.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
         }
         submitAapter.notifyDataSetChanged();
-        textViewViewCountry.setText(data.getCountryName());
-        textViewAnnounType.setText(announcmentType != null && announcmentType.equals("1") ? conversionData.getEvent_activity() : conversionData.getNews_update());
-        editTextName.append(data.getAnnouncement_name());
-        editTextDesc.append(data.getAnnouncement_description());
-        if (announcmentType != null && announcmentType.equals("1")) {
-            editTextVenue.setText(data.getVenue());
-            textViewStartDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, fromDate, false, null));
-        }
+        textViewViewCountry.setText(data.getActivity_country());
+        textViewState.setText(data.getActivity_state());
+        textViewCity.setText(data.getActivity_city());
+        textViewLocation.setText(data.getMap_location());
+        textViewAnnounType.setText(announcmentType != null && announcmentType.equals("1") ? conversionData.getStudy_group() : conversionData.getOnsite());
+        editTextName.append(data.getActivity_title());
+        editTextDesc.append(data.getActivity_discription());
+        editTextVenue.setText(data.getActivity_venue());
+        editTextContactName.setText(data.getActivity_contact_name());
+        edittextContactNumber.setText(data.getActivity_contact_number());
+        editTextContatEmail.setText(data.getActivity_contact_email());
+        textViewDay.setText(getDay());
+        textViewStartDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, fromDate, false, null));
+        textViewStartTime.setText(CommonUtils.getformattedDateFromString("HH:mm:ss", "hh:mm a", startTime, false, null));
+    }
 
+    private String getDay() {
+        for (WeekDayModel weekDayModel : weekDayModelList) {
+            if (weekDayModel.getIndex().equals(day)) {
+                return weekDayModel.getDay();
+            }
+        }
+        return "";
     }
 
     @Override
@@ -226,7 +245,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
 
     @Override
     public void onAdded() {
-        MyAnnouncementActivity.shouldRefresh = true;
+        MyCountryActivity.shouldRefresh = true;
         onBackPressed();
     }
 
@@ -234,7 +253,10 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     public void imageDelete() {
         remoteImageList.remove(position);
         submitAapter.notifyItemRemoved(position);
-        MyAnnouncementActivity.shouldRefresh = true;
+        MyCountryActivity.shouldRefresh = true;
+        if (remoteImageList.isEmpty()) {
+            hideReccylerView();
+        }
     }
 
     private void showCountryPicker() {
@@ -404,6 +426,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
                 if (place != null) {
                     lat = String.valueOf(place.getLatLng().latitude);
                     lon = String.valueOf(place.getLatLng().longitude);
+                    textViewLocation.setText(place.getAddress());
                 }
 
             }
@@ -531,7 +554,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         builder.addFormDataPart("activity_contact_name", contactName);
         builder.addFormDataPart("activity_contact_email", contanctEmail);
         builder.addFormDataPart("activity_country", countryId);
-        builder.addFormDataPart("activity_id", data != null ? data.getAnnouncement_id() : "");
+        builder.addFormDataPart("activity_id", data != null ? data.getActivity_id() : "");
         builder.addFormDataPart("activity_date", fromDate);
         builder.addFormDataPart("activity_time", startTime);
         builder.addFormDataPart("activity_venue", venue);
@@ -540,6 +563,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         builder.addFormDataPart("activity_day", day);
         builder.addFormDataPart("activity_location_lat", lat);
         builder.addFormDataPart("activity_location_long", lon);
+        builder.addFormDataPart("activity_map_location", textViewLocation.getText().toString());
 
         for (int i = 0; i < imageList.size(); i++) {
             try {
@@ -562,14 +586,13 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     public void deleteImage(int position) {
         this.position = position;
         Object o = remoteImageList.get(position);
-        if (o instanceof MyAnnouncementResponseData.ImageData) {
-            MyAnnouncementResponseData.ImageData image = (MyAnnouncementResponseData.ImageData) o;
+        if (o instanceof MyCountryActivityResponseData.ImageData) {
+            MyCountryActivityResponseData.ImageData image = (MyCountryActivityResponseData.ImageData) o;
             Map<String, String> headers = new HashMap<>();
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             HashMap<String, String> params = new HashMap<>();
             params.put("id", image.getId());
             presenter.deleleteCountryActivityImage(params, headers);
-
         }
     }
 

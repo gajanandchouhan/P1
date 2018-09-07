@@ -85,6 +85,8 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
         List<MyAnnouncementResponseData.ImageData> announcement_images = myAnnouncementResponseData.getAnnouncement_images();
         if (announcement_images != null && announcement_images.size() > 0) {
             ImageLoadUtils.loadImage(announcement_images.get(0).getImage(), holder.imageView);
+        }else{
+           holder.imageView.setImageResource(R.drawable.default_placeholder);
         }
     }
 

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnouncementResponseData;
+import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseData;
+import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.mycountryactivities.addcountryactivity.AddCountryActivityActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.ImageViewerActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -45,6 +47,9 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
         } else if (s instanceof MyAnnouncementResponseData.ImageData) {
             MyAnnouncementResponseData.ImageData imageData = (MyAnnouncementResponseData.ImageData) s;
             ImageLoadUtils.loadImage(imageData.getImage(), holder.imageView);
+        } else if (s instanceof MyCountryActivityResponseData.ImageData) {
+            MyCountryActivityResponseData.ImageData imageData = (MyCountryActivityResponseData.ImageData) s;
+            ImageLoadUtils.loadImage(imageData.getImage(), holder.imageView);
         }
 
     }
@@ -72,6 +77,8 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
                 if (o instanceof MyAnnouncementResponseData.ImageData) {
                     ((AddAnnouncementActivity) mContext).deleteImage(getAdapterPosition());
 
+                } else if (o instanceof MyCountryActivityResponseData.ImageData) {
+                    ((AddCountryActivityActivity) mContext).deleteImage(getAdapterPosition());
                 } else {
                     list.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
@@ -90,6 +97,8 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
                 Bundle bundle = new Bundle();
                 if (o instanceof MyAnnouncementResponseData.ImageData) {
                     bundle.putString("image", ((MyAnnouncementResponseData.ImageData) o).getImage());
+                } else if (o instanceof MyCountryActivityResponseData.ImageData) {
+                    bundle.putString("image", ((MyCountryActivityResponseData.ImageData) o).getImage());
                 } else {
                     bundle.putString("image", o.toString());
                 }

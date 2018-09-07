@@ -103,7 +103,7 @@ public class AddCountryActivityPresenter extends BasePresenter<AddCountryActivit
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_MY_AANOUCNE_IMAGE, new ResponseHandler<BaseResponseModel>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_DELETE_ACTIVITY_IMAGE, new ResponseHandler<BaseResponseModel>() {
             @Override
             public void onResponse(BaseResponseModel baseResponseModel) {
                 view.hideProgress();

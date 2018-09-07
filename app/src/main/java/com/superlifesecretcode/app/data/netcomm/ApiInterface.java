@@ -331,10 +331,22 @@ public interface ApiInterface {
     Observable<BaseResponseModel> sendReq(@HeaderMap Map<String, String> headers);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
-    @GET("myCountryActivities")
+    @GET("myActivities")
     Observable<MyCountryActivityResponseModel> getMyCountryActivity(@HeaderMap Map<String, String> headers);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("addActivity")
     Observable<BaseResponseModel> addCountryActivity(@Body RequestBody body, @HeaderMap() Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("removeActivityImage")
+    Observable<BaseResponseModel> removeActivityImage(@PartMap() Map<String, RequestBody> partMap,
+                                                          @HeaderMap Map<String, String> headers);
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("deleteActivity")
+    Observable<BaseResponseModel> deleteActivity(@PartMap() Map<String, RequestBody> partMap,
+                                                     @HeaderMap Map<String, String> headers);
+
 }

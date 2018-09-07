@@ -260,7 +260,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     CommonUtils.startActivity((AppCompatActivity) mContext, MyAnnouncementActivity.class);
                     break;
                 case ConstantLib.TYPE_MY_COUNTRY_ACTIVITIES:
-                   // CommonUtils.startActivity((AppCompatActivity) mContext, MyCountryActivity.class);
+                    CommonUtils.startActivity((AppCompatActivity) mContext, MyCountryActivity.class);
                     break;
 
                 case ConstantLib.TYPE_BOOK_ORDER_HISTORY:
