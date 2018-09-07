@@ -49,7 +49,7 @@ public class StoresAapter extends RecyclerView.Adapter<StoresAapter.ItemViewHold
             @Override
             public void onClick(View v) {
                 String address = list.get(position).getStore_name()+", "+list.get(position).getStreet_address()+", "+list.get(position).getCity()+", "+list.get(position).getState()+", "+list.get(position).getCountry();
-                bookSelectedListener.onSelectStoreAddess(list.get(position),address);
+                //bookSelectedListener.onSelectStoreAddess(list.get(position),address);
             }
         });
     }

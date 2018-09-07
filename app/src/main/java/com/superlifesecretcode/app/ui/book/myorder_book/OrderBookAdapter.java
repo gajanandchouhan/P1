@@ -33,7 +33,7 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
         holder.textview_orderid.setText(orderArrayList.get(position).getOrder_code());
         holder.textview_status.setText(orderArrayList.get(position).getOrder_status());
         holder.textview_date.setText(orderArrayList.get(position).getOrder_date());
-        holder.textview_amount.setText(""+ SuperLifeSecretPreferences.getInstance().getString("")+" "+orderArrayList.get(position).getTotal_amount());
+        holder.textview_amount.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+orderArrayList.get(position).getTotal_amount());
         holder.textview_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

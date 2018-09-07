@@ -87,11 +87,10 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
 
     private void orderDetail(String order_id) {
         Map<String, String> headers = new HashMap<>();
-//        headers.put("Authorization", "Bearer " + "llTHt4b7S8pXx66HwcJmytxUljTfkCGZplDXaAMhfX8Hvoz16uVYRAaGCcMi");
+
         headers.put("Authorization", "Bearer " + userData.getApi_token());
 
         HashMap<String, String> params = new HashMap<>();
-//        params.put("id", "68");
         params.put("id", order_id);
         myOrderDetailPresenter.getOrderDetail(params, headers);
     }

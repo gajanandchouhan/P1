@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
                 android:maxLines="2"
-                android:text="Bank Name"
                 android:textColor="@color/red_bg"
                 android:textSize="@dimen/_12sdp" />
 
@@ -41,9 +40,8 @@
                 android:id="@+id/textview_accountnumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
+                android:fontFamily="@font/reguler"
                 android:maxLines="2"
-                android:text="0000 0000 0000 0000"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>

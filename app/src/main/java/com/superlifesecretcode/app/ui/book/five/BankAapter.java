@@ -39,7 +39,7 @@ public class BankAapter extends RecyclerView.Adapter<BankAapter.ItemViewHolder> 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         holder.textview_bankname.setText(list.get(position).getBank_name());
-
+        holder.textview_accountnumber.setText(list.get(position).getAccount_number());
         if (list.get(position).isSelected())
             holder.imageview_check.setVisibility(View.VISIBLE);
         else

@@ -335,20 +335,13 @@
                         android:layout_height="wrap_content">
 
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recyclerview_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_ordertype"
-                            android:layout_marginTop="@dimen/_5sdp" />
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recyclerview_storelist"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_ordertype"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:visibility="gone" />
+                        <!--<android.support.v7.widget.RecyclerView-->
+                            <!--android:id="@+id/recyclerview_storelist"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_below="@+id/tv_ordertype"-->
+                            <!--android:layout_marginTop="@dimen/_5sdp"-->
+                            <!--android:visibility="gone" />-->
 
                         <LinearLayout
                             android:id="@+id/linear_ordertype"
@@ -394,10 +387,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round_whitelbg"
-                            android:drawableRight="@drawable/arrow_drop_down"
+                            android:drawableRight="@drawable/drop_down"
                             android:fontFamily="@font/reguler"
                             android:inputType="number"
                             android:paddingBottom="@dimen/_6sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
@@ -412,31 +406,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tv_add_address"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="center"
                             android:padding="@dimen/_10sdp"
                             android:text="Add Address"
+                            android:textStyle="bold"
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_12sdp" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/tv_saved_address"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:fontFamily="@font/reguler"-->
-                        <!--android:gravity="center"-->
-                        <!--android:padding="@dimen/_10sdp"-->
-                        <!--android:text="Saved Address"-->
-                        <!--android:textColor="@color/red_bg"-->
-                        <!--android:textSize="@dimen/_12sdp" />-->
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerview_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_5sdp" />
 
                     </LinearLayout>
 
