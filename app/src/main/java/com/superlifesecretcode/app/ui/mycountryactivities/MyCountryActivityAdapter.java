@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.mycountryactivities.addcountryactivity.AddCountryActivityActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -27,11 +29,13 @@ import java.util.List;
 public class MyCountryActivityAdapter extends RecyclerView.Adapter<MyCountryActivityAdapter.ItemViewHolder> {
 
     private final Context mContext;
+    private final LanguageResponseData conversionData;
     private List<MyCountryActivityResponseData> list;
 
     public MyCountryActivityAdapter(List list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
+        conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
     }
 
     @NonNull
@@ -56,17 +60,17 @@ public class MyCountryActivityAdapter extends RecyclerView.Adapter<MyCountryActi
 
         switch (myAnnouncementResponseData.getStatus()) {
             case "0":
-                holder.textViewStatus.setText("Pending");
+                holder.textViewStatus.setText(conversionData.getPending());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_pending);
                 holder.textViewReason.setVisibility(View.GONE);
                 break;
             case "1":
-                holder.textViewStatus.setText("Published");
+                holder.textViewStatus.setText(conversionData.getPublished());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_published);
                 holder.textViewReason.setVisibility(View.GONE);
                 break;
             case "2":
-                holder.textViewStatus.setText("Declined");
+                holder.textViewStatus.setText(conversionData.getRejected());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_declined);
                 holder.textViewReason.setVisibility(View.VISIBLE);
                 break;
@@ -75,8 +79,7 @@ public class MyCountryActivityAdapter extends RecyclerView.Adapter<MyCountryActi
         List<MyCountryActivityResponseData.ImageData> announcement_images = myAnnouncementResponseData.getActivity_images();
         if (announcement_images != null && announcement_images.size() > 0) {
             ImageLoadUtils.loadImage(announcement_images.get(0).getImage(), holder.imageView);
-        }
-        else{
+        } else {
             holder.imageView.setImageResource(R.drawable.default_placeholder);
         }
     }
