@@ -1,4 +1,6 @@
 package com.superlifesecretcode.app.ui.book.second;
 
-public class SecondBookView {
+import com.superlifesecretcode.app.ui.base.BaseView;
+
+public interface SecondBookView extends BaseView {
 }

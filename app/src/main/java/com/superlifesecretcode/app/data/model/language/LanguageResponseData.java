@@ -166,6 +166,10 @@ public class LanguageResponseData {
     private String min_password_character;
     private String select_city;
 
+    // book
+
+
+
     public String getSelect_city() {
         return select_city;
     }

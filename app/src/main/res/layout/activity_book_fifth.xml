@@ -158,19 +158,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/_25sdp"
-                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/textview_payment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/reguler"
-                    android:text="Please pay $122 to the follwoing account"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/_10sdp" />
 
@@ -179,42 +176,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_4sdp"
-                            android:fontFamily="@font/reguler"
-                            android:text="Payment Date"
-                            android:textColor="@color/red_bg"
-                            android:textSize="@dimen/_10sdp" />
-
-                        <TextView
-                            android:id="@+id/tv_payment_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:background="@drawable/edittext_round"
-                            android:fontFamily="@font/reguler"
-                            android:inputType="number"
-                            android:singleLine="true"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:text="Select"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_10sdp" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -239,16 +200,57 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:background="@drawable/edittext_round"
+                            android:drawableRight="@drawable/drop_down"
                             android:fontFamily="@font/reguler"
                             android:gravity="center"
                             android:inputType="number"
-                            android:singleLine="true"
+                            android:layout_marginRight="@dimen/_2sdp"
                             android:padding="@dimen/_5sdp"
+                            android:singleLine="true"
                             android:text="Select"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_10sdp" />
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_4sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/reguler"
+                            android:text="Payment Date"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_payment_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:background="@drawable/edittext_round"
+                            android:drawableRight="@drawable/drop_down"
+                            android:fontFamily="@font/reguler"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:singleLine="true"
+                            android:text="Select"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_9sdp" />
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView

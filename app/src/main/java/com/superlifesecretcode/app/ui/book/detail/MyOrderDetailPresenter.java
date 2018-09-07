@@ -45,7 +45,7 @@ public class MyOrderDetailPresenter extends BasePresenter<MyOrderDetailView> {
                     if (newsResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.getOrderDetail(newsResponseModel);
                     }
-                    CommonUtils.showToast(mContext, newsResponseModel.getMessage());
+                    //CommonUtils.showToast(mContext, newsResponseModel.getMessage());
                 } else {
                     CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
                 }
