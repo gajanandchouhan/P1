@@ -70,7 +70,7 @@ public class StudyGroupDetailsActivity extends BaseActivity {
         switch (studyGroupDetails.getSubcription_status()) {
             case ConstantLib.STATUS_GROUP_NEW:
                 layoutStatus.setVisibility(View.GONE);
-                buttonSubscribe.setVisibility(View.GONE);
+                buttonSubscribe.setVisibility(View.VISIBLE);
                 textViewReason.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_SUBSCRIBED:
@@ -118,7 +118,7 @@ public class StudyGroupDetailsActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
         if (conversionData != null)
-            textViewTitle.setText(conversionData.getAnnouncement());
+            textViewTitle.setText(conversionData.getStudy_group());
     }
 
     @Override
