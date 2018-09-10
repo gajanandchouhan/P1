@@ -510,35 +510,35 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         String contactNo = edittextContactNumber.getText().toString().trim();
         String contanctEmail = editTextContatEmail.getText().toString().trim();
         if (announcmentType == null || announcmentType.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please select type");
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_activity_type());
             return;
         }
 
         if (name.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter event title");
+            CommonUtils.showSnakeBar(this, conversionData.getEnter_activity());
             return;
         }
         if (desc.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter description");
+            CommonUtils.showSnakeBar(this, conversionData.getEnter_activity_desc());
             return;
         }
         if (!(remoteImageList != null && remoteImageList.size() > 0)) {
             if (imageList == null || imageList.isEmpty()) {
-                CommonUtils.showSnakeBar(this, "Please select at least one image");
+                CommonUtils.showSnakeBar(this, conversionData.getSelect_image());
                 return;
             }
         }
 
         if (remoteImageList.size() > 5) {
-            CommonUtils.showSnakeBar(this, "You can upload maximum 5 images");
+            CommonUtils.showSnakeBar(this, conversionData.getMax_upload_msg());
             return;
         }
         if (contactName.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter contact person name");
+            CommonUtils.showSnakeBar(this, conversionData.getEnter_contact_p_name());
             return;
         }
         if (contactNo.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter contact person number");
+            CommonUtils.showSnakeBar(this, conversionData.getEnter_contact_p_num());
             return;
         }
         if (!contanctEmail.isEmpty()) {
@@ -561,7 +561,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
             return;
         }
         if (venue.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please enter venue details");
+            CommonUtils.showSnakeBar(this, conversionData.getEnter_venue());
             return;
         }
         if (fromDate == null || fromDate.isEmpty()) {
@@ -573,11 +573,11 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
             return;
         }
         if (day == null || day.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please select day");
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_day());
             return;
         }
         if (lat == null || lat.isEmpty() || lat.equals("0.0") | lon == null || lon.isEmpty() || lon.equals("0.0")) {
-            CommonUtils.showSnakeBar(this, "Please select map location");
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_map_loc());
             return;
         }
         MultipartBody.Builder builder = new MultipartBody.Builder();

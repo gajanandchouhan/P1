@@ -196,6 +196,14 @@ public class LanguageResponseData {
     private String add_activity;
     private String update_activity;
 
+    private String enter_activity;
+    private String enter_activity_desc;
+    private String select_activity_type;
+    private String enter_contact_p_name;
+    private String enter_contact_p_num;
+    private String select_day;
+    private String select_map_loc;
+
     public String getSelect_city() {
         return select_city;
     }
@@ -1691,5 +1699,61 @@ public class LanguageResponseData {
 
     public void setUpdate_activity(String update_activity) {
         this.update_activity = update_activity;
+    }
+
+    public String getEnter_activity() {
+        return enter_activity;
+    }
+
+    public void setEnter_activity(String enter_activity) {
+        this.enter_activity = enter_activity;
+    }
+
+    public String getEnter_activity_desc() {
+        return enter_activity_desc;
+    }
+
+    public void setEnter_activity_desc(String enter_activity_desc) {
+        this.enter_activity_desc = enter_activity_desc;
+    }
+
+    public String getSelect_activity_type() {
+        return select_activity_type;
+    }
+
+    public void setSelect_activity_type(String select_activity_type) {
+        this.select_activity_type = select_activity_type;
+    }
+
+    public String getEnter_contact_p_name() {
+        return enter_contact_p_name;
+    }
+
+    public void setEnter_contact_p_name(String enter_contact_p_name) {
+        this.enter_contact_p_name = enter_contact_p_name;
+    }
+
+    public String getEnter_contact_p_num() {
+        return enter_contact_p_num;
+    }
+
+    public void setEnter_contact_p_num(String enter_contact_p_num) {
+        this.enter_contact_p_num = enter_contact_p_num;
+    }
+
+    public String getSelect_day() {
+        return select_day;
+    }
+
+    public void setSelect_day(String select_day) {
+        this.select_day = select_day;
+    }
+
+    public String getSelect_map_loc() {
+        return select_map_loc;
+    }
+
+    public void setSelect_map_loc(String select_map_loc) {
+        this.select_map_loc = select_map_loc;
     }
 }
