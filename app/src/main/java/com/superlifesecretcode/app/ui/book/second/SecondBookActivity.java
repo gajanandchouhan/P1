@@ -1,6 +1,8 @@
 package com.superlifesecretcode.app.ui.book.second;
 
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -11,9 +13,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.base.BaseView;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
+import com.superlifesecretcode.app.ui.book.first.BookList;
 import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.book.forth.ForthBookActivity;
 import com.superlifesecretcode.app.ui.book.third.ThirsBookActivity;
@@ -21,8 +26,10 @@ import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-public class SecondBookActivity extends BaseActivity {
+public class SecondBookActivity extends BaseActivity implements SecondBookView{
 
     LinearLayout linearlayout_book_quality, linearlayout_affortdability, amount_linear;
     ImageView checkbox_affordibility, check_book_quality;
@@ -32,6 +39,11 @@ public class SecondBookActivity extends BaseActivity {
     ArrayList<BookBean> bookArrayList;
     double TOTAL_AMOUNT, REMAINING_AMOUNT;
     ImageView back_image;
+    SecondBookPresenter secondBookPresenter;
+    private UserDetailResponseData userData;
+    RecyclerView delivery_recyclerview;
+    DeliveryAapter deliveryAapter;
+    ArrayList<DeliveryData> deliveryDataArrayList;
 
     @Override
     protected int getContentView() {
@@ -45,8 +57,7 @@ public class SecondBookActivity extends BaseActivity {
 
     @Override
     protected void initializeView() {
-
-//        bookArrayList = (ArrayList<BookBean>) getIntent().getSerializableExtra("selected_booklist");
+        userData = SuperLifeSecretPreferences.getInstance().getUserData();
         bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
 
         linearlayout_book_quality = findViewById(R.id.linearlayout_book_quality);
@@ -63,21 +74,27 @@ public class SecondBookActivity extends BaseActivity {
         textview_next = findViewById(R.id.textview_next);
         textview_back = findViewById(R.id.textview_back);
         back_image = findViewById(R.id.back_image);
+        delivery_recyclerview = findViewById(R.id.delivery_recyclerview);
+
+        deliveryDataArrayList = new ArrayList<>();
+        delivery_recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        deliveryAapter = new DeliveryAapter(deliveryDataArrayList,this);
+        delivery_recyclerview.setAdapter(deliveryAapter);
+        getDeliveryCharges();
 
         back_image.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-
         if(SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")){
             linearlayout_affortdability.setVisibility(View.GONE);
         }else{
             linearlayout_affortdability.setVisibility(View.VISIBLE);
         }
-
 
         amount_linear.setVisibility(View.GONE);
         linearlayout_book_quality.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +171,12 @@ public class SecondBookActivity extends BaseActivity {
         }
     }
 
+    private void getDeliveryCharges() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        secondBookPresenter.getDeliveryCharges(headers);
+    }
+
     public void getBookAmount() {
 
         double AMOUNT_ENTERED = Double.parseDouble(edittext_enteramount.getText().toString());
@@ -206,5 +229,14 @@ public class SecondBookActivity extends BaseActivity {
 
     @Override
     protected void initializePresenter() {
+        secondBookPresenter = new SecondBookPresenter(this);
+        secondBookPresenter.setView(this);
+    }
+
+    @Override
+    public void getDeliveryCharges(Delivery categoryResponseModel) {
+        deliveryDataArrayList.clear();
+        deliveryDataArrayList.addAll(categoryResponseModel.getData());
+        deliveryAapter.notifyDataSetChanged();
     }
 }

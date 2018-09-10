@@ -28,6 +28,7 @@ import com.superlifesecretcode.app.ui.book.five.BankBean;
 import com.superlifesecretcode.app.ui.book.forth.AddressBean;
 import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
+import com.superlifesecretcode.app.ui.book.second.Delivery;
 
 import java.util.Map;
 
@@ -300,6 +301,10 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("myOrders")
     Observable<MyOrderBean> getMyOrderList(@HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("deliveryCharges")
+    Observable<Delivery> getDeliveryCharges(@HeaderMap Map<String, String> headers);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})

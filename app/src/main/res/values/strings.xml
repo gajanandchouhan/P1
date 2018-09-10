@@ -34,4 +34,13 @@
     <string name="signup">Sign Up</string>
     <string name="skip_and_signup">Skip &amp; Signup</string>
     <string name="que">\?</string>
+
+    <string name="select_book_on_sales">Select Available Books on Sales</string>
+    <string name="select_book">Please select the book</string>
+    <string name="print_by_quantity">Print by Book quantity</string>
+    <string name="buy_by_quantity">Print by Book quantity</string>
+
+
+
+
 </resources>

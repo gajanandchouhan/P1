@@ -60,4 +60,5 @@ public interface RequestType {
     byte REQ_SEND_EVENT_REQ = 51;
     byte REQ_GET_MY_COUNTRY_ACTIVITY = 52;
     byte REQ_ADD_COUNTRY_ACTIVITY = 53;
+    byte REQ_GET_DELIVERY_CHARGES = 54;
 }

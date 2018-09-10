@@ -54,7 +54,6 @@ public class FirstBookPresenter extends BasePresenter<FirstBookView> {
             public void onError() {
                 view.hideProgress();
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
-
             }
         }, params, headers);
     }
