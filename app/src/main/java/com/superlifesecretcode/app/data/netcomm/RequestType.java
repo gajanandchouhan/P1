@@ -63,4 +63,5 @@ public interface RequestType {
     byte REQ_DELETE_ACTIVITY_IMAGE=54;
     byte REQ_DELETE_ACTIVITY=55;
     byte REQ_GET_DELIVERY_CHARGES = 56;
+    byte REQ_GET_GROUPS = 57;
 }

@@ -39,13 +39,13 @@
         <TextView
             android:id="@+id/text_view_subscribe"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:fontFamily="@font/bold"
             android:text="Subscribe"
             android:textColor="@color/red_bg"
-            android:fontFamily="@font/bold"
-            android:textSize="@dimen/_14sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/_14sdp" />
 
         <TextView
             android:id="@+id/textView_desc"
@@ -64,14 +64,14 @@
             android:textSize="@dimen/_13sdp" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/layout_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textView_desc"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/text_view_status"

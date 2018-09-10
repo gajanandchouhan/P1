@@ -23,6 +23,7 @@ import com.superlifesecretcode.app.data.model.notifications.NotificationResponse
 import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
+import com.superlifesecretcode.app.data.model.studygroups.StudyGroupResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.ui.book.detail.DetailBean;
@@ -497,7 +498,12 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<Delivery>(handler));
                 break;
-
+            case REQ_GET_GROUPS:
+                Observable<StudyGroupResponseModel> getGroupObservable = apiInterface.getStudyGroups(headers);
+                getGroupObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<StudyGroupResponseModel>(handler));
+                break;
         }
 
     }

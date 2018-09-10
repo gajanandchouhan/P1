@@ -69,5 +69,11 @@ public interface ConstantLib {
 
     String MAIN_MENU_CHAT = "3";
     String MAIN_MENU_STUDY_GROUP = "4";
+
+    String STATUS_GROUP_NEW = "0";
+    String STATUS_GROUP_SUBSCRIBED = "1";
+    String STATUS_GROUP_PENDING = "2";
+    String STATUS_GROUP_EXPIRED = "3";
+    String STATUS_GROUP_REJECTED = "4";
 }
 

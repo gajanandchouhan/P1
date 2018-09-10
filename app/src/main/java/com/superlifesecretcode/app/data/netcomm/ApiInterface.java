@@ -20,6 +20,7 @@ import com.superlifesecretcode.app.data.model.notifications.NotificationResponse
 import com.superlifesecretcode.app.data.model.personalevent.PersonalEventResponseModel;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
+import com.superlifesecretcode.app.data.model.studygroups.StudyGroupResponseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
 import com.superlifesecretcode.app.ui.book.detail.DetailBean;
@@ -353,5 +354,9 @@ public interface ApiInterface {
     @POST("deleteActivity")
     Observable<BaseResponseModel> deleteActivity(@PartMap() Map<String, RequestBody> partMap,
                                                      @HeaderMap Map<String, String> headers);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("getStudyGroups")
+    Observable<StudyGroupResponseModel> getStudyGroups(@HeaderMap Map<String, String> headers);
 
 }

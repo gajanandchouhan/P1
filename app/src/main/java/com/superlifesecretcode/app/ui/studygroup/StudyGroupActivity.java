@@ -9,22 +9,29 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.studygroups.StudyGroupData;
+import com.superlifesecretcode.app.data.model.studygroups.StudyGroupDetails;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class StudyGroupActivity extends BaseActivity {
+public class StudyGroupActivity extends BaseActivity implements StudyGroupView {
 
 
     private LanguageResponseData conversionData;
     private UserDetailResponseData userData;
     private RecyclerView recyclerView;
-    private List list;
+    private List<StudyGroupDetails> list;
     private StudyGroupListAdapter adapter;
     private TabLayout tabLayout;
+    private StudyGroupPresenter presenter;
+    private List<StudyGroupDetails> subScribeGroupList;
+    private List<StudyGroupDetails> newGroupList;
 
     @Override
     protected int getContentView() {
@@ -41,17 +48,21 @@ public class StudyGroupActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.getTabAt(0).setText("New");
         tabLayout.getTabAt(1).setText("My Subscription");
-        list = new ArrayList();
+        list = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StudyGroupListAdapter(list);
+        adapter = new StudyGroupListAdapter(list,this);
         recyclerView.setAdapter(adapter);
         tabLayout.addOnTabSelectedListener(listener);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        presenter.getStudyGroup(headers);
     }
 
     @Override
     protected void initializePresenter() {
-
+        presenter = new StudyGroupPresenter(this);
+        presenter.setView(this);
     }
 
     private void setUpToolbar() {
@@ -80,10 +91,18 @@ public class StudyGroupActivity extends BaseActivity {
             switch (tab.getPosition()) {
                 case 0:
                     list.clear();
-
+                    if (newGroupList != null) {
+                        list.addAll(newGroupList);
+                    }
+                    adapter.notifyDataSetChanged();
                     break;
                 case 1:
                     list.clear();
+                    if (subScribeGroupList != null) {
+                        list.addAll(subScribeGroupList);
+
+                    }
+                    adapter.notifyDataSetChanged();
                     break;
 
             }
@@ -99,4 +118,19 @@ public class StudyGroupActivity extends BaseActivity {
 
         }
     };
+
+    @Override
+    public void setStudyGroupList(StudyGroupData data) {
+        if (data != null) {
+            newGroupList = data.getNew_groups();
+            subScribeGroupList = data.getSubcribed_groups();
+            list.clear();
+            if (tabLayout.getSelectedTabPosition() == 0 && newGroupList != null) {
+                list.addAll(newGroupList);
+            } else if (subScribeGroupList != null) {
+                list.addAll(subScribeGroupList);
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
 }
