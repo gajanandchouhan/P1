@@ -187,6 +187,15 @@ public class LanguageResponseData {
     private String submit_req_pending_msg;
     private String max_upload_msg;
 
+    private String activity_type;
+    private String title;
+    private String contact_name;
+    private String contact_number;
+    private String contact_email;
+    private String map_location;
+    private String add_activity;
+    private String update_activity;
+
     public String getSelect_city() {
         return select_city;
     }
@@ -1618,5 +1627,69 @@ public class LanguageResponseData {
 
     public void setMax_upload_msg(String max_upload_msg) {
         this.max_upload_msg = max_upload_msg;
+    }
+
+    public String getActivity_type() {
+        return activity_type;
+    }
+
+    public void setActivity_type(String activity_type) {
+        this.activity_type = activity_type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContact_name() {
+        return contact_name;
+    }
+
+    public void setContact_name(String contact_name) {
+        this.contact_name = contact_name;
+    }
+
+    public String getContact_number() {
+        return contact_number;
+    }
+
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number;
+    }
+
+    public String getContact_email() {
+        return contact_email;
+    }
+
+    public void setContact_email(String contact_email) {
+        this.contact_email = contact_email;
+    }
+
+    public String getMap_location() {
+        return map_location;
+    }
+
+    public void setMap_location(String map_location) {
+        this.map_location = map_location;
+    }
+
+    public String getAdd_activity() {
+        return add_activity;
+    }
+
+    public void setAdd_activity(String add_activity) {
+        this.add_activity = add_activity;
+    }
+
+    public String getUpdate_activity() {
+        return update_activity;
+    }
+
+    public void setUpdate_activity(String update_activity) {
+        this.update_activity = update_activity;
     }
 }

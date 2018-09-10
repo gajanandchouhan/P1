@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -91,6 +92,8 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     private String day;
     private String stateId;
     private String city;
+    TextInputLayout inputLayoutName, inputLayoutDesc, inputLayoutContactName,
+            inputLayoutContactEmail, inputLayoutContactNumber, inputLayoutVenue;
 
     int PLACE_PICKER_REQUEST = 1;
     private String lat;
@@ -127,6 +130,12 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         editTextContactName = findViewById(R.id.input_contact_name);
         edittextContactNumber = findViewById(R.id.input_contact_no);
         editTextContatEmail = findViewById(R.id.input_contact_email);
+        inputLayoutName = findViewById(R.id.input_layout_name);
+        inputLayoutDesc = findViewById(R.id.input_layout_desc);
+        inputLayoutContactName = findViewById(R.id.input_layout_contact_name);
+        inputLayoutContactEmail = findViewById(R.id.input_layout_contact_email);
+        inputLayoutContactNumber = findViewById(R.id.input_layout_contact_no);
+        inputLayoutVenue = findViewById(R.id.input_layout_venue);
         button = findViewById(R.id.button_add);
         button.setOnClickListener(this);
         textViewViewCountry.setOnClickListener(this);
@@ -148,10 +157,36 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         recyclerView.setAdapter(submitAapter);
         announcmentType = "1";
         textViewAnnounType.setText(conversionData.getStudy_group());
+        setUpConversion();
         setWeekDayList();
         if (data != null) {
             setUpUi();
         }
+    }
+
+    private void setUpConversion() {
+        textViewAnnounType.setHint(conversionData.getActivity_type());
+        editTextName.setHint(conversionData.getTitle());
+        editTextDesc.setHint(conversionData.getDescription());
+        editTextContactName.setHint(conversionData.getContact_name());
+        edittextContactNumber.setHint(conversionData.getContact_number());
+        editTextContatEmail.setHint(conversionData.getContact_email());
+        editTextVenue.setHint(conversionData.getVenue());
+        textViewViewCountry.setHint(conversionData.getCountry());
+        textViewState.setHint(conversionData.getState());
+        textViewCity.setHint(conversionData.getCity());
+        textViewPickImage.setHint(conversionData.getImage());
+        textViewStartDate.setHint(conversionData.getDate());
+        textViewStartTime.setHint(conversionData.getTime());
+        textViewDay.setHint(conversionData.getDay());
+        textViewLocation.setHint(conversionData.getMap_location());
+        button.setText(conversionData.getAdd_activity());
+        inputLayoutName.setHint(conversionData.getTitle());
+        inputLayoutDesc.setHint(conversionData.getDescription());
+        inputLayoutVenue.setHint(conversionData.getVenue());
+        inputLayoutContactName.setHint(conversionData.getContact_name());
+        inputLayoutContactNumber.setHint(conversionData.getContact_number());
+        inputLayoutContactEmail.setHint(conversionData.getContact_email());
     }
 
     private void setWeekDayList() {
@@ -166,7 +201,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     }
 
     private void setUpUi() {
-        button.setText("Update Activity");
+        button.setText(conversionData.getUpdate_activity());
         announcmentType = data.getActivity_type();
         countryId = data.getActivity_country_id();
         stateId = data.getActivity_state_id();

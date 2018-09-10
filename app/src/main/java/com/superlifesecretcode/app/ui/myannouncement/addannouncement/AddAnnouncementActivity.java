@@ -77,7 +77,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     private String announcmentType;
     private List<Object> remoteImageList;
 
-    TextInputLayout venueInputLayout;
+    TextInputLayout venueInputLayout, inputLayoutName, inputLayoutDesc, inputLayout;
     MyAnnouncementResponseData data;
     private int position;
 
@@ -109,6 +109,8 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         editTextDesc = findViewById(R.id.input_desc);
         editTextVenue = findViewById(R.id.input_venue);
         venueInputLayout = findViewById(R.id.input_layout_venue);
+        inputLayoutName = findViewById(R.id.input_layout_name);
+        inputLayoutDesc = findViewById(R.id.input_layout_desc);
         button = findViewById(R.id.button_add);
         button.setOnClickListener(this);
         textViewViewCountry.setOnClickListener(this);
@@ -147,6 +149,9 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         textViewStartTime.setHint(conversionData.getStart_time());
         textViewEndTime.setHint(conversionData.getEnd_time());
         button.setText(conversionData.getAdd_announcement());
+        inputLayoutName.setHint(conversionData.getName());
+        inputLayoutDesc.setHint(conversionData.getDescription());
+        venueInputLayout.setHint(conversionData.getVenue());
     }
 
     private void setUpUi() {

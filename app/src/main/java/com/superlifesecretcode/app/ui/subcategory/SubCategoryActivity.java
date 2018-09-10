@@ -102,9 +102,9 @@ public class SubCategoryActivity extends BaseActivity implements SubCaetgoryView
         autoScrollViewPager.getLayoutParams().height = height;
         setUpBanner();
         setUpBottomBar2();
-        if (SuperLifeSecretPreferences.getInstance().getSelectedBooks()!=null&&SuperLifeSecretPreferences.getInstance().getSelectedBooks().size()>0){
+       /* if (SuperLifeSecretPreferences.getInstance().getSelectedBooks()!=null&&SuperLifeSecretPreferences.getInstance().getSelectedBooks().size()>0){
             CommonUtils.startActivity(this, FirstBookActivity.class);
-        }
+        }*/
     }
 
     @Override
