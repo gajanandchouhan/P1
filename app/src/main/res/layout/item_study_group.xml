@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
@@ -12,42 +13,94 @@
         android:padding="@dimen/_10sdp">
 
         <com.superlifesecretcode.app.custom.CircleImageView
-            android:id="@+id/imageView_news"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
+            android:id="@+id/image_view_group"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
             android:src="@drawable/default_placeholder" />
 
-        <LinearLayout
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/imageView_news"
-            android:layout_toRightOf="@+id/imageView_news"
+        <TextView
+            android:id="@+id/textView_title"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/textView_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/reguler"
-                android:maxLines="1"
-                android:text="Title"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="@dimen/_14sdp" />
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/image_view_group"
+            android:layout_toLeftOf="@+id/text_view_subscribe"
+            android:layout_toRightOf="@+id/image_view_group"
+            android:layout_toStartOf="@+id/text_view_subscribe"
+            android:ellipsize="end"
+            android:fontFamily="@font/bold"
+            android:maxLines="2"
+            android:text="Title"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/text_view_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Subscribe"
+            android:textColor="@color/red_bg"
+            android:fontFamily="@font/bold"
+            android:textSize="@dimen/_14sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_title"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/image_view_group"
+            android:layout_toRightOf="@+id/image_view_group"
+            android:ellipsize="end"
+            android:fontFamily="@font/reguler"
+            android:maxLines="3"
+            android:minLines="3"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in elit ante. Donec maximus, felis porttitor vehicula pellentesque, orci ante hendrerit dui, non mollis mauris neque id metus. Maecenas dolor nisi, fringilla sed neque sed, commodo sollicitudin risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc pretium ligula quis sem maximus, sodales facilisis orci pulvinar. Donec consectetur ipsum vel purus tempor pretium et eu tellus. Vestibulum tincidunt maximus sollicitudin. Donec eu orci in turpis faucibus accumsan et nec ligula. Mauris aliquet id enim id dictum. Nulla aliquet sodales arcu vel rhoncus. Suspendisse nec sem at justo faucibus venenatis. Sed dolor urna, pretium in luctus ac, fringilla eu lacus. Nam ut imperdiet diam, in suscipit sapien. Duis accumsan ullamcorper lacus, ut interdum tellus aliquam eu."
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layout_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView_desc"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView_date"
+                android:id="@+id/text_view_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/bold"
-                android:maxLines="1"
-                android:text="Title"
-                android:textColor="@color/colorLightBlack"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/bg_pending"
+                android:fontFamily="@font/reguler"
+                android:paddingBottom="@dimen/_2sdp"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:text="Pending"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_11sdp" />
+
+            <TextView
+                android:id="@+id/text_view_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:background="@drawable/circle_count_bg"
+                android:fontFamily="@font/reguler"
+                android:gravity="center"
+                android:text="@string/que"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_11sdp"
+                android:visibility="gone" />
         </LinearLayout>
+
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

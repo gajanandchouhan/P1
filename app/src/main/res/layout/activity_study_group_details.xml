@@ -30,13 +30,13 @@
             android:textSize="@dimen/_14sdp" />
 
         <TextView
-            android:id="@+id/textView_date"
+            android:id="@+id/text_view_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/bold"
             android:maxLines="1"
-            android:text="Title"
+            android:text="Desciption"
             android:textColor="@color/colorLightBlack"
             android:textSize="@dimen/_11sdp" />
     </LinearLayout>

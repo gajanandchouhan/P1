@@ -27,7 +27,7 @@ public class StudyGroupDetailsActivity extends BaseActivity {
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_study_group;
+        return R.layout.activity_study_group_details;
     }
 
     @Override

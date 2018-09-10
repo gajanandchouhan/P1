@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.studygroup;
 
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ public class StudyGroupActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private List list;
     private StudyGroupListAdapter adapter;
+    private TabLayout tabLayout;
 
     @Override
     protected int getContentView() {
@@ -34,11 +36,17 @@ public class StudyGroupActivity extends BaseActivity {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         setUpToolbar();
+        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.getTabAt(0).setText("New");
+        tabLayout.getTabAt(1).setText("My Subscription");
         list = new ArrayList();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new StudyGroupListAdapter(list);
         recyclerView.setAdapter(adapter);
+        tabLayout.addOnTabSelectedListener(listener);
     }
 
     @Override
@@ -54,7 +62,7 @@ public class StudyGroupActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
         if (conversionData != null)
-            textViewTitle.setText(conversionData.getAnnouncement());
+            textViewTitle.setText(conversionData.getStudy_group());
     }
 
     @Override
@@ -64,4 +72,31 @@ public class StudyGroupActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    TabLayout.OnTabSelectedListener listener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            switch (tab.getPosition()) {
+                case 0:
+                    list.clear();
+
+                    break;
+                case 1:
+                    list.clear();
+                    break;
+
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    };
 }

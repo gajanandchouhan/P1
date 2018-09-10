@@ -204,6 +204,51 @@ public class LanguageResponseData {
     private String select_day;
     private String select_map_loc;
 
+    private String select_book_on_sales;
+    private String select_book;
+    private String print_by_quantity;
+    private String buy_by_quantity;
+    private String print_by_affordability;
+    private String select_option;
+    private String enter_amount;
+    private String insufficient_funds;
+    private String add_quantity_for;
+    private String total;
+    private String next;
+    private String select_quantity_printing;
+    private String select_quantity_buying;
+    private String want_delete;
+    private String printing_own;
+    private String buying_own;
+    private String printing_behalf;
+    private String buying_behalf;
+    private String name_national_card;
+    private String email_id;
+    private String delivery_address;
+    private String postcode;
+    private String enter_address;
+    private String enter_postcode;
+    private String designated;
+    private String distribute;
+    private String no_address;
+    private String please_enter_address;
+    private String please_enter_postcode;
+    private String please_select_address;
+    private String please_pay;
+    private String one_following_account;
+    private String payment_mode;
+    private String payment_date;
+    private String attached_file;
+    private String please_attach_file;
+    private String please_select_bank;
+    private String please_add_receipts;
+    private String please_select_pay_date;
+    private String please_select_pay_mode;
+    private String back;
+    private String order_type;
+    private String cancel;
+
+
     public String getSelect_city() {
         return select_city;
     }
@@ -1755,5 +1800,350 @@ public class LanguageResponseData {
 
     public void setSelect_map_loc(String select_map_loc) {
         this.select_map_loc = select_map_loc;
+    }
+
+
+    public String getSelect_book_on_sales() {
+        return select_book_on_sales;
+    }
+
+    public void setSelect_book_on_sales(String select_book_on_sales) {
+        this.select_book_on_sales = select_book_on_sales;
+    }
+
+    public String getSelect_book() {
+        return select_book;
+    }
+
+    public void setSelect_book(String select_book) {
+        this.select_book = select_book;
+    }
+
+    public String getPrint_by_quantity() {
+        return print_by_quantity;
+    }
+
+    public void setPrint_by_quantity(String print_by_quantity) {
+        this.print_by_quantity = print_by_quantity;
+    }
+
+    public String getBuy_by_quantity() {
+        return buy_by_quantity;
+    }
+
+    public void setBuy_by_quantity(String buy_by_quantity) {
+        this.buy_by_quantity = buy_by_quantity;
+    }
+
+    public String getPrint_by_affordability() {
+        return print_by_affordability;
+    }
+
+    public void setPrint_by_affordability(String print_by_affordability) {
+        this.print_by_affordability = print_by_affordability;
+    }
+
+    public String getSelect_option() {
+        return select_option;
+    }
+
+    public void setSelect_option(String select_option) {
+        this.select_option = select_option;
+    }
+
+    public String getEnter_amount() {
+        return enter_amount;
+    }
+
+    public void setEnter_amount(String enter_amount) {
+        this.enter_amount = enter_amount;
+    }
+
+    public String getInsufficient_funds() {
+        return insufficient_funds;
+    }
+
+    public void setInsufficient_funds(String insufficient_funds) {
+        this.insufficient_funds = insufficient_funds;
+    }
+
+    public String getAdd_quantity_for() {
+        return add_quantity_for;
+    }
+
+    public void setAdd_quantity_for(String add_quantity_for) {
+        this.add_quantity_for = add_quantity_for;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
+    }
+
+    public String getSelect_quantity_printing() {
+        return select_quantity_printing;
+    }
+
+    public void setSelect_quantity_printing(String select_quantity_printing) {
+        this.select_quantity_printing = select_quantity_printing;
+    }
+
+    public String getSelect_quantity_buying() {
+        return select_quantity_buying;
+    }
+
+    public void setSelect_quantity_buying(String select_quantity_buying) {
+        this.select_quantity_buying = select_quantity_buying;
+    }
+
+    public String getWant_delete() {
+        return want_delete;
+    }
+
+    public void setWant_delete(String want_delete) {
+        this.want_delete = want_delete;
+    }
+
+    public String getPrinting_own() {
+        return printing_own;
+    }
+
+    public void setPrinting_own(String printing_own) {
+        this.printing_own = printing_own;
+    }
+
+    public String getBuying_own() {
+        return buying_own;
+    }
+
+    public void setBuying_own(String buying_own) {
+        this.buying_own = buying_own;
+    }
+
+    public String getPrinting_behalf() {
+        return printing_behalf;
+    }
+
+    public void setPrinting_behalf(String printing_behalf) {
+        this.printing_behalf = printing_behalf;
+    }
+
+    public String getBuying_behalf() {
+        return buying_behalf;
+    }
+
+    public void setBuying_behalf(String buying_behalf) {
+        this.buying_behalf = buying_behalf;
+    }
+
+    public String getName_national_card() {
+        return name_national_card;
+    }
+
+    public void setName_national_card(String name_national_card) {
+        this.name_national_card = name_national_card;
+    }
+
+    public String getEmail_id() {
+        return email_id;
+    }
+
+    public void setEmail_id(String email_id) {
+        this.email_id = email_id;
+    }
+
+    public String getDelivery_address() {
+        return delivery_address;
+    }
+
+    public void setDelivery_address(String delivery_address) {
+        this.delivery_address = delivery_address;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public String getEnter_address() {
+        return enter_address;
+    }
+
+    public void setEnter_address(String enter_address) {
+        this.enter_address = enter_address;
+    }
+
+    public String getEnter_postcode() {
+        return enter_postcode;
+    }
+
+    public void setEnter_postcode(String enter_postcode) {
+        this.enter_postcode = enter_postcode;
+    }
+
+    public String getDesignated() {
+        return designated;
+    }
+
+    public void setDesignated(String designated) {
+        this.designated = designated;
+    }
+
+    public String getDistribute() {
+        return distribute;
+    }
+
+    public void setDistribute(String distribute) {
+        this.distribute = distribute;
+    }
+
+    public String getNo_address() {
+        return no_address;
+    }
+
+    public void setNo_address(String no_address) {
+        this.no_address = no_address;
+    }
+
+    public String getPlease_enter_address() {
+        return please_enter_address;
+    }
+
+    public void setPlease_enter_address(String please_enter_address) {
+        this.please_enter_address = please_enter_address;
+    }
+
+    public String getPlease_enter_postcode() {
+        return please_enter_postcode;
+    }
+
+    public void setPlease_enter_postcode(String please_enter_postcode) {
+        this.please_enter_postcode = please_enter_postcode;
+    }
+
+    public String getPlease_select_address() {
+        return please_select_address;
+    }
+
+    public void setPlease_select_address(String please_select_address) {
+        this.please_select_address = please_select_address;
+    }
+
+    public String getPlease_pay() {
+        return please_pay;
+    }
+
+    public void setPlease_pay(String please_pay) {
+        this.please_pay = please_pay;
+    }
+
+    public String getOne_following_account() {
+        return one_following_account;
+    }
+
+    public void setOne_following_account(String one_following_account) {
+        this.one_following_account = one_following_account;
+    }
+
+    public String getPayment_mode() {
+        return payment_mode;
+    }
+
+    public void setPayment_mode(String payment_mode) {
+        this.payment_mode = payment_mode;
+    }
+
+    public String getPayment_date() {
+        return payment_date;
+    }
+
+    public void setPayment_date(String payment_date) {
+        this.payment_date = payment_date;
+    }
+
+    public String getAttached_file() {
+        return attached_file;
+    }
+
+    public void setAttached_file(String attached_file) {
+        this.attached_file = attached_file;
+    }
+
+    public String getPlease_attach_file() {
+        return please_attach_file;
+    }
+
+    public void setPlease_attach_file(String please_attach_file) {
+        this.please_attach_file = please_attach_file;
+    }
+
+    public String getPlease_select_bank() {
+        return please_select_bank;
+    }
+
+    public void setPlease_select_bank(String please_select_bank) {
+        this.please_select_bank = please_select_bank;
+    }
+
+    public String getPlease_add_receipts() {
+        return please_add_receipts;
+    }
+
+    public void setPlease_add_receipts(String please_add_receipts) {
+        this.please_add_receipts = please_add_receipts;
+    }
+
+    public String getPlease_select_pay_date() {
+        return please_select_pay_date;
+    }
+
+    public void setPlease_select_pay_date(String please_select_pay_date) {
+        this.please_select_pay_date = please_select_pay_date;
+    }
+
+    public String getPlease_select_pay_mode() {
+        return please_select_pay_mode;
+    }
+
+    public void setPlease_select_pay_mode(String please_select_pay_mode) {
+        this.please_select_pay_mode = please_select_pay_mode;
+    }
+
+    public String getBack() {
+        return back;
+    }
+
+    public void setBack(String back) {
+        this.back = back;
+    }
+
+    public String getOrder_type() {
+        return order_type;
+    }
+
+    public void setOrder_type(String order_type) {
+        this.order_type = order_type;
+    }
+
+    public String getCancel() {
+        return cancel;
+    }
+
+    public void setCancel(String cancel) {
+        this.cancel = cancel;
     }
 }
