@@ -31,6 +31,7 @@ import com.superlifesecretcode.app.ui.book.five.BankBean;
 import com.superlifesecretcode.app.ui.book.forth.AddressBean;
 import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
+import com.superlifesecretcode.app.ui.book.second.Delivery;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.io.File;
@@ -488,6 +489,13 @@ public class ApiController implements RequestType {
                 myOrderObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<MyOrderBean>(handler));
+                break;
+
+            case REQ_GET_DELIVERY_CHARGES:
+                Observable<Delivery> deliverychargesObservable = apiInterface.getDeliveryCharges(headers);
+                deliverychargesObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<Delivery>(handler));
                 break;
 
         }
