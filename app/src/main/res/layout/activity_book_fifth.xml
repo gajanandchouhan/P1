@@ -184,6 +184,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/payment_type_heading"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
@@ -217,9 +218,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/payment_date_heading"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_4sdp"
@@ -266,7 +269,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/reguler"
-                    android:text="If you done with transaction then please Attached File"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -345,8 +347,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/bold"
             android:gravity="center"
+            android:textAllCaps="true"
             android:padding="@dimen/_8sdp"
-            android:text="TOTAL"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14sdp" />
 

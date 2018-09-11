@@ -168,7 +168,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/reguler"
                 android:gravity="center"
-                android:text="Select Availabe Books for Pricing"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp" />
 
@@ -197,7 +196,6 @@
                 android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:padding="@dimen/_6sdp"
-                android:text="Back"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/_15sdp" />
 
@@ -210,7 +208,6 @@
                 android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:padding="@dimen/_6sdp"
-                android:text="Next"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_15sdp" />
 

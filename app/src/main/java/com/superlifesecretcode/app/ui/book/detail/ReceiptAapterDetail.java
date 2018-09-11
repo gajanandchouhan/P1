@@ -46,12 +46,7 @@ public class ReceiptAapterDetail extends RecyclerView.Adapter<ReceiptAapterDetai
                 receiptListene.clickReceipt(position);
             }
         });
-//        holder.cross.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                receiptListene.onDeleteImage(position);
-//            }
-//        });
+
     }
 
     @Override

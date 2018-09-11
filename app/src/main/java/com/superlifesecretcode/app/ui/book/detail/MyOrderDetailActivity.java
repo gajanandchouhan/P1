@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -39,6 +40,10 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
     ArrayList<Receipt> receipts;
     ImageView back_image;
     ReceiptAapterDetail receiptAapterDetail;
+    TextView order_detail , tv_order_status ,tv_order_date ;
+    TextView tv_orderid , tv_book_type , tv_order_for , tv_delivery_type , tv_delivery_address , tv_user_name , tv_user_country;
+    TextView tv_subtotal , tv_delivery , tv_grand_total , tv_paymentdetail  , textView_title;
+    LanguageResponseData conversionData;
 
     @Override
     protected int getContentView() {
@@ -48,6 +53,22 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
     @Override
     protected void initializeView() {
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
+        conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        tv_orderid = findViewById(R.id.tv_orderid);
+        tv_book_type = findViewById(R.id.tv_book_type);
+        tv_order_for = findViewById(R.id.tv_order_for);
+        tv_delivery_type = findViewById(R.id.tv_delivery_type);
+        tv_delivery_address = findViewById(R.id.tv_delivery_address);
+        tv_user_name = findViewById(R.id.tv_user_name);
+        tv_user_country = findViewById(R.id.tv_user_country);
+        order_detail = findViewById(R.id.order_detail);
+        tv_order_status = findViewById(R.id.tv_order_status);
+        tv_order_date = findViewById(R.id.tv_order_date);
+        tv_paymentdetail = findViewById(R.id.tv_paymentdetail);
+        tv_subtotal = findViewById(R.id.tv_subtotal);
+        tv_delivery = findViewById(R.id.tv_delivery);
+        tv_grand_total = findViewById(R.id.tv_grand_total);
+
         order_id = findViewById(R.id.order_id);
         book_type = findViewById(R.id.book_type);
         order_for = findViewById(R.id.order_for);
@@ -64,6 +85,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
         recyclerView = findViewById(R.id.recyclerView);
         receipt_recyclerview = findViewById(R.id.receipt_recyclerview);
         back_image = findViewById(R.id.back_image);
+        textView_title = findViewById(R.id.textView_title);
+
         bookArrayList = new ArrayList<>();
         receipts = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -89,7 +112,6 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
         Map<String, String> headers = new HashMap<>();
 
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-
         HashMap<String, String> params = new HashMap<>();
         params.put("id", order_id);
         myOrderDetailPresenter.getOrderDetail(params, headers);
@@ -127,6 +149,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
         receipts.clear();
         receipts.addAll(newsResponseModel.getData().getReceipts());
         receiptAapterDetail.notifyDataSetChanged();
+        setConversionData();
     }
 
     public class onReceiptSelector {
@@ -149,5 +172,25 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
         ReceiptFullPageAapterDetail bigReceiptAapter = new ReceiptFullPageAapterDetail(this,receipts);
         recyclerView.setAdapter(bigReceiptAapter);
         dialog.show();
+    }
+
+
+    public void setConversionData(){
+        if (conversionData!=null){
+            tv_orderid.setText(conversionData.getOrder_id());
+            tv_book_type.setText(conversionData.getBook_type());
+            tv_order_for.setText(conversionData.getOrder_for());
+            tv_delivery_type.setText(conversionData.getDelivery_type());
+            tv_user_name.setText(conversionData.getUsername());
+            tv_user_country.setText(conversionData.getUser_country());
+            tv_order_status.setText(conversionData.getOrder_status());
+            tv_order_date.setText(conversionData.getOrder_date());
+            tv_receipt.setText(conversionData.getReceipts());
+            tv_subtotal.setText(conversionData.getSubtotal());
+            tv_delivery.setText(conversionData.getDelivery());
+            tv_grand_total.setText(conversionData.getGrandtotal());
+            tv_paymentdetail.setText(conversionData.getPayment_detail());
+            textView_title.setText(conversionData.getOrder_detail());
+        }
     }
 }
