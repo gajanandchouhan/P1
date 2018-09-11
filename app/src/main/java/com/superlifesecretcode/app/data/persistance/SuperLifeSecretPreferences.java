@@ -161,7 +161,7 @@ public class SuperLifeSecretPreferences {
             ArrayList<String> list = new Gson().fromJson(subMneus, type);
             return list;
         }
-        return null;
+        return new ArrayList<String>();
     }
 
 
@@ -177,7 +177,7 @@ public class SuperLifeSecretPreferences {
             ArrayList<BookBean> list = new Gson().fromJson(subMneus, type);
             return list;
         }
-        return null;
+        return new ArrayList<BookBean>();
     }
 
     public void setDeviceToken(String refreshedToken) {

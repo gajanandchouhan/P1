@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import java.util.ArrayList;
 /**
@@ -16,6 +17,7 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
     OrderBookActivity orderBookActivity;
     ArrayList<Order> orderArrayList;
     OrderBookActivity.BookListener bookListener;
+    LanguageResponseData languageResponseData;
 
     public OrderBookAdapter(OrderBookActivity orderBookActivity, ArrayList<Order> orderArrayList, OrderBookActivity.BookListener bookListener) {
         this.orderBookActivity=orderBookActivity;
@@ -30,6 +32,16 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
+
+        languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
+
+
+        holder.order_id.setText(languageResponseData.getOrder_id());
+        holder.date.setText(languageResponseData.getDate());
+        holder.amount.setText(languageResponseData.getAmount());
+        holder.status.setText(languageResponseData.getStatus());
+        holder.textview_detail.setText(languageResponseData.getView_detail());
+
         holder.textview_orderid.setText(orderArrayList.get(position).getOrder_code());
         holder.textview_status.setText(orderArrayList.get(position).getOrder_status());
         holder.textview_date.setText(orderArrayList.get(position).getOrder_date());
@@ -50,6 +62,7 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView textview_orderid , textview_amount , textview_date , textview_status , textview_detail;
+        TextView order_id , amount , date , status;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +71,11 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
             textview_date = itemView.findViewById(R.id.textview_date);
             textview_status = itemView.findViewById(R.id.textview_status);
             textview_detail = itemView.findViewById(R.id.textview_detail);
+
+            order_id = itemView.findViewById(R.id.order_id);
+            amount = itemView.findViewById(R.id.amount);
+            date = itemView.findViewById(R.id.date);
+            status = itemView.findViewById(R.id.status);
         }
     }
 }

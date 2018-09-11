@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -24,6 +25,7 @@ public class OrderBookActivity extends BaseActivity implements OrderBookView {
     OrderBookAdapter orderBookAdapter;
     private UserDetailResponseData userDetailResponseData;
     ImageView back_image;
+    TextView textView_title;
 
     @Override
     protected int getContentView() {
@@ -36,6 +38,8 @@ public class OrderBookActivity extends BaseActivity implements OrderBookView {
         back_image = findViewById(R.id.back_image);
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         recyclerview_myorderlist = findViewById(R.id.recyclerview_myorderlist);
+        textView_title = findViewById(R.id.textView_title);
+        textView_title.setText(SuperLifeSecretPreferences.getInstance().getString("book_title"));
         getMyorderList();
         recyclerview_myorderlist.setLayoutManager(new LinearLayoutManager(this));
         orderBookAdapter = new OrderBookAdapter(OrderBookActivity.this,orderArrayList,new BookListener());

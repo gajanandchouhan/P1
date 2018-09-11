@@ -176,7 +176,7 @@
                     android:layout_marginTop="@dimen/_3sdp"
                     android:fontFamily="@font/bold"
                     android:gravity="center_horizontal"
-                    android:text="Thank You!"
+                    android:text="Thank You"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/_15sdp" />
 
@@ -190,7 +190,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/reguler"
                     android:gravity="center"
-                    android:text="Your order has been successfully added to your account"
+                    android:text="Your order has been successfully added to your account."
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>

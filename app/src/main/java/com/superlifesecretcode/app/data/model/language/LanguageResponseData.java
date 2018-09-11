@@ -249,6 +249,250 @@ public class LanguageResponseData {
     private String cancel;
     private String select_announcement_type;
 
+    private String buy_by_affordability;
+    private String delivery_charges;
+    private String add_address;
+    private String thank_you;
+    private String thank_you_message;
+    private String bank_transfer;
+    private String cash_deposit;
+    private String cheque_deposit;
+    private String address;
+    private String order_id;
+    private String amount;
+    private String status;
+    private String view_detail;
+    private String order_detail;
+    private String book_type;
+    private String order_for;
+    private String delivery_type;
+    private String user_country;
+    private String order_status;
+    private String order_date;
+    private String receipts;
+    private String payment_detail;
+    private String subtotal;
+    private String delivery;
+    private String grandtotal;
+    private String wrong_mobile_email;
+    private String please_select_order_type;
+
+    public String getPlease_select_order_type() {
+        return please_select_order_type;
+    }
+
+    public void setPlease_select_order_type(String please_select_order_type) {
+        this.please_select_order_type = please_select_order_type;
+    }
+
+    public String getOrder_detail() {
+        return order_detail;
+    }
+
+    public void setOrder_detail(String order_detail) {
+        this.order_detail = order_detail;
+    }
+
+    public String getBook_type() {
+        return book_type;
+    }
+
+    public void setBook_type(String book_type) {
+        this.book_type = book_type;
+    }
+
+    public String getOrder_for() {
+        return order_for;
+    }
+
+    public void setOrder_for(String order_for) {
+        this.order_for = order_for;
+    }
+
+    public String getDelivery_type() {
+        return delivery_type;
+    }
+
+    public void setDelivery_type(String delivery_type) {
+        this.delivery_type = delivery_type;
+    }
+
+    public String getUser_country() {
+        return user_country;
+    }
+
+    public void setUser_country(String user_country) {
+        this.user_country = user_country;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
+    }
+
+    public String getOrder_date() {
+        return order_date;
+    }
+
+    public void setOrder_date(String order_date) {
+        this.order_date = order_date;
+    }
+
+    public String getReceipts() {
+        return receipts;
+    }
+
+    public void setReceipts(String receipts) {
+        this.receipts = receipts;
+    }
+
+    public String getPayment_detail() {
+        return payment_detail;
+    }
+
+    public void setPayment_detail(String payment_detail) {
+        this.payment_detail = payment_detail;
+    }
+
+    public String getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(String subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
+    }
+
+    public String getGrandtotal() {
+        return grandtotal;
+    }
+
+    public void setGrandtotal(String grandtotal) {
+        this.grandtotal = grandtotal;
+    }
+
+    public String getWrong_mobile_email() {
+        return wrong_mobile_email;
+    }
+
+    public void setWrong_mobile_email(String wrong_mobile_email) {
+        this.wrong_mobile_email = wrong_mobile_email;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getView_detail() {
+        return view_detail;
+    }
+
+    public void setView_detail(String view_detail) {
+        this.view_detail = view_detail;
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getBuy_by_affordability() {
+        return buy_by_affordability;
+    }
+
+    public void setBuy_by_affordability(String buy_by_affordability) {
+        this.buy_by_affordability = buy_by_affordability;
+    }
+
+    public String getBank_transfer() {
+        return bank_transfer;
+    }
+
+    public void setBank_transfer(String bank_transfer) {
+        this.bank_transfer = bank_transfer;
+    }
+
+    public String getCash_deposit() {
+        return cash_deposit;
+    }
+
+    public void setCash_deposit(String cash_deposit) {
+        this.cash_deposit = cash_deposit;
+    }
+
+    public String getCheque_deposit() {
+        return cheque_deposit;
+    }
+
+    public void setCheque_deposit(String cheque_deposit) {
+        this.cheque_deposit = cheque_deposit;
+    }
+
+    public String getThank_you() {
+        return thank_you;
+    }
+
+    public void setThank_you(String thank_you) {
+        this.thank_you = thank_you;
+    }
+
+    public String getThank_you_message() {
+        return thank_you_message;
+    }
+
+    public void setThank_you_message(String thank_you_message) {
+        this.thank_you_message = thank_you_message;
+    }
+
+    public String getAdd_address() {
+        return add_address;
+    }
+
+    public void setAdd_address(String add_address) {
+        this.add_address = add_address;
+    }
+
+
+    public String getDelivery_charges() {
+        return delivery_charges;
+    }
+
+    public void setDelivery_charges(String delivery_charges) {
+        this.delivery_charges = delivery_charges;
+    }
 
     public String getSelect_city() {
         return select_city;
