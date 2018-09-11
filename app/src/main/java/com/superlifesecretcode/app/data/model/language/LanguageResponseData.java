@@ -247,6 +247,7 @@ public class LanguageResponseData {
     private String back;
     private String order_type;
     private String cancel;
+    private String select_announcement_type;
 
 
     public String getSelect_city() {
@@ -2145,5 +2146,13 @@ public class LanguageResponseData {
 
     public void setCancel(String cancel) {
         this.cancel = cancel;
+    }
+
+    public String getSelect_announcement_type() {
+        return select_announcement_type;
+    }
+
+    public void setSelect_announcement_type(String select_announcement_type) {
+        this.select_announcement_type = select_announcement_type;
     }
 }

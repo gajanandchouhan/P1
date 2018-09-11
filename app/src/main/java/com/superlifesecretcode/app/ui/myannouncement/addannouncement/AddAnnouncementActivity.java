@@ -437,7 +437,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         }
 
         if (announcmentType == null || announcmentType.isEmpty()) {
-            CommonUtils.showSnakeBar(this, "Please select type");
+            CommonUtils.showSnakeBar(this, conversionData.getSelect_announcement_type());
             return;
         }
         if (name.isEmpty()) {
