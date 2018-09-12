@@ -323,7 +323,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     CommonUtils.startActivity((AppCompatActivity) mContext, MyCountryActivity.class);
                     break;
 
-                case ConstantLib.TYPE_BOOK_ORDER_HISTORY:
+                case ConstantLib.TYPE_MY_ORDER:
 
                     Bundle bundle5 = new Bundle();
                     SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());

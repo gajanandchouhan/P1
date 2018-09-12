@@ -427,7 +427,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="left"
-                            android:text="Account Number"
+                            android:text="Payment Mode"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_10sdp" />
 

@@ -35,12 +35,15 @@ public interface ConstantLib {
     String TYPE_EVENT_CALENDAR = "8";
     String TYPE_STUDY_GROUP = "9";
     String TYPE_ONSITE = "10";
-    String TYPE_PRINT_BOOK = "11";
-    String TYPE_BUY_BOOK = "12";
-    String TYPE_BOOK_ORDER_HISTORY = "13";
+//    String TYPE_PRINT_BOOK = "11";
+//    String TYPE_BUY_BOOK = "12";
+//    String TYPE_BOOK_ORDER_HISTORY = "13";
     String TYPE_MY_ANNOUNCEMENT = "14";
     String TYPE_MY_COUNTRY_ACTIVITIES = "15";
     String TYPE_LEARNING_STUDY_GROUP = "16";
+    String TYPE_PRINT_BOOK = "18";
+    String TYPE_BUY_BOOK = "17";
+    String TYPE_MY_ORDER = "19";
 
     String NOTIFICATION_PERSONAL = "1";
     String NOTIFICATION_EVENT = "2";
