@@ -176,7 +176,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView{
             textview_next.setText(conversionData.getNext());
 //            select_book = conversionData.getSelect_book();
             enter_amount = conversionData.getEnter_amount();
-            textview_totalamount.setText(conversionData.getEnter_amount());
+            textview_totalamount.setText(conversionData.getAmount());
             edittext_enteramount.setHint(conversionData.getEnter_amount());
             textview_delivery_charges.setText(conversionData.getDelivery_charges());
 

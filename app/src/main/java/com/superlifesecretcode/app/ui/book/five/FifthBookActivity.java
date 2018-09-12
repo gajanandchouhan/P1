@@ -29,6 +29,8 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.book.detail.BookAapterDetail;
+import com.superlifesecretcode.app.ui.book.detail.MyOrderDetailActivity;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.book.six.SixthBookActivity;
@@ -390,6 +392,99 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             Toast.makeText(this, "" + bankBean.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+//    public void showDialog(String bank_name, String account_number) {
+//        dialog = new Dialog(FifthBookActivity.this, R.style.DialogCustomTheme);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_receipt);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        TextView tv_header = dialog.findViewById(R.id.textView_title);
+//        tv_header.setText("Your Order");
+//        RecyclerView  recyclerView = dialog.findViewById(R.id.recyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        ArrayList<BookBean> bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
+//        DialogBookAapter bookAapterDetail = new DialogBookAapter(bookArrayList, FifthBookActivity.this);
+//        recyclerView.setAdapter(bookAapterDetail);
+//        TextView book_type, order_for, delivery_type, delivery_address;
+//        TextView user_name, user_country,  tv_receipt;
+//        TextView grant_total;
+//        TextView order_detail , tv_order_status ,tv_order_date ;
+//        TextView  tv_book_type , tv_order_for , tv_delivery_type , tv_delivery_address , tv_user_name , tv_user_country;
+//        TextView tv_subtotal , tv_delivery , tv_grand_total , tv_paymentdetail  , textView_title;
+//
+//        TextView bankname , accountno , payment_mode ;
+//        TextView tv_bankname , tv_accountno , tv_payment_mode ;
+//
+//        tv_book_type = dialog.findViewById(R.id.tv_book_type);
+//        tv_order_for = dialog.findViewById(R.id.tv_order_for);
+//        tv_delivery_type = dialog.findViewById(R.id.tv_delivery_type);
+//        tv_delivery_address = dialog.findViewById(R.id.tv_delivery_address);
+//        tv_user_name = dialog.findViewById(R.id.tv_user_name);
+//        tv_user_country = dialog.findViewById(R.id.tv_user_country);
+//        order_detail = dialog.findViewById(R.id.order_detail);
+//        tv_order_date = dialog.findViewById(R.id.tv_order_date);
+//        tv_paymentdetail = dialog.findViewById(R.id.tv_paymentdetail);
+//        tv_subtotal = dialog.findViewById(R.id.tv_subtotal);
+//        tv_delivery = dialog.findViewById(R.id.tv_delivery);
+//        tv_grand_total = dialog.findViewById(R.id.tv_grand_total);
+//        tv_receipt = dialog.findViewById(R.id.tv_receipt);
+//
+//        book_type = dialog.findViewById(R.id.book_type);
+//        order_for = dialog.findViewById(R.id.order_for);
+//        delivery_type = dialog.findViewById(R.id.delivery_type);
+//        delivery_address = dialog.findViewById(R.id.delivery_address);
+//        user_name = dialog.findViewById(R.id.user_name);
+//        user_country = dialog.findViewById(R.id.user_country);
+//       // order_date = dialog.findViewById(R.id.order_date);
+//        grant_total = dialog.findViewById(R.id.grant_total);
+//        recyclerView = dialog.findViewById(R.id.recyclerView);
+//
+//        bankname = dialog.findViewById(R.id.bankname);
+//        tv_bankname = dialog.findViewById(R.id.tv_bank_name);
+//        accountno = dialog.findViewById(R.id.accountno);
+//        tv_bankname = dialog.findViewById(R.id.tv_bank_name);
+//        payment_mode = dialog.findViewById(R.id.paymentmode);
+//        tv_payment_mode = dialog.findViewById(R.id.tv_paymentmode);
+//
+//        tv_book_type.setText(languageResponseData.getBook_type());
+//        tv_order_for.setText(languageResponseData.getOrder_for());
+//        tv_delivery_type.setText(languageResponseData.getDelivery_type());
+//        tv_user_name.setText(languageResponseData.getUsername());
+//        tv_user_country.setText(languageResponseData.getUser_country());
+//        //tv_order_date.setText(languageResponseData.getOrder_date());
+//        tv_receipt.setText(languageResponseData.getReceipts());
+//        //tv_subtotal.setText(languageResponseData.getSubtotal());
+//        //tv_delivery.setText(languageResponseData.getDelivery());
+//        tv_grand_total.setText(languageResponseData.getGrandtotal());
+//        tv_paymentdetail.setText(languageResponseData.getPayment_detail());
+//        order_detail.setText(languageResponseData.getOrder_detail());
+//        bankname.setText(bank_name);
+//        accountno.setText(account_number);
+//        payment_mode.setText(payment_type);
+//
+//        back_image = dialog.findViewById(R.id.back_image);
+//
+//        book_type.setText(""+SuperLifeSecretPreferences.getInstance().getString("book_title"));
+//        order_for.setText(""+SuperLifeSecretPreferences.getInstance().getString("delivery_type_text"));
+//        delivery_type.setText(""+SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
+//        user_name.setText(SuperLifeSecretPreferences.getInstance().getString("book_full_name"));
+//        UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
+//        user_country.setText(userDetailResponseData.getCountryName());
+//
+//
+//        back_image.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
+//        Window window = dialog.getWindow();
+//        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+//
+//    }
 
     public void showDialog(String bank_name, String account_number) {
         dialog = new Dialog(FifthBookActivity.this, R.style.DialogCustomTheme);
