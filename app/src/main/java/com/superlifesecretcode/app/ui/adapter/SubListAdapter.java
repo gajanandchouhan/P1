@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.AlertModel;
@@ -24,14 +23,13 @@ import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivit
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
-import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
 import com.superlifesecretcode.app.ui.mycountryactivities.MyCountryActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
-import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
+import com.superlifesecretcode.app.ui.studygroup.StudyGroupActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -331,6 +329,9 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                     SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
                     CommonUtils.startActivity((AppCompatActivity) mContext, OrderBookActivity.class, bundle5, false);
+                    break;
+                case ConstantLib.TYPE_LEARNING_STUDY_GROUP:
+                    CommonUtils.startActivity((AppCompatActivity)mContext, StudyGroupActivity.class);
                     break;
             }
         }

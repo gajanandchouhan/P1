@@ -131,6 +131,8 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         announcmentType = "1";
         textViewAnnounType.setText(conversionData.getEvent_activity());
         setUpConversion();
+        countryId=userData.getCountry();
+        textViewViewCountry.setText(userData.getCountryName());
         if (data != null) {
             setUpUi();
         }

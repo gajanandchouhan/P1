@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
@@ -48,6 +49,10 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         setUpToolbar();
+        ImageView viewById = findViewById(R.id.imageView_profile);
+        viewById.setVisibility(View.VISIBLE);
+        viewById.setImageResource(R.drawable.add_plus_btn);
+        viewById.setOnClickListener(this);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         announcementList = new ArrayList<>();
@@ -100,7 +105,7 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.text_view_add:
+            case R.id.imageView_profile:
                 switch (permisionStatus) {
                     case ConstantLib.PERMISSION_DEFAULT:
                         showRequestAlert(conversionData.getSubmit_req_msg());

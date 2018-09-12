@@ -31,6 +31,6 @@
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_30sdp"
             android:textStyle="bold"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

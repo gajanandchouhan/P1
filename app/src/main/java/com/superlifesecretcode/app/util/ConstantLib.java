@@ -40,6 +40,7 @@ public interface ConstantLib {
     String TYPE_BOOK_ORDER_HISTORY = "13";
     String TYPE_MY_ANNOUNCEMENT = "14";
     String TYPE_MY_COUNTRY_ACTIVITIES = "15";
+    String TYPE_LEARNING_STUDY_GROUP = "16";
 
     String NOTIFICATION_PERSONAL = "1";
     String NOTIFICATION_EVENT = "2";
@@ -68,7 +69,7 @@ public interface ConstantLib {
 
 
     String MAIN_MENU_CHAT = "3";
-    String MAIN_MENU_STUDY_GROUP = "4";
+
 
     String STATUS_GROUP_NEW = "0";
     String STATUS_GROUP_SUBSCRIBED = "1";
