@@ -191,6 +191,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             tv_grand_total.setText(conversionData.getGrandtotal());
             tv_paymentdetail.setText(conversionData.getPayment_detail());
             textView_title.setText(conversionData.getOrder_detail());
+            order_detail.setText(conversionData.getOrder_detail());
         }
     }
 }
