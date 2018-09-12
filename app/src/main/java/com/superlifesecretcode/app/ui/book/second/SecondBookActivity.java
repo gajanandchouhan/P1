@@ -94,11 +94,14 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView{
 
         if(SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")){
             linearlayout_affortdability.setVisibility(View.GONE);
+            linearlayout_book_quality.setVisibility(View.GONE);
+            amount_linear.setVisibility(View.VISIBLE);
         }else{
+            amount_linear.setVisibility(View.GONE);
+            linearlayout_book_quality.setVisibility(View.VISIBLE);
             linearlayout_affortdability.setVisibility(View.VISIBLE);
         }
 
-        amount_linear.setVisibility(View.GONE);
         linearlayout_book_quality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +179,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView{
             textview_next.setText(conversionData.getNext());
 //            select_book = conversionData.getSelect_book();
             enter_amount = conversionData.getEnter_amount();
-            textview_totalamount.setText(conversionData.getAmount());
+            textview_totalamount.setText(conversionData.getEnter_amount());
             edittext_enteramount.setHint(conversionData.getEnter_amount());
             textview_delivery_charges.setText(conversionData.getDelivery_charges());
 
