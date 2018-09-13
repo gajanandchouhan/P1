@@ -25,11 +25,13 @@ public class ReceiptAapter extends RecyclerView.Adapter<ReceiptAapter.ItemViewHo
     ArrayList<Receipt> receipt_list;
     private Context fifthBookActivity;
     FifthBookActivity.ReceiptListener receiptListene;
+    boolean crossshowornot;
 
-    public ReceiptAapter(ArrayList<Receipt> receipt_list, FifthBookActivity fifthBookActivity,FifthBookActivity.ReceiptListener receiptListener) {
+    public ReceiptAapter(ArrayList<Receipt> receipt_list, FifthBookActivity fifthBookActivity, FifthBookActivity.ReceiptListener receiptListener, boolean crossshowornot) {
         this.receipt_list = receipt_list;
         this.fifthBookActivity = fifthBookActivity;
         receiptListene = receiptListener;
+        this.crossshowornot = crossshowornot;
     }
 
     @Override
@@ -45,6 +47,10 @@ public class ReceiptAapter extends RecyclerView.Adapter<ReceiptAapter.ItemViewHo
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if (crossshowornot == true)
+            holder.cross.setVisibility(View.VISIBLE);
+        else holder.cross.setVisibility(View.GONE);
 
         holder.imageview_receipt.setOnClickListener(new View.OnClickListener() {
             @Override

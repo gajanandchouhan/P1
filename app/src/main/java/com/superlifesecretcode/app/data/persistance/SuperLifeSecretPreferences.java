@@ -12,6 +12,7 @@ import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
+import com.superlifesecretcode.app.ui.book.second.DeliveryData;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -162,6 +163,21 @@ public class SuperLifeSecretPreferences {
             return list;
         }
         return new ArrayList<String>();
+    }
+
+    public void setDeliveryChargesList(ArrayList<DeliveryData> list) {
+        editer.putString("delivery_charges_list", new Gson().toJson(list)).commit();
+    }
+
+    public ArrayList<DeliveryData> getDeliveryChargesList() {
+        String subMneus = preferences.getString("delivery_charges_list", "");
+        if (subMneus.length() > 0) {
+            Type type = new TypeToken<ArrayList<DeliveryData>>() {
+            }.getType();
+            ArrayList<DeliveryData> list = new Gson().fromJson(subMneus, type);
+            return list;
+        }
+        return new ArrayList<DeliveryData>();
     }
 
 

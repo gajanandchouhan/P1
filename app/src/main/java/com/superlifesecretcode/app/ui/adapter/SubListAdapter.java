@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseData;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
@@ -173,7 +174,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
         });
     }
 
-    private void openNext(int position) {
+    private void openNext(final int position) {
         if (list.get(position).getType().equalsIgnoreCase("1") || list.get(position).getType().equalsIgnoreCase("2")) {
             Bundle bundle = new Bundle();
             bundle.putString("title", list.get(position).getTitle());
@@ -221,30 +222,46 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     break;
 
                 case ConstantLib.TYPE_PRINT_BOOK:
-                    Bundle bundle3 = new Bundle();
-                    SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+                    final Bundle bundle3 = new Bundle();
+
                     if (SuperLifeSecretPreferences.getInstance().getString("book_type") == null || SuperLifeSecretPreferences.getInstance().getString("book_type").equals("")) {
+                        SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                         SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
                         SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
                         SuperLifeSecretPreferences.getInstance().putString("book_print_status", "1");
                         SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
                         SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
                         CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
-                    }else {
+                    } else {
                         if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
-                            SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
-                            SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
-                            SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
-                            SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
-                            SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_address", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_email", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_state", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_city", "");
-                            CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
-                        }else {
+
+                            LanguageResponseData languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
+                            String message = languageResponseData.getAre_you_sure_clear_buy();
+                            CommonUtils.showAlert(mContext, message, "Ok", "Cancel", new AlertDialog.OnClickListner() {
+                                @Override
+                                public void onPositiveClick() {
+                                    SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+                                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
+                                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                                    SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+                                    CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
+                                }
+
+                                @Override
+                                public void onNegativeClick() {
+                                }
+                            });
+
+                        } else {
+                            SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                             CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
                         }
                     }
@@ -268,30 +285,46 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     break;
 
                 case ConstantLib.TYPE_BUY_BOOK:
-                    Bundle bundle4 = new Bundle();
+                    final Bundle bundle4 = new Bundle();
                     SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                     if (SuperLifeSecretPreferences.getInstance().getString("book_type") == null || SuperLifeSecretPreferences.getInstance().getString("book_type").equals("")) {
+                        SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                         SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
                         SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
                         SuperLifeSecretPreferences.getInstance().putString("book_print_status", "2");
                         SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
                         SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
                         CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
-                    }else {
+                    } else {
                         if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
-                            SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
-                            SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
-                            SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
-                            SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
-                            SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_address", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_email", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_state", "");
-                            SuperLifeSecretPreferences.getInstance().putString("book_city", "");
-                            CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
-                        }else {
+                            LanguageResponseData languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
+                            String message = languageResponseData.getAre_you_sure_clear_print();
+                            CommonUtils.showAlert(mContext, message, "Ok", "Cancel", new AlertDialog.OnClickListner() {
+                                @Override
+                                public void onPositiveClick() {
+                                    SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+                                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
+                                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                                    SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+                                    SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+                                    CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
+                                }
+
+                                @Override
+                                public void onNegativeClick() {
+
+                                }
+                            });
+
+                        } else {
+                            SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                             CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
                         }
                     }
@@ -331,7 +364,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                     CommonUtils.startActivity((AppCompatActivity) mContext, OrderBookActivity.class, bundle5, false);
                     break;
                 case ConstantLib.TYPE_LEARNING_STUDY_GROUP:
-                    CommonUtils.startActivity((AppCompatActivity)mContext, StudyGroupActivity.class);
+                    CommonUtils.startActivity((AppCompatActivity) mContext, StudyGroupActivity.class);
                     break;
             }
         }

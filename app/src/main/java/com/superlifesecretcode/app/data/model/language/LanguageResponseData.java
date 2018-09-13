@@ -277,6 +277,62 @@ public class LanguageResponseData {
     private String wrong_mobile_email;
     private String please_select_order_type;
 
+    private String are_you_sure_continue;
+    private String bank_name;
+    private String account_number;
+    private String your_order;
+    private String are_you_sure_clear_buy;
+    private String are_you_sure_clear_print;
+
+
+    public String getAre_you_sure_clear_buy() {
+        return are_you_sure_clear_buy;
+    }
+
+    public void setAre_you_sure_clear_buy(String are_you_sure_clear_buy) {
+        this.are_you_sure_clear_buy = are_you_sure_clear_buy;
+    }
+
+    public String getAre_you_sure_clear_print() {
+        return are_you_sure_clear_print;
+    }
+
+    public void setAre_you_sure_clear_print(String are_you_sure_clear_print) {
+        this.are_you_sure_clear_print = are_you_sure_clear_print;
+    }
+
+    public String getAre_you_sure_continue() {
+        return are_you_sure_continue;
+    }
+
+    public void setAre_you_sure_continue(String are_you_sure_continue) {
+        this.are_you_sure_continue = are_you_sure_continue;
+    }
+
+    public String getBank_name() {
+        return bank_name;
+    }
+
+    public void setBank_name(String bank_name) {
+        this.bank_name = bank_name;
+    }
+
+    public String getAccount_number() {
+        return account_number;
+    }
+
+    public void setAccount_number(String account_number) {
+        this.account_number = account_number;
+    }
+
+    public String getYour_order() {
+        return your_order;
+    }
+
+    public void setYour_order(String your_order) {
+        this.your_order = your_order;
+    }
+
     public String getPlease_select_order_type() {
         return please_select_order_type;
     }
