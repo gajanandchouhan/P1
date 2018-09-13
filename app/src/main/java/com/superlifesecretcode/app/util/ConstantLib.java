@@ -35,7 +35,7 @@ public interface ConstantLib {
     String TYPE_EVENT_CALENDAR = "8";
     String TYPE_STUDY_GROUP = "9";
     String TYPE_ONSITE = "10";
-//    String TYPE_PRINT_BOOK = "11";
+    //    String TYPE_PRINT_BOOK = "11";
 //    String TYPE_BUY_BOOK = "12";
 //    String TYPE_BOOK_ORDER_HISTORY = "13";
     String TYPE_MY_ANNOUNCEMENT = "14";
@@ -80,18 +80,11 @@ public interface ConstantLib {
     String STATUS_GROUP_EXPIRED = "3";
     String STATUS_GROUP_REJECTED = "4";
 
-    enum GroupItemType{
-        TYPE_AUDIO("1"),TYPE_VIDEO("2"),TYPE_WEB_LINK("3"),TYPE_TEXT("4");
+    String TYPE_AUDIO_ITEM = "1";
+    String TYPE_VIDEO_ITEM = "2";
+    String TYPE_WEB_LINK = "3";
+    String TYPE_TEXT = "4";
 
-        private final String type;
 
-        GroupItemType(String type) {
-            this.type=type;
-        }
-
-        public String getType() {
-            return type;
-        }
-    }
 }
 

@@ -38,14 +38,14 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         StudyGroupItemData studyGroupItemData = list.get(position);
-        switch (ConstantLib.GroupItemType.valueOf(studyGroupItemData.getItem_type())) {
-            case TYPE_AUDIO:
+        switch (studyGroupItemData.getItem_type_id()) {
+            case ConstantLib.TYPE_AUDIO_ITEM:
                 break;
-            case TYPE_VIDEO:
+            case ConstantLib.TYPE_VIDEO_ITEM:
                 break;
-            case TYPE_WEB_LINK:
+            case ConstantLib.TYPE_WEB_LINK:
                 break;
-            case TYPE_TEXT:
+            case ConstantLib.TYPE_TEXT:
                 break;
         }
 
