@@ -33,6 +33,7 @@ import com.superlifesecretcode.app.ui.book.detail.BookAapterDetail;
 import com.superlifesecretcode.app.ui.book.detail.MyOrderDetailActivity;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
+import com.superlifesecretcode.app.ui.book.second.DeliveryData;
 import com.superlifesecretcode.app.ui.book.six.SixthBookActivity;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -69,7 +70,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
     String total_amont;
     TextView textview_plus, tv_payment_date, tv_payment_type;
     ArrayList<String> payment_type_list;
-    String payment_type = "", payment_date = "" , payment_type_string="";
+    String payment_type = "", payment_date = "", payment_type_string = "", payment_date_string = "";
     TextView payment_date_heading, payment_type_heading, textView_title;
     private LanguageResponseData languageResponseData;
 
@@ -114,7 +115,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         rechcyclerview_bankslist.setAdapter(bankAapter);
 
         receipt_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        receiptAapter = new ReceiptAapter(receipt_list, this, new ReceiptListener());
+        receiptAapter = new ReceiptAapter(receipt_list, this, new ReceiptListener(), true);
         receipt_recyclerview.setAdapter(receiptAapter);
 
         Map<String, String> headers = new HashMap<>();
@@ -223,6 +224,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 payment_date = CommonUtils.getAppendedDate(i, i1, i2);
+                payment_date_string = CommonUtils.getFromatttedDate(i, i1, i2);
                 tv_payment_date.setText(CommonUtils.getFromatttedDate(i, i1, i2));
             }
         }, minDate);
@@ -394,143 +396,201 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         }
     }
 
-//    public void showDialog(String bank_name, String account_number) {
-//        dialog = new Dialog(FifthBookActivity.this, R.style.DialogCustomTheme);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.dialog_receipt2);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-//        TextView tv_header = dialog.findViewById(R.id.textView_title);
-//        tv_header.setText("Your Order");
-//        RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        ArrayList<BookBean> bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
-//        DialogBookAapter bookAapterDetail = new DialogBookAapter(bookArrayList, FifthBookActivity.this);
-//        recyclerView.setAdapter(bookAapterDetail);
-//        TextView book_type, order_for, delivery_type, delivery_address;
-//        TextView user_name, user_country, tv_receipt;
-//        TextView grant_total;
-//        TextView order_detail, tv_order_status, tv_order_date;
-//        TextView tv_book_type, tv_order_for, tv_delivery_type, tv_delivery_address, tv_user_name, tv_user_country;
-//        TextView tv_subtotal, tv_delivery, tv_grand_total, tv_paymentdetail, textView_title;
-//
-//        TextView bankname, accountno, payment_mode;
-//        TextView tv_bankname, tv_accountno, tv_payment_mode;
-//
-//        tv_book_type = dialog.findViewById(R.id.tv_book_type);
-//        tv_order_for = dialog.findViewById(R.id.tv_order_for);
-//        tv_delivery_type = dialog.findViewById(R.id.tv_delivery_type);
-//        tv_delivery_address = dialog.findViewById(R.id.tv_delivery_address);
-//        tv_user_name = dialog.findViewById(R.id.tv_user_name);
-//        tv_user_country = dialog.findViewById(R.id.tv_user_country);
-//        order_detail = dialog.findViewById(R.id.order_detail);
-//        tv_order_date = dialog.findViewById(R.id.tv_order_date);
-//        tv_paymentdetail = dialog.findViewById(R.id.tv_paymentdetail);
-//        tv_subtotal = dialog.findViewById(R.id.tv_subtotal);
-//        tv_delivery = dialog.findViewById(R.id.tv_delivery);
-//        tv_grand_total = dialog.findViewById(R.id.tv_grand_total);
-//        tv_receipt = dialog.findViewById(R.id.tv_receipt);
-//
-//        book_type = dialog.findViewById(R.id.book_type);
-//        order_for = dialog.findViewById(R.id.order_for);
-//        delivery_type = dialog.findViewById(R.id.delivery_type);
-//        delivery_address = dialog.findViewById(R.id.delivery_address);
-//        user_name = dialog.findViewById(R.id.user_name);
-//        user_country = dialog.findViewById(R.id.user_country);
-//        // order_date = dialog.findViewById(R.id.order_date);
-//        grant_total = dialog.findViewById(R.id.grant_total);
-//        recyclerView = dialog.findViewById(R.id.recyclerView);
-//
-//        bankname = dialog.findViewById(R.id.bankname);
-//        tv_bankname = dialog.findViewById(R.id.tv_bank_name);
-//        accountno = dialog.findViewById(R.id.accountno);
-//        tv_bankname = dialog.findViewById(R.id.tv_bank_name);
-//        payment_mode = dialog.findViewById(R.id.paymentmode);
-//        tv_payment_mode = dialog.findViewById(R.id.tv_paymentmode);
-//        back_image = dialog.findViewById(R.id.back_image);
-//
-//
-//        tv_book_type.setText(languageResponseData.getBook_type());
-//        tv_order_for.setText(languageResponseData.getOrder_for());
-//        tv_delivery_type.setText(languageResponseData.getDelivery_type());
-//        tv_user_name.setText(languageResponseData.getUsername());
-//        tv_user_country.setText(languageResponseData.getUser_country());
-//        //tv_order_date.setText(languageResponseData.getOrder_date());
-//        tv_receipt.setText(languageResponseData.getReceipts());
-//        //tv_subtotal.setText(languageResponseData.getSubtotal());
-//        //tv_delivery.setText(languageResponseData.getDelivery());
-//        tv_grand_total.setText(languageResponseData.getGrandtotal());
-//        tv_paymentdetail.setText(languageResponseData.getPayment_detail());
-//        order_detail.setText(languageResponseData.getOrder_detail());
-//        bankname.setText(bank_name);
-//        accountno.setText(account_number);
-//        payment_mode.setText(payment_type_string);
-//
-//        book_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_title"));
-//        order_for.setText("" + SuperLifeSecretPreferences.getInstance().getString("delivery_type_text"));
-//        delivery_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
-//        user_name.setText(SuperLifeSecretPreferences.getInstance().getString("book_full_name"));
-//        UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
-//        user_country.setText(userDetailResponseData.getCountryName());
-//        grant_total.setText("");
-//
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-//        ReceiptAapter receiptAapter2 = new ReceiptAapter(receipt_list, this, new ReceiptListener());
-//        recyclerView.setAdapter(receiptAapter2);
-//
-//        back_image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-//        dialog.show();
-//        Window window = dialog.getWindow();
-//        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//
-//    }
-
     public void showDialog(String bank_name, String account_number) {
         dialog = new Dialog(FifthBookActivity.this, R.style.DialogCustomTheme);
         dialog.setCanceledOnTouchOutside(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_receipt);
+        dialog.setContentView(R.layout.dialog_receipt2);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        BigReceiptAapter receiptAapter;
-        ImageView imageview_cross = dialog.findViewById(R.id.imageview_cross);
-        ImageView imageview_right = dialog.findViewById(R.id.imageview_right);
-        TextView textview_bankname = dialog.findViewById(R.id.textview_bankname);
-        TextView tv_accountnumber = dialog.findViewById(R.id.tv_accountnumber);
-        textview_bankname.setText(bank_name);
-        tv_accountnumber.setText(account_number);
-        RecyclerView recyclerView = dialog.findViewById(R.id.recycler_view);
-        LinearLayout bank_linear = dialog.findViewById(R.id.bank_linear);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        BigReceiptAapter bigReceiptAapter = new BigReceiptAapter(receipt_list, this);
-        recyclerView.setAdapter(bigReceiptAapter);
 
-        Animation startAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-        imageview_cross.startAnimation(startAnimation);
-        imageview_right.startAnimation(startAnimation);
-        bank_linear.startAnimation(startAnimation);
-        imageview_cross.setOnClickListener(new View.OnClickListener() {
+        TextView tv_header = dialog.findViewById(R.id.textView_title);
+        tv_header.setText(languageResponseData.getYour_order());
+
+        RecyclerView dialog_book_recyclerview = dialog.findViewById(R.id.dialog_book_recyclerview);
+        dialog_book_recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<BookBean> bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
+        DialogBookAapter bookAapterDetail = new DialogBookAapter(bookArrayList, FifthBookActivity.this);
+        dialog_book_recyclerview.setAdapter(bookAapterDetail);
+
+        TextView book_type, order_for, delivery_type, delivery_address;
+        TextView user_name, user_country, tv_receipt;
+        TextView grant_total;
+        TextView  tv_order_date ,tv_order_detail_dialog;
+        TextView tv_book_type, tv_order_for, tv_delivery_type, tv_delivery_address, tv_user_name, tv_user_country;
+        TextView tv_delivery, tv_grand_total, tv_paymentdetail, textView_title;
+
+        TextView bankname, accountno, payment_mode, payment_date_dialog, tv_subtotal, tv_deliverycharges;
+        TextView tv_bankname, tv_accountno, tv_payment_mode, tv_payment_date_dialog, subtotal, deliverycharges;
+        LinearLayout address_linear_dialog;
+        TextView tv_are_you_sure , tv_yes , tv_no;
+        ImageView dialog_back_image;
+
+        address_linear_dialog = dialog.findViewById(R.id.address_linear_dialog);
+        tv_book_type = dialog.findViewById(R.id.tv_book_type);
+        tv_order_for = dialog.findViewById(R.id.tv_order_for);
+        tv_delivery_type = dialog.findViewById(R.id.tv_delivery_type);
+        tv_delivery_address = dialog.findViewById(R.id.tv_delivery_address);
+        tv_user_name = dialog.findViewById(R.id.tv_user_name);
+        tv_user_country = dialog.findViewById(R.id.tv_user_country);
+        tv_order_date = dialog.findViewById(R.id.tv_order_date);
+        tv_paymentdetail = dialog.findViewById(R.id.tv_paymentdetail);
+        tv_subtotal = dialog.findViewById(R.id.tv_subtotal);
+        tv_delivery = dialog.findViewById(R.id.tv_delivery);
+        tv_grand_total = dialog.findViewById(R.id.tv_grand_total);
+        tv_receipt = dialog.findViewById(R.id.tv_receipt);
+        payment_date_dialog = dialog.findViewById(R.id.payment_date_dialog);
+        tv_payment_date_dialog = dialog.findViewById(R.id.tv_payment_date_dialog);
+        subtotal = dialog.findViewById(R.id.subtotal);
+        tv_are_you_sure = dialog.findViewById(R.id.tv_are_you_sure);
+        tv_yes = dialog.findViewById(R.id.tv_yes);
+        tv_no = dialog.findViewById(R.id.tv_no);
+        book_type = dialog.findViewById(R.id.book_type);
+        order_for = dialog.findViewById(R.id.order_for);
+        delivery_type = dialog.findViewById(R.id.delivery_type);
+        delivery_address = dialog.findViewById(R.id.delivery_address);
+        user_name = dialog.findViewById(R.id.user_name);
+        user_country = dialog.findViewById(R.id.user_country);
+        grant_total = dialog.findViewById(R.id.grant_total);
+        tv_order_detail_dialog = dialog.findViewById(R.id.tv_order_detail_dialog);
+        RecyclerView dialog_receipt_recyclerview = dialog.findViewById(R.id.dialog_receipt_recyclerview);
+
+        bankname = dialog.findViewById(R.id.bankname);
+        tv_bankname = dialog.findViewById(R.id.tv_bank_name);
+        tv_accountno = dialog.findViewById(R.id.tv_accountno);
+        accountno = dialog.findViewById(R.id.accountno);
+        payment_mode = dialog.findViewById(R.id.paymentmode);
+        tv_payment_mode = dialog.findViewById(R.id.tv_paymentmode);
+        dialog_back_image = dialog.findViewById(R.id.back_image);
+        tv_deliverycharges = dialog.findViewById(R.id.tv_deliverycharges);
+        deliverycharges = dialog.findViewById(R.id.deliverycharges);
+
+        tv_are_you_sure.setText(languageResponseData.getAre_you_sure_continue());
+        tv_bankname.setText(languageResponseData.getBank_name());
+        tv_accountno.setText(languageResponseData.getAccount_number());
+        tv_order_detail_dialog.setText(languageResponseData.getOrder_detail());
+        tv_book_type.setText(languageResponseData.getBook_type());
+        tv_order_for.setText(languageResponseData.getOrder_for());
+        tv_payment_mode.setText(languageResponseData.getPayment_mode());
+        tv_delivery_type.setText(languageResponseData.getDelivery_type());
+        tv_user_name.setText(languageResponseData.getUsername());
+        tv_user_country.setText(languageResponseData.getUser_country());
+        tv_receipt.setText(languageResponseData.getReceipts());
+        tv_grand_total.setText(languageResponseData.getGrandtotal());
+        tv_paymentdetail.setText(languageResponseData.getPayment_detail());
+        //order_detail.setText(languageResponseData.getOrder_detail());
+        tv_payment_date_dialog.setText(languageResponseData.getPayment_date());
+        tv_deliverycharges.setText(languageResponseData.getDelivery_charges());
+        tv_subtotal.setText(languageResponseData.getSubtotal());
+        tv_order_date.setText(languageResponseData.getOrder_date());
+
+        bankname.setText(bank_name);
+        accountno.setText(account_number);
+        payment_mode.setText(payment_type_string);
+        payment_date_dialog.setText(payment_date_string);
+        tv_yes.setText(languageResponseData.getYes());
+        tv_no.setText(languageResponseData.getNo());
+
+        book_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_title"));
+        order_for.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
+        delivery_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
+        user_name.setText(SuperLifeSecretPreferences.getInstance().getString("book_full_name"));
+        UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
+        user_country.setText(userDetailResponseData.getCountryName());
+
+        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("2"))
+            address_linear_dialog.setVisibility(View.GONE);
+        else {
+            address_linear_dialog.setVisibility(View.VISIBLE);
+            delivery_address.setText(SuperLifeSecretPreferences.getInstance().getString("final_dialog_address"));
+        }
+
+        String totalamount = SuperLifeSecretPreferences.getInstance().getString("total_amount");
+        double dountl_total_amount = Double.parseDouble(totalamount);
+        double delivery_charges = 0.0;
+
+        ArrayList<DeliveryData> deliveryDataArrayList = SuperLifeSecretPreferences.getInstance().getDeliveryChargesList();
+        for (int i = 0; i < deliveryDataArrayList.size(); i++) {
+            double from = Double.parseDouble(deliveryDataArrayList.get(i).getRange_from());
+            double to = Double.parseDouble(deliveryDataArrayList.get(i).getRange_to());
+            if (dountl_total_amount >= from && dountl_total_amount <= to) {
+                delivery_charges = Double.parseDouble(deliveryDataArrayList.get(i).getDelivery_charge());
+            } else if (dountl_total_amount >= to) {
+                delivery_charges = Double.parseDouble(deliveryDataArrayList.get(i).getDelivery_charge());
+            }
+        }
+        deliverycharges.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + delivery_charges);
+        double grandtotal = delivery_charges + dountl_total_amount;
+        grant_total.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal);
+        subtotal.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + dountl_total_amount);
+        dialog_receipt_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        ReceiptAapter receiptAapter2 = new ReceiptAapter(receipt_list, this, new ReceiptListener(), false);
+        dialog_receipt_recyclerview.setAdapter(receiptAapter2);
+        dialog_receipt_recyclerview.setClickable(false);
+
+        dialog_back_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
+                dialog.dismiss();
             }
         });
-        imageview_right.setOnClickListener(new View.OnClickListener() {
+        tv_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 orderWebservice();
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
+            }
+        });
+        tv_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
         dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     }
+
+//    public void showDialog(String bank_name, String account_number) {
+//        dialog = new Dialog(FifthBookActivity.this, R.style.DialogCustomTheme);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_receipt);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        BigReceiptAapter receiptAapter;
+//        ImageView imageview_cross = dialog.findViewById(R.id.imageview_cross);
+//        ImageView imageview_right = dialog.findViewById(R.id.imageview_right);
+//        TextView textview_bankname = dialog.findViewById(R.id.textview_bankname);
+//        TextView tv_accountnumber = dialog.findViewById(R.id.tv_accountnumber);
+//        textview_bankname.setText(bank_name);
+//        tv_accountnumber.setText(account_number);
+//        RecyclerView recyclerView = dialog.findViewById(R.id.recycler_view);
+//        LinearLayout bank_linear = dialog.findViewById(R.id.bank_linear);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+//        BigReceiptAapter bigReceiptAapter = new BigReceiptAapter(receipt_list, this);
+//        recyclerView.setAdapter(bigReceiptAapter);
+//
+//        Animation startAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+//        imageview_cross.startAnimation(startAnimation);
+//        imageview_right.startAnimation(startAnimation);
+//        bank_linear.startAnimation(startAnimation);
+//        imageview_cross.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (dialog.isShowing()) {
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//        imageview_right.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                orderWebservice();
+//                if (dialog.isShowing()) {
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//        dialog.show();
+//    }
 }
