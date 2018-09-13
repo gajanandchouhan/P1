@@ -79,5 +79,19 @@ public interface ConstantLib {
     String STATUS_GROUP_PENDING = "2";
     String STATUS_GROUP_EXPIRED = "3";
     String STATUS_GROUP_REJECTED = "4";
+
+    enum GroupItemType{
+        TYPE_AUDIO("1"),TYPE_VIDEO("2"),TYPE_WEB_LINK("3"),TYPE_TEXT("4");
+
+        private final String type;
+
+        GroupItemType(String type) {
+            this.type=type;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
 }
 

@@ -7,6 +7,8 @@
       <module fileurl="file://$PROJECT_DIR$/calendarmodule/calendarmodule.iml" filepath="$PROJECT_DIR$/calendarmodule/calendarmodule.iml" />
       <module fileurl="file://$PROJECT_DIR$/cometchatui/cometchatui.iml" filepath="$PROJECT_DIR$/cometchatui/cometchatui.iml" />
       <module fileurl="file://$PROJECT_DIR$/countrypicker/countrypicker.iml" filepath="$PROJECT_DIR$/countrypicker/countrypicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exomedia-4.2.3/exomedia-4.2.3.iml" filepath="$PROJECT_DIR$/exomedia-4.2.3/exomedia-4.2.3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/medialibrary/medialibrary.iml" filepath="$PROJECT_DIR$/medialibrary/medialibrary.iml" />
     </modules>
   </component>
 </project>

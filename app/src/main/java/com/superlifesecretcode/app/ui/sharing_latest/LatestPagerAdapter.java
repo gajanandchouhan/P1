@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.shares.FileResponseData;
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseData;
+import com.superlifesecretcode.app.player.activity.FullScreenVideoPlayerActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.ImageViewerActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -56,7 +57,7 @@ public class LatestPagerAdapter extends PagerAdapter {
                 } else if (bannerList.get(position).getType().equalsIgnoreCase(ConstantLib.TYPE_VIDEO)) {
                     Bundle bundle = new Bundle();
                     bundle.putString("video", bannerList.get(position).getFile());
-                    CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
+                    CommonUtils.startActivity((AppCompatActivity) mContext, FullScreenVideoPlayerActivity.class, bundle, false);
                 }
 
             }

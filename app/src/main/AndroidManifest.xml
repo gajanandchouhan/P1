@@ -274,6 +274,27 @@
         <activity
             android:name=".ui.studygroup.studygroupdetails.StudyGroupDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".player.activity.VideoPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Player">
+        </activity>
+        <activity
+            android:name=".player.activity.FullScreenVideoPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Player">
+        </activity>
+
+        <activity
+            android:name=".player.activity.AudioPlayerActivity"
+            android:label="Player">
+        </activity>
+
+
+        <service
+            android:name=".player.service.MediaService"
+            android:enabled="true"
+            android:exported="false"/>
     </application>
 
 </manifest>

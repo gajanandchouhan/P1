@@ -63,16 +63,19 @@ public class MyCountryActivityAdapter extends RecyclerView.Adapter<MyCountryActi
                 holder.textViewStatus.setText(conversionData.getPending());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_pending);
                 holder.textViewReason.setVisibility(View.GONE);
+                holder.imageViewDelete.setVisibility(View.GONE);
                 break;
             case "1":
                 holder.textViewStatus.setText(conversionData.getPublished());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_published);
                 holder.textViewReason.setVisibility(View.GONE);
+                holder.imageViewDelete.setVisibility(View.VISIBLE);
                 break;
             case "2":
                 holder.textViewStatus.setText(conversionData.getRejected());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_declined);
                 holder.textViewReason.setVisibility(View.VISIBLE);
+                holder.imageViewDelete.setVisibility(View.GONE);
                 break;
         }
         holder.textViewStatus.setPadding(25, 0, 25, 5);

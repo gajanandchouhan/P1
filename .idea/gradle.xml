@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/calendarmodule" />
             <option value="$PROJECT_DIR$/cometchatui" />
             <option value="$PROJECT_DIR$/countrypicker" />
+            <option value="$PROJECT_DIR$/exomedia-4.2.3" />
+            <option value="$PROJECT_DIR$/medialibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

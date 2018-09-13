@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.myannouncement;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -50,8 +51,12 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         setUpToolbar();
         ImageView viewById = findViewById(R.id.imageView_profile);
+        viewById.getLayoutParams().height = 100;
+        viewById.getLayoutParams().width = 100;
         viewById.setVisibility(View.VISIBLE);
         viewById.setImageResource(R.drawable.add_plus_btn);
+        viewById.setBackground(ContextCompat.getDrawable(this, R.drawable.circle_count_bg));
+        viewById.setPadding(20, 20, 20, 20);
         viewById.setOnClickListener(this);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

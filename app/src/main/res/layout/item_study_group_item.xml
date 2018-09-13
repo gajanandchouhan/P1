@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorWhite"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_placeholder" />
+
+        <ImageView
+            android:id="@+id/image_view_type"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:background="#5a000000"
+            android:scaleType="centerInside"
+            android:src="@drawable/add_images" />
+
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/image_view"
+            android:layout_toRightOf="@+id/image_view"
+            android:ellipsize="end"
+            android:fontFamily="@font/bold"
+            android:maxLines="2"
+            android:text="Title"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/text_view_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/bold"
+            android:text="04:20"
+            android:textColor="@color/red_bg"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/textView_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_title"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/image_view"
+            android:layout_toRightOf="@+id/image_view"
+            android:ellipsize="end"
+            android:fontFamily="@font/reguler"
+            android:maxLines="3"
+            android:text="Desc"
+            android:layout_toStartOf="@+id/arrow"
+            android:layout_toLeftOf="@+id/arrow"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:rotation="-90"
+            android:src="@drawable/arrow_drop_down" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

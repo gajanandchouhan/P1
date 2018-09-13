@@ -1,1 +1,1 @@
-include ':app', ':countrypicker', ':calendarmodule', ':cometchatui'
+include ':app', ':countrypicker', ':calendarmodule', ':cometchatui', ':exomedia-4.2.3', ':medialibrary'

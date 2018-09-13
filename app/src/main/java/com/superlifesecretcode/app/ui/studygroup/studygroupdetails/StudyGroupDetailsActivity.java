@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.studygroups.StudyGroupDetails;
+import com.superlifesecretcode.app.data.model.studygroups.studygroupitem.StudyGroupItemData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
@@ -21,20 +22,24 @@ import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class StudyGroupDetailsActivity extends BaseActivity {
+public class StudyGroupDetailsActivity extends BaseActivity implements StudyGroupDetailView {
 
 
     private LanguageResponseData conversionData;
     private UserDetailResponseData userData;
     private RecyclerView recyclerView;
-    private List list;
+    private List<StudyGroupItemData> list;
     private StudyGroupDetails studyGroupDetails;
     private TextView textViewTitle, textViewDesc, textViewReason, textViewStatus;
     LinearLayout layoutStatus;
     private ImageView imageView;
     private Button buttonSubscribe;
+    private StudyGroupItemAdapter adapter;
+    StudyGroupDetailPresenter presenter;
 
     @Override
     protected int getContentView() {
@@ -54,11 +59,19 @@ public class StudyGroupDetailsActivity extends BaseActivity {
         textViewReason = findViewById(R.id.text_view_reason);
         imageView = findViewById(R.id.image_view_group);
         layoutStatus = findViewById(R.id.layout_status);
-        list = new ArrayList();
+        list = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new StudyGroupItemAdapter(this, list);
+        recyclerView.setAdapter(adapter);
         if (studyGroupDetails != null) {
             setDetails();
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Authorization", "Bearer " + userData.getApi_token());
+            HashMap<String, String> params = new HashMap<>();
+            params.put("study_group_id", studyGroupDetails.getGroup_id());
+            presenter.getGroupItems(params, headers);
         }
 
     }
@@ -107,7 +120,8 @@ public class StudyGroupDetailsActivity extends BaseActivity {
 
     @Override
     protected void initializePresenter() {
-
+       presenter=new StudyGroupDetailPresenter(this);
+       presenter.setView(this);
     }
 
     private void setUpToolbar() {
@@ -127,5 +141,14 @@ public class StudyGroupDetailsActivity extends BaseActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setItemList(List<StudyGroupItemData> data) {
+        if (data!=null){
+            list.clear();
+            list.addAll(data);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
