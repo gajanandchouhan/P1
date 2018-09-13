@@ -158,6 +158,12 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         announcmentType = "1";
         textViewAnnounType.setText(conversionData.getStudy_group());
         setUpConversion();
+        countryId = userData.getCountry();
+        textViewViewCountry.setText(userData.getCountryName());
+        stateId = userData.getState();
+        city = userData.getCity();
+        textViewState.setText(userData.getStateName());
+        textViewCity.setText(userData.getCityName());
         setWeekDayList();
         if (data != null) {
             setUpUi();
@@ -187,6 +193,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         inputLayoutContactName.setHint(conversionData.getContact_name());
         inputLayoutContactNumber.setHint(conversionData.getContact_number());
         inputLayoutContactEmail.setHint(conversionData.getContact_email());
+
     }
 
     private void setWeekDayList() {

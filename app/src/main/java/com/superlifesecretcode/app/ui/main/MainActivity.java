@@ -413,10 +413,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
             return;
         }
-        if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_STUDY_GROUP)) {
-            CommonUtils.startActivity(this, StudyGroupActivity.class);
-            return;
-        }
 
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();

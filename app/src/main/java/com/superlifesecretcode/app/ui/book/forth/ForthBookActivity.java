@@ -335,17 +335,18 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 }
             }
         });
-
+        SuperLifeSecretPreferences.getInstance().putString("order_for_text", ""+conversionData.getPrinting_own());
         linear_print_for_own.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("order_for_text", ""+conversionData.getPrinting_own());
                 SuperLifeSecretPreferences.getInstance().putString("book_order_for", "1");
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "0");
                 printing_status = 1;
-                textview_print_for_own.setTextColor(getResources().getColor(R.color.colorPrimary));
+                textview_print_for_own.setTextColor(getResources().getColor(R.color.color_black));
                 textview_print_on_behalf.setTextColor(getResources().getColor(R.color.gray_color));
-                view_printforown.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                view_printforown.setBackgroundColor(getResources().getColor(R.color.color_black));
                 view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.transparent));
                 linear_address.setVisibility(View.GONE);
                 linear_ordertype.setVisibility(View.GONE);
@@ -358,14 +359,15 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         linear_print_onBehalf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("order_for_text", ""+conversionData.getPrinting_behalf());
                 SuperLifeSecretPreferences.getInstance().putString("book_order_for", "2");
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "0");
                 printing_status = 2;
                 textview_print_for_own.setTextColor(getResources().getColor(R.color.gray_color));
-                textview_print_on_behalf.setTextColor(getResources().getColor(R.color.colorPrimary));
+                textview_print_on_behalf.setTextColor(getResources().getColor(R.color.color_black));
                 view_printforown.setBackgroundColor(getResources().getColor(R.color.transparent));
-                view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.color_black));
                 recyclerview_address.setVisibility(View.GONE);
                 add_address_Layout.setVisibility(View.GONE);
                 linear_address.setVisibility(View.GONE);
@@ -390,6 +392,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textview_designated_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("delivery_type_text", ""+conversionData.getDesignated());
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "1");
                 tv_ordertype.setText(conversionData.getDesignated());
@@ -408,6 +411,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textview_other_destribution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("delivery_type_text", ""+conversionData.getDistribute());
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "2");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "2");
                 tv_ordertype.setText(conversionData.getDistribute());

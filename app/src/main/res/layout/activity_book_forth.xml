@@ -69,7 +69,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"></LinearLayout>
+                        android:background="@color/colorPrimary"/>
 
                 </LinearLayout>
 
@@ -93,7 +93,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"></LinearLayout>
+                        android:background="@color/colorPrimary"/>
 
                 </LinearLayout>
 
@@ -117,7 +117,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/gray_color"></LinearLayout>
+                        android:background="@color/gray_color"/>
 
                 </LinearLayout>
 
@@ -141,7 +141,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/gray_color"></LinearLayout>
+                        android:background="@color/gray_color"/>
 
                 </LinearLayout>
 
@@ -183,14 +183,14 @@
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
                             android:text="Printing for Own"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_12sdp" />
 
                         <View
                             android:id="@+id/view_printforown"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/colorPrimary"></View>
+                            android:background="@color/color_black"></View>
                     </LinearLayout>
 
                     <LinearLayout
@@ -212,7 +212,7 @@
                             android:fontFamily="@font/reguler"
                             android:gravity="center"
                             android:text="Printing on Behalf"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/gray_color"
                             android:textSize="@dimen/_12sdp" />
 
                         <View
