@@ -9,7 +9,7 @@ import com.google.android.exoplayer2.util.EventLogger;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.player.MediaItem;
-import com.superlifesecretcode.app.player.MyMediaItem;
+//import com.superlifesecretcode.app.player.MyMediaItem;
 import com.superlifesecretcode.app.player.VideoApi;
 import com.superlifesecretcode.app.player.manager.PlaylistManager;
 
@@ -91,9 +91,9 @@ public class VideoPlayerActivity extends Activity implements VideoControlsSeekLi
     private void setupPlaylistManager() {
         playlistManager = ((SuperLifeSecretCodeApp) getApplicationContext()).getPlaylistManager();
 
-        List<MediaItem> mediaItems = new LinkedList<>();
-        mediaItems.add(new MediaItem(new MyMediaItem(videoUrl,"",""),false));
-        playlistManager.setParameters(mediaItems, selectedIndex);
-        playlistManager.setId(PLAYLIST_ID);
+//        List<MediaItem> mediaItems = new LinkedList<>();
+//        mediaItems.add(new MediaItem(new MyMediaItem(videoUrl,"",""),false));
+//        playlistManager.setParameters(mediaItems, selectedIndex);
+//        playlistManager.setId(PLAYLIST_ID);
     }
 }

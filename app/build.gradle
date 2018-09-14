@@ -116,6 +116,8 @@ dependencies {
     implementation 'com.devbrackets.android:exomedia:4.2.3'
     // Playlist support
     implementation 'com.devbrackets.android:playlistcore:2.0.1'
+    implementation 'com.ramotion.foldingcell:folding-cell:1.2.2'
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'

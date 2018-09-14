@@ -9,13 +9,13 @@ import com.superlifesecretcode.app.player.manager.PlaylistManager;
  * to hold the information pertaining to the audio and video items
  */
 public class MediaItem implements PlaylistItem {
-    private MyMediaItem sample;
+//    private MyMediaItem sample;
     boolean isAudio;
 
-    public MediaItem(MyMediaItem sample, boolean isAudio) {
-        this.sample = sample;
-        this.isAudio = isAudio;
-    }
+//    public MediaItem(MyMediaItem sample, boolean isAudio) {
+//        this.sample = sample;
+//        this.isAudio = isAudio;
+//    }
 
     @Override
     public long getId() {
@@ -35,7 +35,8 @@ public class MediaItem implements PlaylistItem {
 
     @Override
     public String getMediaUrl() {
-        return sample.getMediaUrl();
+        return "";
+//        return sample.getMediaUrl();
     }
 
     @Override
@@ -45,17 +46,20 @@ public class MediaItem implements PlaylistItem {
 
     @Override
     public String getThumbnailUrl() {
-        return sample.getImageUrl();
+        return "";
+//        return sample.getImageUrl();
     }
 
     @Override
     public String getArtworkUrl() {
-        return sample.getImageUrl();
+        return "";
+//        return sample.getImageUrl();
     }
 
     @Override
     public String getTitle() {
-        return sample.getTitle();
+        return "";
+//        return sample.getTitle();
     }
 
     @Override

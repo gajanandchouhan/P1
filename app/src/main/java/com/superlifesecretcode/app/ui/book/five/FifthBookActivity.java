@@ -7,10 +7,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ramotion.foldingcell.FoldingCell;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
@@ -397,7 +400,9 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
     }
 
     public void showDialog(String bank_name, String account_number) {
-        dialog = new Dialog(FifthBookActivity.this, R.style.DialogCustomTheme);
+        dialog = new Dialog(FifthBookActivity.this);
+//        dialog = new Dialog(new ContextThemeWrapper(this, R.style.DialogSlideAnim));
+
         dialog.setCanceledOnTouchOutside(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_receipt2);
@@ -405,6 +410,8 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
 
         TextView tv_header = dialog.findViewById(R.id.textView_title);
         tv_header.setText(languageResponseData.getYour_order());
+        final FoldingCell fc = (FoldingCell) dialog.findViewById(R.id.folding_cell);
+        fc.initialize(2000, getResources().getColor(R.color.colorPrimary), 5);
 
         RecyclerView dialog_book_recyclerview = dialog.findViewById(R.id.dialog_book_recyclerview);
         dialog_book_recyclerview.setLayoutManager(new LinearLayoutManager(this));
@@ -549,6 +556,12 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         dialog.show();
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fc.toggle(false);
+            }
+        },1000);
     }
 
 //    public void showDialog(String bank_name, String account_number) {
