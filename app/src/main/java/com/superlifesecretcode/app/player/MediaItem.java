@@ -35,6 +35,7 @@ public class MediaItem implements PlaylistItem {
 
     @Override
     public String getMediaUrl() {
+//        return "";
         return sample.getMediaUrl();
     }
 
@@ -45,16 +46,19 @@ public class MediaItem implements PlaylistItem {
 
     @Override
     public String getThumbnailUrl() {
+//        return "";
         return sample.getImageUrl();
     }
 
     @Override
     public String getArtworkUrl() {
+//        return "";
         return sample.getImageUrl();
     }
 
     @Override
     public String getTitle() {
+//        return "";
         return sample.getTitle();
     }
 

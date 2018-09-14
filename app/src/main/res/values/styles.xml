@@ -62,4 +62,9 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
+    <style name="DialogAnimation_Final">
+        <item name="android:windowEnterAnimation">@anim/dialog_up</item>
+        <item name="android:windowExitAnimation">@anim/dialog_down</item>
+    </style>
+
 </resources>

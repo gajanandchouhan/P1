@@ -22,6 +22,7 @@ import com.devbrackets.android.playlistcore.listener.ProgressListener;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.player.MediaItem;
+//import com.superlifesecretcode.app.player.MyMediaItem;
 import com.superlifesecretcode.app.player.MyMediaItem;
 import com.superlifesecretcode.app.player.manager.PlaylistManager;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
@@ -263,7 +264,7 @@ public class AudioPlayerActivity extends AppCompatActivity implements PlaylistLi
         if (playlistManager.getId() == PLAYLIST_ID) {
             return false;
         }
-
+//
         List<MediaItem> mediaItems = new LinkedList<>();
         MediaItem mediaItem = new MediaItem(new MyMediaItem(url, image, name), true);
         mediaItems.add(mediaItem);
