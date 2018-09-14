@@ -406,12 +406,23 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         dialog.setCanceledOnTouchOutside(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_receipt2);
+        dialog.getWindow()
+                .getAttributes().windowAnimations = R.style.DialogAnimation_Final;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView tv_header = dialog.findViewById(R.id.textView_title);
         tv_header.setText(languageResponseData.getYour_order());
         final FoldingCell fc = (FoldingCell) dialog.findViewById(R.id.folding_cell);
-        fc.initialize(2000, getResources().getColor(R.color.colorPrimary), 5);
+        fc.initialize(2000, getResources().getColor(R.color.colorPrimary), 6);
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fc.toggle(false);
+            }
+        },400);
 
         RecyclerView dialog_book_recyclerview = dialog.findViewById(R.id.dialog_book_recyclerview);
         dialog_book_recyclerview.setLayoutManager(new LinearLayoutManager(this));
@@ -499,7 +510,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
 
         book_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_title"));
         order_for.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
-        delivery_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
+        delivery_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("delivery_type_text"));
         user_name.setText(SuperLifeSecretPreferences.getInstance().getString("book_full_name"));
         UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         user_country.setText(userDetailResponseData.getCountryName());
@@ -553,15 +564,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
                 dialog.dismiss();
             }
         });
-        dialog.show();
-        Window window = dialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                fc.toggle(false);
-            }
-        },1000);
+
     }
 
 //    public void showDialog(String bank_name, String account_number) {
