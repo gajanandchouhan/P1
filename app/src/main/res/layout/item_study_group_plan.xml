@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/_5sdp"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorWhite"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      >
+
+
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView_desc"
+            android:layout_alignTop="@+id/textView_desc"
+            android:background="@drawable/subs_icon"
+            android:ellipsize="end"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="1 Month"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_13sdp" />
+
+
+        <TextView
+            android:id="@+id/textView_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/textView_title"
+            android:layout_toLeftOf="@+id/text_view_currency"
+            android:layout_toRightOf="@+id/textView_title"
+            android:layout_toStartOf="@+id/text_view_currency"
+            android:ellipsize="end"
+            android:fontFamily="@font/reguler"
+            android:gravity="center_vertical"
+            android:maxLines="3"
+            android:minLines="3"
+            android:text="Desc"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/text_view_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_toLeftOf="@+id/text_view_amount"
+            android:layout_toStartOf="@+id/text_view_amount"
+            android:fontFamily="@font/bold"
+            android:text="$"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_11sdp" />
+
+        <TextView
+            android:id="@+id/text_view_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:fontFamily="@font/bold"
+            android:text="00.00"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:textColor="@color/red_bg"
+            android:textSize="@dimen/_18sdp" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

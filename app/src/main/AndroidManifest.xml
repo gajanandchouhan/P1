@@ -270,31 +270,31 @@
         <activity
             android:name=".ui.studygroup.StudyGroupActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.studygroup.studygroupdetails.StudyGroupDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".player.activity.VideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Player">
-        </activity>
+            android:label="Player" />
         <activity
             android:name=".player.activity.FullScreenVideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Player">
-        </activity>
-
+            android:label="Player" />
         <activity
             android:name=".player.activity.AudioPlayerActivity"
-            android:label="Player">
-        </activity>
-
+            android:label="Player" />
 
         <service
             android:name=".player.service.MediaService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.studygroup.planlist.SubscriptionPlanListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.studygroup.paymentproof.PaymentProofActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

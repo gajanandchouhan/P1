@@ -24,6 +24,7 @@ import com.superlifesecretcode.app.data.model.personalevent.PersonalEventRespons
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.studygroups.StudyGroupResponseModel;
+import com.superlifesecretcode.app.data.model.studygroups.studtgroupplans.StudyGroupPlanResponseModel;
 import com.superlifesecretcode.app.data.model.studygroups.studygroupitem.StudyGroupItemResponnseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -395,6 +396,12 @@ public class ApiController implements RequestType {
                     getGroupItemObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<StudyGroupItemResponnseModel>(handler));
+                    break;
+                case REQ_GET_SUBSCRIPTION_PLAN:
+                    Observable<StudyGroupPlanResponseModel> planListObservable = apiInterface.getStudyGroupPlan(stringMultipartParamsParams, header);
+                    planListObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<StudyGroupPlanResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

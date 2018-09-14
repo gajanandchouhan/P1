@@ -9,12 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.studygroups.studygroupitem.StudyGroupItemData;
 import com.superlifesecretcode.app.player.activity.AudioPlayerActivity;
+import com.superlifesecretcode.app.player.activity.VideoPlayerActivity;
+import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -22,6 +29,7 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
 
     private Context mContext;
     private List<StudyGroupItemData> list;
+    private String subscirptionStatus;
 
     public StudyGroupItemAdapter(Context mContext, List list) {
         this.mContext = mContext;
@@ -40,14 +48,24 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
         StudyGroupItemData studyGroupItemData = list.get(position);
         switch (studyGroupItemData.getItem_type_id()) {
             case ConstantLib.TYPE_AUDIO_ITEM:
+                holder.textViewDuration.setVisibility(View.VISIBLE);
+                holder.textViewDuration.setText(studyGroupItemData.getDuration());
                 break;
             case ConstantLib.TYPE_VIDEO_ITEM:
+                holder.textViewDuration.setVisibility(View.VISIBLE);
+                holder.textViewDuration.setText(studyGroupItemData.getDuration());
                 break;
             case ConstantLib.TYPE_WEB_LINK:
+                holder.textViewDuration.setVisibility(View.GONE);
                 break;
             case ConstantLib.TYPE_TEXT:
+                holder.textViewDuration.setVisibility(View.GONE);
                 break;
         }
+        holder.textViewName.setText(studyGroupItemData.getItem_title());
+        holder.textViewDesc.setText(studyGroupItemData.getItem_description());
+        holder.textViewExpiry.setText(String.format("Expire on : %s", CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, ConstantLib.OUTPUT_DATE_FORMATE, studyGroupItemData.getItem_expiry_date(), false, null)));
+        ImageLoadUtils.loadImage(studyGroupItemData.getItem_icon(), holder.imageView);
 
     }
 
@@ -56,19 +74,50 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
         return list.size();
     }
 
+    public void setSubscirptionStatus(String subscirptionStatus) {
+        this.subscirptionStatus = subscirptionStatus;
+    }
+
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView textViewName;
+        TextView textViewDesc;
+        TextView textViewDuration;
+        TextView textViewExpiry;
+        ImageView imageView;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            textViewName = itemView.findViewById(R.id.textView_title);
+            textViewDesc = itemView.findViewById(R.id.textView_desc);
+            textViewDuration = itemView.findViewById(R.id.text_view_duration);
+            textViewExpiry = itemView.findViewById(R.id.textView_expire);
+            imageView = itemView.findViewById(R.id.image_view);
         }
 
         @Override
         public void onClick(View v) {
-            /*Bundle bundle = new Bundle();
-            bundle.putString("name", "Test");
-            bundle.putString("url", "https://archive.org/download/count_monte_cristo_0711_librivox/count_of_monte_cristo_001_dumas.mp3");
-            bundle.putString("image", "https://ia902708.us.archive.org/3/items/count_monte_cristo_0711_librivox/Count_Monte_Cristo_1110.jpg?cnt=0");
-            CommonUtils.startActivity((AppCompatActivity) mContext, AudioPlayerActivity.class, bundle, false);*/
+            StudyGroupItemData studyGroupItemData = list.get(getAdapterPosition());
+            if (subscirptionStatus.equals(ConstantLib.STATUS_GROUP_SUBSCRIBED)) {
+                Bundle bundle = new Bundle();
+                if (studyGroupItemData.getItem_type_id().equals(ConstantLib.TYPE_AUDIO_ITEM)) {
+                    bundle.putString("name", studyGroupItemData.getItem_title());
+                    bundle.putString("url", studyGroupItemData.getItem_url());
+                    bundle.putString("image", studyGroupItemData.getItem_icon());
+                    CommonUtils.startActivity((AppCompatActivity) mContext, AudioPlayerActivity.class, bundle, false);
+                } else if (studyGroupItemData.getItem_type_id().equals(ConstantLib.TYPE_VIDEO_ITEM)) {
+                    bundle.putString("video", studyGroupItemData.getItem_url());
+                    CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
+                } else {
+                    bundle.putString("title", studyGroupItemData.getItem_title());
+                    bundle.putBoolean("is_link", studyGroupItemData.getItem_type_id().equalsIgnoreCase(ConstantLib.TYPE_WEB_LINK));
+                    bundle.putString("url", studyGroupItemData.getItem_url());
+                    bundle.putString("content", studyGroupItemData.getItem_description());
+                    CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
+                }
+            }else{
+                ((StudyGroupDetailsActivity)mContext).showAlertSubscriptionStatus();
+            }
         }
     }
 }

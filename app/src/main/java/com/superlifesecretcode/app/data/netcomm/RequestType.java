@@ -65,4 +65,5 @@ public interface RequestType {
     byte REQ_GET_DELIVERY_CHARGES = 56;
     byte REQ_GET_GROUPS = 57;
     byte REQ_GET_STUDY_GROUP_ITEMS = 57;
+    byte REQ_GET_SUBSCRIPTION_PLAN = 58;
 }

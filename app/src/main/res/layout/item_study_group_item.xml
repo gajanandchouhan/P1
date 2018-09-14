@@ -15,6 +15,7 @@
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="@dimen/_70sdp"
+            android:layout_centerVertical="true"
             android:layout_height="@dimen/_70sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_placeholder" />
@@ -23,6 +24,7 @@
             android:id="@+id/image_view_type"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
+            android:visibility="gone"
             android:background="#5a000000"
             android:scaleType="centerInside"
             android:src="@drawable/add_images" />
@@ -68,7 +70,22 @@
             android:layout_toLeftOf="@+id/arrow"
             android:textColor="@color/colorLightBlack"
             android:textSize="@dimen/_13sdp" />
-
+        <TextView
+            android:id="@+id/textView_expire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_desc"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/image_view"
+            android:layout_toRightOf="@+id/image_view"
+            android:ellipsize="end"
+            android:fontFamily="@font/bold"
+            android:maxLines="1"
+            android:text="Expires on: 20 September, 2018"
+            android:layout_toStartOf="@+id/arrow"
+            android:layout_toLeftOf="@+id/arrow"
+            android:textColor="@color/red_bg"
+            android:textSize="@dimen/_11sdp" />
         <ImageView
             android:id="@+id/arrow"
             android:layout_width="wrap_content"

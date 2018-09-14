@@ -21,6 +21,7 @@ import com.superlifesecretcode.app.data.model.personalevent.PersonalEventRespons
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.studygroups.StudyGroupResponseModel;
+import com.superlifesecretcode.app.data.model.studygroups.studtgroupplans.StudyGroupPlanResponseModel;
 import com.superlifesecretcode.app.data.model.studygroups.studygroupitem.StudyGroupItemResponnseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -365,5 +366,10 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getStudyGroupItems")
     Observable<StudyGroupItemResponnseModel> getStudyGroupItems(@PartMap() Map<String, RequestBody> params, @HeaderMap Map<String, String> header);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getStudyGroupPlan")
+    Observable<StudyGroupPlanResponseModel> getStudyGroupPlan(@PartMap() Map<String, RequestBody> params, @HeaderMap Map<String, String> header);
 
 }

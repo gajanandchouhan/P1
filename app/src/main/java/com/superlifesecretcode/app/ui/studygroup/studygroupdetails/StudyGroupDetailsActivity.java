@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.studygroup.studygroupdetails;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +18,9 @@ import com.superlifesecretcode.app.data.model.studygroups.studygroupitem.StudyGr
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.studygroup.StudyGroupListAdapter;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
+import com.superlifesecretcode.app.ui.studygroup.planlist.SubscriptionPlanListActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
@@ -26,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudyGroupDetailsActivity extends BaseActivity implements StudyGroupDetailView {
+public class StudyGroupDetailsActivity extends BaseActivity implements StudyGroupDetailView, View.OnClickListener {
 
 
     private LanguageResponseData conversionData;
@@ -34,8 +37,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
     private RecyclerView recyclerView;
     private List<StudyGroupItemData> list;
     private StudyGroupDetails studyGroupDetails;
-    private TextView textViewTitle, textViewDesc, textViewReason, textViewStatus;
-    LinearLayout layoutStatus;
+    private TextView textViewTitle, textViewDesc, textViewReason, textViewExpiry;
     private ImageView imageView;
     private Button buttonSubscribe;
     private StudyGroupItemAdapter adapter;
@@ -55,10 +57,10 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
         textViewTitle = findViewById(R.id.textView_group_title);
         textViewDesc = findViewById(R.id.text_view_desc);
         buttonSubscribe = findViewById(R.id.button_subscribe);
-        textViewStatus = findViewById(R.id.text_view_status);
         textViewReason = findViewById(R.id.text_view_reason);
         imageView = findViewById(R.id.image_view_group);
-        layoutStatus = findViewById(R.id.layout_status);
+        textViewExpiry = findViewById(R.id.text_view_expiry);
+        buttonSubscribe.setOnClickListener(this);
         list = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
@@ -72,6 +74,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
             HashMap<String, String> params = new HashMap<>();
             params.put("study_group_id", studyGroupDetails.getGroup_id());
             presenter.getGroupItems(params, headers);
+            adapter.setSubscirptionStatus(studyGroupDetails.getSubcription_status());
         }
 
     }
@@ -82,46 +85,38 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
         ImageLoadUtils.loadImage(studyGroupDetails.getGroup_image(), imageView);
         switch (studyGroupDetails.getSubcription_status()) {
             case ConstantLib.STATUS_GROUP_NEW:
-                layoutStatus.setVisibility(View.GONE);
-                buttonSubscribe.setVisibility(View.VISIBLE);
+                buttonSubscribe.setText("Subscribe");
                 textViewReason.setVisibility(View.GONE);
+                textViewExpiry.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_SUBSCRIBED:
-                layoutStatus.setVisibility(View.VISIBLE);
-                textViewStatus.setText("Subscribed");
-                textViewStatus.setBackgroundResource(R.drawable.bg_published);
-                buttonSubscribe.setVisibility(View.GONE);
+                buttonSubscribe.setText("Subscribed");
                 textViewReason.setVisibility(View.GONE);
+                textViewExpiry.setVisibility(View.VISIBLE);
                 break;
             case ConstantLib.STATUS_GROUP_PENDING:
-                layoutStatus.setVisibility(View.VISIBLE);
-                textViewStatus.setText("PENDING");
-                textViewStatus.setBackgroundResource(R.drawable.bg_pending);
-                buttonSubscribe.setVisibility(View.GONE);
-                textViewReason.setVisibility(View.GONE);
+                buttonSubscribe.setText("Pending");
+                textViewExpiry.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_EXPIRED:
-                layoutStatus.setVisibility(View.VISIBLE);
-                textViewStatus.setText("Expired");
-                textViewStatus.setText("Renew");
-                textViewStatus.setBackgroundResource(R.drawable.bg_declined);
-                buttonSubscribe.setVisibility(View.VISIBLE);
+                buttonSubscribe.setText("Renew");
                 textViewReason.setVisibility(View.GONE);
+                textViewExpiry.setVisibility(View.VISIBLE);
+                textViewExpiry.setText("Expired");
                 break;
             case ConstantLib.STATUS_GROUP_REJECTED:
-                layoutStatus.setVisibility(View.VISIBLE);
-                textViewStatus.setText("Reject");
-                textViewStatus.setBackgroundResource(R.drawable.bg_declined);
-                buttonSubscribe.setVisibility(View.GONE);
+                buttonSubscribe.setText("Subscribe");
                 textViewReason.setVisibility(View.VISIBLE);
+                textViewExpiry.setVisibility(View.VISIBLE);
+                textViewExpiry.setText("Rejected");
                 break;
         }
     }
 
     @Override
     protected void initializePresenter() {
-       presenter=new StudyGroupDetailPresenter(this);
-       presenter.setView(this);
+        presenter = new StudyGroupDetailPresenter(this);
+        presenter.setView(this);
     }
 
     private void setUpToolbar() {
@@ -145,10 +140,83 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
 
     @Override
     public void setItemList(List<StudyGroupItemData> data) {
-        if (data!=null){
+        if (data != null) {
             list.clear();
             list.addAll(data);
             adapter.notifyDataSetChanged();
+            setDuration();
         }
+    }
+
+
+    private void setDuration() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (StudyGroupItemData studyGroupItemData : list) {
+                    if (studyGroupItemData.getItem_type_id().equals(ConstantLib.TYPE_AUDIO_ITEM) || studyGroupItemData.getItem_type_id().equals(ConstantLib.TYPE_VIDEO_ITEM)) {
+                        studyGroupItemData.setDuration(CommonUtils.getDuration(studyGroupItemData.getItem_url()));
+                    }
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_subscribe:
+                if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_PENDING) || studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_SUBSCRIBED)) {
+                    return;
+                }
+                openPlanSelectionActivity();
+                break;
+        }
+    }
+
+    private void openPlanSelectionActivity() {
+        if (studyGroupDetails != null) {
+            Intent intent = new Intent(this, SubscriptionPlanListActivity.class);
+            intent.putExtra("title", studyGroupDetails.getGroup_name());
+            intent.putExtra("id", studyGroupDetails.getGroup_id());
+            startActivity(intent);
+        }
+    }
+
+    public void showAlertSubscriptionStatus() {
+        if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_NEW)) {
+            showAlert("Subscribe", conversionData.getCancel(), "You need to subscribe first to access the item");
+        } else if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_PENDING)) {
+            showAlert(conversionData.getOk(), null, "Your subscription is pending for approval.");
+        } else if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_EXPIRED)) {
+            showAlert("Renew", conversionData.getCancel(), "Your subscription plan is expired, please renew plan.");
+        } else if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_REJECTED)) {
+            showAlert("Subscribe", conversionData.getCancel(), "Your subscription is rejected,You need to subscribe first to access the item.");
+        }
+    }
+
+    private void showAlert(String positive, final String negative, String message) {
+        CommonUtils.showAlert(this, message, positive, negative, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+                if (negative != null) {
+                    openPlanSelectionActivity();
+                }
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
+
     }
 }
