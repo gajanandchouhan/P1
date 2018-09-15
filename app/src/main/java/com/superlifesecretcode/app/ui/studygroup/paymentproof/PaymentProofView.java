@@ -5,4 +5,6 @@ import com.superlifesecretcode.app.ui.book.five.BankBean;
 
 interface PaymentProofView extends BaseView {
     void getBanks(BankBean bankBean);
+
+    void onSubscribed();
 }

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ramotion.foldingcell.FoldingCell;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -34,6 +36,7 @@ import com.superlifesecretcode.app.ui.book.five.Receipt;
 import com.superlifesecretcode.app.ui.book.five.ReceiptAapter;
 import com.superlifesecretcode.app.ui.book.second.DeliveryData;
 import com.superlifesecretcode.app.ui.picker.DropDownWindow;
+import com.superlifesecretcode.app.ui.studygroup.ThanksActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ImagePickerUtils;
 import com.superlifesecretcode.app.util.PermissionConstant;
@@ -66,11 +69,14 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
     public ArrayList<Receipt> receipt_list;
     StudyGroupReceiptAapter receiptAapter;
     Dialog dialog;
-    String total_amont;
     TextView textview_plus, tv_payment_date, tv_payment_type;
     ArrayList<String> payment_type_list;
     String payment_type = "", payment_date = "", payment_type_string = "", payment_date_string = "";
     TextView payment_date_heading, payment_type_heading;
+    private String planCost;
+    private String groupName;
+    private String currency;
+    private String planTitle;
 
     @Override
     protected int getContentView() {
@@ -82,11 +88,14 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         planId = getIntent().getStringExtra("plan_id");
+        planCost = getIntent().getStringExtra("plan_cost");
+        groupName = getIntent().getStringExtra("group_name");
+        currency = getIntent().getStringExtra("plan_currency");
+        planTitle = getIntent().getStringExtra("plan_title");
         setUpToolbar();
         bankArrayList = new ArrayList<>();
         receipt_list = new ArrayList<>();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
-        total_amont = SuperLifeSecretPreferences.getInstance().getString("total_amount");
         textview_payment = findViewById(R.id.textview_payment);
         textview_attachmentline = findViewById(R.id.textview_attachmentline);
         edittext_enteramount = findViewById(R.id.edittext_enteramount);
@@ -102,6 +111,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         textview_plus = findViewById(R.id.textview_plus);
         tv_payment_date = findViewById(R.id.tv_payment_date);
         tv_payment_type = findViewById(R.id.tv_payment_type);
+        textview_total_price.setText(String.format("%s %s", currency, planCost));
         payment_type_list = new ArrayList<>();
         payment_type_list.add(conversionData.getBank_transfer());
         payment_type_list.add(conversionData.getCash_deposit());
@@ -150,7 +160,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
                     return;
                 }
 
-                if (check_any_selected == false) {
+                if (getBankId() == null || getBankId().isEmpty()) {
                     CommonUtils.showSnakeBar(PaymentProofActivity.this, conversionData.getPlease_select_bank());
                     return;
                 }
@@ -186,7 +196,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         tv_payment_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showgGenderSelection();
+                showPaymentModeSelection();
             }
         });
         tv_payment_date.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +228,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         return super.onOptionsItemSelected(item);
     }
 
-    private void showgGenderSelection() {
+    private void showPaymentModeSelection() {
         DropDownWindow.show(this, tv_payment_type, payment_type_list, new DropDownWindow.SelectedListner() {
             @Override
             public void onSelected(String value, int position) {
@@ -245,46 +255,17 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
 
-        builder.addFormDataPart("book_type", SuperLifeSecretPreferences.getInstance().getString("book_type"));
-        builder.addFormDataPart("order_for", SuperLifeSecretPreferences.getInstance().getString("book_order_for"));
-        builder.addFormDataPart("name", SuperLifeSecretPreferences.getInstance().getString("book_full_name"));
-        builder.addFormDataPart("mobile", SuperLifeSecretPreferences.getInstance().getString("book_mobile"));
-        builder.addFormDataPart("email", SuperLifeSecretPreferences.getInstance().getString("book_email"));
 
-        int deliverytype = 0;
-        if (SuperLifeSecretPreferences.getInstance().getString("status_old_store_address").equals("0")) {
-            builder.addFormDataPart("address", SuperLifeSecretPreferences.getInstance().getString("book_address"));
-            builder.addFormDataPart("pin_code", SuperLifeSecretPreferences.getInstance().getString("book_pin_code"));
-            builder.addFormDataPart("state", SuperLifeSecretPreferences.getInstance().getString("book_state"));
-            builder.addFormDataPart("city", SuperLifeSecretPreferences.getInstance().getString("book_city"));
-            deliverytype = 1;
-        } else if (SuperLifeSecretPreferences.getInstance().getString("status_old_store_address").equals("1")) {
-            deliverytype = 1;
-            builder.addFormDataPart("old_shipping_address", SuperLifeSecretPreferences.getInstance().getString("book_old_address_id"));
-        } else if (SuperLifeSecretPreferences.getInstance().getString("status_old_store_address").equals("2")) {
-            deliverytype = 2;
-        }
-        builder.addFormDataPart("delevery_type", "" + deliverytype);
-        builder.addFormDataPart("bank_id", SuperLifeSecretPreferences.getInstance().getString("bank_id"));
-
-        ArrayList<BookBean> bookBeanList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
-        String books = "";
-        for (int p = 0; p < bookBeanList.size(); p++) {
-            if (p == (bookBeanList.size() - 1)) {
-                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice());
-            } else {
-                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice() + ",");
-            }
-        }
-        builder.addFormDataPart("books", books);
         builder.addFormDataPart("payment_date", payment_date);
         builder.addFormDataPart("payment_mode", payment_type);
+        builder.addFormDataPart("plan_id", planId);
+        builder.addFormDataPart("bank_id", getBankId());
         for (int i = 0; i < receipt_list.size(); i++) {
             try {
                 if (receipt_list.get(i) != null) {
                     File file = new File(receipt_list.get(i).getReceipt_image_path());
                     RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    builder.addFormDataPart("receipts[]", file.getName(), requestBody);
+                    builder.addFormDataPart("payment_receipt[]", file.getName(), requestBody);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -294,7 +275,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         RequestBody finalRequestBody = builder.build();
-        //fifthBookPresenter.bookOrder(finalRequestBody, headers);
+        paymentProfPresenter.subscribePlan(finalRequestBody, headers);
     }
 
     private void setUpConversion() {
@@ -308,7 +289,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
             payment_date_heading.setText(conversionData.getPayment_date());
             tv_payment_type.setText(conversionData.getSelect());
             tv_payment_date.setText(conversionData.getSelect());
-            textview_payment.setText("" + conversionData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont + " " + conversionData.getOne_following_account());
+            textview_payment.setText(String.format("%s %s %s %s", conversionData.getPlease_pay(), currency, planCost, conversionData.getOne_following_account()));
             edittext_enteramount.setHint(conversionData.getPlease_attach_file());
         }
     }
@@ -354,6 +335,12 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         bankAapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onSubscribed() {
+        finish();
+        CommonUtils.startActivity(this, ThanksActivity.class);
+    }
+
     public class ReceiptListener {
         public void onImageSelect() {
             if (CommonUtils.hasPermissions(PaymentProofActivity.this, PermissionConstant.PERMISSION_PROFILE)) {
@@ -377,7 +364,6 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
                     if (selected_status == true) {
                         bankArrayList.get(i).setSelected(false);
                     } else {
-                        SuperLifeSecretPreferences.getInstance().putString("bank_id", bankArrayList.get(i).getId());
                         bankArrayList.get(i).setSelected(true);
                     }
                 } else {
@@ -406,42 +392,36 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         dialog = new Dialog(PaymentProofActivity.this, R.style.DialogCustomTheme);
         dialog.setCanceledOnTouchOutside(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_receipt2);
+        dialog.setContentView(R.layout.dialog_subscription_confirm);
+        dialog.getWindow()
+                .getAttributes().windowAnimations = R.style.DialogAnimation_Final;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+        final FoldingCell fc = (FoldingCell) dialog.findViewById(R.id.folding_cell);
+        fc.initialize(2000, getResources().getColor(R.color.colorPrimary), 5);
         TextView tv_header = dialog.findViewById(R.id.textView_title);
-        tv_header.setText(conversionData.getYour_order());
+        tv_header.setText("Confirm Order");
 
-        RecyclerView dialog_book_recyclerview = dialog.findViewById(R.id.dialog_book_recyclerview);
-        dialog_book_recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        ArrayList<BookBean> bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
-        DialogBookAapter bookAapterDetail = new DialogBookAapter(bookArrayList, PaymentProofActivity.this);
-        dialog_book_recyclerview.setAdapter(bookAapterDetail);
 
-        TextView book_type, order_for, delivery_type, delivery_address;
-        TextView user_name, user_country, tv_receipt;
+        TextView group_name, plan, cost, user_name;
+        TextView email, mobile, tv_receipt;
         TextView grant_total;
-        TextView tv_order_date, tv_order_detail_dialog;
-        TextView tv_book_type, tv_order_for, tv_delivery_type, tv_delivery_address, tv_user_name, tv_user_country;
-        TextView tv_delivery, tv_grand_total, tv_paymentdetail, textView_title;
+        TextView tv_order_detail_dialog;
+        TextView tv_group_name, tv_plan, tv_cost, tv_user_name, tv_email, tv_mobile_num;
+        TextView tv_grand_total, tv_paymentdetail;
 
-        TextView bankname, accountno, payment_mode, payment_date_dialog, tv_subtotal, tv_deliverycharges;
-        TextView tv_bankname, tv_accountno, tv_payment_mode, tv_payment_date_dialog, subtotal, deliverycharges;
-        LinearLayout address_linear_dialog;
+        TextView bankname, accountno, payment_mode, payment_date_dialog, tv_subtotal;
+        TextView tv_bankname, tv_accountno, tv_payment_mode, tv_payment_date_dialog, subtotal;
         TextView tv_are_you_sure, tv_yes, tv_no;
         ImageView dialog_back_image;
 
-        address_linear_dialog = dialog.findViewById(R.id.address_linear_dialog);
-        tv_book_type = dialog.findViewById(R.id.tv_book_type);
-        tv_order_for = dialog.findViewById(R.id.tv_order_for);
-        tv_delivery_type = dialog.findViewById(R.id.tv_delivery_type);
-        tv_delivery_address = dialog.findViewById(R.id.tv_delivery_address);
+        tv_group_name = dialog.findViewById(R.id.tv_group_name);
+        tv_plan = dialog.findViewById(R.id.tv_plan);
+        tv_cost = dialog.findViewById(R.id.tv_cost);
+        tv_email = dialog.findViewById(R.id.tv_email);
         tv_user_name = dialog.findViewById(R.id.tv_user_name);
-        tv_user_country = dialog.findViewById(R.id.tv_user_country);
-        tv_order_date = dialog.findViewById(R.id.tv_order_date);
+        tv_mobile_num = dialog.findViewById(R.id.tv_mobile);
         tv_paymentdetail = dialog.findViewById(R.id.tv_paymentdetail);
         tv_subtotal = dialog.findViewById(R.id.tv_subtotal);
-        tv_delivery = dialog.findViewById(R.id.tv_delivery);
         tv_grand_total = dialog.findViewById(R.id.tv_grand_total);
         tv_receipt = dialog.findViewById(R.id.tv_receipt);
         payment_date_dialog = dialog.findViewById(R.id.payment_date_dialog);
@@ -450,12 +430,12 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         tv_are_you_sure = dialog.findViewById(R.id.tv_are_you_sure);
         tv_yes = dialog.findViewById(R.id.tv_yes);
         tv_no = dialog.findViewById(R.id.tv_no);
-        book_type = dialog.findViewById(R.id.book_type);
-        order_for = dialog.findViewById(R.id.order_for);
-        delivery_type = dialog.findViewById(R.id.delivery_type);
-        delivery_address = dialog.findViewById(R.id.delivery_address);
+        group_name = dialog.findViewById(R.id.group_name);
+        plan = dialog.findViewById(R.id.plan);
+        cost = dialog.findViewById(R.id.cost);
+        email = dialog.findViewById(R.id.email);
         user_name = dialog.findViewById(R.id.user_name);
-        user_country = dialog.findViewById(R.id.user_country);
+        mobile = dialog.findViewById(R.id.mobile);
         grant_total = dialog.findViewById(R.id.grant_total);
         tv_order_detail_dialog = dialog.findViewById(R.id.tv_order_detail_dialog);
         RecyclerView dialog_receipt_recyclerview = dialog.findViewById(R.id.dialog_receipt_recyclerview);
@@ -467,27 +447,24 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         payment_mode = dialog.findViewById(R.id.paymentmode);
         tv_payment_mode = dialog.findViewById(R.id.tv_paymentmode);
         dialog_back_image = dialog.findViewById(R.id.back_image);
-        tv_deliverycharges = dialog.findViewById(R.id.tv_deliverycharges);
-        deliverycharges = dialog.findViewById(R.id.deliverycharges);
 
         tv_are_you_sure.setText(conversionData.getAre_you_sure_continue());
-        tv_bankname.setText(conversionData.getBank_name());
-        tv_accountno.setText(conversionData.getAccount_number());
-        tv_order_detail_dialog.setText(conversionData.getOrder_detail());
-        tv_book_type.setText(conversionData.getBook_type());
-        tv_order_for.setText(conversionData.getOrder_for());
+        tv_bankname.setText(conversionData.getBank_name() + ":");
+        tv_accountno.setText(conversionData.getAccount_number() + ":");
+        tv_order_detail_dialog.setText(conversionData.getOrder_detail() + ":");
+        tv_group_name.setText("Group Name:");
+        tv_plan.setText("Subscription Plan:");
+        tv_cost.setText("Cost:");
         tv_payment_mode.setText(conversionData.getPayment_mode());
-        tv_delivery_type.setText(conversionData.getDelivery_type());
-        tv_user_name.setText(conversionData.getUsername());
-        tv_user_country.setText(conversionData.getUser_country());
-        tv_receipt.setText(conversionData.getReceipts());
-        tv_grand_total.setText(conversionData.getGrandtotal());
-        tv_paymentdetail.setText(conversionData.getPayment_detail());
+        tv_email.setText(conversionData.getEmail() + ":");
+        tv_user_name.setText(conversionData.getUsername() + ":");
+        tv_mobile_num.setText(conversionData.getMobile_no() + ":");
+        tv_receipt.setText(conversionData.getReceipts() + ":");
+        tv_grand_total.setText(conversionData.getGrandtotal() + ":");
+        tv_paymentdetail.setText(conversionData.getPayment_detail() + ":");
         //order_detail.setText(conversionData.getOrder_detail());
-        tv_payment_date_dialog.setText(conversionData.getPayment_date());
-        tv_deliverycharges.setText(conversionData.getDelivery_charges());
-        tv_subtotal.setText(conversionData.getSubtotal());
-        tv_order_date.setText(conversionData.getOrder_date());
+        tv_payment_date_dialog.setText(conversionData.getPayment_date() + ":");
+        tv_subtotal.setText(conversionData.getSubtotal() + ":");
 
         bankname.setText(bank_name);
         accountno.setText(account_number);
@@ -496,38 +473,14 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         tv_yes.setText(conversionData.getYes());
         tv_no.setText(conversionData.getNo());
 
-        book_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_title"));
-        order_for.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
-        delivery_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
-        user_name.setText(SuperLifeSecretPreferences.getInstance().getString("book_full_name"));
-        UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
-        user_country.setText(userDetailResponseData.getCountryName());
+        group_name.setText(groupName);
+        plan.setText(planTitle);
+        cost.setText(currency + " " + planCost);
+        user_name.setText(userData.getUsername());
+        email.setText(userData.getEmail());
+        mobile.setText(String.format("%s%s", userData.getPhone_code(), userData.getMobile()));
 
-        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("2"))
-            address_linear_dialog.setVisibility(View.GONE);
-        else {
-            address_linear_dialog.setVisibility(View.VISIBLE);
-            delivery_address.setText(SuperLifeSecretPreferences.getInstance().getString("final_dialog_address"));
-        }
-
-        String totalamount = SuperLifeSecretPreferences.getInstance().getString("total_amount");
-        double dountl_total_amount = Double.parseDouble(totalamount);
-        double delivery_charges = 0.0;
-
-        ArrayList<DeliveryData> deliveryDataArrayList = SuperLifeSecretPreferences.getInstance().getDeliveryChargesList();
-        for (int i = 0; i < deliveryDataArrayList.size(); i++) {
-            double from = Double.parseDouble(deliveryDataArrayList.get(i).getRange_from());
-            double to = Double.parseDouble(deliveryDataArrayList.get(i).getRange_to());
-            if (dountl_total_amount >= from && dountl_total_amount <= to) {
-                delivery_charges = Double.parseDouble(deliveryDataArrayList.get(i).getDelivery_charge());
-            } else if (dountl_total_amount >= to) {
-                delivery_charges = Double.parseDouble(deliveryDataArrayList.get(i).getDelivery_charge());
-            }
-        }
-        deliverycharges.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + delivery_charges);
-        double grandtotal = delivery_charges + dountl_total_amount;
-        grant_total.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal);
-        subtotal.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + dountl_total_amount);
+        grant_total.setText(currency + " " + planCost);
         dialog_receipt_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         StudyGroupReceiptAapter receiptAapter2 = new StudyGroupReceiptAapter(receipt_list, this, new ReceiptListener(), false);
         dialog_receipt_recyclerview.setAdapter(receiptAapter2);
@@ -553,7 +506,24 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
             }
         });
         dialog.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fc.toggle(false);
+            }
+        }, 400);
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+    }
+
+
+    private String getBankId() {
+
+        for (Bank bank : bankArrayList) {
+            if (bank.isSelected()) {
+                return bank.getId();
+            }
+        }
+        return null;
     }
 }

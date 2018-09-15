@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.studygroup.planlist;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import com.superlifesecretcode.app.data.model.studygroups.studtgroupplans.StudyG
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.studygroup.paymentproof.PaymentProofActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import java.util.Map;
 public class SubscriptionPlanListActivity extends BaseActivity implements SubscriptionPlanView {
 
 
+    private static SubscriptionPlanListActivity activity;
     private LanguageResponseData conversionData;
     private UserDetailResponseData userData;
     private String groupTitle;
@@ -29,6 +32,8 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
     private RecyclerView recyclerView;
     private List<StudyGroupPlanData> list;
     private StudyGroupPlanAdapter adapter;
+    
+    
 
     @Override
     protected int getContentView() {
@@ -48,6 +53,7 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
 
     @Override
     protected void initializeView() {
+        activity=this;
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         groupTitle = getIntent().getStringExtra("title");
@@ -90,4 +96,21 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
     }
 
 
+    public void startPaymentConirmScreen(int position) {
+
+        Intent intent = new Intent(this, PaymentProofActivity.class);
+        intent.putExtra("plan_id", list.get(position).getPlan_id());
+        intent.putExtra("plan_cost", list.get(position).getPlan_cost());
+        intent.putExtra("plan_title",list.get(position).getPlan_title());
+        intent.putExtra("plan_currency", list.get(position).getCurrency_symbol());
+        intent.putExtra("group_name", groupTitle);
+        intent.putExtra("group_id", groupId);
+        startActivity(intent);
+    }
+
+    public static void finishActivity() {
+        if (activity != null) {
+            activity.finish();
+        }
+    }
 }

@@ -66,4 +66,5 @@ public interface RequestType {
     byte REQ_GET_GROUPS = 57;
     byte REQ_GET_STUDY_GROUP_ITEMS = 57;
     byte REQ_GET_SUBSCRIPTION_PLAN = 58;
+    byte REQ_SUBSCRIPTION_PLAN = 59;
 }

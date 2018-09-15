@@ -584,6 +584,13 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
                 break;
+
+            case REQ_SUBSCRIPTION_PLAN:
+                Observable<BaseResponseModel> subPlanObservable = apiInterface.subscribePlan(fileParams, headers);
+                subPlanObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
+                break;
         }
     }
 

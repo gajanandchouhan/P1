@@ -372,4 +372,7 @@ public interface ApiInterface {
     @POST("getStudyGroupPlan")
     Observable<StudyGroupPlanResponseModel> getStudyGroupPlan(@PartMap() Map<String, RequestBody> params, @HeaderMap Map<String, String> header);
 
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("subscribePlan")
+    Observable<BaseResponseModel> subscribePlan(@Body RequestBody fileParams, @HeaderMap() Map<String, String> headers);
 }

@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.studygroup.studygroupdetails;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,8 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
     private StudyGroupItemAdapter adapter;
     StudyGroupDetailPresenter presenter;
 
+    private static StudyGroupDetailsActivity activity;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_study_group_details;
@@ -50,6 +53,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
 
     @Override
     protected void initializeView() {
+        activity = this;
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         studyGroupDetails = (StudyGroupDetails) getIntent().getBundleExtra("bundle").getSerializable("data");
@@ -77,6 +81,13 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
             adapter.setSubscirptionStatus(studyGroupDetails.getSubcription_status());
         }
 
+    }
+
+
+    public static void finishActivity() {
+        if (activity != null) {
+            activity.finish();
+        }
     }
 
     private void setDetails() {

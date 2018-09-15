@@ -33,6 +33,8 @@ public class StudyGroupActivity extends BaseActivity implements StudyGroupView {
     private List<StudyGroupDetails> subScribeGroupList;
     private List<StudyGroupDetails> newGroupList;
 
+    public static boolean shouldRefresh = false;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_study_group;
@@ -51,9 +53,13 @@ public class StudyGroupActivity extends BaseActivity implements StudyGroupView {
         list = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StudyGroupListAdapter(list,this);
+        adapter = new StudyGroupListAdapter(list, this);
         recyclerView.setAdapter(adapter);
         tabLayout.addOnTabSelectedListener(listener);
+        getStudyGroup();
+    }
+
+    private void getStudyGroup() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         presenter.getStudyGroup(headers);
@@ -63,6 +69,16 @@ public class StudyGroupActivity extends BaseActivity implements StudyGroupView {
     protected void initializePresenter() {
         presenter = new StudyGroupPresenter(this);
         presenter.setView(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (shouldRefresh) {
+            shouldRefresh = false;
+            getStudyGroup();
+
+        }
     }
 
     private void setUpToolbar() {

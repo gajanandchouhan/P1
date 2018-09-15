@@ -5,7 +5,7 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,10 +15,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
-
+            <include layout="@layout/toolbar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,6 +31,8 @@
                     android:id="@+id/textview_payment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/reguler"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/_10sdp" />
@@ -125,8 +126,7 @@
                     android:id="@+id/rechcyclerview_bankslist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                   />
+                    android:layout_marginTop="@dimen/_5sdp" />
 
                 <TextView
                     android:id="@+id/textview_attachmentline"
@@ -158,10 +158,7 @@
                     android:textColor="@color/dark_gray"
                     android:textSize="@dimen/_10sdp" />
 
-                <ScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fillViewport="true">
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -173,10 +170,9 @@
                             android:id="@+id/receipt_recyclerview"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/_60sdp"
-
                             android:layout_gravity="left"
                             android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+                            android:layout_weight="1" />
 
                         <TextView
                             android:id="@+id/textview_plus"
@@ -191,7 +187,6 @@
                             android:textStyle="bold"
                             android:visibility="gone" />
                     </LinearLayout>
-                </ScrollView>
 
             </LinearLayout>
         </LinearLayout>
@@ -200,8 +195,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
         android:background="#eee9e9"
         android:orientation="horizontal">
 

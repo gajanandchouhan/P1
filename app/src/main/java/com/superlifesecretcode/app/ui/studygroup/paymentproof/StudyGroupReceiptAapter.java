@@ -53,7 +53,7 @@ public class StudyGroupReceiptAapter extends RecyclerView.Adapter<StudyGroupRece
         holder.imageview_receipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                receiptListene.onImageSelect();
+                //receiptListene.onImageSelect();
             }
         });
         holder.cross.setOnClickListener(new View.OnClickListener() {

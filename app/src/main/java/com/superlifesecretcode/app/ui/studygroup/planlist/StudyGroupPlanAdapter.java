@@ -73,9 +73,7 @@ public class StudyGroupPlanAdapter extends RecyclerView.Adapter<StudyGroupPlanAd
 
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(mContext, PaymentProofActivity.class);
-            intent.putExtra("plan_id",list.get(getAdapterPosition()).getPlan_id());
-            mContext.startActivity(intent);
+            ((SubscriptionPlanListActivity)mContext).startPaymentConirmScreen(getAdapterPosition());
         }
     }
 }
