@@ -80,6 +80,7 @@ public class StudyGroupListAdapter extends RecyclerView.Adapter<StudyGroupListAd
                 holder.textViewSubscribe.setVisibility(View.GONE);
                 break;
         }
+        holder.textViewStatus.setPadding(25, 0, 25, 5);
     }
 
     @Override

@@ -104,6 +104,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
                 buttonSubscribe.setText("Subscribed");
                 textViewReason.setVisibility(View.GONE);
                 textViewExpiry.setVisibility(View.VISIBLE);
+                textViewExpiry.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd, MMM, yy", studyGroupDetails.getExpiry_date(), false, null));
                 break;
             case ConstantLib.STATUS_GROUP_PENDING:
                 buttonSubscribe.setText("Pending");
