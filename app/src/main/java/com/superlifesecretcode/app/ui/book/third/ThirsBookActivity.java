@@ -114,6 +114,7 @@ public class ThirsBookActivity extends BaseActivity {
                 AMOUNT_TOTAL = ((bookArrayList.get(i).getPrice() * bookArrayList.get(i).getQuantity()) + AMOUNT_TOTAL);
             }
             total = AMOUNT_TOTAL;
+            total_amont = ""+AMOUNT_TOTAL;
             textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + AMOUNT_TOTAL);
 
             thirdBooksAapter.notifyDataSetChanged();
@@ -130,6 +131,7 @@ public class ThirsBookActivity extends BaseActivity {
                 }
                 textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + AMOUNT_TOTAL);
                 total = AMOUNT_TOTAL;
+                total_amont = ""+AMOUNT_TOTAL;
                 SuperLifeSecretPreferences.getInstance().setSelectedBooksList(bookArrayList);
             } catch (Exception e) {
                 s = "1";
@@ -141,6 +143,7 @@ public class ThirsBookActivity extends BaseActivity {
                     AMOUNT_TOTAL = ((bookArrayList.get(i).getPrice() * bookArrayList.get(i).getQuantity()) + AMOUNT_TOTAL);
                 }
                 total = AMOUNT_TOTAL;
+                total_amont = ""+AMOUNT_TOTAL;
                 textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + AMOUNT_TOTAL);
                 thirdBooksAapter.notifyDataSetChanged();
             }

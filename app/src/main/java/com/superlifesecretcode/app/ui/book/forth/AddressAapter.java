@@ -18,12 +18,12 @@ import java.util.List;
  */
 
 public class AddressAapter extends RecyclerView.Adapter<AddressAapter.ItemViewHolder> {
-    private final List<Addresss> list;
+    private final List<Stores> list;
     private Context mContext;
     ForthBookActivity.StoreListener bookSelectedListener;
 
 
-    public AddressAapter(ArrayList<Addresss> list, ForthBookActivity mContext, ForthBookActivity.StoreListener bookSelectedListener) {
+    public AddressAapter(ArrayList<Stores> list, ForthBookActivity mContext, ForthBookActivity.StoreListener bookSelectedListener) {
         this.list = list;
         this.mContext = mContext;
         this.bookSelectedListener = bookSelectedListener;

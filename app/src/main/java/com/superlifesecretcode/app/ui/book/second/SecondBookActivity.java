@@ -94,7 +94,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             }
         });
 
-        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
+        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
             linearlayout_affortdability.setVisibility(View.GONE);
             linearlayout_book_quality.setVisibility(View.GONE);
             amount_linear.setVisibility(View.VISIBLE);
@@ -138,7 +138,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
 
                     startActivity(intent);
                 } else {
-                    if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
+                    if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
                         if (!edittext_enteramount.getText().toString().equals("")) {
                             getBookAmount();
                             if (TOTAL_AMOUNT != 0.0) {
@@ -199,7 +199,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             edittext_enteramount.setHint(conversionData.getEnter_amount());
             textview_delivery_charges.setText(conversionData.getDelivery_charges());
 
-            if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
+            if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
                 textview_printbybookquality.setText(conversionData.getPrint_by_quantity());
                 textview_affordability.setText(conversionData.getPrint_by_affordability());
             } else {

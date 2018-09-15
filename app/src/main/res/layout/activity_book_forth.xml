@@ -69,7 +69,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"/>
+                        android:background="@color/colorPrimary" />
 
                 </LinearLayout>
 
@@ -93,7 +93,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimary"/>
+                        android:background="@color/colorPrimary" />
 
                 </LinearLayout>
 
@@ -117,7 +117,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/gray_color"/>
+                        android:background="@color/gray_color" />
 
                 </LinearLayout>
 
@@ -141,7 +141,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_weight="1"
-                        android:background="@color/gray_color"/>
+                        android:background="@color/gray_color" />
 
                 </LinearLayout>
 
@@ -292,6 +292,68 @@
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_10sdp" />
 
+                        <LinearLayout
+                            android:id="@+id/linear_other_person"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textview_other_person_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:fontFamily="@font/reguler"
+                                android:text="Other Person Name"
+                                android:textColor="@color/red_bg"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <EditText
+                                android:id="@+id/edittext_other_person_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:background="@drawable/edittext_round"
+                                android:fontFamily="@font/reguler"
+                                android:hint="Other person's name"
+                                android:inputType="text"
+                                android:paddingBottom="@dimen/_6sdp"
+                                android:paddingLeft="@dimen/_8sdp"
+                                android:paddingRight="@dimen/_6sdp"
+                                android:paddingTop="@dimen/_6sdp"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <TextView
+                                android:id="@+id/textview_other_person_mobile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:fontFamily="@font/reguler"
+                                android:text="Other person's mobile"
+                                android:textColor="@color/red_bg"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <EditText
+                                android:id="@+id/edittext_otehr_person_mobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:background="@drawable/edittext_round"
+                                android:fontFamily="@font/reguler"
+                                android:hint="Other person's mobile"
+                                android:inputType="number"
+                                android:paddingBottom="@dimen/_6sdp"
+                                android:paddingLeft="@dimen/_8sdp"
+                                android:paddingRight="@dimen/_6sdp"
+                                android:paddingTop="@dimen/_6sdp"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_10sdp" />
+                        </LinearLayout>
+
                         <TextView
                             android:id="@+id/textview_emailid"
                             android:layout_width="wrap_content"
@@ -314,9 +376,9 @@
                             android:inputType="textEmailAddress"
                             android:paddingBottom="@dimen/_6sdp"
                             android:paddingLeft="@dimen/_8sdp"
-                            android:textColor="@color/colorBlack"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
@@ -336,12 +398,12 @@
 
 
                         <!--<android.support.v7.widget.RecyclerView-->
-                            <!--android:id="@+id/recyclerview_storelist"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_below="@+id/tv_ordertype"-->
-                            <!--android:layout_marginTop="@dimen/_5sdp"-->
-                            <!--android:visibility="gone" />-->
+                        <!--android:id="@+id/recyclerview_storelist"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/tv_ordertype"-->
+                        <!--android:layout_marginTop="@dimen/_5sdp"-->
+                        <!--android:visibility="gone" />-->
 
                         <LinearLayout
                             android:id="@+id/linear_ordertype"
@@ -367,7 +429,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_1sdp"
-                                android:background="@color/colorPrimary" />
+                                android:background="@color/colorPrimary"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/textview_other_destribution"
@@ -377,7 +440,8 @@
                                 android:padding="@dimen/_10sdp"
                                 android:text="Let Other to Distribute the Books"
                                 android:textColor="@color/dark_gray"
-                                android:textSize="@dimen/_10sdp" />
+                                android:textSize="@dimen/_10sdp"
+                                android:visibility="gone" />
                         </LinearLayout>
 
 
@@ -385,13 +449,13 @@
                             android:id="@+id/tv_ordertype"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round_whitelbg"
                             android:drawableRight="@drawable/drop_down"
                             android:fontFamily="@font/reguler"
                             android:inputType="number"
                             android:paddingBottom="@dimen/_6sdp"
-                            android:layout_marginBottom="@dimen/_5sdp"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
@@ -416,17 +480,18 @@
                             android:gravity="center"
                             android:padding="@dimen/_10sdp"
                             android:text="Add Address"
-                            android:textStyle="bold"
                             android:textColor="@color/red_bg"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/recyclerview_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
                             android:layout_marginBottom="@dimen/_20sdp"
-                            android:layout_marginTop="@dimen/_5sdp" />
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -444,35 +509,35 @@
                         android:visibility="gone" />
 
                     <!--<LinearLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:visibility="gone">-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:visibility="gone">-->
 
-                        <!--<TextView-->
-                            <!--android:id="@+id/textview_address"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginBottom="@dimen/_10sdp"-->
-                            <!--android:layout_marginTop="@dimen/_5sdp"-->
-                            <!--android:fontFamily="@font/reguler"-->
-                            <!--android:text="Address"-->
-                            <!--android:textColor="@color/red_bg"-->
-                            <!--android:textSize="@dimen/_10sdp" />-->
+                    <!--<TextView-->
+                    <!--android:id="@+id/textview_address"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/_10sdp"-->
+                    <!--android:layout_marginTop="@dimen/_5sdp"-->
+                    <!--android:fontFamily="@font/reguler"-->
+                    <!--android:text="Address"-->
+                    <!--android:textColor="@color/red_bg"-->
+                    <!--android:textSize="@dimen/_10sdp" />-->
 
-                        <!--<EditText-->
-                            <!--android:id="@+id/edittext_address"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginBottom="@dimen/_10sdp"-->
-                            <!--android:background="@drawable/edittext_round"-->
-                            <!--android:hint="23 2 karobag delhi india"-->
-                            <!--android:inputType="text"-->
-                            <!--android:paddingBottom="@dimen/_6sdp"-->
-                            <!--android:paddingLeft="@dimen/_8sdp"-->
-                            <!--android:paddingRight="@dimen/_6sdp"-->
-                            <!--android:paddingTop="@dimen/_6sdp"-->
-                            <!--android:textSize="@dimen/_10sdp" />-->
+                    <!--<EditText-->
+                    <!--android:id="@+id/edittext_address"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/_10sdp"-->
+                    <!--android:background="@drawable/edittext_round"-->
+                    <!--android:hint="23 2 karobag delhi india"-->
+                    <!--android:inputType="text"-->
+                    <!--android:paddingBottom="@dimen/_6sdp"-->
+                    <!--android:paddingLeft="@dimen/_8sdp"-->
+                    <!--android:paddingRight="@dimen/_6sdp"-->
+                    <!--android:paddingTop="@dimen/_6sdp"-->
+                    <!--android:textSize="@dimen/_10sdp" />-->
                     <!--</LinearLayout>-->
 
                     <LinearLayout

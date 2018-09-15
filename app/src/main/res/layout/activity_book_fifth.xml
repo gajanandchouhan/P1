@@ -308,7 +308,6 @@
                             android:id="@+id/receipt_recyclerview"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/_60sdp"
-
                             android:layout_gravity="left"
                             android:layout_margin="@dimen/_5sdp"
                             android:layout_weight="1"></android.support.v7.widget.RecyclerView>
