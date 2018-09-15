@@ -58,11 +58,13 @@ public class AudioPlayerActivity extends AppCompatActivity implements PlaylistLi
     private int selectedPosition = 0;
 
     private String name, url, image;
+    private TextView textViewName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.audio_player_activity);
+        textViewName=findViewById(R.id.text_view_audio_name);
         retrieveExtras();
         init();
     }
@@ -176,6 +178,7 @@ public class AudioPlayerActivity extends AppCompatActivity implements PlaylistLi
         url = extras.getString("url");
         image = extras.getString("image");
         selectedPosition = extras.getInt(EXTRA_INDEX, 0);
+        textViewName.setText(name);
     }
 
     /**

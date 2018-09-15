@@ -12,6 +12,7 @@ import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -34,6 +35,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.superlifesecretcode.app.BuildConfig;
 import com.superlifesecretcode.app.GlideApp;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 
 import java.io.ByteArrayOutputStream;
@@ -48,10 +50,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
@@ -432,6 +436,7 @@ public class CommonUtils {
         datePickerDialog.getDatePicker().setMaxDate(max);
         datePickerDialog.show();
     }
+
     public static void showTimePicker(Context mContext, TimePickerDialog.OnTimeSetListener listner) {
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -512,5 +517,30 @@ public class CommonUtils {
             return false;
         }
         return true;
+    }
+
+
+    public static String getDuration(String url) {
+        try {
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(url);
+            String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            long millis = Long.parseLong(time);
+            if (millis > 60 * 1000 * 60) {
+                return String.format(Locale.getDefault(), "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+                        TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                        TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+            } else {
+                return String.format(Locale.getDefault(), "%02d:%02d",
+                        TimeUnit.MILLISECONDS.toMinutes(millis),
+                        TimeUnit.MILLISECONDS.toSeconds(millis) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+            }
+
+        } catch (Exception e) {
+
+        }
+        return "";
+
     }
 }

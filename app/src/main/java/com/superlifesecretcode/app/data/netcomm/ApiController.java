@@ -24,6 +24,7 @@ import com.superlifesecretcode.app.data.model.personalevent.PersonalEventRespons
 import com.superlifesecretcode.app.data.model.shares.ShareListResponseModel;
 import com.superlifesecretcode.app.data.model.standardevent.StandardEventResponseModel;
 import com.superlifesecretcode.app.data.model.studygroups.StudyGroupResponseModel;
+import com.superlifesecretcode.app.data.model.studygroups.studtgroupplans.StudyGroupPlanResponseModel;
 import com.superlifesecretcode.app.data.model.studygroups.studygroupitem.StudyGroupItemResponnseModel;
 import com.superlifesecretcode.app.data.model.unreadannouncement.AnnouncementCountResponseModel;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseModel;
@@ -396,6 +397,12 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<StudyGroupItemResponnseModel>(handler));
                     break;
+                case REQ_GET_SUBSCRIPTION_PLAN:
+                    Observable<StudyGroupPlanResponseModel> planListObservable = apiInterface.getStudyGroupPlan(stringMultipartParamsParams, header);
+                    planListObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<StudyGroupPlanResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -574,6 +581,13 @@ public class ApiController implements RequestType {
             case REQ_BOOK_ORDER:
                 Observable<BaseResponseModel> bookOrderObservable = apiInterface.bookOrder(fileParams, headers);
                 bookOrderObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
+                break;
+
+            case REQ_SUBSCRIPTION_PLAN:
+                Observable<BaseResponseModel> subPlanObservable = apiInterface.subscribePlan(fileParams, headers);
+                subPlanObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(responseHandler));
                 break;

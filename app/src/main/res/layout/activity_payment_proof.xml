@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/toolbar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textview_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/reguler"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/_10sdp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/payment_type_heading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/reguler"
+                            android:text="Payment Type"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_payment_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:background="@drawable/edittext_round"
+                            android:drawableRight="@drawable/drop_down"
+                            android:fontFamily="@font/reguler"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:padding="@dimen/_5sdp"
+                            android:singleLine="true"
+                            android:text="Select"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_10sdp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/payment_date_heading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_4sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/reguler"
+                            android:text="Payment Date"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_payment_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:background="@drawable/edittext_round"
+                            android:drawableRight="@drawable/drop_down"
+                            android:fontFamily="@font/reguler"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:singleLine="true"
+                            android:text="Select"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_9sdp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rechcyclerview_bankslist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp" />
+
+                <TextView
+                    android:id="@+id/textview_attachmentline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/reguler"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <EditText
+                    android:id="@+id/edittext_enteramount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/edittext_round"
+                    android:drawableRight="@drawable/attach_drawable"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/reguler"
+                    android:hint="Please Attach File"
+                    android:inputType="number"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_6sdp"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/_10sdp" />
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/receipt_recyclerview"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_gravity="left"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/textview_plus"
+                            android:layout_width="@dimen/_55sdp"
+                            android:layout_height="@dimen/_55sdp"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:background="@color/colorPrimary"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/_25sdp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eee9e9"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textview_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:textAllCaps="true"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/textview_total_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/reguler"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:text="288"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_16sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textview_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/gray_color"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:padding="@dimen/_6sdp"
+            android:text="Back"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/_15sdp" />
+
+        <TextView
+            android:id="@+id/textview_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:padding="@dimen/_6sdp"
+            android:text="Next"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_15sdp" />
+    </LinearLayout>
+</LinearLayout>

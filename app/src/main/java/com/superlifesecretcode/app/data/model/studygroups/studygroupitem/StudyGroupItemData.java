@@ -9,6 +9,16 @@ public class StudyGroupItemData {
     private String group_name;
     private String item_type;
     private String item_type_id;
+    private String duration;
+    private String item_expiry_date;
+
+    public String getItem_expiry_date() {
+        return item_expiry_date;
+    }
+
+    public void setItem_expiry_date(String item_expiry_date) {
+        this.item_expiry_date = item_expiry_date;
+    }
 
     public String getItem_id() {
         return item_id;
@@ -72,5 +82,13 @@ public class StudyGroupItemData {
 
     public void setItem_type_id(String item_type_id) {
         this.item_type_id = item_type_id;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getDuration() {
+        return duration;
     }
 }

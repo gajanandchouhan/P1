@@ -10,6 +10,8 @@ public class StudyGroupDetails implements Serializable {
     private String group_start_date;
     private String group_end_date;
     private String subcription_status;
+    private String approval_date;
+    private String expiry_date;
 
     public String getGroup_id() {
         return group_id;
@@ -65,5 +67,21 @@ public class StudyGroupDetails implements Serializable {
 
     public void setSubcription_status(String subcription_status) {
         this.subcription_status = subcription_status;
+    }
+
+    public String getApproval_date() {
+        return approval_date;
+    }
+
+    public void setApproval_date(String approval_date) {
+        this.approval_date = approval_date;
+    }
+
+    public String getExpiry_date() {
+        return expiry_date;
+    }
+
+    public void setExpiry_date(String expiry_date) {
+        this.expiry_date = expiry_date;
     }
 }
