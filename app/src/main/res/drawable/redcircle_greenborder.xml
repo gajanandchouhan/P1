@@ -5,6 +5,6 @@
          android:width="@dimen/_80sdp"
          android:height="@dimen/_80sdp" />-->
     <stroke
-        android:width="@dimen/_1sdp"
+        android:width="1.5dp"
         android:color="@color/colorPrimary"></stroke>
 </shape>

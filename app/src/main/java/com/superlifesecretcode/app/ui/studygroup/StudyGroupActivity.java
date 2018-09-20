@@ -48,8 +48,8 @@ public class StudyGroupActivity extends BaseActivity implements StudyGroupView {
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
-        tabLayout.getTabAt(0).setText("New");
-        tabLayout.getTabAt(1).setText("My Subscription");
+        tabLayout.getTabAt(0).setText(conversionData.getNew_groups());
+        tabLayout.getTabAt(1).setText(conversionData.getMy_subscriptions());
         list = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

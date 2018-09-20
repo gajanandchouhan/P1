@@ -54,9 +54,6 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
 
     @Override
     protected void initializeView() {
-        Locale current = getResources().getConfiguration().locale;
-        Log.i("locale", Currency.getInstance(current).getSymbol());
-        SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + Currency.getInstance(current).getSymbol());
 
         bookrecyclerview = findViewById(R.id.bookrecyclerview);
         textview_select = findViewById(R.id.textview_select);
@@ -77,10 +74,9 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         booksList = new ArrayList<>();
         selectedBooks = new ArrayList<>();
 
-            if (SuperLifeSecretPreferences.getInstance().getSelectedBooks().size() == 0) {
-                selectedBooks = new ArrayList<>();
-            }
-         else {
+        if (SuperLifeSecretPreferences.getInstance().getSelectedBooks().size() == 0) {
+            selectedBooks = new ArrayList<>();
+        } else {
             selectedBooks = SuperLifeSecretPreferences.getInstance().getSelectedBooks();
         }
         if (SuperLifeSecretPreferences.getInstance().getSelectedBooksList() == null || SuperLifeSecretPreferences.getInstance().getSelectedBooksList().size() == 0) {
@@ -111,6 +107,17 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         textview_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                SuperLifeSecretPreferences.getInstance().putString("book_type", "");
+                SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+                SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+                SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+                SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+                SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+                SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+                SuperLifeSecretPreferences.getInstance().putString("book_city", "");
                 finish();
             }
         });
@@ -149,6 +156,17 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
 
     @Override
     public void getBookList(BookList bookData) {
+        try{
+            if (bookData.getCurrencyUnit().getCurrency_symbol() != null || !bookData.getCurrencyUnit().getCurrency_symbol().equals("")) {
+                SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + bookData.getCurrencyUnit().getCurrency_symbol());
+            } else {
+                Locale current = getResources().getConfiguration().locale;
+                Log.i("locale", Currency.getInstance(current).getSymbol());
+                SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + Currency.getInstance(current).getSymbol());
+            }
+        }catch (Exception e){
+            Log.e("E",e.toString());
+        }
 
         ArrayList<BookBean> finalBooklist = bookData.getData();
         booksList.clear();
@@ -204,5 +222,16 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+        SuperLifeSecretPreferences.getInstance().putString("book_type", "");
+        SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+        SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+        SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+        SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+        SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+        SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+        SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+        SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+        SuperLifeSecretPreferences.getInstance().putString("book_city", "");
     }
 }

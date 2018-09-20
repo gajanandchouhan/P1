@@ -284,6 +284,290 @@ public class LanguageResponseData {
     private String are_you_sure_clear_buy;
     private String are_you_sure_clear_print;
 
+    private String printing;
+    private String buying;
+    private String own;
+    private String behalf;
+    private String free;
+    private String shipping;
+    private String book_store;
+    private String other_person;
+    private String other_mobile;
+    private String enter_other_person;
+    private String enter_other_mobile;
+
+    private String new_groups;
+    private String my_subscriptions;
+    private String subscribe;
+    private String subscribed;
+    //    private String pending;
+    private String declined;
+    private String renew;
+    private String started_on;
+    private String expire_on;
+    private String need_subscribe_first;
+    private String subscription_pending_for_approval;
+    private String subscription_plan_expired;
+    private String subscription_plan_rejected;
+    private String subscription_plans;
+    private String group_name;
+    private String confirm_subscription;
+    private String are_you_sure_confirm_subscription;
+    private String cost;
+    private String thankyou_groupstudy_msg;
+    private String subscription_detail;
+    private String select_plan;
+
+
+
+
+    public String getSubscription_detail() {
+        return subscription_detail;
+    }
+
+    public void setSubscription_detail(String subscription_detail) {
+        this.subscription_detail = subscription_detail;
+    }
+
+    public String getSelect_plan() {
+        return select_plan;
+    }
+
+    public void setSelect_plan(String select_plan) {
+        this.select_plan = select_plan;
+    }
+
+    public String getThankyou_groupstudy_msg() {
+        return thankyou_groupstudy_msg;
+    }
+
+    public void setThankyou_groupstudy_msg(String thankyou_groupstudy_msg) {
+        this.thankyou_groupstudy_msg = thankyou_groupstudy_msg;
+    }
+
+    public String getGroup_name() {
+        return group_name;
+    }
+
+    public void setGroup_name(String group_name) {
+        this.group_name = group_name;
+    }
+
+    public String getConfirm_subscription() {
+        return confirm_subscription;
+    }
+
+    public void setConfirm_subscription(String confirm_subscription) {
+        this.confirm_subscription = confirm_subscription;
+    }
+
+    public String getAre_you_sure_confirm_subscription() {
+        return are_you_sure_confirm_subscription;
+    }
+
+    public void setAre_you_sure_confirm_subscription(String are_you_sure_confirm_subscription) {
+        this.are_you_sure_confirm_subscription = are_you_sure_confirm_subscription;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public String getNew_groups() {
+        return new_groups;
+    }
+
+    public void setNew_groups(String new_groups) {
+        this.new_groups = new_groups;
+    }
+
+    public String getMy_subscriptions() {
+        return my_subscriptions;
+    }
+
+    public void setMy_subscriptions(String my_subscriptions) {
+        this.my_subscriptions = my_subscriptions;
+    }
+
+    public String getSubscribe() {
+        return subscribe;
+    }
+
+    public void setSubscribe(String subscribe) {
+        this.subscribe = subscribe;
+    }
+
+    public String getSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(String subscribed) {
+        this.subscribed = subscribed;
+    }
+
+    public String getDeclined() {
+        return declined;
+    }
+
+    public void setDeclined(String declined) {
+        this.declined = declined;
+    }
+
+    public String getRenew() {
+        return renew;
+    }
+
+    public void setRenew(String renew) {
+        this.renew = renew;
+    }
+
+    public String getStarted_on() {
+        return started_on;
+    }
+
+    public void setStarted_on(String started_on) {
+        this.started_on = started_on;
+    }
+
+    public String getExpire_on() {
+        return expire_on;
+    }
+
+    public void setExpire_on(String expire_on) {
+        this.expire_on = expire_on;
+    }
+
+    public String getNeed_subscribe_first() {
+        return need_subscribe_first;
+    }
+
+    public void setNeed_subscribe_first(String need_subscribe_first) {
+        this.need_subscribe_first = need_subscribe_first;
+    }
+
+    public String getSubscription_pending_for_approval() {
+        return subscription_pending_for_approval;
+    }
+
+    public void setSubscription_pending_for_approval(String subscription_pending_for_approval) {
+        this.subscription_pending_for_approval = subscription_pending_for_approval;
+    }
+
+    public String getSubscription_plan_expired() {
+        return subscription_plan_expired;
+    }
+
+    public void setSubscription_plan_expired(String subscription_plan_expired) {
+        this.subscription_plan_expired = subscription_plan_expired;
+    }
+
+    public String getSubscription_plan_rejected() {
+        return subscription_plan_rejected;
+    }
+
+    public void setSubscription_plan_rejected(String subscription_plan_rejected) {
+        this.subscription_plan_rejected = subscription_plan_rejected;
+    }
+
+    public String getSubscription_plans() {
+        return subscription_plans;
+    }
+
+    public void setSubscription_plans(String subscription_plans) {
+        this.subscription_plans = subscription_plans;
+    }
+
+    public String getBook_store() {
+        return book_store;
+    }
+
+    public void setBook_store(String book_store) {
+        this.book_store = book_store;
+    }
+
+    public String getPrinting() {
+        return printing;
+    }
+
+    public void setPrinting(String printing) {
+        this.printing = printing;
+    }
+
+    public String getBuying() {
+        return buying;
+    }
+
+    public void setBuying(String buying) {
+        this.buying = buying;
+    }
+
+    public String getOwn() {
+        return own;
+    }
+
+    public void setOwn(String own) {
+        this.own = own;
+    }
+
+    public String getBehalf() {
+        return behalf;
+    }
+
+    public void setBehalf(String behalf) {
+        this.behalf = behalf;
+    }
+
+    public String getFree() {
+        return free;
+    }
+
+    public void setFree(String free) {
+        this.free = free;
+    }
+
+    public String getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(String shipping) {
+        this.shipping = shipping;
+    }
+
+    public String getOther_person() {
+        return other_person;
+    }
+
+    public void setOther_person(String other_person) {
+        this.other_person = other_person;
+    }
+
+    public String getOther_mobile() {
+        return other_mobile;
+    }
+
+    public void setOther_mobile(String other_mobile) {
+        this.other_mobile = other_mobile;
+    }
+
+    public String getEnter_other_person() {
+        return enter_other_person;
+    }
+
+    public void setEnter_other_person(String enter_other_person) {
+        this.enter_other_person = enter_other_person;
+    }
+
+    public String getEnter_other_mobile() {
+        return enter_other_mobile;
+    }
+
+    public void setEnter_other_mobile(String enter_other_mobile) {
+        this.enter_other_mobile = enter_other_mobile;
+    }
 
     public String getAre_you_sure_clear_buy() {
         return are_you_sure_clear_buy;

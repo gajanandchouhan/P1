@@ -5,4 +5,5 @@ import com.superlifesecretcode.app.ui.book.first.BookList;
 
 public interface SecondBookView extends BaseView {
     void getDeliveryCharges(Delivery categoryResponseModel);
+    void getDeliveryDescription(DeliveryDescription categoryResponseModel);
 }

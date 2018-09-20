@@ -234,10 +234,25 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                         CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
                     } else {
                         if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
-
+                            if (SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("0") || SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("1")){
+                                SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+                                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                                SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
+                                SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                                SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                                SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+                                CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
+                                return;
+                            }
                             LanguageResponseData languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
                             String message = languageResponseData.getAre_you_sure_clear_buy();
-                            CommonUtils.showAlert(mContext, message, "Ok", "Cancel", new AlertDialog.OnClickListner() {
+                            CommonUtils.showAlert(mContext, message, languageResponseData.getOk(), languageResponseData.getCancel(), new AlertDialog.OnClickListner() {
                                 @Override
                                 public void onPositiveClick() {
                                     SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
@@ -297,9 +312,25 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
                         CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
                     } else {
                         if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
+                            if (SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("0") || SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("1")){
+                                SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+                                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                                SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
+                                SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                                SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                                SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+                                SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+                                CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
+                                return;
+                            }
                             LanguageResponseData languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
                             String message = languageResponseData.getAre_you_sure_clear_print();
-                            CommonUtils.showAlert(mContext, message, "Ok", "Cancel", new AlertDialog.OnClickListner() {
+                            CommonUtils.showAlert(mContext, message, languageResponseData.getOk(), languageResponseData.getCancel(), new AlertDialog.OnClickListner() {
                                 @Override
                                 public void onPositiveClick() {
                                     SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());

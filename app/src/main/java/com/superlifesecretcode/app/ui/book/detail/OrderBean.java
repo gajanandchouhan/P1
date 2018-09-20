@@ -23,7 +23,34 @@ public class OrderBean {
     String store_country;
     String store_state;
     String store_city;
+    String other_person_name;
+    String other_person_mobile;
+    String delivery_charge;
 
+
+    public String getDelivery_charge() {
+        return delivery_charge;
+    }
+
+    public void setDelivery_charge(String delivery_charge) {
+        this.delivery_charge = delivery_charge;
+    }
+
+    public String getOther_person_name() {
+        return other_person_name;
+    }
+
+    public void setOther_person_name(String other_person_name) {
+        this.other_person_name = other_person_name;
+    }
+
+    public String getOther_person_mobile() {
+        return other_person_mobile;
+    }
+
+    public void setOther_person_mobile(String other_person_mobile) {
+        this.other_person_mobile = other_person_mobile;
+    }
 
     public String getOrder_id() {
         return order_id;

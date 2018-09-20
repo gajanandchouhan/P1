@@ -216,7 +216,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
-        textViewTitle.setText("Payment Detail");
+        textViewTitle.setText(conversionData.getPayment_detail());
 
     }
 
@@ -254,7 +254,6 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
 
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
-
 
         builder.addFormDataPart("payment_date", payment_date);
         builder.addFormDataPart("payment_mode", payment_type);
@@ -399,8 +398,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         final FoldingCell fc = (FoldingCell) dialog.findViewById(R.id.folding_cell);
         fc.initialize(2000, getResources().getColor(R.color.colorPrimary), 5);
         TextView tv_header = dialog.findViewById(R.id.textView_title);
-        tv_header.setText("Confirm Order");
-
+        tv_header.setText(conversionData.getSubscription_plans());
 
         TextView group_name, plan, cost, user_name;
         TextView email, mobile, tv_receipt;
@@ -448,13 +446,13 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         tv_payment_mode = dialog.findViewById(R.id.tv_paymentmode);
         dialog_back_image = dialog.findViewById(R.id.back_image);
 
-        tv_are_you_sure.setText(conversionData.getAre_you_sure_continue());
+        tv_are_you_sure.setText(conversionData.getAre_you_sure_confirm_subscription());
         tv_bankname.setText(conversionData.getBank_name() + ":");
         tv_accountno.setText(conversionData.getAccount_number() + ":");
-        tv_order_detail_dialog.setText(conversionData.getOrder_detail() + ":");
-        tv_group_name.setText("Group Name:");
-        tv_plan.setText("Subscription Plan:");
-        tv_cost.setText("Cost:");
+        tv_order_detail_dialog.setText(conversionData.getSubscription_detail() + ":");
+        tv_group_name.setText(conversionData.getGroup_name()+":");
+        tv_plan.setText(conversionData.getSubscription_plans()+":");
+        tv_cost.setText(conversionData.getCost()+":");
         tv_payment_mode.setText(conversionData.getPayment_mode());
         tv_email.setText(conversionData.getEmail() + ":");
         tv_user_name.setText(conversionData.getUsername() + ":");

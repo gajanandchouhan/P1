@@ -13,6 +13,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.second.DeliveryData;
+import com.superlifesecretcode.app.ui.book.second.Discount;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -178,6 +179,22 @@ public class SuperLifeSecretPreferences {
             return list;
         }
         return new ArrayList<DeliveryData>();
+    }
+
+
+    public void setDiscountList(ArrayList<Discount> list) {
+        editer.putString("discount_list", new Gson().toJson(list)).commit();
+    }
+
+    public ArrayList<Discount> getDiscountList() {
+        String subMneus = preferences.getString("discount_list", "");
+        if (subMneus.length() > 0) {
+            Type type = new TypeToken<ArrayList<Discount>>() {
+            }.getType();
+            ArrayList<Discount> list = new Gson().fromJson(subMneus, type);
+            return list;
+        }
+        return new ArrayList<Discount>();
     }
 
 

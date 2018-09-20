@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
@@ -19,6 +20,7 @@
             <include layout="@layout/toolbar2" />
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_20sdp"
@@ -43,7 +45,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"></LinearLayout>
 
@@ -62,12 +64,12 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="2"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary" />
 
@@ -86,12 +88,12 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="3"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary" />
 
@@ -110,14 +112,14 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="4"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
-                        android:background="@color/gray_color" />
+                        android:background="@color/dark_gray" />
 
                 </LinearLayout>
 
@@ -134,14 +136,14 @@
                         android:background="@drawable/whitecircle_grayborder"
                         android:gravity="center"
                         android:text="5"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/dark_gray"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
-                        android:background="@color/gray_color" />
+                        android:background="@color/dark_gray" />
 
                 </LinearLayout>
 
@@ -151,15 +153,15 @@
                     android:background="@drawable/whitecircle_grayborder"
                     android:gravity="center"
                     android:text="6"
-                    android:textColor="@color/gray_color"
+                    android:textColor="@color/dark_gray"
                     android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/_25sdp"
-                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_marginLeft="@dimen/_23sdp"
+                android:layout_marginRight="@dimen/_23sdp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -182,15 +184,18 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
+                            android:layout_marginLeft="@dimen/_2sdp"
                             android:text="Printing for Own"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
 
                         <View
                             android:id="@+id/view_printforown"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/color_black"></View>
+                            android:layout_height="1.5dp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@color/colorPrimary"></View>
                     </LinearLayout>
 
                     <LinearLayout
@@ -211,19 +216,23 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/reguler"
                             android:gravity="center"
+                            android:layout_marginRight="@dimen/_2sdp"
                             android:text="Printing on Behalf"
                             android:textColor="@color/gray_color"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
 
                         <View
                             android:id="@+id/view_printfbehalf"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="1.5dp"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:background="@color/transparent"></View>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:id="@+id/linear_viewhide_printonbehalf"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -292,12 +301,39 @@
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_10sdp" />
 
+                        <TextView
+                            android:id="@+id/textview_emailid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:fontFamily="@font/reguler"
+                            android:text="Email id"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <EditText
+                            android:id="@+id/edittext_emailid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@drawable/edittext_round"
+                            android:fontFamily="@font/reguler"
+                            android:hint="Enter Email id"
+                            android:inputType="textEmailAddress"
+                            android:paddingBottom="@dimen/_6sdp"
+                            android:paddingLeft="@dimen/_8sdp"
+                            android:paddingRight="@dimen/_6sdp"
+                            android:paddingTop="@dimen/_6sdp"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_10sdp" />
+
                         <LinearLayout
                             android:id="@+id/linear_other_person"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/textview_other_person_name"
@@ -354,32 +390,6 @@
                                 android:textSize="@dimen/_10sdp" />
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textview_emailid"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_3sdp"
-                            android:fontFamily="@font/reguler"
-                            android:text="Email id"
-                            android:textColor="@color/red_bg"
-                            android:textSize="@dimen/_10sdp" />
-
-                        <EditText
-                            android:id="@+id/edittext_emailid"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:background="@drawable/edittext_round"
-                            android:fontFamily="@font/reguler"
-                            android:hint="Enter Email id"
-                            android:inputType="textEmailAddress"
-                            android:paddingBottom="@dimen/_6sdp"
-                            android:paddingLeft="@dimen/_8sdp"
-                            android:paddingRight="@dimen/_6sdp"
-                            android:paddingTop="@dimen/_6sdp"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
                     <TextView
@@ -396,7 +406,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-
                         <!--<android.support.v7.widget.RecyclerView-->
                         <!--android:id="@+id/recyclerview_storelist"-->
                         <!--android:layout_width="match_parent"-->
@@ -410,6 +419,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_ordertype"
+                            android:layout_marginBottom="@dimen/_20sdp"
                             android:layout_marginTop="-28dp"
                             android:background="@drawable/round_border"
                             android:orientation="vertical"
@@ -423,14 +433,14 @@
                                 android:fontFamily="@font/reguler"
                                 android:padding="@dimen/_10sdp"
                                 android:text="Books at a Designated Location"
-                                android:textColor="@color/dark_gray"
+                                android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_10sdp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_1sdp"
                                 android:background="@color/colorPrimary"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
 
                             <TextView
                                 android:id="@+id/textview_other_destribution"
@@ -439,9 +449,8 @@
                                 android:fontFamily="@font/reguler"
                                 android:padding="@dimen/_10sdp"
                                 android:text="Let Other to Distribute the Books"
-                                android:textColor="@color/dark_gray"
-                                android:textSize="@dimen/_10sdp"
-                                android:visibility="gone" />
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_10sdp" />
                         </LinearLayout>
 
 
@@ -449,7 +458,6 @@
                             android:id="@+id/tv_ordertype"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_5sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round_whitelbg"
                             android:drawableRight="@drawable/drop_down"
@@ -459,7 +467,7 @@
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/gray_color"
                             android:textSize="@dimen/_10sdp" />
 
                     </RelativeLayout>
@@ -468,7 +476,7 @@
                         android:id="@+id/linear_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -485,14 +493,21 @@
                             android:textStyle="bold"
                             android:visibility="gone" />
 
+                        <!--<android.support.v7.widget.CardView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--app:cardElevation="@dimen/_3sdp"-->
+                        <!--app:cardBackgroundColor="#fff"-->
+                        <!--app:cardUseCompatPadding="true">-->
+
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/recyclerview_address"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_20sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_height="@dimen/_150sdp"
+                            android:layout_margin="@dimen/_2sdp"
                             android:visibility="gone" />
 
+                        <!--</android.support.v7.widget.CardView>-->
                     </LinearLayout>
 
                     <TextView
@@ -679,7 +694,6 @@
             android:fontFamily="@font/bold"
             android:gravity="center"
             android:padding="@dimen/_8sdp"
-            android:textAllCaps="true"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14sdp" />
 
@@ -688,11 +702,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/reguler"
+            android:fontFamily="@font/bold"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_16sdp" />
+            android:textColor="@color/red_bg"
+            android:textSize="@dimen/_15sdp" />
 
     </LinearLayout>
 

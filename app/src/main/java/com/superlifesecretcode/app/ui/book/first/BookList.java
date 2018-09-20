@@ -8,7 +8,15 @@ public class BookList  extends BaseResponseModel{
 
     String total;
     ArrayList<BookBean> data;
+    Currency currencyUnit;
 
+    public Currency getCurrencyUnit() {
+        return currencyUnit;
+    }
+
+    public void setCurrencyUnit(Currency currencyUnit) {
+        this.currencyUnit = currencyUnit;
+    }
 
     public String getTotal() {
         return total;

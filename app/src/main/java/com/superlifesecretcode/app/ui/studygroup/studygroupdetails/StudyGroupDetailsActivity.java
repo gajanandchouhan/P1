@@ -96,31 +96,31 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
         ImageLoadUtils.loadImage(studyGroupDetails.getGroup_image(), imageView);
         switch (studyGroupDetails.getSubcription_status()) {
             case ConstantLib.STATUS_GROUP_NEW:
-                buttonSubscribe.setText("Subscribe");
+                buttonSubscribe.setText(conversionData.getSubscribe());
                 textViewReason.setVisibility(View.GONE);
                 textViewExpiry.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_SUBSCRIBED:
-                buttonSubscribe.setText("Subscribed");
+                buttonSubscribe.setText(conversionData.getSubscribed());
                 textViewReason.setVisibility(View.GONE);
                 textViewExpiry.setVisibility(View.VISIBLE);
                 textViewExpiry.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd, MMM, yy", studyGroupDetails.getExpiry_date(), false, null));
                 break;
             case ConstantLib.STATUS_GROUP_PENDING:
-                buttonSubscribe.setText("Pending");
+                buttonSubscribe.setText(conversionData.getPending());
                 textViewExpiry.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_EXPIRED:
-                buttonSubscribe.setText("Renew");
+                buttonSubscribe.setText(conversionData.getRenew());
                 textViewReason.setVisibility(View.GONE);
                 textViewExpiry.setVisibility(View.VISIBLE);
-                textViewExpiry.setText("Expired");
+                textViewExpiry.setText(conversionData.getExpire_on());
                 break;
             case ConstantLib.STATUS_GROUP_REJECTED:
-                buttonSubscribe.setText("Subscribe");
+                buttonSubscribe.setText(conversionData.getSubscribe());
                 textViewReason.setVisibility(View.VISIBLE);
                 textViewExpiry.setVisibility(View.VISIBLE);
-                textViewExpiry.setText("Rejected");
+                textViewExpiry.setText(conversionData.getRejected());
                 break;
         }
     }
@@ -205,13 +205,13 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
 
     public void showAlertSubscriptionStatus() {
         if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_NEW)) {
-            showAlert("Subscribe", conversionData.getCancel(), "You need to subscribe first to access the item");
+            showAlert(conversionData.getSubscribe(), conversionData.getCancel(), conversionData.getNeed_subscribe_first());
         } else if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_PENDING)) {
-            showAlert(conversionData.getOk(), null, "Your subscription is pending for approval.");
+            showAlert(conversionData.getOk(), null, conversionData.getSubscription_pending_for_approval());
         } else if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_EXPIRED)) {
-            showAlert("Renew", conversionData.getCancel(), "Your subscription plan is expired, please renew plan.");
+            showAlert(conversionData.getRenew(), conversionData.getCancel(), conversionData.getSubscription_plan_expired());
         } else if (studyGroupDetails.getSubcription_status().equals(ConstantLib.STATUS_GROUP_REJECTED)) {
-            showAlert("Subscribe", conversionData.getCancel(), "Your subscription is rejected,You need to subscribe first to access the item.");
+            showAlert(conversionData.getSubscribe(), conversionData.getCancel(), conversionData.getSubscription_plan_rejected());
         }
     }
 

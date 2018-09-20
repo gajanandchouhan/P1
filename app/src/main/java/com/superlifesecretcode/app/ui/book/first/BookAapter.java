@@ -20,6 +20,7 @@ import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Divya on 26-02-2018.
@@ -46,9 +47,11 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_auther_name.setText(list.get(position).getAuthor_name());
 //        holder.textview_book_descrption.setText(list.get(position).getDescription());
-        holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+ list.get(position).getPrice());
+        try {
+            holder.textview_bookprice.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " +  String.format(Locale.getDefault(), "%.2f", list.get(position).getPrice()));
+        } catch (Exception e) {
+        }
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
-
         if (list.get(position).isSelected()) {
             holder.checkbox.setImageDrawable(mContext.getResources().getDrawable(R.drawable.check));
         } else {

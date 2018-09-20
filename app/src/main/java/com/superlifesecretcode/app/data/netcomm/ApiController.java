@@ -35,6 +35,7 @@ import com.superlifesecretcode.app.ui.book.forth.AddressBean;
 import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
 import com.superlifesecretcode.app.ui.book.second.Delivery;
+import com.superlifesecretcode.app.ui.book.second.DeliveryDescription;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.io.File;
@@ -517,6 +518,12 @@ public class ApiController implements RequestType {
                 getGroupObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<StudyGroupResponseModel>(handler));
+                break;
+            case REQ_GET_DELIVERY_BUY_DESCRIPTION:
+                Observable<DeliveryDescription> getdeliverybuyDescriptionObservable = apiInterface.getDeliveryBuyDescription(headers);
+                getdeliverybuyDescriptionObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<DeliveryDescription>(handler));
                 break;
         }
 

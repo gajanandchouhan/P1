@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -16,6 +19,7 @@ import java.util.List;
 public class DeliveryAapter extends RecyclerView.Adapter<DeliveryAapter.ItemViewHolder> {
     private final List<DeliveryData> list;
     private Context mContext;
+    LanguageResponseData languageResponseData;
 
     public DeliveryAapter(ArrayList<DeliveryData> list, SecondBookActivity mContext) {
         this.list = list;
@@ -29,7 +33,14 @@ public class DeliveryAapter extends RecyclerView.Adapter<DeliveryAapter.ItemView
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
-        holder.textview_bankname.setText(""+list.get(position).getRange_from()+" - "+list.get(position).getRange_to()+" = "+list.get(position).getDelivery_charge());
+        languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        holder.textview_bankname.setText(""+list.get(position).getRange_from()+" - "+list.get(position).getRange_to()+" "+languageResponseData.getBooks()+""+" = ");
+        try {
+            holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(java.util.Locale.getDefault(), "%.2f", Double.parseDouble(list.get(position).getDelivery_charge())));
+        }catch (Exception e){
+            holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + list.get(position).getDelivery_charge());
+        }
+
     }
 
     @Override
@@ -40,10 +51,12 @@ public class DeliveryAapter extends RecyclerView.Adapter<DeliveryAapter.ItemView
     class ItemViewHolder extends RecyclerView.ViewHolder  {
 
         TextView textview_bankname;
+        TextView tvtotal;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             textview_bankname = itemView.findViewById(R.id.textview_bankname);
+            tvtotal = itemView.findViewById(R.id.tvtotal);
         }
     }
 }

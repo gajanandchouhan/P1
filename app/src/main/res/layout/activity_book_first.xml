@@ -43,9 +43,9 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_1sdp"
+                    android:layout_height="1.5dp"
                     android:layout_weight="1"
-                    android:background="@color/gray_color"></LinearLayout>
+                    android:background="@color/dark_gray"></LinearLayout>
 
             </LinearLayout>
 
@@ -62,14 +62,16 @@
                     android:background="@drawable/whitecircle_grayborder"
                     android:gravity="center"
                     android:text="2"
-                    android:textColor="@color/gray_color"
+                    android:textColor="@color/dark_gray"
+                    android:textStyle="normal"
+
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_1sdp"
+                    android:layout_height="1.5dp"
                     android:layout_weight="1"
-                    android:background="@color/gray_color"></LinearLayout>
+                    android:background="@color/dark_gray"></LinearLayout>
 
             </LinearLayout>
 
@@ -86,14 +88,14 @@
                     android:background="@drawable/whitecircle_grayborder"
                     android:gravity="center"
                     android:text="3"
-                    android:textColor="@color/gray_color"
+                    android:textColor="@color/dark_gray"
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_1sdp"
+                    android:layout_height="1.5dp"
                     android:layout_weight="1"
-                    android:background="@color/gray_color"></LinearLayout>
+                    android:background="@color/dark_gray"></LinearLayout>
 
             </LinearLayout>
 
@@ -110,14 +112,14 @@
                     android:background="@drawable/whitecircle_grayborder"
                     android:gravity="center"
                     android:text="4"
-                    android:textColor="@color/gray_color"
+                    android:textColor="@color/dark_gray"
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_1sdp"
+                    android:layout_height="1.5dp"
                     android:layout_weight="1"
-                    android:background="@color/gray_color"></LinearLayout>
+                    android:background="@color/dark_gray"></LinearLayout>
 
             </LinearLayout>
 
@@ -134,14 +136,14 @@
                     android:background="@drawable/whitecircle_grayborder"
                     android:gravity="center"
                     android:text="5"
-                    android:textColor="@color/gray_color"
+                    android:textColor="@color/dark_gray"
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_1sdp"
+                    android:layout_height="1.5dp"
                     android:layout_weight="1"
-                    android:background="@color/gray_color"></LinearLayout>
+                    android:background="@color/dark_gray"></LinearLayout>
 
             </LinearLayout>
 
@@ -152,7 +154,7 @@
                 android:background="@drawable/whitecircle_grayborder"
                 android:gravity="center"
                 android:text="6"
-                android:textColor="@color/gray_color"
+                android:textColor="@color/dark_gray"
                 android:textSize="@dimen/_14sdp" />
         </LinearLayout>
 
@@ -169,7 +171,7 @@
                 android:fontFamily="@font/reguler"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/bookrecyclerview"

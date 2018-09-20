@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,9 +23,11 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.player.PLayerPopupActivityYesNO;
+import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -50,12 +53,22 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
-        holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + list.get(position).getPrice());
+        try {
+            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + String.format(Locale.getDefault(), "%.2f", list.get(position).getPrice()));
+        }catch (Exception e){
+            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + list.get(position).getPrice());
+        }
+
         Log.e("adapter" + position, "" + list.get(position).getQuantity());
         holder.edittext_quantity.setText("" + list.get(position).getQuantity());
         holder.edittext_quantity.setSelection(holder.edittext_quantity.getText().length());
+        holder.edittext_quantity.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-
+                return false;
+            }
+        });
         holder.edittext_quantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -64,32 +77,37 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (holder.edittext_quantity.getText().toString().equals("")) {
-                    holder.edittext_quantity.setText("1");
-                    onDeleteListener.onQualtityChanged("1",position);
-                }else {
+                if (!holder.edittext_quantity.getText().toString().equals("")) {
                     onDeleteListener.onQualtityChanged(holder.edittext_quantity.getText().toString(),position);
+                   // holder.edittext_quantity.setText("1");
+                   // onDeleteListener.onQualtityChanged("1",position);
+//                    onDeleteListener.onQualtityChanged("0",position);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (holder.edittext_quantity.getText().toString().equals("")) {
+                   // holder.edittext_quantity.setText("0");
+                    onDeleteListener.onQualtityChanged("0",position);
+                }
+
             }
         });
 
         holder.delete_iamge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletePopup(position);
+                deletePopup(position,list.get(position).getName());
             }
         });
     }
 
-    private void deletePopup(final int position) {
+    private void deletePopup(final int position, String name) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LanguageResponseData conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
-            builder.setMessage("Do you really want to delete");
+            builder.setMessage(conversionData.getWant_delete()+" "+name);
             builder.setPositiveButton(conversionData.getYes(), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

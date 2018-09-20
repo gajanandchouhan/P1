@@ -9,6 +9,8 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import java.util.ArrayList;
+import java.util.Locale;
+
 /**
  * Created by Divya on 26-02-2018.
  */
@@ -45,7 +47,12 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
         holder.textview_orderid.setText(orderArrayList.get(position).getOrder_code());
         holder.textview_status.setText(orderArrayList.get(position).getOrder_status());
         holder.textview_date.setText(orderArrayList.get(position).getOrder_date());
-        holder.textview_amount.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+orderArrayList.get(position).getTotal_amount());
+        try {
+            holder.textview_amount.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(orderArrayList.get(position).getTotal_amount())));
+        }catch (Exception e){
+            holder.textview_amount.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+orderArrayList.get(position).getTotal_amount());
+        }
+        //holder.textview_amount.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+orderArrayList.get(position).getTotal_amount());
         holder.textview_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

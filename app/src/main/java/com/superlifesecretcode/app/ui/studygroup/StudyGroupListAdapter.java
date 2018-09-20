@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.studygroups.StudyGroupDetails;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.studygroup.studygroupdetails.StudyGroupDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -24,6 +26,7 @@ import java.util.List;
 public class StudyGroupListAdapter extends RecyclerView.Adapter<StudyGroupListAdapter.ViewHolder> {
     private List<StudyGroupDetails> list;
     private Context mContext;
+    private LanguageResponseData conversionData;
 
     public StudyGroupListAdapter(List list, Context mContext) {
         this.list = list;
@@ -40,6 +43,7 @@ public class StudyGroupListAdapter extends RecyclerView.Adapter<StudyGroupListAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         StudyGroupDetails studyGroupDetails = list.get(position);
         holder.textViewTitle.setText(studyGroupDetails.getGroup_name());
         holder.textViewDesc.setText(studyGroupDetails.getGroup_description());
@@ -52,29 +56,29 @@ public class StudyGroupListAdapter extends RecyclerView.Adapter<StudyGroupListAd
                 break;
             case ConstantLib.STATUS_GROUP_SUBSCRIBED:
                 holder.layoutStatus.setVisibility(View.VISIBLE);
-                holder.textViewStatus.setText("Subscribed");
+                holder.textViewStatus.setText(conversionData.getSubscribed());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_published);
                 holder.textViewSubscribe.setVisibility(View.GONE);
                 holder.textViewReason.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_PENDING:
                 holder.layoutStatus.setVisibility(View.VISIBLE);
-                holder.textViewStatus.setText("PENDING");
+                holder.textViewStatus.setText(conversionData.getPending());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_pending);
                 holder.textViewSubscribe.setVisibility(View.GONE);
                 holder.textViewReason.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_EXPIRED:
                 holder.layoutStatus.setVisibility(View.VISIBLE);
-                holder.textViewStatus.setText("Expired");
-                holder.textViewStatus.setText("Renew");
+                holder.textViewStatus.setText(conversionData.getExpire_on());
+                holder.textViewStatus.setText(conversionData.getRenew());
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_declined);
                 holder.textViewSubscribe.setVisibility(View.GONE);
                 holder.textViewReason.setVisibility(View.GONE);
                 break;
             case ConstantLib.STATUS_GROUP_REJECTED:
                 holder.layoutStatus.setVisibility(View.VISIBLE);
-                holder.textViewStatus.setText("Rejected");
+                holder.textViewStatus.setText(conversionData.getRejected());
                 holder.textViewReason.setVisibility(View.VISIBLE);
                 holder.textViewStatus.setBackgroundResource(R.drawable.bg_declined);
                 holder.textViewSubscribe.setVisibility(View.GONE);

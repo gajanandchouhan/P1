@@ -60,4 +60,36 @@ public class SecondBookPresenter extends BasePresenter<SecondBookView> {
             }
         }, headers,"","");
     }
+
+    public void getDeliveryDescription(Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_DELIVERY_BUY_DESCRIPTION, new ResponseHandler<DeliveryDescription>() {
+            @Override
+            public void onResponse(DeliveryDescription categoryResponseModel) {
+                view.hideProgress();
+                if (categoryResponseModel != null) {
+                    if (categoryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS))
+                        view.getDeliveryDescription(categoryResponseModel);
+                    else {
+                        CommonUtils.showSnakeBar(mContext, categoryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, headers,"","");
+    }
 }

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
@@ -24,6 +25,7 @@ import com.superlifesecretcode.app.util.CommonUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ForthBookActivity extends BaseActivity implements ForthBookView {
@@ -50,14 +52,14 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     EditText edittext_fullname, edittext_contact_number, edittext_emailid;
     TextView textview_contact_number, textview_emailid, textview_state, textview_city;
     EditText edittext_deliveryaddress, edittext_postcode, edittext_state, edittext_city;
-    String countryId , country_name;
+    String countryId, country_name;
     String stateId = "", city_id = "";
     private CountryStatePicker countryStatePicker;
     private LanguageResponseData conversionData;
     TextView textview_fullname, textView_title, textview_ordertype, textview_deliveryaddress, textview_pincode;
     LinearLayout linear_other_person;
-    TextView  textview_other_person_name , textview_other_person_mobile;
-    EditText  edittext_other_person_name, edittext_otehr_person_mobile;
+    TextView textview_other_person_name, textview_other_person_mobile;
+    EditText edittext_other_person_name, edittext_otehr_person_mobile;
 
     @Override
     protected int getContentView() {
@@ -72,6 +74,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         oldAddressList = new ArrayList<>();
         total_amont = SuperLifeSecretPreferences.getInstance().getString("total_amount");
         textView_title = findViewById(R.id.textView_title);
+
         textView_title.setText(SuperLifeSecretPreferences.getInstance().getString("book_title"));
 
         Map<String, String> headers = new HashMap<>();
@@ -124,23 +127,26 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             if (Integer.parseInt(stack) < 4) {
                 SuperLifeSecretPreferences.getInstance().putString("book_order_for", "1");
                 SuperLifeSecretPreferences.getInstance().putString("book_store_id", "0");
-                //SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "0");
+                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
             }
         }
-
-        edittext_emailid.setText("" + userData.getEmail());
-        edittext_contact_number.setText("" + userData.getMobile());
-        textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
-
+        edittext_fullname.setText(userData.getUsername());
+        edittext_emailid.setText(userData.getEmail());
+        edittext_contact_number.setText(userData.getMobile());
+        try {
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", Double.parseDouble(total_amont)));
+        } catch (Exception e) {
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
+        }
         setUpConversion();
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "3");
                 finish();
             }
         });
-
         edittext_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,264 +174,116 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textview_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (printing_status == 1) {
-                    String contact_number = edittext_contact_number.getText().toString();
-                    String email = edittext_emailid.getText().toString();
-                    if (add_address_Layout.getVisibility() == View.GONE) {
-                        if (edittext_fullname.getText().toString().equals("")) {
-                            edittext_fullname.setError(conversionData.getName_national_card());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getName_national_card());
-                            return;
-                        }
-                        if (contact_number.isEmpty()) {
-                            edittext_fullname.setError(conversionData.getEnter_contact_p_num());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_contact_p_num());
-                            return;
-                        }
-                        if (email.isEmpty()) {
-                            edittext_emailid.setError(conversionData.getEnter_email());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_email());
-                            return;
-                        }
-//                        if (CommonUtils.isValidEmail(email)) {
-//                            edittext_emailid.setError(conversionData.getEnter_valid_email());
-//                            CommonUtils.showSnakeBar(ForthBookActivity.this,  conversionData.getEnter_valid_email());
-//                            return;
-//                        }
-                        if (!contact_number.equals(userData.getMobile()) || !email.equals(userData.getEmail())) {
-                            showAlert();
-                            return;
-                        }
-                        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_select_order_type());
-                            return;
-                        }
-                        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("1")) {
-                            if (tv_add_address.getVisibility() == View.VISIBLE && recyclerview_address.getVisibility() == View.VISIBLE) {
-                                CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_address());
-                                return;
-                            }
-                        }
-                    } else {
-                        if (edittext_fullname.getText().toString().equals("")) {
-                            edittext_fullname.setError(conversionData.getName_national_card());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getName_national_card());
-                            return;
-                        }
-                        if (contact_number.isEmpty()) {
-                            edittext_fullname.setError(conversionData.getEnter_contact_p_num());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_contact_p_num());
-                            return;
-                        }
-                        if (email.isEmpty()) {
-                            edittext_emailid.setError(conversionData.getEnter_email());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_email());
-                            return;
-                        }
-//                        if (CommonUtils.isValidEmail(email)) {
-//                            edittext_emailid.setError(conversionData.getEnter_valid_email());
-//                            CommonUtils.showSnakeBar(ForthBookActivity.this,  conversionData.getEnter_valid_email());
-//                            return;
-//                        }
-                        if (!contact_number.equals(userData.getMobile()) || !email.equals(userData.getEmail())) {
-                            showAlert();
-                            return;
-                        }
-                        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_select_order_type());
-                            return;
-                        }
-                        if (edittext_deliveryaddress.getText().toString().equals("")) {
-                            edittext_deliveryaddress.setError(conversionData.getPlease_enter_address());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_address());
-                            return;
-                        }
-                        if (edittext_postcode.getText().toString().equals("")) {
-                            edittext_postcode.setError(conversionData.getPlease_enter_postcode());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_postcode());
-                            return;
-                        }
-                        if (edittext_state.getText().toString().equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getSelect_state());
-                            return;
-                        }
-                        if (edittext_city.getText().toString().equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getSelect_city());
-                            return;
-                        }
-                    }
-                    if (!SuperLifeSecretPreferences.getInstance().getString("status_old_store_address").equals("1")){
-                        String delivery_address = edittext_deliveryaddress.getText().toString()+","+edittext_city.getText().toString()+" , "
-                                +","+edittext_city.getText().toString()+" , "+country_name;
-                        SuperLifeSecretPreferences.getInstance().putString("final_dialog_address",delivery_address);
-                    }
-                    SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_full_name", edittext_fullname.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_mobile", edittext_contact_number.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_email", edittext_emailid.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_pin_code", edittext_postcode.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_state", stateId);
-                    SuperLifeSecretPreferences.getInstance().putString("book_city", city_id);
-                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "4");
-                    CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);
+                String contact_number = edittext_contact_number.getText().toString();
+                String email = edittext_emailid.getText().toString();
+                String fullname = edittext_fullname.getText().toString();
+                String other_person_name = edittext_other_person_name.getText().toString();
+                String other_person_contactno = edittext_otehr_person_mobile.getText().toString();
 
-                } else if (printing_status == 2) {
-                    if (add_address_Layout.getVisibility() == View.GONE) {
-                        if (edittext_fullname.getText().toString().equals("")) {
-                            edittext_fullname.setError(conversionData.getName_national_card());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getName_national_card());
-                            return;
-                        }
-                        if (edittext_contact_number.getText().toString().equals("")) {
-                            edittext_contact_number.setError(conversionData.getEnter_contact_p_num());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_contact_p_num());
-                            return;
-                        }
-                        if (edittext_other_person_name.getText().toString().equals("")) {
-                            //edittext_other_person_name.setError(conversionData.getEnter_contact_p_num());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_contact_p_num());
-                            return;
-                        }
-                        if (edittext_otehr_person_mobile.getText().toString().equals("")) {
-                            //edittext_otehr_person_mobile.setError(conversionData.getEnter_contact_p_num());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_contact_p_num());
-                            return;
-                        }
-                        if (edittext_emailid.getText().toString().equals("")) {
-                            edittext_emailid.setError(conversionData.getEnter_email());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_email());
-                            return;
-                        }
-//                        if (CommonUtils.isValidEmail(edittext_emailid.getText().toString())) {
-//                            edittext_emailid.setError(conversionData.getEnter_valid_email());
-//                            CommonUtils.showSnakeBar(ForthBookActivity.this,  conversionData.getEnter_valid_email());
-//                            return;
-//                        }
-                        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_select_order_type());
-                            return;
-                        }
-                        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("1")) {
-                            if (tv_add_address.getVisibility() == View.VISIBLE && recyclerview_address.getVisibility() == View.VISIBLE) {
-                                CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_address());
-                                return;
-                            }
-                        }
-                    } else {
-                        if (edittext_fullname.getText().toString().equals("")) {
-                            edittext_fullname.setError(conversionData.getName_national_card());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getName_national_card());
-                            return;
-                        }
-                        if (edittext_contact_number.getText().toString().equals("")) {
-                            edittext_fullname.setError(conversionData.getEnter_contact_p_num());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_contact_p_num());
-                            return;
-                        }
-                        if (edittext_emailid.getText().toString().equals("")) {
-                            edittext_emailid.setError(conversionData.getEnter_email());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_email());
-                            return;
-                        }
-//                        if (CommonUtils.isValidEmail(edittext_emailid.getText().toString())) {
-//                            edittext_emailid.setError(conversionData.getEnter_valid_email());
-//                            CommonUtils.showSnakeBar(ForthBookActivity.this,  conversionData.getEnter_valid_email());
-//                            return;
-//                        }
-                        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_select_order_type());
-                            return;
-                        }
-                        if (edittext_deliveryaddress.getText().toString().equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_address());
-                            return;
-                        }
-                        if (edittext_postcode.getText().toString().equals("")) {
-                            edittext_postcode.setError(conversionData.getPlease_enter_postcode());
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_postcode());
-                            return;
-                        }
-                        if (edittext_state.getText().toString().equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getSelect_state());
-                            return;
-                        }
-                        if (edittext_city.getText().toString().equals("")) {
-                            CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getSelect_city());
-                            return;
-                        }
-                    }
-
-                    if (!SuperLifeSecretPreferences.getInstance().getString("status_old_store_address").equals("1")){
-                        String delivery_address = edittext_deliveryaddress.getText().toString()+","+edittext_city.getText().toString()+" , "
-                                +","+edittext_city.getText().toString()+" , "+country_name;
-                        SuperLifeSecretPreferences.getInstance().putString("final_dialog_address",delivery_address);
-                    }
-                    SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_full_name", edittext_fullname.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_mobile", edittext_contact_number.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_email", edittext_emailid.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_state", stateId);
-                    SuperLifeSecretPreferences.getInstance().putString("book_city", city_id);
-                    SuperLifeSecretPreferences.getInstance().putString("book_pin_code", edittext_postcode.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "4");
-                    SuperLifeSecretPreferences.getInstance().putString("other_person_name", ""+edittext_other_person_name.getText().toString());
-                    SuperLifeSecretPreferences.getInstance().putString("other_person_contact", ""+edittext_otehr_person_mobile.getText().toString());
-                    CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);
+                if (fullname.equals("")) {
+                    edittext_fullname.setError(conversionData.getName_national_card());
+                    CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getName_national_card());
+                    return;
                 }
+                if (contact_number.isEmpty()) {
+                    edittext_contact_number.setError(conversionData.getEnter_contact_p_num());
+                    CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_contact_p_num());
+                    return;
+                }
+                if (printing_status == 1) {
+                    if (email.isEmpty()) {
+                        edittext_emailid.setError(conversionData.getEnter_email());
+                        CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_email());
+                        return;
+                    }
+                    if (!contact_number.equals(userData.getMobile()) || !email.equals(userData.getEmail())) {
+                        showAlert();
+                        return;
+                    }
+                } else {
+                    if (other_person_name.equals("")) {
+                        edittext_other_person_name.setError(conversionData.getOther_person());
+                        CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getOther_person());
+                        return;
+                    }
+                    if (other_person_name.equals("")) {
+                        edittext_otehr_person_mobile.setError(conversionData.getOther_mobile());
+                        CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getOther_mobile());
+                        return;
+                    }
+                    if (email.isEmpty()) {
+                        edittext_emailid.setError(conversionData.getEnter_email());
+                        CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getEnter_email());
+                        return;
+                    }
+                }
+                if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("")) {
+                    CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_select_order_type());
+                    return;
+                }
+                if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("1")) {
+                    if (recyclerview_address.getVisibility() == View.VISIBLE) {
+                        CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_address());
+                        return;
+                    }
+                }
+                SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
+                SuperLifeSecretPreferences.getInstance().putString("book_full_name", fullname);
+                SuperLifeSecretPreferences.getInstance().putString("book_mobile", contact_number);
+                SuperLifeSecretPreferences.getInstance().putString("book_email", email);
+                SuperLifeSecretPreferences.getInstance().putString("book_state", stateId);
+                SuperLifeSecretPreferences.getInstance().putString("book_city", city_id);
+                SuperLifeSecretPreferences.getInstance().putString("book_pin_code", edittext_postcode.getText().toString());
+                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "4");
+                SuperLifeSecretPreferences.getInstance().putString("other_person_name", other_person_name);
+                SuperLifeSecretPreferences.getInstance().putString("other_person_contact", other_person_contactno);
+                CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);
             }
         });
+
         SuperLifeSecretPreferences.getInstance().putString("order_for_text", "" + conversionData.getPrinting_own());
         ArrayList<BookBean> bookBeanArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
         int qualtity = 0;
-        for(int i=0 ; i < bookBeanArrayList.size() ; i++){
+        for (int i = 0; i < bookBeanArrayList.size(); i++) {
             qualtity = bookBeanArrayList.get(i).getQuantity();
         }
-        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")){
-            if (qualtity>=1000){
-                textview_other_destribution.setVisibility(View.VISIBLE);
-            }else {
-                SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
-                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "1");
-                tv_ordertype.setText(conversionData.getDesignated());
-                textview_other_destribution.setVisibility(View.GONE);
-                recyclerview_address.setVisibility(View.VISIBLE);
-                if (oldAddressList.size() == 0) {
-                    textview_noaddressfound.setVisibility(View.VISIBLE);
-                } else {
-                    textview_noaddressfound.setVisibility(View.GONE);
-                }
-            }
-        }else {
-            SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
-            SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "1");
-            tv_ordertype.setText(conversionData.getDesignated());
-            textview_other_destribution.setVisibility(View.GONE);
-            recyclerview_address.setVisibility(View.VISIBLE);
-            if (oldAddressList.size() == 0) {
-                textview_noaddressfound.setVisibility(View.VISIBLE);
-            } else {
-                textview_noaddressfound.setVisibility(View.GONE);
-            }
-        }
+        SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
+        SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
+        tv_ordertype.setHint(conversionData.getPlease_select_order_type());
+        textview_other_destribution.setVisibility(View.VISIBLE);
+//        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
+////            if (qualtity>=1000){
+////                textview_other_destribution.setVisibility(View.VISIBLE);
+////            }else {
+//            SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
+//            SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
+//            tv_ordertype.setHint(conversionData.getPlease_select_order_type());
+//            textview_other_destribution.setVisibility(View.VISIBLE);
+//        } else {
+//            SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
+//            SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
+//            tv_ordertype.setHint(conversionData.getPlease_select_order_type());
+//            textview_other_destribution.setVisibility(View.VISIBLE);
+//        }
 
         linear_print_for_own.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                edittext_fullname.setText(userData.getUsername());
                 SuperLifeSecretPreferences.getInstance().putString("order_for_text", "" + conversionData.getPrinting_own());
                 SuperLifeSecretPreferences.getInstance().putString("book_order_for", "1");
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
-                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "0");
+                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
                 printing_status = 1;
                 textview_print_for_own.setTextColor(getResources().getColor(R.color.color_black));
                 textview_print_on_behalf.setTextColor(getResources().getColor(R.color.gray_color));
-                view_printforown.setBackgroundColor(getResources().getColor(R.color.color_black));
+                view_printforown.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.transparent));
                 linear_address.setVisibility(View.GONE);
                 linear_ordertype.setVisibility(View.GONE);
-                tv_ordertype.setText(conversionData.getOrder_type());
+                tv_ordertype.setHint(conversionData.getPlease_select_order_type());
                 add_address_Layout.setVisibility(View.GONE);
                 textview_noaddressfound.setVisibility(View.GONE);
-
                 linear_other_person.setVisibility(View.GONE);
             }
         });
@@ -433,20 +291,21 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         linear_print_onBehalf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                edittext_fullname.setText("");
                 SuperLifeSecretPreferences.getInstance().putString("order_for_text", "" + conversionData.getPrinting_behalf());
                 SuperLifeSecretPreferences.getInstance().putString("book_order_for", "2");
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
-                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "0");
+                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
                 printing_status = 2;
                 textview_print_for_own.setTextColor(getResources().getColor(R.color.gray_color));
                 textview_print_on_behalf.setTextColor(getResources().getColor(R.color.color_black));
                 view_printforown.setBackgroundColor(getResources().getColor(R.color.transparent));
-                view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.color_black));
+                view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 recyclerview_address.setVisibility(View.GONE);
                 add_address_Layout.setVisibility(View.GONE);
                 linear_address.setVisibility(View.GONE);
                 linear_ordertype.setVisibility(View.GONE);
-                tv_ordertype.setText(conversionData.getOrder_type());
+                tv_ordertype.setText(conversionData.getPlease_select_order_type());
                 textview_noaddressfound.setVisibility(View.GONE);
 
                 linear_other_person.setVisibility(View.VISIBLE);
@@ -456,11 +315,14 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         tv_ordertype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tv_ordertype.setTextColor(getResources().getColor(R.color.gray_color));
                 if (linear_ordertype.getVisibility() == View.GONE) {
                     linear_ordertype.setVisibility(View.VISIBLE);
                 } else
                     linear_ordertype.setVisibility(View.GONE);
-
+                tv_ordertype.setText(conversionData.getPlease_select_order_type());
+                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
+                SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 recyclerview_address.setVisibility(View.GONE);
                 textview_noaddressfound.setVisibility(View.GONE);
             }
@@ -473,6 +335,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "1");
                 tv_ordertype.setText(conversionData.getDesignated());
+                tv_ordertype.setTextColor(getResources().getColor(R.color.color_black));
                 linear_ordertype.setVisibility(View.GONE);
                 linear_address.setVisibility(View.VISIBLE);
                 add_address_Layout.setVisibility(View.GONE);
@@ -492,12 +355,21 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "2");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "2");
                 tv_ordertype.setText(conversionData.getDistribute());
+                tv_ordertype.setTextColor(getResources().getColor(R.color.color_black));
                 linear_ordertype.setVisibility(View.GONE);
                 linear_address.setVisibility(View.GONE);
                 add_address_Layout.setVisibility(View.GONE);
                 textview_noaddressfound.setVisibility(View.GONE);
             }
         });
+
+        double delivery_charges =  Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
+
+        if (delivery_charges!=0.0){
+            textview_other_destribution.setTextColor(getResources().getColor(R.color.gray_color));
+            textview_other_destribution.setClickable(false);
+            textview_other_destribution.setOnClickListener(null);
+        }
 
         tv_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -517,7 +389,6 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         recyclerview_address.setLayoutManager(new LinearLayoutManager(this));
         addressAapter = new AddressAapter(oldAddressList, this, new StoreListener());
         recyclerview_address.setAdapter(addressAapter);
-
 
         String stack2 = SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no");
         if (stack2 != null) {
@@ -557,9 +428,10 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
 
         public void onSelectOldAddess(Stores stores, String address) {
             SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "1");
-            Log.e("stores.getLast_order",stores.getId());
+            Log.e("stores.getLast_order", stores.getId());
+            SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "1");
             SuperLifeSecretPreferences.getInstance().putString("book_old_address_id", stores.getId());
-            SuperLifeSecretPreferences.getInstance().putString("final_dialog_address",address);
+            SuperLifeSecretPreferences.getInstance().putString("final_dialog_address", address);
             recyclerview_address.setVisibility(View.GONE);
             tv_ordertype.setText(address);
         }
@@ -586,6 +458,11 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         oldAddressList.clear();
         oldAddressList.addAll(categoryResponseModel.getData());
         addressAapter.notifyDataSetChanged();
+        if (oldAddressList.size() == 0) {
+            textview_noaddressfound.setVisibility(View.VISIBLE);
+        } else {
+            textview_noaddressfound.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -623,10 +500,15 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         if (conversionData != null) {
             textview_back.setText(conversionData.getBack());
             textview_next.setText(conversionData.getContinuee());
-            textview_print_for_own.setText(conversionData.getPrinting_own());
-            textview_print_on_behalf.setText(conversionData.getPrinting_behalf());
+            if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")){
+                textview_print_for_own.setText(conversionData.getBuying_own());
+                textview_print_on_behalf.setText(conversionData.getBuying_behalf());
+            }else {
+                textview_print_for_own.setText(conversionData.getPrinting_own());
+                textview_print_on_behalf.setText(conversionData.getPrinting_behalf());
+            }
+
             textview_fullname.setText(conversionData.getName_national_card());
-            textview_print_on_behalf.setText(conversionData.getPrinting_behalf());
             textview_noaddressfound.setText(conversionData.getNo_address());
             textview_total.setText(conversionData.getTotal());
             textview_state.setText(conversionData.getState());
@@ -637,7 +519,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             //tv_add_address.setText(conversionData.getAdd_address());
             textview_deliveryaddress.setText(conversionData.getDelivery_address());
             textview_pincode.setText(conversionData.getPostcode());
-            tv_ordertype.setText(conversionData.getOrder_type());
+            tv_ordertype.setText(conversionData.getPlease_select_order_type());
             textview_designated_location.setText(conversionData.getDesignated());
             textview_other_destribution.setText(conversionData.getDistribute());
 
@@ -648,6 +530,17 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             edittext_postcode.setHint(conversionData.getEnter_postcode());
             edittext_state.setHint(conversionData.getSelect_state());
             edittext_city.setHint(conversionData.getSelect_city());
+
+            textview_other_person_name.setText(conversionData.getOther_person());
+            textview_other_person_mobile.setText(conversionData.getOther_mobile());
+            edittext_other_person_name.setHint(conversionData.getEnter_other_person());
+            edittext_otehr_person_mobile.setHint(conversionData.getEnter_other_mobile());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "3");
     }
 }

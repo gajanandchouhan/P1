@@ -43,7 +43,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"></LinearLayout>
 
@@ -62,12 +62,12 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="2"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"></LinearLayout>
 
@@ -86,12 +86,12 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="3"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"></LinearLayout>
 
@@ -110,12 +110,12 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="4"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"></LinearLayout>
 
@@ -134,12 +134,12 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="5"
-                        android:textColor="@color/gray_color"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_1sdp"
+                        android:layout_height="1.5dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"></LinearLayout>
 
@@ -151,7 +151,7 @@
                     android:background="@drawable/redcircle_greenborder"
                     android:gravity="center"
                     android:text="6"
-                    android:textColor="@color/gray_color"
+                    android:textColor="@color/color_white"
                     android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 

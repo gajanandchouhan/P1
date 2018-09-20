@@ -16,6 +16,7 @@ import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Divya on 26-02-2018.
@@ -38,9 +39,18 @@ public class DialogBookAapter extends RecyclerView.Adapter<DialogBookAapter.Item
     @Override
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
-        holder.textview_price_quantity.setText(list.get(position).getPrice()+" X "+list.get(position).getQuantity());
+        try {
+            holder.textview_price_quantity.setText(String.format(Locale.getDefault(), "%.2f", list.get(position).getPrice())+" X "+list.get(position).getQuantity());
+        }catch (Exception e){
+            holder.textview_price_quantity.setText(list.get(position).getPrice()+" X "+list.get(position).getQuantity());
+        }
         Double total = (list.get(position).getPrice() * list.get(position).getQuantity());
-        holder.textview_total.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+total);
+        try {
+            holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", total));
+        }catch (Exception e){
+            holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total);
+        }
+        //holder.textview_total.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+total);
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
     }
 

@@ -32,8 +32,6 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
     private RecyclerView recyclerView;
     private List<StudyGroupPlanData> list;
     private StudyGroupPlanAdapter adapter;
-    
-    
 
     @Override
     protected int getContentView() {
@@ -47,7 +45,7 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
-        textViewTitle.setText("Select Plan");
+        textViewTitle.setText(conversionData.getSelect_plan());
 
     }
 

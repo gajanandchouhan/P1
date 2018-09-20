@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.book.myorder_book;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +15,9 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.book.detail.MyOrderDetailActivity;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class OrderBookActivity extends BaseActivity implements OrderBookView {
@@ -34,6 +37,9 @@ public class OrderBookActivity extends BaseActivity implements OrderBookView {
 
     @Override
     protected void initializeView() {
+        Locale current = getResources().getConfiguration().locale;
+        Log.i("locale", Currency.getInstance(current).getSymbol());
+        SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + Currency.getInstance(current).getSymbol());
         orderArrayList = new ArrayList<>();
         back_image = findViewById(R.id.back_image);
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
@@ -69,9 +75,22 @@ public class OrderBookActivity extends BaseActivity implements OrderBookView {
 
     @Override
     public void getOrderlist(MyOrderBean categoryResponseModel) {
-        orderArrayList.clear();
-        orderArrayList.addAll(categoryResponseModel.getData());
-        orderBookAdapter.notifyDataSetChanged();
+        if (categoryResponseModel!=null){
+            try {
+                if (categoryResponseModel.getCurrencyUnit().getCurrency_symbol() != null || !categoryResponseModel.getCurrencyUnit().getCurrency_symbol().equals("")) {
+                    SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + categoryResponseModel.getCurrencyUnit().getCurrency_symbol());
+                } else {
+                    Locale current = getResources().getConfiguration().locale;
+                    Log.i("locale", Currency.getInstance(current).getSymbol());
+                    SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + Currency.getInstance(current).getSymbol());
+                }
+            }catch (Exception e){
+                Log.e("E",e.toString());
+            }
+            orderArrayList.clear();
+            orderArrayList.addAll(categoryResponseModel.getData());
+            orderBookAdapter.notifyDataSetChanged();
+        }
     }
     public class BookListener {
         public void onClickDetail(String order_id) {

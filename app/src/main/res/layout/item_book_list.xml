@@ -39,7 +39,6 @@
                 android:id="@+id/textview_book_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp"
                 android:fontFamily="@font/bold"
                 android:text="Book Name"
                 android:textColor="@color/colorLightBlack"
@@ -50,24 +49,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textview_book_name"
-                android:layout_marginTop="-2dp"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/reguler"
                 android:text="Auther Name"
                 android:textColor="@color/red_bg"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_11sdp" />
 
             <TextView
                 android:id="@+id/textview_book_descrption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_below="@+id/textview_auther_name"
-                android:layout_marginTop="-3dp"
                 android:fontFamily="@font/reguler"
-                android:maxLines="2"
                 android:lineSpacingExtra="-2dp"
+                android:maxLines="2"
                 android:text="Book Name"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_11sdp" />
 
             <TextView
                 android:id="@+id/textview_bookprice"
@@ -76,7 +75,6 @@
                 android:layout_alignParentRight="true"
                 android:fontFamily="@font/bold"
                 android:text="$90"
-
                 android:textColor="@color/red_bg"
                 android:textSize="@dimen/_12sdp" />
 
