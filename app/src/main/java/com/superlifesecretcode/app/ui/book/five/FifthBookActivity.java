@@ -564,9 +564,9 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         other_person_name_dialog.setText("" + SuperLifeSecretPreferences.getInstance().getString("other_person_name"));
         other_person_mobile_dialog.setText("" + SuperLifeSecretPreferences.getInstance().getString("other_person_contact"));
         if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
-            book_type.setText(languageResponseData.getPrinting());
+            book_type.setText(languageResponseData.getBuying());
         } else {
-            book_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_title"));
+            book_type.setText(languageResponseData.getPrinting());
         }
         order_for.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
         delivery_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("delivery_type_text"));
