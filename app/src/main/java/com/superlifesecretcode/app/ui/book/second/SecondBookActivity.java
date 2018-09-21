@@ -38,7 +38,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
     ImageView back_image;
     SecondBookPresenter secondBookPresenter;
     private UserDetailResponseData userData;
-    RecyclerView delivery_recyclerview , discount_recyclerview;
+    RecyclerView delivery_recyclerview, discount_recyclerview;
     DeliveryAapter deliveryAapter;
     DiscountAapter discountAapter;
     ArrayList<DeliveryData> deliveryDataArrayList;
@@ -46,18 +46,13 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
     private LanguageResponseData conversionData;
     String enter_amount;
     TextView textView_title, textview_delivery_charges, textview_delivery_description_buy;
-    boolean print_by_bookquantity = false ;
+    boolean print_by_bookquantity = false;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_book_second;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
-    }
 
     @Override
     protected void initializeView() {
@@ -95,10 +90,10 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         discountAapter = new DiscountAapter(discountArrayList, this);
         discount_recyclerview.setAdapter(discountAapter);
 
-        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2"))
-            textview_delivery_description_buy.setVisibility(View.GONE);
-        else
-            textview_delivery_description_buy.setVisibility(View.VISIBLE);
+//        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2"))
+//            textview_delivery_description_buy.setVisibility(View.GONE);
+//        else
+//            textview_delivery_description_buy.setVisibility(View.VISIBLE);
         getDeliveryCharges();
         setUpConversion();
         back_image.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +137,9 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             @Override
             public void onClick(View v) {
 
-                if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")){
-                    if (print_by_bookquantity==false){
-                        CommonUtils.showSnakeBar(SecondBookActivity.this,conversionData.getSelect_option());
+                if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
+                    if (print_by_bookquantity == false) {
+                        CommonUtils.showSnakeBar(SecondBookActivity.this, conversionData.getSelect_option());
                         return;
                     }
                 }
@@ -210,6 +205,15 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
+        if (CommonUtils.book_stake == true) {
+            finish();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "1");
@@ -238,7 +242,9 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
     private void getDeliveryCharges() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-        secondBookPresenter.getDeliveryCharges(headers);
+        HashMap<String, String> param = new HashMap<>();
+        param.put("book_type", SuperLifeSecretPreferences.getInstance().getString("book_type"));
+        secondBookPresenter.getDeliveryCharges(param,headers);
     }
 
     private void getDeliveryBuySentence() {
@@ -303,7 +309,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
 
     @Override
     public void getDeliveryCharges(Delivery categoryResponseModel) {
-        getDeliveryBuySentence();
+        //getDeliveryBuySentence();
         deliveryDataArrayList.clear();
         deliveryDataArrayList.addAll(categoryResponseModel.getData().getDelivery_charges());
         SuperLifeSecretPreferences.getInstance().setDeliveryChargesList(deliveryDataArrayList);
@@ -312,6 +318,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         discountArrayList.addAll(categoryResponseModel.getData().getDiscounts());
         discountAapter.notifyDataSetChanged();
         SuperLifeSecretPreferences.getInstance().setDiscountList(discountArrayList);
+        textview_delivery_description_buy.setText(categoryResponseModel.getData().getInformation());
     }
 
     @Override

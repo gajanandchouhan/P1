@@ -65,6 +65,8 @@ import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
 public class CommonUtils {
 
+    public static boolean book_stake = false;
+
     public static void showSnakeBar(Context mContext, String message) {
         if (SuperLifeSecretPreferences.getInstance().getConversionData() != null) {
             if (message != null && message.equalsIgnoreCase(mContext.getString(R.string.server_error))) {

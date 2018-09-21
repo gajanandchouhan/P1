@@ -404,6 +404,13 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<StudyGroupPlanResponseModel>(handler));
                     break;
+
+                case REQ_GET_DELIVERY_CHARGES:
+                    Observable<Delivery> deliverychargesObservable = apiInterface.getDeliveryCharges(stringMultipartParamsParams,header);
+                    deliverychargesObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<Delivery>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -507,12 +514,7 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<MyOrderBean>(handler));
                 break;
 
-            case REQ_GET_DELIVERY_CHARGES:
-                Observable<Delivery> deliverychargesObservable = apiInterface.getDeliveryCharges(headers);
-                deliverychargesObservable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ResponseObserver<Delivery>(handler));
-                break;
+
             case REQ_GET_GROUPS:
                 Observable<StudyGroupResponseModel> getGroupObservable = apiInterface.getStudyGroups(headers);
                 getGroupObservable.subscribeOn(Schedulers.io())

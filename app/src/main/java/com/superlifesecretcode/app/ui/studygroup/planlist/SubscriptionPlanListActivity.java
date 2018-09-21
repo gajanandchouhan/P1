@@ -13,7 +13,9 @@ import com.superlifesecretcode.app.data.model.studygroups.studtgroupplans.StudyG
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.studygroup.StudyGroupActivity;
 import com.superlifesecretcode.app.ui.studygroup.paymentproof.PaymentProofActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ import java.util.Map;
 public class SubscriptionPlanListActivity extends BaseActivity implements SubscriptionPlanView {
 
 
-    private static SubscriptionPlanListActivity activity;
+    //private static SubscriptionPlanListActivity activity;
     private LanguageResponseData conversionData;
     private UserDetailResponseData userData;
     private String groupTitle;
@@ -51,7 +53,7 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
 
     @Override
     protected void initializeView() {
-        activity=this;
+       // activity=this;
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         groupTitle = getIntent().getStringExtra("title");
@@ -106,9 +108,17 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
         startActivity(intent);
     }
 
-    public static void finishActivity() {
-        if (activity != null) {
-            activity.finish();
+//    public static void finishActivity() {
+//        if (activity != null) {
+//            activity.finish();
+//        }
+//    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ( StudyGroupActivity.shouldRefresh == true){
+            finish();
         }
     }
 }

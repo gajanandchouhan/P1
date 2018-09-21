@@ -306,9 +306,10 @@ public interface ApiInterface {
     @GET("myOrders")
     Observable<MyOrderBean> getMyOrderList(@HeaderMap Map<String, String> headers);
 
+    @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
-    @GET("deliveryCharges")
-    Observable<Delivery> getDeliveryCharges(@HeaderMap Map<String, String> headers);
+    @POST("deliveryCharges")
+    Observable<Delivery> getDeliveryCharges(@PartMap() Map<String, RequestBody> params, @HeaderMap Map<String, String> header);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
@@ -381,4 +382,6 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("buyingbookdescription")
     Observable<DeliveryDescription> getDeliveryBuyDescription(@HeaderMap Map<String, String> headers);
+
+
 }

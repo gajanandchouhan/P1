@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.book.six;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
+import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
 import com.superlifesecretcode.app.ui.main.MainActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 
@@ -31,6 +33,7 @@ public class SixthBookActivity extends BaseActivity {
     @Override
     protected void initializeView() {
 
+        CommonUtils.book_stake = true;
         //first page
         SuperLifeSecretPreferences.getInstance().putString("book_print_status", "");
         SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
@@ -59,13 +62,19 @@ public class SixthBookActivity extends BaseActivity {
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtils.startActivity(SixthBookActivity.this, MainActivity.class);
+                finish();
+//                Intent i = new Intent(SixthBookActivity.this, MainActivity.class);
+//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(i);
             }
         });
         textview_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtils.startActivity(SixthBookActivity.this, MainActivity.class);
+                finish();
+//                Intent i = new Intent(SixthBookActivity.this, MainActivity.class);
+//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(i);
             }
         });
         setUpConversion();
@@ -78,8 +87,11 @@ public class SixthBookActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        CommonUtils.startActivity(SixthBookActivity.this, MainActivity.class);
+        finish();
+//        Intent i = new Intent(SixthBookActivity.this, MainActivity.class);
+//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(i);
+        //CommonUtils.startActivity(SixthBookActivity.this, MainActivity.class);
     }
 
     private void setUpConversion() {

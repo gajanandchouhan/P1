@@ -223,7 +223,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
 
                 case ConstantLib.TYPE_BUY_BOOK:
                     final Bundle bundle3 = new Bundle();
-
+                    CommonUtils.book_stake = false;
                     if (SuperLifeSecretPreferences.getInstance().getString("book_type") == null || SuperLifeSecretPreferences.getInstance().getString("book_type").equals("")) {
                         SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                         SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
@@ -301,6 +301,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ItemView
 
                 case ConstantLib.TYPE_PRINT_BOOK:
                     final Bundle bundle4 = new Bundle();
+                    CommonUtils.book_stake = false;
                     SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
                     if (SuperLifeSecretPreferences.getInstance().getString("book_type") == null || SuperLifeSecretPreferences.getInstance().getString("book_type").equals("")) {
                         SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());

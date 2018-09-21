@@ -44,6 +44,9 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     @Override
     protected void onResume() {
         super.onResume();
+        if(CommonUtils.book_stake==true){
+            finish();
+        }
     }
 
     @Override

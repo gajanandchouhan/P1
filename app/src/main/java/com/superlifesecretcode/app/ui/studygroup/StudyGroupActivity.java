@@ -77,7 +77,6 @@ public class StudyGroupActivity extends BaseActivity implements StudyGroupView {
         if (shouldRefresh) {
             shouldRefresh = false;
             getStudyGroup();
-
         }
     }
 

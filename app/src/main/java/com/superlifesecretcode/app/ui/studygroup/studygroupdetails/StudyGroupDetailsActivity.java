@@ -20,6 +20,7 @@ import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
+import com.superlifesecretcode.app.ui.studygroup.StudyGroupActivity;
 import com.superlifesecretcode.app.ui.studygroup.planlist.SubscriptionPlanListActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -44,7 +45,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
     private StudyGroupItemAdapter adapter;
     StudyGroupDetailPresenter presenter;
 
-    private static StudyGroupDetailsActivity activity;
+    //private static StudyGroupDetailsActivity activity;
 
     @Override
     protected int getContentView() {
@@ -53,7 +54,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
 
     @Override
     protected void initializeView() {
-        activity = this;
+       // activity = this;
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         studyGroupDetails = (StudyGroupDetails) getIntent().getBundleExtra("bundle").getSerializable("data");
@@ -84,11 +85,11 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
     }
 
 
-    public static void finishActivity() {
-        if (activity != null) {
-            activity.finish();
-        }
-    }
+//    public static void finishActivity() {
+//        if (activity != null) {
+//            activity.finish();
+//        }
+//    }
 
     private void setDetails() {
         textViewTitle.setText(studyGroupDetails.getGroup_name());
@@ -230,5 +231,13 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ( StudyGroupActivity.shouldRefresh == true){
+            finish();
+        }
     }
 }

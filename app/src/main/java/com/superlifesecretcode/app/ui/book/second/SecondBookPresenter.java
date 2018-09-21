@@ -29,14 +29,14 @@ public class SecondBookPresenter extends BasePresenter<SecondBookView> {
     }
 
 
-    public void getDeliveryCharges(Map<String, String> headers) {
+    public void getDeliveryCharges(HashMap<String, String> params, Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_DELIVERY_CHARGES, new ResponseHandler<Delivery>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_GET_DELIVERY_CHARGES, new ResponseHandler<Delivery>() {
             @Override
             public void onResponse(Delivery categoryResponseModel) {
                 view.hideProgress();
@@ -58,7 +58,7 @@ public class SecondBookPresenter extends BasePresenter<SecondBookView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        }, headers,"","");
+        }, params, headers);
     }
 
     public void getDeliveryDescription(Map<String, String> headers) {

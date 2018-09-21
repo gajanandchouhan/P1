@@ -43,6 +43,9 @@ public class ThirsBookActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(CommonUtils.book_stake==true){
+            finish();
+        }
     }
 
     @Override

@@ -348,7 +348,6 @@
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/reguler"
-                    android:text="Delivery Charges"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -369,7 +368,7 @@
                     android:id="@+id/delivery_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_180sdp"
                     android:layout_marginTop="@dimen/_5sdp" />
 
                 <TextView

@@ -31,8 +31,8 @@ import com.superlifesecretcode.app.ui.studygroup.studygroupdetails.StudyGroupDet
                 findViewById(R.id.textview_continue).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SubscriptionPlanListActivity.finishActivity();
-                        StudyGroupDetailsActivity.finishActivity();
+                        //SubscriptionPlanListActivity.finishActivity();
+                        //StudyGroupDetailsActivity.finishActivity();
                         StudyGroupActivity.shouldRefresh = true;
                         finish();
                     }

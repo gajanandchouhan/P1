@@ -4,8 +4,18 @@ import java.util.ArrayList;
 
 public class DeliveryDiscountBean {
 
+    String information;
     ArrayList<DeliveryData> delivery_charges;
     ArrayList<Discount> discounts;
+
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
 
     public ArrayList<DeliveryData> getDelivery_charges() {
         return delivery_charges;

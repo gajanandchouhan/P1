@@ -65,7 +65,13 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     protected int getContentView() {
         return R.layout.activity_book_forth;
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(CommonUtils.book_stake==true){
+            finish();
+        }
+    }
     @Override
     protected void initializeView() {
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
@@ -363,13 +369,13 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             }
         });
 
-        double delivery_charges =  Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
-
-        if (delivery_charges!=0.0){
-            textview_other_destribution.setTextColor(getResources().getColor(R.color.gray_color));
-            textview_other_destribution.setClickable(false);
-            textview_other_destribution.setOnClickListener(null);
-        }
+//        double delivery_charges =  Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
+//
+//        if (delivery_charges!=0.0){
+//            textview_other_destribution.setTextColor(getResources().getColor(R.color.gray_color));
+//            textview_other_destribution.setClickable(false);
+//            textview_other_destribution.setOnClickListener(null);
+//        }
 
         tv_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
