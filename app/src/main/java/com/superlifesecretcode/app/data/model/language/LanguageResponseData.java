@@ -317,9 +317,124 @@ public class LanguageResponseData {
     private String thankyou_groupstudy_msg;
     private String subscription_detail;
     private String select_plan;
+    private String success;
 
+    private String news;
+    private String events;
+    private String unread_events;
+    private String activity;
+    private String more_to_go;
+    private String total_post;
+    private String your_sharing_liked;
+    private String times;
+    private String join_at;
+    private String attend_at;
+    private String in;
+    private String total_points;
 
+    public String getNews() {
+        return news;
+    }
 
+    public void setNews(String news) {
+        this.news = news;
+    }
+
+    public String getEvents() {
+        return events;
+    }
+
+    public void setEvents(String events) {
+        this.events = events;
+    }
+
+    public String getUnread_events() {
+        return unread_events;
+    }
+
+    public void setUnread_events(String unread_events) {
+        this.unread_events = unread_events;
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
+    public String getMore_to_go() {
+        return more_to_go;
+    }
+
+    public void setMore_to_go(String more_to_go) {
+        this.more_to_go = more_to_go;
+    }
+
+    public String getTotal_post() {
+        return total_post;
+    }
+
+    public void setTotal_post(String total_post) {
+        this.total_post = total_post;
+    }
+
+    public String getYour_sharing_liked() {
+        return your_sharing_liked;
+    }
+
+    public void setYour_sharing_liked(String your_sharing_liked) {
+        this.your_sharing_liked = your_sharing_liked;
+    }
+
+    public String getTimes() {
+        return times;
+    }
+
+    public void setTimes(String times) {
+        this.times = times;
+    }
+
+    public String getJoin_at() {
+        return join_at;
+    }
+
+    public void setJoin_at(String join_at) {
+        this.join_at = join_at;
+    }
+
+    public String getAttend_at() {
+        return attend_at;
+    }
+
+    public void setAttend_at(String attend_at) {
+        this.attend_at = attend_at;
+    }
+
+    public String getIn() {
+        return in;
+    }
+
+    public void setIn(String in) {
+        this.in = in;
+    }
+
+    public String getTotal_points() {
+        return total_points;
+    }
+
+    public void setTotal_points(String total_points) {
+        this.total_points = total_points;
+    }
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
+    }
 
     public String getSubscription_detail() {
         return subscription_detail;

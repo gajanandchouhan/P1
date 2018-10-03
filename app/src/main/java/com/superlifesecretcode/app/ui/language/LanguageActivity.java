@@ -133,7 +133,6 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
         body.put("language_id", languageId);
         presenter.getConversion(body);
     }
-
     @Override
     public void setConversionContent(LanguageResponseData data) {
         if (data != null) {

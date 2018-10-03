@@ -68,4 +68,5 @@ public interface RequestType {
     byte REQ_GET_SUBSCRIPTION_PLAN = 58;
     byte REQ_SUBSCRIPTION_PLAN = 59;
     byte REQ_GET_DELIVERY_BUY_DESCRIPTION = 60;
+    byte REQ_GET_KPI_SUMMERY = 61;
 }

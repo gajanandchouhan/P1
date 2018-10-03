@@ -1,10 +1,8 @@
 package com.superlifesecretcode.app.ui.mycountryactivities;
 
 import android.content.Context;
-
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
-import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
 import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;

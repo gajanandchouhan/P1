@@ -72,7 +72,7 @@ public interface ConstantLib {
 
 
     String MAIN_MENU_CHAT = "3";
-
+    String MAIN_MENU_SETTING = "4";
 
     String STATUS_GROUP_NEW = "0";
     String STATUS_GROUP_SUBSCRIBED = "1";

@@ -36,7 +36,7 @@ public class DeliveryAapter extends RecyclerView.Adapter<DeliveryAapter.ItemView
         languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
         holder.textview_bankname.setText(""+list.get(position).getRange_from()+" - "+list.get(position).getRange_to()+" "+languageResponseData.getBooks()+""+" = ");
         try {
-            holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(java.util.Locale.getDefault(), "%.2f", Double.parseDouble(list.get(position).getDelivery_charge())));
+            holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(java.util.Locale.getDefault(), "%,.2f", Double.parseDouble(list.get(position).getDelivery_charge())));
         }catch (Exception e){
             holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + list.get(position).getDelivery_charge());
         }

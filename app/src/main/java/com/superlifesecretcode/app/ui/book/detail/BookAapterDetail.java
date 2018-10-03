@@ -40,14 +40,14 @@ public class BookAapterDetail extends RecyclerView.Adapter<BookAapterDetail.Item
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getBook_name());
         try {
-            holder.textview_price_quantity.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(list.get(position).getBook_price()))+" X "+list.get(position).getBook_quantity());
+            holder.textview_price_quantity.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",Double.parseDouble(list.get(position).getBook_price()))+" X "+list.get(position).getBook_quantity());
         }catch (Exception e){
             holder.textview_price_quantity.setText(list.get(position).getBook_price()+" X "+list.get(position).getBook_quantity());
         }
 
         Double total = (Double.parseDouble(list.get(position).getBook_price()) * Double.parseDouble(list.get(position).getBook_quantity()));
         try {
-            holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",total));
+            holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",total));
         }catch (Exception e){
             holder.textview_total.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+total);
         }

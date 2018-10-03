@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.ui.book.forth.Addresss;
 import com.superlifesecretcode.app.ui.book.forth.ForthBookActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,8 @@ public class BankAapter extends RecyclerView.Adapter<BankAapter.ItemViewHolder> 
                 bookSelectedListener.onSelectBank(list.get(position).isSelected(),position);
             }
         });
+        ImageLoadUtils.loadImage(list.get(position).getBank_icon(), holder.iv_bank_logo);
+
     }
 
     @Override
@@ -63,13 +67,14 @@ public class BankAapter extends RecyclerView.Adapter<BankAapter.ItemViewHolder> 
         TextView textview_bankname;
         TextView textview_accountnumber;
         LinearLayout linear_bank;
-        ImageView imageview_check;
+        ImageView imageview_check , iv_bank_logo;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             textview_bankname = itemView.findViewById(R.id.textview_bankname);
             textview_accountnumber = itemView.findViewById(R.id.textview_accountnumber);
             imageview_check = itemView.findViewById(R.id.imageview_check);
+            iv_bank_logo = itemView.findViewById(R.id.iv_bank_logo);
             linear_bank = itemView.findViewById(R.id.linear_bank);
         }
     }

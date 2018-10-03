@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,17 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
                     CommonUtils.startActivity((AppCompatActivity) mContext, AudioPlayerActivity.class, bundle, false);
                 } else if (studyGroupItemData.getItem_type_id().equals(ConstantLib.TYPE_VIDEO_ITEM)) {
                     bundle.putString("video", studyGroupItemData.getItem_url());
-                    CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
+
+                    if (Patterns.WEB_URL.matcher(studyGroupItemData.getItem_url()).matches()) {
+                        CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
+                    }else {
+                        bundle.putString("title", studyGroupItemData.getItem_title());
+                        bundle.putBoolean("is_link", true);
+
+                        bundle.putString("url", studyGroupItemData.getItem_url());
+                        bundle.putString("content", studyGroupItemData.getItem_description());
+                        CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
+                    }
                 } else {
                     bundle.putString("title", studyGroupItemData.getItem_title());
                     bundle.putBoolean("is_link", studyGroupItemData.getItem_type_id().equalsIgnoreCase(ConstantLib.TYPE_WEB_LINK));
@@ -115,8 +126,8 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
                     bundle.putString("content", studyGroupItemData.getItem_description());
                     CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
                 }
-            }else{
-                ((StudyGroupDetailsActivity)mContext).showAlertSubscriptionStatus();
+            } else {
+                ((StudyGroupDetailsActivity) mContext).showAlertSubscriptionStatus();
             }
         }
     }

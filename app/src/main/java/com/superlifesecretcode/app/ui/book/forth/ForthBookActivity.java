@@ -1,5 +1,12 @@
 package com.superlifesecretcode.app.ui.book.forth;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -60,18 +67,21 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     LinearLayout linear_other_person;
     TextView textview_other_person_name, textview_other_person_mobile;
     EditText edittext_other_person_name, edittext_otehr_person_mobile;
+    String no="";
 
     @Override
     protected int getContentView() {
         return R.layout.activity_book_forth;
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        if(CommonUtils.book_stake==true){
+        if (CommonUtils.book_stake == true) {
             finish();
         }
     }
+
     @Override
     protected void initializeView() {
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
@@ -141,7 +151,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         edittext_emailid.setText(userData.getEmail());
         edittext_contact_number.setText(userData.getMobile());
         try {
-            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", Double.parseDouble(total_amont)));
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
         } catch (Exception e) {
             textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
         }
@@ -357,6 +367,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textview_other_destribution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("final_dialog_email", "");
+                SuperLifeSecretPreferences.getInstance().putString("final_dialog_phone", "");
                 SuperLifeSecretPreferences.getInstance().putString("delivery_type_text", "" + conversionData.getDistribute());
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "2");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "2");
@@ -438,8 +450,20 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "1");
             SuperLifeSecretPreferences.getInstance().putString("book_old_address_id", stores.getId());
             SuperLifeSecretPreferences.getInstance().putString("final_dialog_address", address);
+            SuperLifeSecretPreferences.getInstance().putString("final_dialog_email", stores.getEmail());
+            SuperLifeSecretPreferences.getInstance().putString("final_dialog_phone", stores.getMobile());
             recyclerview_address.setVisibility(View.GONE);
             tv_ordertype.setText(address);
+        }
+
+        public void onCall(String number) {
+            no = number;
+            int permissionCheck = ContextCompat.checkSelfPermission(ForthBookActivity.this, Manifest.permission.CALL_PHONE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(ForthBookActivity.this, new String[]{Manifest.permission.CALL_PHONE},1);
+            } else {
+                startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+no)));
+            }
         }
     }
 
@@ -506,10 +530,10 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         if (conversionData != null) {
             textview_back.setText(conversionData.getBack());
             textview_next.setText(conversionData.getContinuee());
-            if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")){
+            if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
                 textview_print_for_own.setText(conversionData.getBuying_own());
                 textview_print_on_behalf.setText(conversionData.getBuying_behalf());
-            }else {
+            } else {
                 textview_print_for_own.setText(conversionData.getPrinting_own());
                 textview_print_on_behalf.setText(conversionData.getPrinting_behalf());
             }
@@ -548,5 +572,23 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     public void onBackPressed() {
         super.onBackPressed();
         SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "3");
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ""));
+                    startActivity(intent);
+                } else {
+                    Log.d("TAG", "Call Permission Not Granted");
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 }

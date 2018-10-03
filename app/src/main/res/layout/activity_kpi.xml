@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_totalpoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/tv_totalpoint_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_22sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/announcement" />
+
+                    <TextView
+                        android:id="@+id/tv_myannouncement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:fontFamily="@font/bold"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/image_news"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/news" />
+
+                        <TextView
+                            android:id="@+id/tv_news"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_toRightOf="@+id/image_news"
+                            android:fontFamily="@font/bold"
+                            android:text="News"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_unreadnews_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_news"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@+id/image_news"
+                            android:fontFamily="@font/reguler"
+                            android:text="Unread News :"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_unreadnewscount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_news"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@+id/tv_unreadnews_header"
+                            android:fontFamily="@font/reguler"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_14sdp" />
+
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/image_event"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/event" />
+
+                        <TextView
+                            android:id="@+id/tv_event"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@+id/image_event"
+                            android:fontFamily="@font/bold"
+                            android:text="Event"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_unattented_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_event"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@+id/image_event"
+                            android:fontFamily="@font/reguler"
+                            android:text="Unattend Events :"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_unattented_header_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_event"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginTop="0dp"
+                            android:layout_toRightOf="@+id/tv_unattented_header"
+                            android:fontFamily="@font/reguler"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_14sdp" />
+
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/daily_activity" />
+
+                    <TextView
+                        android:id="@+id/tv_dialy_activity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:fontFamily="@font/bold"
+                        android:text="Dialy Activity"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp" />
+                </LinearLayout>
+
+                <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/image_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/activity" />
+
+                        <TextView
+                            android:id="@+id/tv_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@+id/image_activity"
+                            android:fontFamily="@font/bold"
+                            android:text="Activity"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_done"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_toLeftOf="@+id/tv_done_count"
+                            android:fontFamily="@font/bold"
+                            android:gravity="right"
+                            android:text="Done :"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_done_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:fontFamily="@font/bold"
+                            android:gravity="right"
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_activity_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_activity"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@+id/image_activity"
+                            android:fontFamily="@font/reguler"
+                            android:text="Pending :"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_activity_header_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_activity"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@+id/tv_activity_header"
+                            android:fontFamily="@font/reguler"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sharing" />
+
+                    <TextView
+                        android:id="@+id/tv_sharing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:fontFamily="@font/bold"
+                        android:text="Sharing"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/image_sharing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/post" />
+
+                        <TextView
+                            android:id="@+id/tv_sharing_haeder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@+id/image_sharing"
+                            android:fontFamily="@font/bold"
+                            android:text="Total Post : "
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_postcount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toRightOf="@+id/tv_sharing_haeder"
+                            android:fontFamily="@font/bold"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_your_sharing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_sharing_haeder"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@+id/image_sharing"
+                            android:fontFamily="@font/reguler"
+                            android:text="Your sharing has been liked for 55 times!"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_12sdp" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/tv_study_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:fontFamily="@font/bold"
+                        android:text="Study Group"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_stydy_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_120sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/tv_onsite_sharing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:fontFamily="@font/bold"
+                        android:text="On-Site Sharing"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_onsitesharing"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_marginBottom="@dimen/_10sdp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

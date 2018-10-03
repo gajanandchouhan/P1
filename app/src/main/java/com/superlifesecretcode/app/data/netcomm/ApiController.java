@@ -36,6 +36,7 @@ import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
 import com.superlifesecretcode.app.ui.book.second.Delivery;
 import com.superlifesecretcode.app.ui.book.second.DeliveryDescription;
+import com.superlifesecretcode.app.ui.kpi_summery.KPI;
 import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.io.File;
@@ -526,6 +527,12 @@ public class ApiController implements RequestType {
                 getdeliverybuyDescriptionObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<DeliveryDescription>(handler));
+                break;
+            case REQ_GET_KPI_SUMMERY:
+                Observable<KPI> getkpisummeryObservable = apiInterface.getKpiData(headers);
+                getkpisummeryObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<KPI>(handler));
                 break;
         }
 

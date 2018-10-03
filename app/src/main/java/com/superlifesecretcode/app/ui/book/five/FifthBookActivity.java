@@ -5,25 +5,18 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.ramotion.foldingcell.FoldingCell;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
@@ -32,8 +25,6 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.book.detail.BookAapterDetail;
-import com.superlifesecretcode.app.ui.book.detail.MyOrderDetailActivity;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.book.second.DeliveryData;
@@ -109,7 +100,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         payment_date_heading = findViewById(R.id.payment_date_heading);
         payment_type_heading = findViewById(R.id.payment_type_heading);
         try {
-            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", Double.parseDouble(total_amont)));
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
         } catch (Exception e) {
             textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
         }
@@ -277,8 +268,10 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             builder.addFormDataPart("store_id", SuperLifeSecretPreferences.getInstance().getString("book_old_address_id"));
         } else if (SuperLifeSecretPreferences.getInstance().getString("status_old_store_address").equals("2")) {
             deliverytype = 2;
+            builder.addFormDataPart("store_id", "");
         }
-        builder.addFormDataPart("store_id", SuperLifeSecretPreferences.getInstance().getString("book_old_address_id"));
+       // builder.addFormDataPart("store_id", SuperLifeSecretPreferences.getInstance().getString("book_old_address_id"));
+//        Toast.makeText(this, "delivery type  "+deliverytype, Toast.LENGTH_SHORT).show();
         builder.addFormDataPart("delevery_type", "" + deliverytype);
         builder.addFormDataPart("bank_id", SuperLifeSecretPreferences.getInstance().getString("bank_id"));
 
@@ -286,27 +279,15 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         String books = "";
         for (int p = 0; p < bookBeanList.size(); p++) {
             if (p == (bookBeanList.size() - 1)) {
-                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice());
+                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice()+ "*" + bookBeanList.get(p).getDiscount_applied());
             } else {
-                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice() + ",");
+                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice() + "*" + bookBeanList.get(p).getDiscount_applied()+ ",");
             }
         }
         builder.addFormDataPart("books", books);
         builder.addFormDataPart("payment_date", payment_date);
         builder.addFormDataPart("payment_mode", payment_type);
-        ArrayList<BookBean> bookBeanArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
-        int qu = 0;
-
-        for (int i = 0; i < bookBeanArrayList.size(); i++) {
-            qu = (bookBeanArrayList.get(i).getQuantity() + qu);
-        }
-        Log.e("quantiti", "" + qu);
-        if (qu > 1000)
-            builder.addFormDataPart("delivery_charge", "" + delivery_charges);
-        else
-            builder.addFormDataPart("delivery_charge", "0.0");
-
-
+        builder.addFormDataPart("delivery_charge", SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
         for (int i = 0; i < receipt_list.size(); i++) {
             try {
                 if (receipt_list.get(i) != null) {
@@ -337,12 +318,11 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             tv_payment_type.setText("-" + languageResponseData.getSelect() + "-");
             tv_payment_date.setText("-" + languageResponseData.getSelect() + "-");
             try {
-                textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", Double.parseDouble(total_amont)) + " " + languageResponseData.getOne_following_account());
-                // textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", Double.parseDouble(total_amont)));
+                textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)) + " " + languageResponseData.getOne_following_account());
+                // textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
             } catch (Exception e) {
                 textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont + " " + languageResponseData.getOne_following_account());
             }
-
             edittext_enteramount.setHint(languageResponseData.getPlease_attach_file());
         }
     }
@@ -442,18 +422,16 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
     public void showDialog(String bank_name, String account_number) {
         dialog = new Dialog(FifthBookActivity.this);
 //        dialog = new Dialog(new ContextThemeWrapper(this, R.style.DialogSlideAnim));
-
         dialog.setCanceledOnTouchOutside(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_receipt2);
-        dialog.getWindow()
-                .getAttributes().windowAnimations = R.style.DialogAnimation_Final;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_Final;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView tv_header = dialog.findViewById(R.id.textView_title);
         tv_header.setText(languageResponseData.getYour_order());
         final FoldingCell fc = (FoldingCell) dialog.findViewById(R.id.folding_cell);
-        fc.initialize(2000, getResources().getColor(R.color.colorPrimary), 8);
+        fc.initialize(2000, getResources().getColor(R.color.colorPrimary), 10);
         dialog.show();
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -467,6 +445,12 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         RecyclerView dialog_book_recyclerview = dialog.findViewById(R.id.dialog_book_recyclerview);
         dialog_book_recyclerview.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<BookBean> bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
+
+        double disocunt = 0;
+        for (int ii = 0 ; ii < bookArrayList.size() ; ii++){
+            disocunt = disocunt + bookArrayList.get(ii).getDiscount_applied();
+        }
+
         DialogBookAapter bookAapterDetail = new DialogBookAapter(bookArrayList, FifthBookActivity.this);
         dialog_book_recyclerview.setAdapter(bookAapterDetail);
 
@@ -483,6 +467,9 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         TextView tv_are_you_sure, tv_yes, tv_no, tv_other_person_name_dialog, other_person_name_dialog;
         TextView tv_other_person_mobile_dialog, other_person_mobile_dialog;
         ImageView dialog_back_image;
+        TextView tv_order_type_dialog, order_type_dialog;
+        TextView tv_grand_total_first , grand_total_first;
+        TextView tv_dialog_email , dialog_email , tv_dialog_mobile , dialog_mobile;
 
         tv_other_person_name_dialog = dialog.findViewById(R.id.tv_other_person_name_dialog);
         other_person_name_dialog = dialog.findViewById(R.id.other_person_name_dialog);
@@ -517,6 +504,12 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         tv_order_detail_dialog = dialog.findViewById(R.id.tv_order_detail_dialog);
         RecyclerView dialog_receipt_recyclerview = dialog.findViewById(R.id.dialog_receipt_recyclerview);
         linear_other_person_dialog = dialog.findViewById(R.id.linear_other_person_dialog);
+        tv_order_type_dialog = dialog.findViewById(R.id.tv_order_type_dialog);
+        order_type_dialog = dialog.findViewById(R.id.order_type_dialog);
+        tv_dialog_email = dialog.findViewById(R.id.tv_dialog_email);
+        dialog_email = dialog.findViewById(R.id.dialog_email);
+        tv_dialog_mobile = dialog.findViewById(R.id.tv_dialog_mobile);
+        dialog_mobile = dialog.findViewById(R.id.dialog_mobile);
 
         bankname = dialog.findViewById(R.id.bankname);
         tv_bankname = dialog.findViewById(R.id.tv_bank_name);
@@ -527,6 +520,8 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         dialog_back_image = dialog.findViewById(R.id.back_image);
         tv_deliverycharges = dialog.findViewById(R.id.tv_deliverycharges);
         deliverycharges = dialog.findViewById(R.id.deliverycharges);
+        tv_grand_total_first = dialog.findViewById(R.id.tv_grand_total_first);
+        grand_total_first = dialog.findViewById(R.id.grand_total_first);
 
         tv_are_you_sure.setText(languageResponseData.getAre_you_sure_continue());
         tv_bankname.setText(languageResponseData.getBank_name());
@@ -548,6 +543,22 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         tv_order_date.setText(languageResponseData.getOrder_date());
         tv_other_person_name_dialog.setText(languageResponseData.getOther_person());
         tv_other_person_mobile_dialog.setText(languageResponseData.getOther_mobile());
+        tv_grand_total_first.setText(languageResponseData.getTotal());
+        tv_dialog_email.setText(languageResponseData.getEmail_id());
+        tv_dialog_mobile.setText(languageResponseData.getContact_number());
+        if (SuperLifeSecretPreferences.getInstance().getString("final_dialog_email").equals("")) {
+            tv_dialog_email.setVisibility(View.GONE);
+            tv_dialog_mobile.setVisibility(View.GONE);
+            dialog_email.setVisibility(View.GONE);
+            dialog_mobile.setVisibility(View.GONE);
+        }else {
+            tv_dialog_email.setVisibility(View.VISIBLE);
+            tv_dialog_mobile.setVisibility(View.VISIBLE);
+            dialog_email.setVisibility(View.VISIBLE);
+            dialog_mobile.setVisibility(View.VISIBLE);
+        }
+        dialog_email.setText(SuperLifeSecretPreferences.getInstance().getString("final_dialog_email"));
+        dialog_mobile.setText(SuperLifeSecretPreferences.getInstance().getString("final_dialog_phone"));
 
         bankname.setText(bank_name);
         accountno.setText(account_number);
@@ -555,8 +566,14 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         payment_date_dialog.setText(payment_date_string);
         tv_yes.setText(languageResponseData.getYes());
         tv_no.setText(languageResponseData.getNo());
+        tv_order_type_dialog.setText(languageResponseData.getOrder_type());
 
         if (SuperLifeSecretPreferences.getInstance().getString("book_order_for").equals("2")) {
+            linear_other_person_dialog.setVisibility(View.VISIBLE);
+        } else {
+            linear_other_person_dialog.setVisibility(View.GONE);
+        }
+        if (!SuperLifeSecretPreferences.getInstance().getString("other_person_name").equals("")) {
             linear_other_person_dialog.setVisibility(View.VISIBLE);
         } else {
             linear_other_person_dialog.setVisibility(View.GONE);
@@ -568,9 +585,19 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         } else {
             book_type.setText(languageResponseData.getPrinting());
         }
-        order_for.setText("" + SuperLifeSecretPreferences.getInstance().getString("order_for_text"));
+        if (SuperLifeSecretPreferences.getInstance().getString("book_order_for").equals("1")) {
+            order_for.setText(languageResponseData.getOwn());
+        } else {
+            order_for.setText(languageResponseData.getBehalf());
+        }
+        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("1")) {
+            order_type_dialog.setText(languageResponseData.getDesignated());
+        } else {
+            order_type_dialog.setText(languageResponseData.getDistribute());
+        }
         delivery_type.setText("" + SuperLifeSecretPreferences.getInstance().getString("delivery_type_text"));
         user_name.setText(SuperLifeSecretPreferences.getInstance().getString("book_full_name"));
+
         UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         user_country.setText(userDetailResponseData.getCountryName());
 
@@ -594,24 +621,24 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
 //        }
         delivery_charges = Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
         try {
-            deliverycharges.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", delivery_charges));
+            deliverycharges.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", delivery_charges));
         } catch (Exception e) {
             deliverycharges.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + delivery_charges);
         }
-        //deliverycharges.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + delivery_charges);
         double grandtotal = delivery_charges + dountl_total_amount;
-        //grant_total.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal);
         try {
-            grant_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", grandtotal));
+            grant_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", grandtotal));
         } catch (Exception e) {
             grant_total.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal);
         }
         try {
-            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", dountl_total_amount));
+            tv_grand_total_first.setText(""+(dountl_total_amount-disocunt));
+            grand_total_first.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", dountl_total_amount));
+            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", dountl_total_amount));
         } catch (Exception e) {
+            grand_total_first.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + dountl_total_amount);
             subtotal.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + dountl_total_amount);
         }
-        //subtotal.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + dountl_total_amount);
         dialog_receipt_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         ReceiptAapter receiptAapter2 = new ReceiptAapter(receipt_list, this, new ReceiptListener(), false);
         dialog_receipt_recyclerview.setAdapter(receiptAapter2);
@@ -638,47 +665,4 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         });
 
     }
-
-//    public void showDialog(String bank_name, String account_number) {
-//        dialog = new Dialog(FifthBookActivity.this, R.style.DialogCustomTheme);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.dialog_receipt);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        BigReceiptAapter receiptAapter;
-//        ImageView imageview_cross = dialog.findViewById(R.id.imageview_cross);
-//        ImageView imageview_right = dialog.findViewById(R.id.imageview_right);
-//        TextView textview_bankname = dialog.findViewById(R.id.textview_bankname);
-//        TextView tv_accountnumber = dialog.findViewById(R.id.tv_accountnumber);
-//        textview_bankname.setText(bank_name);
-//        tv_accountnumber.setText(account_number);
-//        RecyclerView recyclerView = dialog.findViewById(R.id.recycler_view);
-//        LinearLayout bank_linear = dialog.findViewById(R.id.bank_linear);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-//        BigReceiptAapter bigReceiptAapter = new BigReceiptAapter(receipt_list, this);
-//        recyclerView.setAdapter(bigReceiptAapter);
-//
-//        Animation startAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-//        imageview_cross.startAnimation(startAnimation);
-//        imageview_right.startAnimation(startAnimation);
-//        bank_linear.startAnimation(startAnimation);
-//        imageview_cross.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (dialog.isShowing()) {
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//        imageview_right.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                orderWebservice();
-//                if (dialog.isShowing()) {
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//        dialog.show();
-//    }
 }

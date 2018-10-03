@@ -330,6 +330,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:background="@drawable/edittext_round"
                                 android:hint="Enter Amount"
+                                android:imeOptions="actionDone"
                                 android:inputType="number"
                                 android:padding="@dimen/_8sdp"
                                 android:textSize="@dimen/_10sdp" />
@@ -344,10 +345,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:paddingRight="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/reguler"
+                    android:paddingRight="@dimen/_10sdp"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -356,19 +357,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:fontFamily="@font/reguler"
                     android:text="Delivery Charges"
-                    android:textStyle="bold"
                     android:textColor="@color/red_bg"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/delivery_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_height="@dimen/_180sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp" />
 
                 <TextView
@@ -376,22 +377,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/reguler"
                     android:text="Discount"
-                    android:textStyle="bold"
-                    android:visibility="gone"
                     android:textColor="@color/red_bg"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/discount_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_5sdp" />
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
 

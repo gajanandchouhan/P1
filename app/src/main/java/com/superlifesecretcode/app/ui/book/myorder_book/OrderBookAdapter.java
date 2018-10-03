@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -45,10 +48,18 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
         holder.textview_detail.setText(languageResponseData.getView_detail());
 
         holder.textview_orderid.setText(orderArrayList.get(position).getOrder_code());
-        holder.textview_status.setText(orderArrayList.get(position).getOrder_status());
-        holder.textview_date.setText(orderArrayList.get(position).getOrder_date());
+        if (orderArrayList.get(position).getOrder_status().equals("1")){
+            holder.textview_status.setText(languageResponseData.getPending());
+        }else if (orderArrayList.get(position).getOrder_status().equals("2")){
+            holder.textview_status.setText(languageResponseData.getSuccess());
+        }else {
+            holder.textview_status.setText(languageResponseData.getDeclined());
+        }
+        holder.textview_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMMM, yyyy hh:mm a", orderArrayList.get(position).getOrder_date() + " " + orderArrayList.get(position).getOrder_time(), true, "utc"));
+       // holder.textview_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMM, yy hh:mm a", list.get(position).getCreated_at(), true, "utc"));
+       // holder.textview_date.setText(orderArrayList.get(position).getOrder_date());
         try {
-            holder.textview_amount.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(orderArrayList.get(position).getTotal_amount())));
+            holder.textview_amount.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",Double.parseDouble(orderArrayList.get(position).getTotal_amount())));
         }catch (Exception e){
             holder.textview_amount.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+orderArrayList.get(position).getTotal_amount());
         }

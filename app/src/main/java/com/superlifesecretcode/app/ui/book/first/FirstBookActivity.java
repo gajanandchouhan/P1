@@ -44,7 +44,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
     @Override
     protected void onResume() {
         super.onResume();
-        if(CommonUtils.book_stake==true){
+        if (CommonUtils.book_stake == true) {
             finish();
         }
     }
@@ -159,7 +159,8 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
 
     @Override
     public void getBookList(BookList bookData) {
-        try{
+
+        try {
             if (bookData.getCurrencyUnit().getCurrency_symbol() != null || !bookData.getCurrencyUnit().getCurrency_symbol().equals("")) {
                 SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + bookData.getCurrencyUnit().getCurrency_symbol());
             } else {
@@ -167,8 +168,8 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                 Log.i("locale", Currency.getInstance(current).getSymbol());
                 SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + Currency.getInstance(current).getSymbol());
             }
-        }catch (Exception e){
-            Log.e("E",e.toString());
+        } catch (Exception e) {
+            Log.e("E", e.toString());
         }
 
         ArrayList<BookBean> finalBooklist = bookData.getData();
@@ -183,10 +184,45 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
             }
         }
         booksList.addAll(finalBooklist);
+        for (int p = 0; p < booksList.size(); p++) {
+            for (int d = 0; d < booksList.get(p).getDiscount().size(); d++) {
+                double book_price = booksList.get(p).getPrice();
+                int min_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMin_qty());
+                int max_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMax_qty());
+                int book_quantity = booksList.get(p).getQuantity();
+                if (book_quantity >= min_quantity && book_quantity <= max_quantity) {
+                    if (booksList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
+                        double no = booksList.get(p).getDiscount().get(d).getDiscount_amount();
+                        double discount = ((book_price * no) / 100);
+                        booksList.get(p).setDiscount_applied(discount);
+                        booksList.get(p).setPrice_after_discount(book_price-discount);
+                    } else {
+                        double discount = booksList.get(p).getDiscount().get(d).getDiscount_amount();
+                        booksList.get(p).setDiscount_applied(discount);
+                        booksList.get(p).setPrice_after_discount(book_price-discount);
+                    }
+                }
+            }
+        }
         bookAapter.notifyDataSetChanged();
+
     }
 
     public class BookSelectedListener {
+
+        public void onExpandCollapse(int post, boolean expand_collapse_status) {
+
+            for (int i = 0; i < booksList.size(); i++) {
+                if (i == post) {
+                    booksList.get(i).setExpand_collapase(expand_collapse_status);
+                } else {
+                    booksList.get(i).setExpand_collapase(false);
+                }
+            }
+            bookAapter.notifyDataSetChanged();
+        }
+
+
         public void onSelected(int i, boolean status) {
             if (status == true) {
                 if (!selectedBooks.contains(booksList.get(i).getId())) {
@@ -219,6 +255,8 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                 Log.e("selectedBokArayListAAF", "" + selectedBookArrayList.size());
                 Log.e("selectedBooks_AAF", "" + selectedBooks.size());
             }
+
+
         }
     }
 

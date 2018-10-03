@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.media.RingtoneManager;
@@ -18,10 +19,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
@@ -35,8 +40,8 @@ import com.bumptech.glide.request.transition.Transition;
 import com.superlifesecretcode.app.BuildConfig;
 import com.superlifesecretcode.app.GlideApp;
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.kpi_summery.KpiActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
@@ -50,7 +55,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -99,6 +103,11 @@ public class CommonUtils {
 
     public static void startActivity(Activity activity, Class clazz) {
         activity.startActivity(new Intent(activity, clazz));
+    }
+
+    public static Spanned getColorfulText(KpiActivity kpiActivity, String s, Color colorId ) {
+        String send = "<font color="+ colorId+">" +s+" </font> ";
+        return  Html.fromHtml(send);
     }
 
     public static void startActivity(AppCompatActivity activity, Class c, Bundle bundle, boolean clearTop) {

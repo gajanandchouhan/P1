@@ -26,7 +26,56 @@ public class OrderBean {
     String other_person_name;
     String other_person_mobile;
     String delivery_charge;
+    String bank_name,account_number,payment_mode,payment_date;
+    String store_mobile , store_email ;
 
+    public String getStore_mobile() {
+        return store_mobile;
+    }
+
+    public void setStore_mobile(String store_mobile) {
+        this.store_mobile = store_mobile;
+    }
+
+    public String getStore_email() {
+        return store_email;
+    }
+
+    public void setStore_email(String store_email) {
+        this.store_email = store_email;
+    }
+
+    public String getBank_name() {
+        return bank_name;
+    }
+
+    public void setBank_name(String bank_name) {
+        this.bank_name = bank_name;
+    }
+
+    public String getAccount_number() {
+        return account_number;
+    }
+
+    public void setAccount_number(String account_number) {
+        this.account_number = account_number;
+    }
+
+    public String getPayment_mode() {
+        return payment_mode;
+    }
+
+    public void setPayment_mode(String payment_mode) {
+        this.payment_mode = payment_mode;
+    }
+
+    public String getPayment_date() {
+        return payment_date;
+    }
+
+    public void setPayment_date(String payment_date) {
+        this.payment_date = payment_date;
+    }
 
     public String getDelivery_charge() {
         return delivery_charge;

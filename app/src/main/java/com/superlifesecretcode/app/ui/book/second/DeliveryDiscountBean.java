@@ -7,7 +7,23 @@ public class DeliveryDiscountBean {
     String information;
     ArrayList<DeliveryData> delivery_charges;
     ArrayList<Discount> discounts;
+    String print_affordability_des , print_quantity_des;
 
+    public String getPrint_affordability_des() {
+        return print_affordability_des;
+    }
+
+    public void setPrint_affordability_des(String print_affordability_des) {
+        this.print_affordability_des = print_affordability_des;
+    }
+
+    public String getPrint_quantity_des() {
+        return print_quantity_des;
+    }
+
+    public void setPrint_quantity_des(String print_quantity_des) {
+        this.print_quantity_des = print_quantity_des;
+    }
 
     public String getInformation() {
         return information;

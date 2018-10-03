@@ -3,6 +3,8 @@ package com.superlifesecretcode.app.ui.book.second;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -21,9 +23,12 @@ import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.third.ThirsBookActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SecondBookActivity extends BaseActivity implements SecondBookView {
@@ -53,7 +58,6 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         return R.layout.activity_book_second;
     }
 
-
     @Override
     protected void initializeView() {
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
@@ -77,6 +81,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         textview_delivery_charges = findViewById(R.id.textview_delivery_charges);
         textview_delivery_description_buy = findViewById(R.id.textview_delivery_description_buy);
         discount_recyclerview = findViewById(R.id.discount_recyclerview);
+        edittext_enteramount.addTextChangedListener(onTextChangedListener());
 
         textView_title.setText(SuperLifeSecretPreferences.getInstance().getString("book_title"));
 
@@ -133,6 +138,8 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             }
         });
 
+
+
         textview_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +156,26 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                         AMOUNT_TOTAL_SEND = bookArrayList.get(i).getPrice() + AMOUNT_TOTAL_SEND;
                         bookArrayList.get(i).setQuantity(1);
                     }
+                    for (int p = 0; p < bookArrayList.size(); p++) {
+                        for (int d = 0; d < bookArrayList.get(p).getDiscount().size(); d++) {
+                            double book_price = bookArrayList.get(p).getPrice();
+                            int min_quantity = Integer.parseInt(bookArrayList.get(p).getDiscount().get(d).getMin_qty());
+                            int max_quantity = Integer.parseInt(bookArrayList.get(p).getDiscount().get(d).getMax_qty());
+                            int book_quantity = bookArrayList.get(p).getQuantity();
+                            if (book_quantity >= min_quantity && book_quantity <= max_quantity) {
+                                if (bookArrayList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
+                                    double no = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                    double discount = ((no * 100) / book_price);
+                                    bookArrayList.get(p).setDiscount_applied(discount);
+                                    bookArrayList.get(p).setPrice_after_discount(book_price-discount);
+                                } else {
+                                    double discount = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                    bookArrayList.get(p).setDiscount_applied(discount);
+                                    bookArrayList.get(p).setPrice_after_discount(book_price-discount);
+                                }
+                            }
+                        }
+                    }
                     Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
                     SuperLifeSecretPreferences.getInstance().setSelectedBooksList(bookArrayList);
                     SuperLifeSecretPreferences.getInstance().putString("total_amount", "" + AMOUNT_TOTAL_SEND);
@@ -163,6 +190,26 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                                 intent.putExtra("selected_booklist", bookArrayList);
                                 for (int p = 0; p < bookArrayList.size(); p++) {
                                     Log.e("quaadddd" + p, "" + bookArrayList.get(p).getQuantity());
+                                }
+                                for (int p = 0; p < bookArrayList.size(); p++) {
+                                    for (int d = 0; d < bookArrayList.get(p).getDiscount().size(); d++) {
+                                        double book_price = bookArrayList.get(p).getPrice();
+                                        int min_quantity = Integer.parseInt(bookArrayList.get(p).getDiscount().get(d).getMin_qty());
+                                        int max_quantity = Integer.parseInt(bookArrayList.get(p).getDiscount().get(d).getMax_qty());
+                                        int book_quantity = bookArrayList.get(p).getQuantity();
+                                        if (book_quantity >= min_quantity && book_quantity <= max_quantity) {
+                                            if (bookArrayList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
+                                                double no = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                                double discount = ((no * 100) / book_price);
+                                                bookArrayList.get(p).setDiscount_applied(discount);
+                                                bookArrayList.get(p).setPrice_after_discount(book_price-discount);
+                                            } else {
+                                                double discount = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                                bookArrayList.get(p).setDiscount_applied(discount);
+                                                bookArrayList.get(p).setPrice_after_discount(book_price-discount);
+                                            }
+                                        }
+                                    }
                                 }
                                 intent.putExtra("total_amount", "" + TOTAL_AMOUNT);
                                 SuperLifeSecretPreferences.getInstance().putString("total_amount", "" + TOTAL_AMOUNT);
@@ -179,6 +226,26 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                         for (int i = 0; i < bookArrayList.size(); i++) {
                             AMOUNT_TOTAL_SEND = bookArrayList.get(i).getPrice() + AMOUNT_TOTAL_SEND;
                             bookArrayList.get(i).setQuantity(1);
+                        }
+                        for (int p = 0; p < bookArrayList.size(); p++) {
+                            for (int d = 0; d < bookArrayList.get(p).getDiscount().size(); d++) {
+                                double book_price = bookArrayList.get(p).getPrice();
+                                int min_quantity = Integer.parseInt(bookArrayList.get(p).getDiscount().get(d).getMin_qty());
+                                int max_quantity = Integer.parseInt(bookArrayList.get(p).getDiscount().get(d).getMax_qty());
+                                int book_quantity = bookArrayList.get(p).getQuantity();
+                                if (book_quantity >= min_quantity && book_quantity <= max_quantity) {
+                                    if (bookArrayList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
+                                        double no = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                        double discount = ((no * 100) / book_price);
+                                        bookArrayList.get(p).setDiscount_applied(discount);
+                                        bookArrayList.get(p).setPrice_after_discount(book_price-discount);
+                                    } else {
+                                        double discount = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                        bookArrayList.get(p).setDiscount_applied(discount);
+                                        bookArrayList.get(p).setPrice_after_discount(book_price-discount);
+                                    }
+                                }
+                            }
                         }
                         Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
                         SuperLifeSecretPreferences.getInstance().setSelectedBooksList(bookArrayList);
@@ -211,6 +278,37 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         if (CommonUtils.book_stake == true) {
             finish();
         }
+    }
+    private TextWatcher onTextChangedListener() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                edittext_enteramount.removeTextChangedListener(this);
+                try {
+                    String originalString = s.toString();
+                    Long longval;
+                    if (originalString.contains(",")) {
+                        originalString = originalString.replaceAll(",", "");
+                    }
+                    longval = Long.parseLong(originalString);
+                    DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                    formatter.applyPattern("##,##,##,###");
+                    String formattedString = formatter.format(longval);
+                    //setting text after format to EditText
+                    edittext_enteramount.setText(formattedString);
+                    edittext_enteramount.setSelection(edittext_enteramount.getText().length());
+                } catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                }
+                edittext_enteramount.addTextChangedListener(this);
+            }
+        };
     }
 
     @Override
@@ -255,7 +353,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
 
     public void getBookAmount() {
 
-        double AMOUNT_ENTERED = Double.parseDouble(edittext_enteramount.getText().toString());
+        double AMOUNT_ENTERED = Double.parseDouble(edittext_enteramount.getText().toString().replace(",",""));
         Log.e("AMOUNT_ENTERED", "" + AMOUNT_ENTERED);
         Log.e("bookArrayList SIZE", "" + bookArrayList.size());
         double AMOUNT_TOTAL = 0.0;
@@ -319,6 +417,8 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         discountAapter.notifyDataSetChanged();
         SuperLifeSecretPreferences.getInstance().setDiscountList(discountArrayList);
         textview_delivery_description_buy.setText(categoryResponseModel.getData().getInformation());
+        textview_affordability_description.setText(categoryResponseModel.getData().getPrint_affordability_des());
+        textview_bookquality_description.setText(categoryResponseModel.getData().getPrint_quantity_des());
     }
 
     @Override

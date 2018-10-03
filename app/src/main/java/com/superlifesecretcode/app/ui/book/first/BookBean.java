@@ -3,14 +3,59 @@ package com.superlifesecretcode.app.ui.book.first;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class BookBean implements Serializable{
 
     String author_name,description,id,image,name,stock;
     double price;
+    double discount_applied=0;
+    double price_after_discount;
     boolean selected  = false;
     int quantity=0;
+    ArrayList<Discount> discount;
+    boolean expand_collapase = false;
+
+    public double getPrice_after_discount() {
+        return price_after_discount;
+    }
+
+    public void setPrice_after_discount(double price_after_discount) {
+        this.price_after_discount = price_after_discount;
+    }
+
+    public double getDiscount_applied() {
+        return discount_applied;
+    }
+
+    public void setDiscount_applied(double discount_applied) {
+        this.discount_applied = discount_applied;
+    }
+
+    public boolean isExpand_collapase() {
+        return expand_collapase;
+    }
+
+    public void setExpand_collapase(boolean expand_collapase) {
+        this.expand_collapase = expand_collapase;
+    }
+
+    public ArrayList<Discount> getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(ArrayList<Discount> discount) {
+        this.discount = discount;
+    }
+
+    public static Comparator<BookBean> getPriceComparater() {
+        return PriceComparater;
+    }
+
+    public static void setPriceComparater(Comparator<BookBean> priceComparater) {
+        PriceComparater = priceComparater;
+    }
 
     public int getQuantity() {
         return quantity;

@@ -135,7 +135,7 @@ public class ForthBookActivity2 extends BaseActivity implements ForthBookView {
         edittext_emailid.setText("" + userData.getEmail());
         edittext_contact_number.setText("" + userData.getMobile());
         try {
-            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", Double.parseDouble(total_amont)));
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
         }catch (Exception e){
             textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
         }

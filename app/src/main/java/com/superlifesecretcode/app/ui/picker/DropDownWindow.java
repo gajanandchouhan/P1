@@ -9,10 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.ui.adapter.PoupupWindowListAdapter;
-
 import java.util.List;
 
 /**

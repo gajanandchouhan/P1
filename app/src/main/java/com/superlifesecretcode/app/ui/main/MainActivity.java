@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.AlertModel;
@@ -30,18 +29,18 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
-import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
+import com.superlifesecretcode.app.ui.customizebar.CustomizeBarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
+import com.superlifesecretcode.app.ui.kpi_summery.KpiActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.notification.NotificationActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
-import com.superlifesecretcode.app.ui.studygroup.StudyGroupActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -50,7 +49,6 @@ import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -132,6 +130,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         View viewNotifcation = findViewById(R.id.imageView_notification);
         viewNotifcation.setVisibility(View.VISIBLE);
         viewNotifcation.setOnClickListener(this);
+//        View viewSummeryKPI = findViewById(R.id.imageView_summery);
+//        viewSummeryKPI.setVisibility(View.VISIBLE);
+//        viewSummeryKPI.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
         drawerAdapter = new DrawerAdapter(list);
@@ -151,15 +152,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mDrawerLayout.bringChildToFront(drawerView);
                 mDrawerLayout.requestLayout();
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
             }
-
             @Override
             public void onDrawerClosed(View drawerView) {
             }
-
             @Override
             public void onDrawerStateChanged(int newState) {
             }
@@ -177,7 +175,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         presenter.getConversion(body);
         setUpBottomBar2();
     }
-
 
     private void setUpBottomBar2() {
         if (userDetailResponseData.getCountry() != null && !userDetailResponseData.getCountry().isEmpty()) {
@@ -361,6 +358,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 CommonUtils.startActivity(this, NotificationActivity.class);
                 break;
             case R.id.textView_edit:
+                Bundle bundle2 = new Bundle();
+                bundle2.putBoolean("update", false);
+                CommonUtils.startActivity(this, ProfileActivity.class, bundle2, false);
+                break;
+
+            case R.id.imageView_summery:
+                CommonUtils.startActivity(this, KpiActivity.class);
+                break;
             case R.id.imageView_profile:
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("update", false);
@@ -414,6 +419,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             return;
         }
 
+        if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_SETTING)) {
+            CommonUtils.startActivity(this, CustomizeBarActivity.class);
+            return;
+        }
+
         if (list.get(clickedPostion).getAlert() != null && list.get(clickedPostion).getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();
             alertModel.setCount(Integer.parseInt(list.get(clickedPostion).getAlert_count()));
@@ -445,8 +455,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             bundle.putString("color", color);
             bundle.putSerializable("banner", bannerList);
             CommonUtils.startActivity(this, SubCategoryActivity.class, bundle, false);
-
-
         }
     }
 
@@ -482,7 +490,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
     }
-
     @Override
     public void setBanners(List<BannerModel> banners) {
         if (banners != null) {

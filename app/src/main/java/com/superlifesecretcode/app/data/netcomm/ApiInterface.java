@@ -33,6 +33,7 @@ import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
 import com.superlifesecretcode.app.ui.book.second.Delivery;
 import com.superlifesecretcode.app.ui.book.second.DeliveryDescription;
+import com.superlifesecretcode.app.ui.kpi_summery.KPI;
 
 import java.util.Map;
 
@@ -363,8 +364,6 @@ public interface ApiInterface {
     @GET("getStudyGroups")
     Observable<StudyGroupResponseModel> getStudyGroups(@HeaderMap Map<String, String> headers);
 
-
-
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getStudyGroupItems")
@@ -383,5 +382,8 @@ public interface ApiInterface {
     @GET("buyingbookdescription")
     Observable<DeliveryDescription> getDeliveryBuyDescription(@HeaderMap Map<String, String> headers);
 
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("getlikeShareDetails")
+    Observable<KPI> getKpiData(@HeaderMap Map<String, String> headers);
 
 }

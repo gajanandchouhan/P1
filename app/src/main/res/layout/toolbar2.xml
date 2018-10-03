@@ -39,7 +39,7 @@
                 android:drawableLeft="@drawable/ic_logo"
                 android:drawablePadding="@dimen/_2sdp"
                 android:fontFamily="@font/bold"
-                android:text="Book"
+                android:text="Summery"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_16sdp" />
 

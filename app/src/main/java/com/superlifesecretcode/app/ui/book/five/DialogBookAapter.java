@@ -40,13 +40,13 @@ public class DialogBookAapter extends RecyclerView.Adapter<DialogBookAapter.Item
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
         try {
-            holder.textview_price_quantity.setText(String.format(Locale.getDefault(), "%.2f", list.get(position).getPrice())+" X "+list.get(position).getQuantity());
+            holder.textview_price_quantity.setText(String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice())+" X "+list.get(position).getQuantity());
         }catch (Exception e){
             holder.textview_price_quantity.setText(list.get(position).getPrice()+" X "+list.get(position).getQuantity());
         }
         Double total = (list.get(position).getPrice() * list.get(position).getQuantity());
         try {
-            holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f", total));
+            holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", total));
         }catch (Exception e){
             holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total);
         }

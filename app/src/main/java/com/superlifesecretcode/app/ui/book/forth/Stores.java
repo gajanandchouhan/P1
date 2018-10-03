@@ -3,6 +3,23 @@ package com.superlifesecretcode.app.ui.book.forth;
 public class Stores {
 
     String id,store_name,pin_code,street_address,country,state,city,opening_time,closing_time;
+    String mobile , email;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getId() {
         return id;

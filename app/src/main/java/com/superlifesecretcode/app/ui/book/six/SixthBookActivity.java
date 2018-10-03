@@ -51,6 +51,9 @@ public class SixthBookActivity extends BaseActivity {
         SuperLifeSecretPreferences.getInstance().putString("book_email", "");
         SuperLifeSecretPreferences.getInstance().putString("book_state", "");
         SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+        SuperLifeSecretPreferences.getInstance().putString("final_dialog_address", "");
+        SuperLifeSecretPreferences.getInstance().putString("final_dialog_email", "");
+        SuperLifeSecretPreferences.getInstance().putString("final_dialog_phone", "");
 
         back_image = findViewById(R.id.back_image);
         //textview_back = findViewById(R.id.textview_back);

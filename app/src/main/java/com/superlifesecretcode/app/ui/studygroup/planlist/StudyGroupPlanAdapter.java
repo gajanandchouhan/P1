@@ -42,7 +42,7 @@ public class StudyGroupPlanAdapter extends RecyclerView.Adapter<StudyGroupPlanAd
         holder.textViewCurrency.setText(studyGroupPlanData.getCurrency_symbol());
         try {
             if (studyGroupPlanData.getPlan_cost() != null && !studyGroupPlanData.getPlan_cost().isEmpty()) {
-                holder.textViewAmount.setText(String.format(Locale.getDefault(), "%.2f", Double.parseDouble(studyGroupPlanData.getPlan_cost())));
+                holder.textViewAmount.setText(String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(studyGroupPlanData.getPlan_cost())));
             }
         } catch (Exception e) {
             e.printStackTrace();

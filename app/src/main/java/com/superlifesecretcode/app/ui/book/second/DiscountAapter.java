@@ -40,7 +40,7 @@ public class DiscountAapter extends RecyclerView.Adapter<DiscountAapter.ItemView
         holder.tvtotal.setText(" " + list.get(position).getDiscount()+" %");
 
 //        try {
-//            holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(java.util.Locale.getDefault(), "%.2f", Double.parseDouble(list.get(position).getDiscount())));
+//            holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(java.util.Locale.getDefault(), "%,.2f", Double.parseDouble(list.get(position).getDiscount())));
 //        }catch (Exception e){
 //            holder.tvtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + list.get(position).getDiscount());
 //        }

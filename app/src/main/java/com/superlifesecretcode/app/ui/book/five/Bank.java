@@ -2,9 +2,17 @@ package com.superlifesecretcode.app.ui.book.five;
 
 public class Bank {
 
-    String id , bank_name , account_number;
+    String id , bank_name , account_number , bank_icon;
     boolean selected;
 
+
+    public String getBank_icon() {
+        return bank_icon;
+    }
+
+    public void setBank_icon(String bank_icon) {
+        this.bank_icon = bank_icon;
+    }
 
     public boolean isSelected() {
         return selected;

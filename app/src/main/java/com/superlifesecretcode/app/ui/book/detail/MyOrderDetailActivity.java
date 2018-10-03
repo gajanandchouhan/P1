@@ -1,8 +1,15 @@
 package com.superlifesecretcode.app.ui.book.detail;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +30,9 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.book.five.BigReceiptAapter;
 import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
+import com.superlifesecretcode.app.ui.book.forth.ForthBookActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -49,6 +59,10 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
     LanguageResponseData conversionData;
     TextView tv_other_person_name_dialog, other_person_name_dialog, tv_other_person_mobile_dialog, other_person_mobile_dialog;
     LinearLayout linear_otherperson_name, linear_other_person_mobile;
+    TextView tv_total, total;
+    TextView tv_bank_name, bank_name, tv_account_no, account_no;
+    TextView tv_payment_mode, payment_mode, tv_payment_date, payment_date;
+    TextView tv_email, email, tv_contactno, contacno;
 
     @Override
     protected int getContentView() {
@@ -92,6 +106,21 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
         receipt_recyclerview = findViewById(R.id.receipt_recyclerview);
         back_image = findViewById(R.id.back_image);
         textView_title = findViewById(R.id.textView_title);
+        tv_total = findViewById(R.id.tv_total);
+        total = findViewById(R.id.total);
+        tv_email = findViewById(R.id.tv_email);
+        email = findViewById(R.id.email);
+        tv_contactno = findViewById(R.id.tv_contactno);
+        contacno = findViewById(R.id.contacno);
+
+        tv_bank_name = findViewById(R.id.tv_bank_name);
+        bank_name = findViewById(R.id.bank_name);
+        tv_account_no = findViewById(R.id.tv_account_no);
+        account_no = findViewById(R.id.account_no);
+        tv_payment_mode = findViewById(R.id.tv_payment_mode);
+        payment_mode = findViewById(R.id.payment_mode);
+        tv_payment_date = findViewById(R.id.tv_payment_date);
+        payment_date = findViewById(R.id.payment_date);
 
         tv_other_person_name_dialog = findViewById(R.id.tv_other_person_name_dialog);
         other_person_name_dialog = findViewById(R.id.other_person_name_dialog);
@@ -121,7 +150,6 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
 
     private void orderDetail(String order_id) {
         Map<String, String> headers = new HashMap<>();
-
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> params = new HashMap<>();
         params.put("id", order_id);
@@ -163,11 +191,10 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
 //                    tv_delivery_address.setVisibility(View.VISIBLE);
 //                    delivery_address.setText(orderBean.getDelevery_street_address() + "," + orderBean.getDelevery_city() + "," + orderBean.getDelevery_state());
 //                }
-
                     if (orderBean.getDelevery_type().equals("1")) {
-                        delivery_type.setText(conversionData.getShipping());
+                        delivery_type.setText(conversionData.getDesignated());
                     } else {
-                        delivery_type.setText(conversionData.getBook_store());
+                        delivery_type.setText(conversionData.getDistribute());
                     }
                     if (delivery_type.getText().toString().equals("")) {
                         delivery_type.setVisibility(View.GONE);
@@ -177,14 +204,16 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                         tv_delivery_type.setVisibility(View.VISIBLE);
                     }
                     user_name.setText(orderBean.getName());
-                    if (orderBean.getStore_country().equals("")) {
-                        user_country.setVisibility(View.GONE);
-                        tv_user_country.setVisibility(View.GONE);
-                    } else {
-                        user_country.setVisibility(View.VISIBLE);
-                        tv_user_country.setVisibility(View.VISIBLE);
-                        user_country.setText(orderBean.getStore_country());
-                    }
+                    UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
+                    user_country.setText(userDetailResponseData.getCountryName());
+//                    if (orderBean.getStore_country().equals("")) {
+//                        user_country.setVisibility(View.GONE);
+//                        tv_user_country.setVisibility(View.GONE);
+//                    } else {
+//                        user_country.setVisibility(View.VISIBLE);
+//                        tv_user_country.setVisibility(View.VISIBLE);
+//                        user_country.setText(orderBean.getStore_country());
+//                    }
 
                     if (orderBean.getBook_type().equals("1")) {
                         book_type.setText(conversionData.getBuying());
@@ -192,9 +221,9 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                         book_type.setText(conversionData.getPrinting());
                     }
                     if (orderBean.getBook_type().equals("2")) {
-                        order_for.setText(conversionData.getOwn());
-                    } else {
                         order_for.setText(conversionData.getBehalf());
+                    } else {
+                        order_for.setText(conversionData.getOwn());
                     }
                     if (!orderBean.getOther_person_name().equals("")) {
                         other_person_name_dialog.setText(orderBean.getOther_person_name());
@@ -211,55 +240,91 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
 //                    } else {
 //                        linear_other_person_mobile.setVisibility(View.GONE);
 //                    }
-                    order_status.setText(orderBean.getOrder_status());
-                    order_date.setText(orderBean.getOrder_date());
+                    //order_status.setText(orderBean.getOrder_status());
+                    if (orderBean.getOrder_status().equals("1")) {
+                        order_status.setText(conversionData.getPending());
+                    } else if (orderBean.getOrder_status().equals("2")) {
+                        order_status.setText(conversionData.getSuccess());
+                    } else {
+                        order_status.setText(conversionData.getDeclined());
+                    }
+                    bank_name.setText(orderBean.getBank_name());
+                    account_no.setText(orderBean.getAccount_number());
+
+                    if (orderBean.getPayment_mode().equals("1")) {
+                        payment_mode.setText(conversionData.getBank_transfer());
+                    } else if (orderBean.getPayment_mode().equals("2")) {
+                        payment_mode.setText(conversionData.getCash_deposit());
+                    } else {
+                        payment_mode.setText(conversionData.getCheque_deposit());
+                    }
+                    payment_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, "dd MMMM, yyyy", orderBean.getPayment_date(), true, "utc"));
+
+                    if (orderBean.getEmail().equals("")) {
+                        tv_email.setVisibility(View.GONE);
+                        tv_contactno.setVisibility(View.GONE);
+                        email.setVisibility(View.GONE);
+                        contacno.setVisibility(View.GONE);
+                    } else {
+                        tv_email.setVisibility(View.VISIBLE);
+                        tv_contactno.setVisibility(View.VISIBLE);
+                        email.setVisibility(View.VISIBLE);
+                        contacno.setVisibility(View.VISIBLE);
+                    }
+                    email.setText(orderBean.getStore_email());
+                    contacno.setText(orderBean.getStore_mobile());
+                    //order_date.setText(orderBean.getOrder_date());
+                    order_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMMM, yyyy hh:mm a", orderBean.getOrder_date(), true, "utc"));
+                    tv_total.setText(conversionData.getTotal());
+                    total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     delivery.setText(conversionData.getFree());
 //                    if (orderBean.getDelivery_charge().equals("0")) {
 //                        delivery.setText(conversionData.getFree());
 //                        try {
-//                            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
+//                            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
 //                        }catch (Exception e){
 //                            subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
 //                        }
 //                    } else {
 //                        try {
-//                            delivery.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(orderBean.getDelivery_charge())));
+//                            delivery.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",Double.parseDouble(orderBean.getDelivery_charge())));
 //                        }catch (Exception e){
 //                            delivery.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(orderBean.getDelivery_charge()));
 //                        }
 //                        double subt = (Double.parseDouble(newsResponseModel.getData().getTotal_amount())  - Double.parseDouble(orderBean.getDelivery_charge()) );
 //                        try {
-//                            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",subt));
+//                            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",subt));
 //                        }catch (Exception e){
 //                            subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
 //                        }
 //                    }
                     try {
-                        subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
-                    }catch (Exception e){
+                        subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
+                    } catch (Exception e) {
                         subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     }
                     if (orderBean.getDelivery_charge().equals("0") || orderBean.getDelivery_charge().equals("0.0")) {
                         delivery.setText(conversionData.getFree());
                         try {
-                            grant_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
-                        }catch (Exception e){
+                            grant_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
+                        } catch (Exception e) {
                             grant_total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                         }
-                    }else {
+                    } else {
                         try {
-                            delivery.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",Double.parseDouble(newsResponseModel.getData().getOrder().getDelivery_charge())));
-                        }catch (Exception e){
+                            delivery.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(newsResponseModel.getData().getOrder().getDelivery_charge())));
+                        } catch (Exception e) {
                             delivery.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getOrder().getDelivery_charge()));
                         }
                         double gt = (Double.parseDouble(newsResponseModel.getData().getTotal_amount()) + Double.parseDouble(newsResponseModel.getData().getOrder().getDelivery_charge()));
                         try {
-                            grant_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%.2f",gt));
-                        }catch (Exception e){
-                            grant_total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " "+ gt);
+                            grant_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", gt));
+                        } catch (Exception e) {
+                            grant_total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + gt);
                         }
                     }
+
                     //grant_total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     receipts.clear();
                     receipts.addAll(newsResponseModel.getData().getReceipts());
@@ -268,6 +333,33 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             }
         }
         setConversionData();
+        contacno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int permissionCheck = ContextCompat.checkSelfPermission(MyOrderDetailActivity.this, Manifest.permission.CALL_PHONE);
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MyOrderDetailActivity.this, new String[]{Manifest.permission.CALL_PHONE},1);
+                } else {
+                    startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+contacno.getText().toString())));
+                }
+            }
+        });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ""));
+                    startActivity(intent);
+                } else {
+                    Log.d("TAG", "Call Permission Not Granted");
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 
     public class onReceiptSelector {
@@ -297,7 +389,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             tv_orderid.setText(conversionData.getOrder_id());
             tv_book_type.setText(conversionData.getBook_type());
             tv_order_for.setText(conversionData.getOrder_for());
-            tv_delivery_type.setText(conversionData.getDelivery_type());
+            tv_delivery_type.setText(conversionData.getOrder_type());
             tv_user_name.setText(conversionData.getUsername());
             tv_user_country.setText(conversionData.getUser_country());
             tv_order_status.setText(conversionData.getOrder_status());
@@ -311,6 +403,12 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             order_detail.setText(conversionData.getOrder_detail());
             tv_other_person_name_dialog.setText(conversionData.getOther_person());
             tv_other_person_mobile_dialog.setText(conversionData.getOther_mobile());
+            tv_bank_name.setText(conversionData.getBank_name());
+            tv_account_no.setText(conversionData.getAccount_number());
+            tv_payment_mode.setText(conversionData.getPayment_mode());
+            tv_payment_date.setText(conversionData.getPayment_date());
+            tv_email.setText(conversionData.getEmail_id());
+            tv_contactno.setText(conversionData.getContact_number());
         }
     }
 }

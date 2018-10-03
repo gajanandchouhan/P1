@@ -30,11 +30,12 @@
         android:textSize="@dimen/_16sdp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_30sdp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_140sdp"
         android:layout_centerInParent="true"
-        android:background="@drawable/rounded_transparent_black"
+        android:layout_margin="@dimen/_30sdp"
+        android:background="@drawable/selectlang_bg"
+        android:gravity="center"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -45,28 +46,29 @@
                 android:id="@+id/tv_lang_simplified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/reguler"
+                android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
                 android:text="簡化中文"
-                android:textColor="@color/colorWhite"
+                android:textColor="#845F2D"
                 android:textSize="@dimen/_15sdp" />
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/imageViewSimplified"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:src="@drawable/right" />
+                android:src="@drawable/right"
+                android:tint="#845F2D"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/colorWhite"></LinearLayout>
+            android:background="#845F2D"></LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -80,27 +82,26 @@
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
                 android:text="繁體中文"
-                android:textColor="@color/colorWhite"
+                android:textColor="#845F2D"
                 android:textSize="@dimen/_15sdp" />
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/imageViewTraditional"
-
                 android:layout_width="@dimen/_15sdp"
+                android:tint="#845F2D"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:src="@drawable/right" />
+                android:src="@drawable/right"
+                android:visibility="gone" />
         </RelativeLayout>
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/colorWhite"></LinearLayout>
+            android:background="#845F2D"></LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -114,19 +115,20 @@
                 android:fontFamily="@font/reguler"
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
-                android:text="English"
-                android:textColor="@color/colorWhite"
+                android:text="ENGLISH"
+                android:textColor="#845F2D"
                 android:textSize="@dimen/_15sdp" />
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/imageViewEnglish"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:src="@drawable/right" />
+                android:src="@drawable/right"
+                android:tint="#845F2D"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </LinearLayout>

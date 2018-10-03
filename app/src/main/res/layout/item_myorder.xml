@@ -27,7 +27,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
                     android:orientation="vertical"
                     android:padding="@dimen/_3sdp">
 
@@ -44,6 +43,7 @@
                         android:id="@+id/textview_orderid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_5sdp"
                         android:fontFamily="@font/reguler"
                         android:text="GKJLDSKFJSAKJDFLKJ"
                         android:textColor="@color/red_bg"
@@ -73,12 +73,11 @@
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:padding="@dimen/_5sdp">
-
 
                     <TextView
                         android:id="@+id/date"
@@ -135,7 +134,7 @@
 
                         <TextView
                             android:id="@+id/textview_detail"
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/_70sdp"
                             android:layout_height="wrap_content"
                             android:background="@color/red_bg"
                             android:paddingBottom="@dimen/_2sdp"

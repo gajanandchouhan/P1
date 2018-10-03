@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +79,8 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             HashMap<String, String> params = new HashMap<>();
             params.put("study_group_id", studyGroupDetails.getGroup_id());
+            Log.e("getGroup_id",""+studyGroupDetails.getGroup_id());
+
             presenter.getGroupItems(params, headers);
             adapter.setSubscirptionStatus(studyGroupDetails.getSubcription_status());
         }

@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.book.third;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -54,34 +55,30 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
         try {
-            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + String.format(Locale.getDefault(), "%.2f", list.get(position).getPrice()));
+            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + String.format(Locale.getDefault(), "%,.2f", (list.get(position).getPrice() - list.get(position).getDiscount_applied())));
         }catch (Exception e){
-            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + list.get(position).getPrice());
+            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + (list.get(position).getPrice() - list.get(position).getDiscount_applied()));
         }
-
-        Log.e("adapter" + position, "" + list.get(position).getQuantity());
         holder.edittext_quantity.setText("" + list.get(position).getQuantity());
         holder.edittext_quantity.setSelection(holder.edittext_quantity.getText().length());
+        holder.textview_bookprice_cut.setPaintFlags(holder.textview_bookprice_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        holder.textview_bookprice_cut.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice()));
         holder.edittext_quantity.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 return false;
             }
         });
         holder.edittext_quantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!holder.edittext_quantity.getText().toString().equals("")) {
                     onDeleteListener.onQualtityChanged(holder.edittext_quantity.getText().toString(),position);
-                   // holder.edittext_quantity.setText("1");
-                   // onDeleteListener.onQualtityChanged("1",position);
-//                    onDeleteListener.onQualtityChanged("0",position);
                 }
             }
 
@@ -91,7 +88,6 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
                    // holder.edittext_quantity.setText("0");
                     onDeleteListener.onQualtityChanged("0",position);
                 }
-
             }
         });
 
@@ -134,19 +130,16 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
 
         ImageView delete_iamge;
         TextView textview_book_name;
-        TextView textview_bookprice;
+        TextView textview_bookprice , textview_bookprice_cut;
         EditText edittext_quantity;
-        //LinearLayout linear_select;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-//            plus = itemView.findViewById(R.id.plus);
-//            minus = itemView.findViewById(R.id.minus);
             delete_iamge = itemView.findViewById(R.id.delete_iamge);
             textview_book_name = itemView.findViewById(R.id.textview_book_name);
             textview_bookprice = itemView.findViewById(R.id.textview_bookprice);
+            textview_bookprice_cut = itemView.findViewById(R.id.textview_bookprice_cut);
             edittext_quantity = itemView.findViewById(R.id.edittext_quantity);
-            //linear_select = itemView.findViewById(R.id.linear_select);
         }
 
         @Override

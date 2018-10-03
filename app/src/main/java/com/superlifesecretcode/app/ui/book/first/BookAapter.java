@@ -1,35 +1,34 @@
 package com.superlifesecretcode.app.ui.book.first;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Build;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.data.model.notifications.NotificationResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
-import com.superlifesecretcode.app.util.CommonUtils;
-import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by Divya on 26-02-2018.
- */
-
 public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> {
     private final List<BookBean> list;
     private Context mContext;
     FirstBookActivity.BookSelectedListener bookSelectedListener;
+
 
     public BookAapter(List<BookBean> list, Context mContext, FirstBookActivity.BookSelectedListener bookSelectedListener) {
         this.list = list;
@@ -39,16 +38,15 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book_list, parent, false));
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book_list2, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, final int position) {
+    public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_auther_name.setText(list.get(position).getAuthor_name());
-//        holder.textview_book_descrption.setText(list.get(position).getDescription());
         try {
-            holder.textview_bookprice.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " +  String.format(Locale.getDefault(), "%.2f", list.get(position).getPrice()));
+            holder.textview_bookprice.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice()));
         } catch (Exception e) {
         }
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
@@ -67,7 +65,11 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
                 }
             }
         });
-
+        if (list.get(position).isExpand_collapase()) {
+            expand(holder.discount_recyclerview, 500, holder.linear_select.getHeight());
+        } else {
+            collapse(holder.discount_recyclerview, 500, 0);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(list.get(position).getDescription(), Html.FROM_HTML_MODE_LEGACY);
             holder.textview_book_descrption.setText(spanned);
@@ -75,6 +77,25 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
             Spanned spanned = Html.fromHtml(list.get(position).getDescription());
             holder.textview_book_descrption.setText(spanned);
         }
+        if (list.get(position).getDiscount().size() == 0) {
+            holder.offer_layout.setVisibility(View.GONE);
+            holder.discount_recyclerview.setVisibility(View.GONE);
+        } else {
+            holder.discount_recyclerview.setVisibility(View.VISIBLE);
+            holder.offer_layout.setVisibility(View.VISIBLE);
+        }
+        holder.offer_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (list.get(position).isExpand_collapase()) {
+                    bookSelectedListener.onExpandCollapse(position, false);
+                } else {
+                    bookSelectedListener.onExpandCollapse(position, true);
+                }
+            }
+        });
+        holder.discount_recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.discount_recyclerview.setAdapter(new DiscountAapter(list.get(position).getDiscount(), mContext));
     }
 
     @Override
@@ -83,13 +104,15 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         ImageView checkbox, book;
         TextView textview_book_name;
         TextView textview_auther_name;
         TextView textview_book_descrption;
         TextView textview_bookprice;
         LinearLayout linear_select;
+        //LinearLayout linear_discount;
+        RecyclerView discount_recyclerview;
+        RelativeLayout offer_layout;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -100,10 +123,45 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
             textview_book_descrption = itemView.findViewById(R.id.textview_book_descrption);
             textview_bookprice = itemView.findViewById(R.id.textview_bookprice);
             linear_select = itemView.findViewById(R.id.linear_select);
+           // linear_discount = itemView.findViewById(R.id.linear_discount);
+            discount_recyclerview = itemView.findViewById(R.id.discount_recyclerview);
+            offer_layout = itemView.findViewById(R.id.offer_linearlayout);
         }
 
         @Override
         public void onClick(View v) {
         }
+    }
+
+    public static void expand(final View v, int duration, int targetHeight) {
+        int prevHeight = v.getHeight();
+        v.setVisibility(View.VISIBLE);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                v.getLayoutParams().height = (int) animation.getAnimatedValue();
+                v.requestLayout();
+            }
+        });
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
+    }
+
+    public static void collapse(final View v, int duration, int targetHeight) {
+        int prevHeight = v.getHeight();
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight);
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                v.getLayoutParams().height = (int) animation.getAnimatedValue();
+                v.requestLayout();
+            }
+        });
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
     }
 }

@@ -72,6 +72,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     ImageView imageViewCamera;
     private String gender;
     private String city = "";
+    TextView tv_done;
 
     @Override
     protected int getContentView() {
@@ -129,7 +130,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         langauageList.add(ConstantLib.STRING_SIMPLIFIED);
         setUpLocalConversion();
         setUpUi();
-        enableDisableView(true);
+       // enableDisableView(true);
     }
 
     private void setUpLocalConversion() {
@@ -263,10 +264,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
-        imageViewProfile = findViewById(R.id.imageView_profile);
-        imageViewProfile.setVisibility(View.VISIBLE);
-        imageViewProfile.setImageResource(R.drawable.edit);
-        imageViewProfile.setOnClickListener(this);
+        tv_done= findViewById(R.id.tv_done);
+        tv_done.setVisibility(View.VISIBLE);
+//        imageViewProfile = findViewById(R.id.imageView_profile);
+//        imageViewProfile.setVisibility(View.VISIBLE);
+//        imageViewProfile.setImageResource(R.drawable.edit);
+        tv_done.setOnClickListener(this);
         textViewTitle.setText(title);
     }
 
@@ -342,12 +345,13 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             case R.id.customize_bar:
                 CommonUtils.startActivity(this, CustomizeBarActivity.class);
                 break;
-            case R.id.imageView_profile:
-                if (isEnabled) {
-                    updateProfile();
-                } else {
-                    enableDisableView(true);
-                }
+            case R.id.tv_done:
+                updateProfile();
+//                if (isEnabled) {
+//                    updateProfile();
+//                } else {
+//                    enableDisableView(true);
+//                }
 
                 break;
             case R.id.textView_country:
@@ -481,13 +485,13 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     private void enableDisableView(boolean enbale) {
         isEnabled = enbale;
-        if (enbale) {
-            imageViewCamera.setVisibility(View.VISIBLE);
-            imageViewProfile.setImageResource(R.drawable.right);
-        } else {
-            imageViewProfile.setImageResource(R.drawable.edit);
-            imageViewCamera.setVisibility(View.GONE);
-        }
+//        if (enbale) {
+//            imageViewCamera.setVisibility(View.VISIBLE);
+//            imageViewProfile.setImageResource(R.drawable.right);
+//        } else {
+//            imageViewProfile.setImageResource(R.drawable.edit);
+//            imageViewCamera.setVisibility(View.GONE);
+//        }
         editTextName.setEnabled(enbale);
         imageViewUser.setEnabled(enbale);
         imageViewFlag.setEnabled(enbale);
