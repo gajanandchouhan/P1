@@ -44,9 +44,9 @@
 
                     <TextView
                         android:id="@+id/tv_total"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        
                         android:fontFamily="@font/reguler"
                         android:gravity="left"
                         android:text="Total"
@@ -54,16 +54,34 @@
                         android:textSize="@dimen/_10sdp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/total"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
                         android:layout_weight="1"
-                        android:fontFamily="@font/reguler"
+                        android:layout_width="0dp"
                         android:gravity="right"
-                        android:text="288"
-                        android:textColor="@color/red_bg"
-                        android:textSize="@dimen/_10sdp" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/total_cut"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/reguler"
+                            android:gravity="right"
+                            android:text=""
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/total"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/reguler"
+                            android:gravity="right"
+                            android:text=""
+                            android:textColor="@color/red_bg"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -117,7 +135,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -148,7 +166,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -179,7 +197,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -217,7 +235,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/reguler"
                                 android:gravity="right"
-                                android:text="288"
+                                android:text=""
 
                                 android:textColor="@color/red_bg"
                                 android:textSize="@dimen/_10sdp" />
@@ -255,7 +273,7 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/reguler"
                                     android:gravity="right"
-                                    android:text="288"
+                                    android:text=""
                                     android:textColor="@color/red_bg"
                                     android:textSize="@dimen/_10sdp" />
                             </LinearLayout>
@@ -288,7 +306,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -321,7 +339,7 @@
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
                             android:maxLines="1"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -351,15 +369,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:autoLink="email"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:textColorLink="#0000FF"
                             android:maxLines="1"
-                            android:autoLink="email"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
+                            android:textColorLink="#0000FF"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -384,21 +403,21 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:autoLink="phone"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:autoLink="phone"
-                            android:text="288"
-                            android:textColorLink="#0000FF"
+                            android:text=""
                             android:textColor="#0000ff"
+                            android:textColorLink="#0000FF"
                             android:textSize="@dimen/_10sdp" />
                         <!--<View-->
-                            <!--android:id="@+id/separator"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="0.3dp"-->
-                            <!--android:layout_alignLeft="@+id/textview_mobile"-->
-                            <!--android:layout_alignRight="@+id/textview_mobile"-->
-                            <!--android:layout_below="@+id/textview_mobile"-->
-                            <!--android:background="#0000ff" />-->
+                        <!--android:id="@+id/separator"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="0.3dp"-->
+                        <!--android:layout_alignLeft="@+id/textview_mobile"-->
+                        <!--android:layout_alignRight="@+id/textview_mobile"-->
+                        <!--android:layout_below="@+id/textview_mobile"-->
+                        <!--android:background="#0000ff" />-->
                     </LinearLayout>
 
                     <LinearLayout
@@ -427,7 +446,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -458,7 +477,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -489,7 +508,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -520,7 +539,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -605,7 +624,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -634,7 +653,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -663,7 +682,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -692,7 +711,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -721,7 +740,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -750,7 +769,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -787,7 +806,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/reguler"
                             android:gravity="right"
-                            android:text="288"
+                            android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>

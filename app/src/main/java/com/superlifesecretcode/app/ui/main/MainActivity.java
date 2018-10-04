@@ -130,9 +130,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         View viewNotifcation = findViewById(R.id.imageView_notification);
         viewNotifcation.setVisibility(View.VISIBLE);
         viewNotifcation.setOnClickListener(this);
-//        View viewSummeryKPI = findViewById(R.id.imageView_summery);
-//        viewSummeryKPI.setVisibility(View.VISIBLE);
-//        viewSummeryKPI.setOnClickListener(this);
+        View viewSummeryKPI = findViewById(R.id.imageView_summery);
+        viewSummeryKPI.setVisibility(View.VISIBLE);
+        viewSummeryKPI.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
         drawerAdapter = new DrawerAdapter(list);

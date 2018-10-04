@@ -99,6 +99,8 @@ public class SubscriptionPlanListActivity extends BaseActivity implements Subscr
     public void startPaymentConirmScreen(int position) {
 
         Intent intent = new Intent(this, PaymentProofActivity.class);
+        intent.putExtra("study_group_id", groupId);
+        intent.putExtra("plan_type", list.get(position).getPlan_type());
         intent.putExtra("plan_id", list.get(position).getPlan_id());
         intent.putExtra("plan_cost", list.get(position).getPlan_cost());
         intent.putExtra("plan_title",list.get(position).getPlan_title());

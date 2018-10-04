@@ -3,6 +3,15 @@ package com.superlifesecretcode.app.ui.book.detail;
 public class Book {
 
     String book_price , book_quantity , book_id , book_name , image;
+    double discount;
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
 
     public String getBook_price() {
         return book_price;

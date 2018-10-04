@@ -51,6 +51,57 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ramotion.foldingcell.FoldingCell;
+import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
+import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
+import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.book.first.BookBean;
+import com.superlifesecretcode.app.ui.book.five.Bank;
+import com.superlifesecretcode.app.ui.book.five.BankBean;
+import com.superlifesecretcode.app.ui.book.five.DialogBookAapter;
+import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
+import com.superlifesecretcode.app.ui.book.five.FifthBookPresenter;
+import com.superlifesecretcode.app.ui.book.five.Receipt;
+import com.superlifesecretcode.app.ui.book.five.ReceiptAapter;
+import com.superlifesecretcode.app.ui.book.second.DeliveryData;
+import com.superlifesecretcode.app.ui.picker.DropDownWindow;
+import com.superlifesecretcode.app.ui.studygroup.ThanksActivity;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ImagePickerUtils;
+import com.superlifesecretcode.app.util.PermissionConstant;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class PaymentProofActivity extends BaseActivity implements PaymentProofView {
 
@@ -72,6 +123,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
     TextView textview_plus, tv_payment_date, tv_payment_type;
     ArrayList<String> payment_type_list;
     String payment_type = "", payment_date = "", payment_type_string = "", payment_date_string = "";
+    String study_group_id = "" , plan_type = "";
     TextView payment_date_heading, payment_type_heading;
     private String planCost;
     private String groupName;
@@ -92,6 +144,8 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         groupName = getIntent().getStringExtra("group_name");
         currency = getIntent().getStringExtra("plan_currency");
         planTitle = getIntent().getStringExtra("plan_title");
+        study_group_id = getIntent().getStringExtra("study_group_id");
+        plan_type = getIntent().getStringExtra("plan_type");
         setUpToolbar();
         bankArrayList = new ArrayList<>();
         receipt_list = new ArrayList<>();
@@ -259,6 +313,8 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
         builder.addFormDataPart("payment_mode", payment_type);
         builder.addFormDataPart("plan_id", planId);
         builder.addFormDataPart("bank_id", getBankId());
+        builder.addFormDataPart("study_group_id", study_group_id);
+        builder.addFormDataPart("plan_type", plan_type);
         for (int i = 0; i < receipt_list.size(); i++) {
             try {
                 if (receipt_list.get(i) != null) {

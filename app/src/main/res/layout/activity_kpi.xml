@@ -17,33 +17,49 @@
 
             <include layout="@layout/toolbar2" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
                 android:background="@color/colorPrimary"
-                android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_totalpoint"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14sdp" />
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_totalpoint_count"
+                    <TextView
+                        android:id="@+id/tv_totalpoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_totalpoint_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/_22sdp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_sharing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/_22sdp" />
-            </LinearLayout>
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/latest_share" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,6 +98,7 @@
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
+                        android:id="@+id/relative_news"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -140,6 +157,7 @@
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
+                        android:id="@+id/relative_event"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -151,10 +169,10 @@
 
                         <TextView
                             android:id="@+id/tv_event"
-                            android:layout_marginTop="@dimen/_2sdp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
                             android:layout_toRightOf="@+id/image_event"
                             android:fontFamily="@font/bold"
                             android:text="Event"
@@ -222,6 +240,7 @@
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
+                        android:id="@+id/raletive_dailyactivity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -324,6 +343,7 @@
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
+                        android:id="@+id/relative_sharing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 

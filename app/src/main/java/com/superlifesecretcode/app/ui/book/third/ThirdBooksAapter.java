@@ -8,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,21 +58,44 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
         try {
-            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + String.format(Locale.getDefault(), "%,.2f", (list.get(position).getPrice() - list.get(position).getDiscount_applied())));
-        }catch (Exception e){
-            holder.textview_bookprice.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + (list.get(position).getPrice() - list.get(position).getDiscount_applied()));
+            holder.textview_bookprice.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", (list.get(position).getPrice() - list.get(position).getDiscount_applied())));
+        } catch (Exception e) {
+            holder.textview_bookprice.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + (list.get(position).getPrice() - list.get(position).getDiscount_applied()));
         }
         holder.edittext_quantity.setText("" + list.get(position).getQuantity());
         holder.edittext_quantity.setSelection(holder.edittext_quantity.getText().length());
         holder.textview_bookprice_cut.setPaintFlags(holder.textview_bookprice_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.textview_bookprice_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice()));
+//        if (list.get(position).getPrice()==list.get(position).getPrice_after_discount()){
+        if (list.get(position).isIs_discounted()) {
+            holder.textview_bookprice_cut.setVisibility(View.VISIBLE);
+        } else {
+            holder.textview_bookprice_cut.setVisibility(View.GONE);
+        }
+//        holder.edittext_quantity.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return false;
+//            }
+//        });
+//        holder.edittext_quantity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//                    if (holder.edittext_quantity.getText().toString().equals("")) {
+//                        onDeleteListener.onQualtityChanged("0", position);
+//                    }
+//                    if (!holder.edittext_quantity.getText().toString().equals("")) {
+//                        onDeleteListener.onQualtityChanged(holder.edittext_quantity.getText().toString(), position);
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
-        holder.textview_bookprice_cut.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" " + String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice()));
-        holder.edittext_quantity.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
         holder.edittext_quantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -77,16 +103,17 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 if (!holder.edittext_quantity.getText().toString().equals("")) {
-                    onDeleteListener.onQualtityChanged(holder.edittext_quantity.getText().toString(),position);
+                    onDeleteListener.onQualtityChanged(holder.edittext_quantity.getText().toString(), position);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (holder.edittext_quantity.getText().toString().equals("")) {
-                   // holder.edittext_quantity.setText("0");
-                    onDeleteListener.onQualtityChanged("0",position);
+                    // holder.edittext_quantity.setText("0");
+                    onDeleteListener.onQualtityChanged("0", position);
                 }
             }
         });
@@ -94,7 +121,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
         holder.delete_iamge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletePopup(position,list.get(position).getName());
+                deletePopup(position, list.get(position).getName());
             }
         });
     }
@@ -103,7 +130,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LanguageResponseData conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
-            builder.setMessage(conversionData.getWant_delete()+" "+name);
+            builder.setMessage(conversionData.getWant_delete() + " " + name);
             builder.setPositiveButton(conversionData.getYes(), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -130,7 +157,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
 
         ImageView delete_iamge;
         TextView textview_book_name;
-        TextView textview_bookprice , textview_bookprice_cut;
+        TextView textview_bookprice, textview_bookprice_cut;
         EditText edittext_quantity;
 
         public ItemViewHolder(View itemView) {

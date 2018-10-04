@@ -1,6 +1,8 @@
 package com.superlifesecretcode.app.ui.book.first;
 
-public class Discount {
+import java.io.Serializable;
+
+public class Discount implements Serializable{
 
     String min_qty;
     String max_qty;

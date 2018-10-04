@@ -97,6 +97,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         textview_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("selectedBookArrayList", "" + selectedBookArrayList);
                 if (selectedBooks.size() != 0) {
                     SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "1");
                     Intent intent = new Intent(FirstBookActivity.this, SecondBookActivity.class);
@@ -159,7 +160,6 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
 
     @Override
     public void getBookList(BookList bookData) {
-
         try {
             if (bookData.getCurrencyUnit().getCurrency_symbol() != null || !bookData.getCurrencyUnit().getCurrency_symbol().equals("")) {
                 SuperLifeSecretPreferences.getInstance().putString("book_currency", "" + bookData.getCurrencyUnit().getCurrency_symbol());
@@ -185,27 +185,39 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         }
         booksList.addAll(finalBooklist);
         for (int p = 0; p < booksList.size(); p++) {
-            for (int d = 0; d < booksList.get(p).getDiscount().size(); d++) {
-                double book_price = booksList.get(p).getPrice();
-                int min_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMin_qty());
-                int max_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMax_qty());
-                int book_quantity = booksList.get(p).getQuantity();
-                if (book_quantity >= min_quantity && book_quantity <= max_quantity) {
-                    if (booksList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
-                        double no = booksList.get(p).getDiscount().get(d).getDiscount_amount();
-                        double discount = ((book_price * no) / 100);
-                        booksList.get(p).setDiscount_applied(discount);
-                        booksList.get(p).setPrice_after_discount(book_price-discount);
+            if (booksList.get(p).getDiscount().size() != 0) {
+                for (int d = 0; d < booksList.get(p).getDiscount().size(); d++) {
+                    double book_price = booksList.get(p).getPrice();
+                    int min_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMin_qty());
+                    int max_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMax_qty());
+                    int book_quantity = booksList.get(p).getQuantity();
+                    booksList.get(p).setPrice_after_discount(book_price);
+                    if (book_quantity >= min_quantity && book_quantity <= max_quantity) {
+                        if (booksList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
+                            double no = booksList.get(p).getDiscount().get(d).getDiscount_amount();
+                            double discount = ((book_price * no) / 100);
+                            booksList.get(p).setDiscount_applied(discount);
+                            booksList.get(p).setIs_discounted(true);
+                            booksList.get(p).setPrice_after_discount(book_price - discount);
+                            break;
+                        } else {
+                            double discount = booksList.get(p).getDiscount().get(d).getDiscount_amount();
+                            booksList.get(p).setDiscount_applied(discount);
+                            booksList.get(p).setPrice_after_discount(book_price - discount);
+                            booksList.get(p).setIs_discounted(true);
+                            break;
+                        }
                     } else {
-                        double discount = booksList.get(p).getDiscount().get(d).getDiscount_amount();
-                        booksList.get(p).setDiscount_applied(discount);
-                        booksList.get(p).setPrice_after_discount(book_price-discount);
+                        booksList.get(p).setDiscount_applied(0);
+                        booksList.get(p).setIs_discounted(false);
+                        booksList.get(p).setPrice_after_discount(book_price);
                     }
                 }
+            } else {
+                booksList.get(p).setPrice_after_discount(booksList.get(p).getPrice());
             }
         }
         bookAapter.notifyDataSetChanged();
-
     }
 
     public class BookSelectedListener {
@@ -230,6 +242,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                     Log.e("selectedBooks_BEF", "" + selectedBookArrayList.size());
                     selectedBookArrayList.add(booksList.get(i));
                     selectedBooks.add("" + booksList.get(i).getId());
+                    booksList.get(i).setQuantity(1);
                     Log.e("selectedBokArayListAAF", "" + selectedBookArrayList.size());
                     Log.e("selectedBooks_AAF", "" + selectedBookArrayList.size());
 
@@ -248,6 +261,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                         selectedBookArrayList.add(booksList.get(p));
                     }
                 }
+                booksList.get(i).setQuantity(0);
                 selectedBooks.remove(booksList.get(i).getId());
                 SuperLifeSecretPreferences.getInstance().setSelectedBooksList(selectedBookArrayList);
                 SuperLifeSecretPreferences.getInstance().setSelectedBooks(selectedBooks);
@@ -255,8 +269,39 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                 Log.e("selectedBokArayListAAF", "" + selectedBookArrayList.size());
                 Log.e("selectedBooks_AAF", "" + selectedBooks.size());
             }
-
-
+            for (int p = 0; p < booksList.size(); p++) {
+                if (booksList.get(p).getDiscount().size() != 0) {
+                    for (int d = 0; d < booksList.get(p).getDiscount().size(); d++) {
+                        double book_price = booksList.get(p).getPrice();
+                        int min_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMin_qty());
+                        int max_quantity = Integer.parseInt(booksList.get(p).getDiscount().get(d).getMax_qty());
+                        int book_quantity = booksList.get(p).getQuantity();
+                        booksList.get(p).setPrice_after_discount(book_price);
+                        if (book_quantity >= min_quantity && book_quantity <= max_quantity) {
+                            if (booksList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
+                                double no = booksList.get(p).getDiscount().get(d).getDiscount_amount();
+                                double discount = ((book_price * no) / 100);
+                                booksList.get(p).setDiscount_applied(discount);
+                                booksList.get(p).setIs_discounted(true);
+                                booksList.get(p).setPrice_after_discount(book_price - discount);
+                                break;
+                            } else {
+                                double discount = booksList.get(p).getDiscount().get(d).getDiscount_amount();
+                                booksList.get(p).setDiscount_applied(discount);
+                                booksList.get(p).setPrice_after_discount(book_price - discount);
+                                booksList.get(p).setIs_discounted(true);
+                                break;
+                            }
+                        } else {
+                            booksList.get(p).setDiscount_applied(0);
+                            booksList.get(p).setIs_discounted(false);
+                            booksList.get(p).setPrice_after_discount(book_price);
+                        }
+                    }
+                } else {
+                    booksList.get(p).setPrice_after_discount(booksList.get(p).getPrice());
+                }
+            }
         }
     }
 

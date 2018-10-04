@@ -43,6 +43,8 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
+
+
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_auther_name.setText(list.get(position).getAuthor_name());
         try {
@@ -96,6 +98,9 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
         });
         holder.discount_recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         holder.discount_recyclerview.setAdapter(new DiscountAapter(list.get(position).getDiscount(), mContext));
+        ViewGroup.LayoutParams params=holder.discount_recyclerview.getLayoutParams();
+        params.height= (list.get(position).getDiscount().size()*30);
+        holder.discount_recyclerview.setLayoutParams(params);
     }
 
     @Override

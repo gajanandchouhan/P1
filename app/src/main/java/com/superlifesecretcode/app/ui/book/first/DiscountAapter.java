@@ -48,7 +48,8 @@ public class DiscountAapter extends RecyclerView.Adapter<DiscountAapter.ItemView
                 }
             }
         }
-        holder.tv_discont_sentence.setText("Discount on the purchase of "+list.get(position).getMin_qty()+"-"+list.get(position).getMax_qty());
+//        String s = languageResponseData.g
+        holder.tv_discont_sentence.setText(languageResponseData.getOn_purchased()+" "+list.get(position).getMin_qty()+"-"+list.get(position).getMax_qty());
     }
 
     @Override

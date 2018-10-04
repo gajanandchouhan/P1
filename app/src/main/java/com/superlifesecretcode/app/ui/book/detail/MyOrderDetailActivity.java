@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -62,7 +63,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
     TextView tv_total, total;
     TextView tv_bank_name, bank_name, tv_account_no, account_no;
     TextView tv_payment_mode, payment_mode, tv_payment_date, payment_date;
-    TextView tv_email, email, tv_contactno, contacno;
+    TextView tv_email, email, tv_contactno, contacno, total_cut;
 
     @Override
     protected int getContentView() {
@@ -112,6 +113,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
         email = findViewById(R.id.email);
         tv_contactno = findViewById(R.id.tv_contactno);
         contacno = findViewById(R.id.contacno);
+        total_cut = findViewById(R.id.total_cut);
 
         tv_bank_name = findViewById(R.id.tv_bank_name);
         bank_name = findViewById(R.id.bank_name);
@@ -271,11 +273,39 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                         email.setVisibility(View.VISIBLE);
                         contacno.setVisibility(View.VISIBLE);
                     }
+                    try {
+                        if (orderBean.getStore_email()!=null) {
+                            email.setVisibility(View.GONE);
+                            tv_email.setVisibility(View.GONE);
+                        } else {
+                            tv_email.setVisibility(View.VISIBLE);
+                            email.setVisibility(View.VISIBLE);
+                        }
+                        if (orderBean.getMobile()!=null) {
+                            contacno.setVisibility(View.GONE);
+                            tv_contactno.setVisibility(View.GONE);
+                        } else {
+                            contacno.setVisibility(View.VISIBLE);
+                            tv_contactno.setVisibility(View.VISIBLE);
+                        }
+                    } catch (Exception e) {
+
+                    }
+//
                     email.setText(orderBean.getStore_email());
                     contacno.setText(orderBean.getStore_mobile());
                     //order_date.setText(orderBean.getOrder_date());
                     order_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMMM, yyyy hh:mm a", orderBean.getOrder_date(), true, "utc"));
                     tv_total.setText(conversionData.getTotal());
+
+                    double price_total_cut = 0.0;
+                    if (newsResponseModel.getData().getBooks().size() != 0) {
+                        for (int ii = 0; ii < newsResponseModel.getData().getBooks().size(); ii++) {
+                            price_total_cut = price_total_cut + Double.parseDouble(newsResponseModel.getData().getBooks().get(ii).getBook_price());
+                        }
+                    }
+                    total_cut.setPaintFlags(total_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    total_cut.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + price_total_cut);
                     total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     delivery.setText(conversionData.getFree());
@@ -338,13 +368,14 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             public void onClick(View v) {
                 int permissionCheck = ContextCompat.checkSelfPermission(MyOrderDetailActivity.this, Manifest.permission.CALL_PHONE);
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MyOrderDetailActivity.this, new String[]{Manifest.permission.CALL_PHONE},1);
+                    ActivityCompat.requestPermissions(MyOrderDetailActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
                 } else {
-                    startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+contacno.getText().toString())));
+                    startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:" + contacno.getText().toString())));
                 }
             }
         });
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {

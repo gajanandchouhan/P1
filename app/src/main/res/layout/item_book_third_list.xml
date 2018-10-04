@@ -66,9 +66,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textview_book_name"
+                        android:layout_marginLeft="@dimen/_2sdp"
                         android:fontFamily="@font/bold"
                         android:text="121"
-                        android:layout_marginLeft="@dimen/_2sdp"
                         android:textColor="@color/red_bg"
                         android:textSize="@dimen/_10sdp" />
                 </LinearLayout>

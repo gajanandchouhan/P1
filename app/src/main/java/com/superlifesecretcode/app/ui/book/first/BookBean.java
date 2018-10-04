@@ -16,6 +16,16 @@ public class BookBean implements Serializable{
     int quantity=0;
     ArrayList<Discount> discount;
     boolean expand_collapase = false;
+    boolean is_discounted = false;
+
+
+    public boolean isIs_discounted() {
+        return is_discounted;
+    }
+
+    public void setIs_discounted(boolean is_discounted) {
+        this.is_discounted = is_discounted;
+    }
 
     public double getPrice_after_discount() {
         return price_after_discount;
@@ -133,8 +143,8 @@ public class BookBean implements Serializable{
     public static Comparator<BookBean> PriceComparater = new Comparator<BookBean>() {
         public int compare(BookBean s1, BookBean s2) {
 
-            int price1 = (int) s1.getPrice();
-            int price2 = (int) s2.getPrice();
+            int price1 = (int) s1.getPrice_after_discount();
+            int price2 = (int) s2.getPrice_after_discount();
 
             /*For ascending order*/
 //            return rollno1-rollno2;

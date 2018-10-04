@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
@@ -279,9 +280,9 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         String books = "";
         for (int p = 0; p < bookBeanList.size(); p++) {
             if (p == (bookBeanList.size() - 1)) {
-                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice()+ "*" + bookBeanList.get(p).getDiscount_applied());
+                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + (bookBeanList.get(p).getPrice_after_discount()+bookBeanList.get(p).getDiscount_applied())+ "*" + bookBeanList.get(p).getDiscount_applied());
             } else {
-                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" + bookBeanList.get(p).getPrice() + "*" + bookBeanList.get(p).getDiscount_applied()+ ",");
+                books = books.concat(bookBeanList.get(p).getId() + "*" + bookBeanList.get(p).getQuantity() + "*" +  (bookBeanList.get(p).getPrice_after_discount()+bookBeanList.get(p).getDiscount_applied()) + "*" + bookBeanList.get(p).getDiscount_applied()+ ",");
             }
         }
         builder.addFormDataPart("books", books);
@@ -469,7 +470,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         ImageView dialog_back_image;
         TextView tv_order_type_dialog, order_type_dialog;
         TextView tv_grand_total_first , grand_total_first;
-        TextView tv_dialog_email , dialog_email , tv_dialog_mobile , dialog_mobile;
+        TextView tv_dialog_email , dialog_email , tv_dialog_mobile , dialog_mobile , grand_total_first_cut;
 
         tv_other_person_name_dialog = dialog.findViewById(R.id.tv_other_person_name_dialog);
         other_person_name_dialog = dialog.findViewById(R.id.other_person_name_dialog);
@@ -510,6 +511,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         dialog_email = dialog.findViewById(R.id.dialog_email);
         tv_dialog_mobile = dialog.findViewById(R.id.tv_dialog_mobile);
         dialog_mobile = dialog.findViewById(R.id.dialog_mobile);
+        grand_total_first_cut = dialog.findViewById(R.id.grand_total_first_cut);
 
         bankname = dialog.findViewById(R.id.bankname);
         tv_bankname = dialog.findViewById(R.id.tv_bank_name);
@@ -631,8 +633,16 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         } catch (Exception e) {
             grant_total.setText(" " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal);
         }
+
+        ArrayList<BookBean> selectBookList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
+        double total_cut_amount = 0.0;
+        for (int i = 0 ; i < selectBookList.size() ; i++){
+            total_cut_amount = total_cut_amount + selectBookList.get(i).getPrice();
+        }
+        grand_total_first_cut.setPaintFlags(grand_total_first_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        grand_total_first_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", total_cut_amount));
         try {
-            tv_grand_total_first.setText(""+(dountl_total_amount-disocunt));
+            //tv_grand_total_first.setText(""+(dountl_total_amount-disocunt));
             grand_total_first.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", dountl_total_amount));
             subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", dountl_total_amount));
         } catch (Exception e) {

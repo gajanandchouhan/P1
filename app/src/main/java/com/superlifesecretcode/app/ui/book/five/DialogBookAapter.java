@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.ui.book.five;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,17 +41,36 @@ public class DialogBookAapter extends RecyclerView.Adapter<DialogBookAapter.Item
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
         holder.textview_book_name.setText(list.get(position).getName());
         try {
-            holder.textview_price_quantity.setText(String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice())+" X "+list.get(position).getQuantity());
+            holder.textview_price_quantity.setText(String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice_after_discount())+" X "+list.get(position).getQuantity());
         }catch (Exception e){
-            holder.textview_price_quantity.setText(list.get(position).getPrice()+" X "+list.get(position).getQuantity());
+            holder.textview_price_quantity.setText(list.get(position).getPrice_after_discount()+" X "+list.get(position).getQuantity());
         }
-        Double total = (list.get(position).getPrice() * list.get(position).getQuantity());
+        Double total = (list.get(position).getPrice_after_discount() * list.get(position).getQuantity());
+        Double total_cut = (list.get(position).getPrice() * list.get(position).getQuantity());
         try {
             holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", total));
         }catch (Exception e){
             holder.textview_total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total);
         }
-        //holder.textview_total.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+total);
+        try {
+            holder.textview_total_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", total_cut));
+        }catch (Exception e){
+            holder.textview_total_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_cut);
+        }
+        if (list.get(position).isIs_discounted()) {
+            holder.textview_price_quantity_cut.setVisibility(View.VISIBLE);
+            holder.textview_total_cut.setVisibility(View.VISIBLE);
+        } else {
+            holder.textview_price_quantity_cut.setVisibility(View.GONE);
+            holder.textview_total_cut.setVisibility(View.GONE);
+        }
+        holder.textview_total_cut.setPaintFlags(holder.textview_total_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.textview_price_quantity_cut.setPaintFlags(holder.textview_price_quantity_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        try {
+            holder.textview_price_quantity_cut.setText(String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice())+" X "+list.get(position).getQuantity());
+        }catch (Exception e){
+            holder.textview_price_quantity_cut.setText(list.get(position).getPrice_after_discount()+" X "+list.get(position).getQuantity());
+        }
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
     }
 
@@ -63,8 +83,8 @@ public class DialogBookAapter extends RecyclerView.Adapter<DialogBookAapter.Item
 
         ImageView book;
         TextView textview_book_name;
-        TextView textview_price_quantity;
-        TextView textview_total;
+        TextView textview_price_quantity , textview_price_quantity_cut;
+        TextView textview_total , textview_total_cut;
         LinearLayout linear_select;
 
         public ItemViewHolder(View itemView) {
@@ -74,8 +94,9 @@ public class DialogBookAapter extends RecyclerView.Adapter<DialogBookAapter.Item
             textview_price_quantity = itemView.findViewById(R.id.textview_price_quantity);
             textview_total = itemView.findViewById(R.id.textview_total);
             linear_select = itemView.findViewById(R.id.linear_select);
+            textview_total_cut = itemView.findViewById(R.id.textview_total_cut);
+            textview_price_quantity_cut = itemView.findViewById(R.id.textview_price_quantity_cut);
         }
-
         @Override
         public void onClick(View v) {
         }

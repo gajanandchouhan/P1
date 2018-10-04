@@ -331,6 +331,16 @@ public class LanguageResponseData {
     private String attend_at;
     private String in;
     private String total_points;
+    private String on_purchased;
+
+
+    public String getOn_purchased() {
+        return on_purchased;
+    }
+
+    public void setOn_purchased(String on_purchased) {
+        this.on_purchased = on_purchased;
+    }
 
     public String getNews() {
         return news;
