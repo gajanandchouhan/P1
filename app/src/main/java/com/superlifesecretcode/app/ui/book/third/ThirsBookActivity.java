@@ -7,15 +7,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
+import com.superlifesecretcode.app.ui.book.first.Discount;
 import com.superlifesecretcode.app.ui.book.forth.ForthBookActivity;
 import com.superlifesecretcode.app.ui.book.second.DeliveryData;
 import com.superlifesecretcode.app.util.CommonUtils;
+
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Handler;
@@ -41,7 +44,7 @@ public class ThirsBookActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(CommonUtils.book_stake==true){
+        if (CommonUtils.book_stake == true) {
             finish();
         }
     }
@@ -80,8 +83,8 @@ public class ThirsBookActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < bookArrayList.size(); i++) {
-                    if(bookArrayList.get(i).getQuantity()==0){
-                        CommonUtils.showSnakeBar(ThirsBookActivity.this, conversionData.getAdd_quantity_for()+" "+bookArrayList.get(i).getName());
+                    if (bookArrayList.get(i).getQuantity() == 0) {
+                        CommonUtils.showSnakeBar(ThirsBookActivity.this, conversionData.getAdd_quantity_for() + " " + bookArrayList.get(i).getName());
                         return;
                     }
                 }
@@ -109,9 +112,27 @@ public class ThirsBookActivity extends BaseActivity {
                                     break;
                                 }
                             } else {
-                                bookArrayList.get(p).setDiscount_applied(0);
-                                bookArrayList.get(p).setIs_discounted(false);
-                                bookArrayList.get(p).setPrice_after_discount(book_price);
+                                Discount maxQty = getMaxQty(bookArrayList.get(p).getDiscount());
+                                if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
+                                    if (maxQty.getDiscount_type().equals("1")) {
+                                        double no = maxQty.getDiscount_amount();
+                                        double discount = ((book_price * no) / 100);
+                                        bookArrayList.get(p).setDiscount_applied(discount);
+                                        bookArrayList.get(p).setIs_discounted(true);
+                                        bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                        break;
+                                    } else {
+                                        double discount = maxQty.getDiscount_amount();
+                                        bookArrayList.get(p).setDiscount_applied(discount);
+                                        bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                        bookArrayList.get(p).setIs_discounted(true);
+                                        break;
+                                    }
+                                } else {
+                                    bookArrayList.get(p).setDiscount_applied(0);
+                                    bookArrayList.get(p).setIs_discounted(false);
+                                    bookArrayList.get(p).setPrice_after_discount(book_price);
+                                }
                             }
                         }
                     } else {
@@ -191,18 +212,21 @@ public class ThirsBookActivity extends BaseActivity {
 
         public void onQualtityChanged(String s, final int position) {
             try {
+                Log.v("QTY Changed", s + " ," + position);
+                bookArrayList.get(position).setQuantity(Integer.parseInt(s));
                 double AMOUNT_TOTAL = 0.0;
                 for (int i = 0; i < bookArrayList.size(); i++) {
-                    if (i == position) {
+                   /* if (i == position) {
                         bookArrayList.get(i).setQuantity(Integer.parseInt(s));
-                    }
+                    }*/
                     AMOUNT_TOTAL = ((bookArrayList.get(i).getPrice_after_discount() * bookArrayList.get(i).getQuantity()) + AMOUNT_TOTAL);
                 }
-                try {
+
+              /*  try {
                     textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", AMOUNT_TOTAL));
                 } catch (Exception e) {
                     textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + AMOUNT_TOTAL);
-                }
+                }*/
                 for (int p = 0; p < bookArrayList.size(); p++) {
                     if (bookArrayList.get(p).getDiscount().size() != 0) {
                         for (int d = 0; d < bookArrayList.get(p).getDiscount().size(); d++) {
@@ -238,15 +262,25 @@ public class ThirsBookActivity extends BaseActivity {
                 }
                 total = AMOUNT_TOTAL;
                 total_amont = "" + AMOUNT_TOTAL;
+                final double finalAMOUNT_TOTAL = AMOUNT_TOTAL;
+                bookrecyclerview.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        thirdBooksAapter.notifyItemChanged(position);
+                        textview_total_price.setText(String.format("%s %s", SuperLifeSecretPreferences.getInstance().getString("book_currency"), String.format(Locale.getDefault(), "%,.2f", finalAMOUNT_TOTAL)));
+                        // thirdBooksAapter.notifyItemChanged(position);
+                    }
+                });
                 SuperLifeSecretPreferences.getInstance().setSelectedBooksList(bookArrayList);
-                new android.os.Handler().postDelayed(new Runnable() {
+            /*    new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         thirdBooksAapter.notifyItemChanged(position);
                     }
-                },1000);
+                },1000);*/
             } catch (Exception e) {
-                s = "1";
+                e.printStackTrace();
+            /*    s = "1";
                 double AMOUNT_TOTAL = 0.0;
                 for (int i = 0; i < bookArrayList.size(); i++) {
                     if (i == position) {
@@ -261,8 +295,29 @@ public class ThirsBookActivity extends BaseActivity {
                 } catch (Exception e2) {
                     textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + AMOUNT_TOTAL);
                 }
-                thirdBooksAapter.notifyDataSetChanged();
+                thirdBooksAapter.notifyDataSetChanged();*/
             }
+        }
+
+        public void onQualtityChanged() {
+
+            double AMOUNT_TOTAL = 0.0;
+            for (int i = 0; i < bookArrayList.size(); i++) {
+                   /* if (i == position) {
+                        bookArrayList.get(i).setQuantity(Integer.parseInt(s));
+                    }*/
+                AMOUNT_TOTAL = ((bookArrayList.get(i).getPrice_after_discount() * bookArrayList.get(i).getQuantity()) + AMOUNT_TOTAL);
+            }
+            total_amont = "" + AMOUNT_TOTAL;
+            final double finalAMOUNT_TOTAL = AMOUNT_TOTAL;
+            bookrecyclerview.post(new Runnable() {
+                @Override
+                public void run() {
+                    textview_total_price.setText(String.format("%s %s", SuperLifeSecretPreferences.getInstance().getString("book_currency"), String.format(Locale.getDefault(), "%,.2f", finalAMOUNT_TOTAL)));
+                    // thirdBooksAapter.notifyItemChanged(position);
+                }
+            });
+            SuperLifeSecretPreferences.getInstance().setSelectedBooksList(bookArrayList);
         }
     }
 
@@ -290,5 +345,22 @@ public class ThirsBookActivity extends BaseActivity {
 
     @Override
     protected void initializePresenter() {
+    }
+
+
+    private Discount getMaxQty(ArrayList<Discount> discountArrayList) {
+        Discount discountMax = null;
+        if (discountArrayList == null || discountArrayList.isEmpty()) {
+            return null;
+        }
+        int maxQty = Integer.parseInt(discountArrayList.get(0).getMax_qty());
+        for (Discount discount : discountArrayList) {
+            if (Integer.parseInt(discount.getMax_qty()) > maxQty) {
+                maxQty = Integer.parseInt(discount.getMax_qty());
+                discountMax = discount;
+            }
+        }
+        return discountMax;
+
     }
 }
