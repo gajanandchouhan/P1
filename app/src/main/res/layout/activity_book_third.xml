@@ -155,7 +155,7 @@
                 android:textSize="@dimen/_14sdp" />
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -173,12 +173,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/bookrecyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_below="@+id/textview_select"
-                android:layout_marginBottom="@dimen/_12sdp"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_12sdp" />
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -211,7 +209,7 @@
                     android:textSize="@dimen/_15sdp" />
 
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

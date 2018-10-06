@@ -43,8 +43,8 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
-
-
+        holder.discount_recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.discount_recyclerview.setAdapter(new DiscountAapter(list.get(position).getDiscount(), mContext));
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_auther_name.setText(list.get(position).getAuthor_name());
         try {
@@ -67,11 +67,6 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
                 }
             }
         });
-        if (list.get(position).isExpand_collapase()) {
-            expand(holder.discount_recyclerview, 500, holder.linear_select.getHeight());
-        } else {
-            collapse(holder.discount_recyclerview, 500, 0);
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Spanned spanned = Html.fromHtml(list.get(position).getDescription(), Html.FROM_HTML_MODE_LEGACY);
             holder.textview_book_descrption.setText(spanned);
@@ -81,9 +76,9 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
         }
         if (list.get(position).getDiscount().size() == 0) {
             holder.offer_layout.setVisibility(View.GONE);
-            holder.discount_recyclerview.setVisibility(View.GONE);
+            //holder.discount_recyclerview.setVisibility(View.GONE);
         } else {
-            holder.discount_recyclerview.setVisibility(View.VISIBLE);
+//            holder.discount_recyclerview.setVisibility(View.VISIBLE);
             holder.offer_layout.setVisibility(View.VISIBLE);
         }
         holder.offer_layout.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +91,16 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
                 }
             }
         });
-        holder.discount_recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
-        holder.discount_recyclerview.setAdapter(new DiscountAapter(list.get(position).getDiscount(), mContext));
-        ViewGroup.LayoutParams params=holder.discount_recyclerview.getLayoutParams();
-        params.height= (list.get(position).getDiscount().size()*30);
-        holder.discount_recyclerview.setLayoutParams(params);
+        if (list.get(position).isExpand_collapase()) {
+            holder.discount_recyclerview.setVisibility(View.VISIBLE);
+            //collapse(holder.discount_recyclerview, 500, 0);
+        } else {
+            holder.discount_recyclerview.setVisibility(View.GONE);
+           // expand(holder.discount_recyclerview, 500, holder.discount_recyclerview.getHeight());
+        }
+//        ViewGroup.LayoutParams params=holder.discount_recyclerview.getLayoutParams();
+//        params.height= (list.get(position).getDiscount().size()*300);
+//        holder.discount_recyclerview.setLayoutParams(params);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
         return list.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView checkbox, book;
         TextView textview_book_name;
         TextView textview_auther_name;
@@ -128,14 +128,12 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
             textview_book_descrption = itemView.findViewById(R.id.textview_book_descrption);
             textview_bookprice = itemView.findViewById(R.id.textview_bookprice);
             linear_select = itemView.findViewById(R.id.linear_select);
-           // linear_discount = itemView.findViewById(R.id.linear_discount);
+            // linear_discount = itemView.findViewById(R.id.linear_discount);
             discount_recyclerview = itemView.findViewById(R.id.discount_recyclerview);
             offer_layout = itemView.findViewById(R.id.offer_linearlayout);
         }
 
-        @Override
-        public void onClick(View v) {
-        }
+
     }
 
     public static void expand(final View v, int duration, int targetHeight) {

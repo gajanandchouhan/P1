@@ -561,7 +561,6 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         }
         dialog_email.setText(SuperLifeSecretPreferences.getInstance().getString("final_dialog_email"));
         dialog_mobile.setText(SuperLifeSecretPreferences.getInstance().getString("final_dialog_phone"));
-
         bankname.setText(bank_name);
         accountno.setText(account_number);
         payment_mode.setText(payment_type_string);
@@ -589,8 +588,16 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         }
         if (SuperLifeSecretPreferences.getInstance().getString("book_order_for").equals("1")) {
             order_for.setText(languageResponseData.getOwn());
+            tv_other_person_mobile_dialog.setVisibility(View.GONE);
+            other_person_mobile_dialog.setVisibility(View.GONE);
+            tv_other_person_name_dialog.setVisibility(View.GONE);
+            other_person_name_dialog.setVisibility(View.GONE);
         } else {
             order_for.setText(languageResponseData.getBehalf());
+            tv_other_person_mobile_dialog.setVisibility(View.VISIBLE);
+            other_person_mobile_dialog.setVisibility(View.VISIBLE);
+            tv_other_person_name_dialog.setVisibility(View.VISIBLE);
+            other_person_name_dialog.setVisibility(View.VISIBLE);
         }
         if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("1")) {
             order_type_dialog.setText(languageResponseData.getDesignated());

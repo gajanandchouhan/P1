@@ -185,7 +185,6 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                 OrderBean orderBean = newsResponseModel.getData().getOrder();
                 if (orderBean != null) {
                     order_id.setText(orderBean.getOrder_code());
-
                     if (orderBean.getDelevery_type().equals("1")) {
                         delivery_type.setText(conversionData.getDesignated());
                     } else {
@@ -201,8 +200,6 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                     user_name.setText(orderBean.getName());
                     UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
                     user_country.setText(userDetailResponseData.getCountryName());
-
-                   // delivery_address.setText();
                     if (orderBean.getBook_type().equals("1")) {
                         book_type.setText(conversionData.getBuying());
                     } else {
@@ -223,7 +220,6 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                     } else {
                         linear_other_person_mobile.setVisibility(View.GONE);
                     }
-
                     if (orderBean.getOrder_status().equals("1")) {
                         order_status.setText(conversionData.getPending());
                     } else if (orderBean.getOrder_status().equals("2")) {
@@ -242,16 +238,15 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                         payment_mode.setText(conversionData.getCheque_deposit());
                     }
                     payment_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, "dd MMMM, yyyy", orderBean.getPayment_date(), true, "utc"));
-
                     try {
-                        if (orderBean.getEmail()==null || orderBean.getEmail().equals("")) {
+                        if (orderBean.getStore_email()==null || orderBean.getStore_email().equals("")) {
                             email.setVisibility(View.GONE);
                             tv_email.setVisibility(View.GONE);
                         } else {
                             tv_email.setVisibility(View.VISIBLE);
                             email.setVisibility(View.VISIBLE);
                         }
-                        if (orderBean.getMobile()==null  || orderBean.getMobile().equals("")) {
+                        if (orderBean.getStore_mobile()==null  || orderBean.getStore_mobile().equals("")) {
                             contacno.setVisibility(View.GONE);
                             tv_contactno.setVisibility(View.GONE);
                         } else {
@@ -259,10 +254,18 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                             tv_contactno.setVisibility(View.VISIBLE);
                         }
                     } catch (Exception e) {
-
                     }
-                    email.setText(orderBean.getEmail());
-                    contacno.setText(orderBean.getMobile());
+                    if(orderBean.getStore_street_address().equals("")){
+                        tv_delivery_address.setVisibility(View.GONE);
+                        delivery_address.setVisibility(View.GONE);
+                    }else {
+                        tv_delivery_address.setVisibility(View.VISIBLE);
+                        delivery_address.setVisibility(View.VISIBLE);
+                    }
+                    String address = orderBean.getStore_street_address()+","+orderBean.getStore_city()+","+orderBean.getStore_state()+","+orderBean.getStore_country();
+                    delivery_address.setText(address);
+                    email.setText(orderBean.getStore_email());
+                    contacno.setText(orderBean.getStore_mobile());
                     order_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMMM, yyyy hh:mm a", orderBean.getOrder_date(), true, "utc"));
                     tv_total.setText(conversionData.getTotal());
 
@@ -404,7 +407,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             tv_payment_date.setText(conversionData.getPayment_date());
             tv_email.setText(conversionData.getEmail_id());
             tv_contactno.setText(conversionData.getContact_number());
-            tv_delivery_address.setText(conversionData.getDelivery_address());
+            tv_delivery_address.setText(conversionData.getAddress());
         }
     }
 }

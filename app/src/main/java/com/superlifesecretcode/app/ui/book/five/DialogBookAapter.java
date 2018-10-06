@@ -69,7 +69,7 @@ public class DialogBookAapter extends RecyclerView.Adapter<DialogBookAapter.Item
         try {
             holder.textview_price_quantity_cut.setText(String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice())+" X "+list.get(position).getQuantity());
         }catch (Exception e){
-            holder.textview_price_quantity_cut.setText(list.get(position).getPrice_after_discount()+" X "+list.get(position).getQuantity());
+            holder.textview_price_quantity_cut.setText(list.get(position).getPrice()+" X "+list.get(position).getQuantity());
         }
         ImageLoadUtils.loadImage(list.get(position).getImage(), holder.book);
     }

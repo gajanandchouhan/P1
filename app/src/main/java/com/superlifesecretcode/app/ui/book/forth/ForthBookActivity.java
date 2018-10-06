@@ -281,7 +281,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.transparent));
                 linear_address.setVisibility(View.GONE);
                 linear_ordertype.setVisibility(View.GONE);
-                tv_ordertype.setHint(conversionData.getPlease_select_order_type());
+                tv_ordertype.setText(conversionData.getPlease_select_order_type());
                 add_address_Layout.setVisibility(View.GONE);
                 textview_noaddressfound.setVisibility(View.GONE);
                 linear_other_person.setVisibility(View.GONE);

@@ -70,9 +70,9 @@ public class BookAapterDetail extends RecyclerView.Adapter<BookAapterDetail.Item
         holder.textview_total_cut.setPaintFlags(holder.textview_total_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.textview_price_quantity_cut.setPaintFlags(holder.textview_price_quantity_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-
+        double bookprice = Double.parseDouble(list.get(position).getBook_price());
         try {
-            holder.textview_price_quantity_cut.setText(String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(list.get(position).getBook_price())+" X "+list.get(position).getBook_quantity()));
+            holder.textview_price_quantity_cut.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+String.format(Locale.getDefault(), "%,.2f", bookprice)+" X "+list.get(position).getBook_quantity());
         }catch (Exception e){
             holder.textview_price_quantity_cut.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+list.get(position).getBook_price()+" X "+list.get(position).getBook_quantity());
         }
