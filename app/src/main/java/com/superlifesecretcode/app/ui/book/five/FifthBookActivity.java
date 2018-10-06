@@ -636,9 +636,14 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
 
         ArrayList<BookBean> selectBookList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
         double total_cut_amount = 0.0;
+        double discount_cut = 0.0;
         for (int i = 0 ; i < selectBookList.size() ; i++){
-            total_cut_amount = total_cut_amount + selectBookList.get(i).getPrice();
+            total_cut_amount = total_cut_amount + (selectBookList.get(i).getPrice()*selectBookList.get(i).getQuantity());
+            discount_cut = discount_cut + selectBookList.get(i).getDiscount_applied();
         }
+        if (discount_cut==0.0)
+            grand_total_first_cut.setVisibility(View.GONE);
+        else grand_total_first_cut.setVisibility(View.VISIBLE);
         grand_total_first_cut.setPaintFlags(grand_total_first_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         grand_total_first_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", total_cut_amount));
         try {

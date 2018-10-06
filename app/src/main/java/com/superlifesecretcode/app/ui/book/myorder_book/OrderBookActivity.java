@@ -15,6 +15,7 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.book.detail.MyOrderDetailActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
@@ -88,7 +89,9 @@ public class OrderBookActivity extends BaseActivity implements OrderBookView {
                 Log.e("E",e.toString());
             }
             orderArrayList.clear();
-            orderArrayList.addAll(categoryResponseModel.getData());
+            ArrayList<Order> orders = categoryResponseModel.getData();
+            Collections.reverse(orders);
+            orderArrayList.addAll(orders);
             orderBookAdapter.notifyDataSetChanged();
         }
     }

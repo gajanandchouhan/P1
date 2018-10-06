@@ -108,7 +108,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
 
     private LanguageResponseData conversionData;
     private UserDetailResponseData userData;
-    private String planId;
+    //private String planId;
     TextView textview_payment, textview_attachmentline;
     EditText edittext_enteramount;
     RecyclerView rechcyclerview_bankslist;
@@ -139,7 +139,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
     protected void initializeView() {
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
-        planId = getIntent().getStringExtra("plan_id");
+       // planId = getIntent().getStringExtra("plan_id");
         planCost = getIntent().getStringExtra("plan_cost");
         groupName = getIntent().getStringExtra("group_name");
         currency = getIntent().getStringExtra("plan_currency");
@@ -311,7 +311,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
 
         builder.addFormDataPart("payment_date", payment_date);
         builder.addFormDataPart("payment_mode", payment_type);
-        builder.addFormDataPart("plan_id", planId);
+        //builder.addFormDataPart("plan_id", planId);
         builder.addFormDataPart("bank_id", getBankId());
         builder.addFormDataPart("study_group_id", study_group_id);
         builder.addFormDataPart("plan_type", plan_type);

@@ -116,7 +116,7 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
                         bundle.putBoolean("is_link", true);
 
                         bundle.putString("url", studyGroupItemData.getItem_url());
-                        bundle.putString("content", studyGroupItemData.getItem_description());
+                        bundle.putString("content", studyGroupItemData.getItem_html_text());
                         CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
                     }
                 } else {

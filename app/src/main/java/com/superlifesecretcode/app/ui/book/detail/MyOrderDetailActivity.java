@@ -185,14 +185,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                 OrderBean orderBean = newsResponseModel.getData().getOrder();
                 if (orderBean != null) {
                     order_id.setText(orderBean.getOrder_code());
-//                if (orderBean.getDelevery_street_address().equals("")){
-//                    delivery_address.setVisibility(View.GONE);
-//                    tv_delivery_address.setVisibility(View.GONE);
-//                }else {
-//                    delivery_address.setVisibility(View.VISIBLE);
-//                    tv_delivery_address.setVisibility(View.VISIBLE);
-//                    delivery_address.setText(orderBean.getDelevery_street_address() + "," + orderBean.getDelevery_city() + "," + orderBean.getDelevery_state());
-//                }
+
                     if (orderBean.getDelevery_type().equals("1")) {
                         delivery_type.setText(conversionData.getDesignated());
                     } else {
@@ -208,21 +201,14 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                     user_name.setText(orderBean.getName());
                     UserDetailResponseData userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
                     user_country.setText(userDetailResponseData.getCountryName());
-//                    if (orderBean.getStore_country().equals("")) {
-//                        user_country.setVisibility(View.GONE);
-//                        tv_user_country.setVisibility(View.GONE);
-//                    } else {
-//                        user_country.setVisibility(View.VISIBLE);
-//                        tv_user_country.setVisibility(View.VISIBLE);
-//                        user_country.setText(orderBean.getStore_country());
-//                    }
 
+                   // delivery_address.setText();
                     if (orderBean.getBook_type().equals("1")) {
                         book_type.setText(conversionData.getBuying());
                     } else {
                         book_type.setText(conversionData.getPrinting());
                     }
-                    if (orderBean.getBook_type().equals("2")) {
+                    if (orderBean.getOrder_for().equals("2")) {
                         order_for.setText(conversionData.getBehalf());
                     } else {
                         order_for.setText(conversionData.getOwn());
@@ -237,12 +223,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                     } else {
                         linear_other_person_mobile.setVisibility(View.GONE);
                     }
-//                    if (!orderBean.getStore_country().equals("")) {
-//                        other_person_mobile_dialog.setText(orderBean.getOther_person_mobile());
-//                    } else {
-//                        linear_other_person_mobile.setVisibility(View.GONE);
-//                    }
-                    //order_status.setText(orderBean.getOrder_status());
+
                     if (orderBean.getOrder_status().equals("1")) {
                         order_status.setText(conversionData.getPending());
                     } else if (orderBean.getOrder_status().equals("2")) {
@@ -262,26 +243,15 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                     }
                     payment_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE, "dd MMMM, yyyy", orderBean.getPayment_date(), true, "utc"));
 
-                    if (orderBean.getEmail().equals("")) {
-                        tv_email.setVisibility(View.GONE);
-                        tv_contactno.setVisibility(View.GONE);
-                        email.setVisibility(View.GONE);
-                        contacno.setVisibility(View.GONE);
-                    } else {
-                        tv_email.setVisibility(View.VISIBLE);
-                        tv_contactno.setVisibility(View.VISIBLE);
-                        email.setVisibility(View.VISIBLE);
-                        contacno.setVisibility(View.VISIBLE);
-                    }
                     try {
-                        if (orderBean.getStore_email()!=null) {
+                        if (orderBean.getEmail()==null || orderBean.getEmail().equals("")) {
                             email.setVisibility(View.GONE);
                             tv_email.setVisibility(View.GONE);
                         } else {
                             tv_email.setVisibility(View.VISIBLE);
                             email.setVisibility(View.VISIBLE);
                         }
-                        if (orderBean.getMobile()!=null) {
+                        if (orderBean.getMobile()==null  || orderBean.getMobile().equals("")) {
                             contacno.setVisibility(View.GONE);
                             tv_contactno.setVisibility(View.GONE);
                         } else {
@@ -291,44 +261,40 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                     } catch (Exception e) {
 
                     }
-//
-                    email.setText(orderBean.getStore_email());
-                    contacno.setText(orderBean.getStore_mobile());
-                    //order_date.setText(orderBean.getOrder_date());
+                    email.setText(orderBean.getEmail());
+                    contacno.setText(orderBean.getMobile());
                     order_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMMM, yyyy hh:mm a", orderBean.getOrder_date(), true, "utc"));
                     tv_total.setText(conversionData.getTotal());
 
                     double price_total_cut = 0.0;
                     if (newsResponseModel.getData().getBooks().size() != 0) {
                         for (int ii = 0; ii < newsResponseModel.getData().getBooks().size(); ii++) {
-                            price_total_cut = price_total_cut + Double.parseDouble(newsResponseModel.getData().getBooks().get(ii).getBook_price());
+                            double price= Double.parseDouble(newsResponseModel.getData().getBooks().get(ii).getBook_price());
+                            double discount= Double.parseDouble(newsResponseModel.getData().getBooks().get(ii).getBook_quantity());
+                            price_total_cut = price_total_cut + (price * discount);
                         }
                     }
+                    if (price_total_cut==Double.parseDouble(newsResponseModel.getData().getTotal_amount())){
+                        total_cut.setVisibility(View.GONE);
+                    }else {
+                        total_cut.setVisibility(View.VISIBLE);
+                    }
+                    try {
+                        total_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",price_total_cut));
+                    }catch (Exception e){
+                        total_cut.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+price_total_cut);
+                    }
                     total_cut.setPaintFlags(total_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    total_cut.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + price_total_cut);
-                    total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
+                    double total_amount = Double.parseDouble(newsResponseModel.getData().getTotal_amount());
+                    try {
+                        total.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",total_amount));
+                    }catch (Exception e){
+                        total.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+total_amount);
+                    }
+                    //total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     delivery.setText(conversionData.getFree());
-//                    if (orderBean.getDelivery_charge().equals("0")) {
-//                        delivery.setText(conversionData.getFree());
-//                        try {
-//                            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
-//                        }catch (Exception e){
-//                            subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
-//                        }
-//                    } else {
-//                        try {
-//                            delivery.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",Double.parseDouble(orderBean.getDelivery_charge())));
-//                        }catch (Exception e){
-//                            delivery.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(orderBean.getDelivery_charge()));
-//                        }
-//                        double subt = (Double.parseDouble(newsResponseModel.getData().getTotal_amount())  - Double.parseDouble(orderBean.getDelivery_charge()) );
-//                        try {
-//                            subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",subt));
-//                        }catch (Exception e){
-//                            subtotal.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
-//                        }
-//                    }
+
                     try {
                         subtotal.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(newsResponseModel.getData().getTotal_amount())));
                     } catch (Exception e) {
@@ -354,8 +320,6 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                             grant_total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + gt);
                         }
                     }
-
-                    //grant_total.setText(SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(newsResponseModel.getData().getTotal_amount()));
                     receipts.clear();
                     receipts.addAll(newsResponseModel.getData().getReceipts());
                     receiptAapterDetail.notifyDataSetChanged();
@@ -440,6 +404,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             tv_payment_date.setText(conversionData.getPayment_date());
             tv_email.setText(conversionData.getEmail_id());
             tv_contactno.setText(conversionData.getContact_number());
+            tv_delivery_address.setText(conversionData.getDelivery_address());
         }
     }
 }

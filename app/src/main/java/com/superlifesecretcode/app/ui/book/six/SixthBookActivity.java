@@ -45,6 +45,10 @@ public class SixthBookActivity extends BaseActivity {
 
         // forth page
 
+
+        SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+        SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+
         SuperLifeSecretPreferences.getInstance().putString("book_address", "");
         SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
         SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");

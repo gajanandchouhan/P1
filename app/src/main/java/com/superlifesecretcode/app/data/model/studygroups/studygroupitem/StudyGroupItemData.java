@@ -11,6 +11,15 @@ public class StudyGroupItemData {
     private String item_type_id;
     private String duration;
     private String item_expiry_date;
+    private String item_html_text;
+
+    public String getItem_html_text() {
+        return item_html_text;
+    }
+
+    public void setItem_html_text(String item_html_text) {
+        this.item_html_text = item_html_text;
+    }
 
     public String getItem_expiry_date() {
         return item_expiry_date;

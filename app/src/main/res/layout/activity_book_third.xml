@@ -175,7 +175,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textview_select"
-                android:layout_margin="@dimen/_15sdp" />
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

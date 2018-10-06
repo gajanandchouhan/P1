@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.ui.book.five.Bank;
 import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class StudyGroupBankAapter extends RecyclerView.Adapter<StudyGroupBankAap
             holder.imageview_check.setVisibility(View.VISIBLE);
         else
             holder.imageview_check.setVisibility(View.GONE);
-
+        ImageLoadUtils.loadImage(list.get(position).getBank_icon(), holder.iv_bank_logo);
         holder.linear_bank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +64,7 @@ public class StudyGroupBankAapter extends RecyclerView.Adapter<StudyGroupBankAap
         TextView textview_bankname;
         TextView textview_accountnumber;
         LinearLayout linear_bank;
-        ImageView imageview_check;
+        ImageView imageview_check , iv_bank_logo;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +72,7 @@ public class StudyGroupBankAapter extends RecyclerView.Adapter<StudyGroupBankAap
             textview_accountnumber = itemView.findViewById(R.id.textview_accountnumber);
             imageview_check = itemView.findViewById(R.id.imageview_check);
             linear_bank = itemView.findViewById(R.id.linear_bank);
+            iv_bank_logo = itemView.findViewById(R.id.iv_bank_logo);
         }
     }
 }

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
@@ -28,7 +27,6 @@ import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.util.CommonUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -267,20 +265,6 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
         tv_ordertype.setHint(conversionData.getPlease_select_order_type());
         textview_other_destribution.setVisibility(View.VISIBLE);
-//        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
-////            if (qualtity>=1000){
-////                textview_other_destribution.setVisibility(View.VISIBLE);
-////            }else {
-//            SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
-//            SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
-//            tv_ordertype.setHint(conversionData.getPlease_select_order_type());
-//            textview_other_destribution.setVisibility(View.VISIBLE);
-//        } else {
-//            SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
-//            SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
-//            tv_ordertype.setHint(conversionData.getPlease_select_order_type());
-//            textview_other_destribution.setVisibility(View.VISIBLE);
-//        }
 
         linear_print_for_own.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -301,13 +285,15 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 add_address_Layout.setVisibility(View.GONE);
                 textview_noaddressfound.setVisibility(View.GONE);
                 linear_other_person.setVisibility(View.GONE);
+                SuperLifeSecretPreferences.getInstance().putString("other_person_name", "");
+                SuperLifeSecretPreferences.getInstance().putString("other_person_contact", "");
             }
         });
 
         linear_print_onBehalf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edittext_fullname.setText("");
+                edittext_fullname.setText(userData.getUsername());
                 SuperLifeSecretPreferences.getInstance().putString("order_for_text", "" + conversionData.getPrinting_behalf());
                 SuperLifeSecretPreferences.getInstance().putString("book_order_for", "2");
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
@@ -380,14 +366,6 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 textview_noaddressfound.setVisibility(View.GONE);
             }
         });
-
-//        double delivery_charges =  Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
-//
-//        if (delivery_charges!=0.0){
-//            textview_other_destribution.setTextColor(getResources().getColor(R.color.gray_color));
-//            textview_other_destribution.setClickable(false);
-//            textview_other_destribution.setOnClickListener(null);
-//        }
 
         tv_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -537,7 +515,6 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 textview_print_for_own.setText(conversionData.getPrinting_own());
                 textview_print_on_behalf.setText(conversionData.getPrinting_behalf());
             }
-
             textview_fullname.setText(conversionData.getName_national_card());
             textview_noaddressfound.setText(conversionData.getNo_address());
             textview_total.setText(conversionData.getTotal());
@@ -546,7 +523,6 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             textview_contact_number.setText(conversionData.getContact_number());
             textview_emailid.setText(conversionData.getEmail_id());
             textview_ordertype.setText(conversionData.getOrder_type());
-            //tv_add_address.setText(conversionData.getAdd_address());
             textview_deliveryaddress.setText(conversionData.getDelivery_address());
             textview_pincode.setText(conversionData.getPostcode());
             tv_ordertype.setText(conversionData.getPlease_select_order_type());
