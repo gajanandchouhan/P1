@@ -332,6 +332,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:background="@drawable/edittext_round"
                                 android:hint="Enter Amount"
+                                android:maxLength="7"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
                                 android:padding="@dimen/_8sdp"
