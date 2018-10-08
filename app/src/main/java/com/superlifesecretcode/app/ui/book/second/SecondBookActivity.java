@@ -209,7 +209,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                     if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
                         if (!edittext_enteramount.getText().toString().equals("")) {
                             boolean bookAmount = getBookAmount();
-                            if (TOTAL_AMOUNT != 0.0&&bookAmount) {
+                            if (TOTAL_AMOUNT != 0.0 && bookAmount) {
                                 Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
                                 intent.putExtra("selected_booklist", bookArrayList);
                                 for (int p = 0; p < bookArrayList.size(); p++) {
