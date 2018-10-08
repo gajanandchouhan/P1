@@ -62,7 +62,7 @@
                     android:background="@drawable/redcircle_greenborder"
                     android:gravity="center"
                     android:text="2"
-                    android:textColor="@color/color_white"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
@@ -86,7 +86,7 @@
                     android:background="@drawable/redcircle_greenborder"
                     android:gravity="center"
                     android:text="3"
-                    android:textColor="@color/color_white"
+                    android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout

@@ -495,9 +495,9 @@ public class ForthBookActivity2 extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
                 printing_status = 1;
-                textview_print_for_own.setTextColor(getResources().getColor(R.color.color_black));
+                textview_print_for_own.setTextColor(getResources().getColor(R.color.colorBlack));
                 textview_print_on_behalf.setTextColor(getResources().getColor(R.color.gray_color));
-                view_printforown.setBackgroundColor(getResources().getColor(R.color.color_black));
+                view_printforown.setBackgroundColor(getResources().getColor(R.color.colorBlack));
                 view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.transparent));
                 linear_address.setVisibility(View.GONE);
                 linear_ordertype.setVisibility(View.GONE);
@@ -518,9 +518,9 @@ public class ForthBookActivity2 extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
                 printing_status = 2;
                 textview_print_for_own.setTextColor(getResources().getColor(R.color.gray_color));
-                textview_print_on_behalf.setTextColor(getResources().getColor(R.color.color_black));
+                textview_print_on_behalf.setTextColor(getResources().getColor(R.color.colorBlack));
                 view_printforown.setBackgroundColor(getResources().getColor(R.color.transparent));
-                view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.color_black));
+                view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.colorBlack));
                 recyclerview_address.setVisibility(View.GONE);
                 add_address_Layout.setVisibility(View.GONE);
                 linear_address.setVisibility(View.GONE);
