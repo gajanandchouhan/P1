@@ -165,9 +165,27 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                                     break;
                                 }
                             } else {
-                                bookArrayList.get(p).setDiscount_applied(0);
-                                bookArrayList.get(p).setIs_discounted(false);
-                                bookArrayList.get(p).setPrice_after_discount(book_price);
+                                com.superlifesecretcode.app.ui.book.first.Discount maxQty = getMaxQty(bookArrayList.get(p).getDiscount());
+                                if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
+                                    if (maxQty.getDiscount_type().equals("1")) {
+                                        double no = maxQty.getDiscount_amount();
+                                        double discount = ((book_price * no) / 100);
+                                        bookArrayList.get(p).setDiscount_applied(discount);
+                                        bookArrayList.get(p).setIs_discounted(true);
+                                        bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                        break;
+                                    } else {
+                                        double discount = maxQty.getDiscount_amount();
+                                        bookArrayList.get(p).setDiscount_applied(discount);
+                                        bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                        bookArrayList.get(p).setIs_discounted(true);
+                                        break;
+                                    }
+                                } else {
+                                    bookArrayList.get(p).setDiscount_applied(0);
+                                    bookArrayList.get(p).setIs_discounted(false);
+                                    bookArrayList.get(p).setPrice_after_discount(book_price);
+                                }
                             }
                         }
                     } else {
@@ -417,5 +435,21 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
     @Override
     public void getDeliveryDescription(DeliveryDescription categoryResponseModel) {
         textview_delivery_description_buy.setText(categoryResponseModel.getData());
+    }
+
+    private com.superlifesecretcode.app.ui.book.first.Discount getMaxQty(ArrayList<com.superlifesecretcode.app.ui.book.first.Discount> discountArrayList) {
+        com.superlifesecretcode.app.ui.book.first.Discount discountMax = null;
+        if (discountArrayList == null || discountArrayList.isEmpty()) {
+            return null;
+        }
+        int maxQty = Integer.parseInt(discountArrayList.get(0).getMax_qty());
+        for (com.superlifesecretcode.app.ui.book.first.Discount discount : discountArrayList) {
+            if (Integer.parseInt(discount.getMax_qty()) > maxQty) {
+                maxQty = Integer.parseInt(discount.getMax_qty());
+                discountMax = discount;
+            }
+        }
+        return discountMax;
+
     }
 }
