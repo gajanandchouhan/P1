@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
@@ -111,7 +112,24 @@ public class ThirsBookActivity extends BaseActivity {
                                     bookArrayList.get(p).setIs_discounted(true);
                                     break;
                                 }
-                            } else {
+                            }
+                           /* else if (d == (bookArrayList.get(p).getDiscount().size() - 1) && book_quantity > max_quantity) {
+                                if (bookArrayList.get(p).getDiscount().get(d).getDiscount_type().equals("1")) {
+                                    double no = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                    double discount = ((book_price * no) / 100);
+                                    bookArrayList.get(p).setDiscount_applied(discount);
+                                    bookArrayList.get(p).setIs_discounted(true);
+                                    bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                    break;
+                                } else {
+                                    double discount = bookArrayList.get(p).getDiscount().get(d).getDiscount_amount();
+                                    bookArrayList.get(p).setDiscount_applied(discount);
+                                    bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                    bookArrayList.get(p).setIs_discounted(true);
+                                    break;
+                                }
+                            }*/
+                            else {
                                 Discount maxQty = getMaxQty(bookArrayList.get(p).getDiscount());
                                 if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
                                     if (maxQty.getDiscount_type().equals("1")) {
@@ -160,6 +178,12 @@ public class ThirsBookActivity extends BaseActivity {
                     CommonUtils.showSnakeBar(ThirsBookActivity.this, insufficient_fund);
                     return;
                 }
+
+//                double AMOUNT_TOTAL = 0.0;
+//                for (int i = 0; i < bookArrayList.size(); i++) {
+//                    AMOUNT_TOTAL = ((bookArrayList.get(i).getPrice_after_discount() * bookArrayList.get(i).getQuantity()) + AMOUNT_TOTAL);
+//                }
+//                total_amont = "" + AMOUNT_TOTAL;
                 SuperLifeSecretPreferences.getInstance().setSelectedBooksList(bookArrayList);
                 SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "3");
                 SuperLifeSecretPreferences.getInstance().putString("total_amount", total_amont);
@@ -355,7 +379,7 @@ public class ThirsBookActivity extends BaseActivity {
         }
         int maxQty = Integer.parseInt(discountArrayList.get(0).getMax_qty());
         for (Discount discount : discountArrayList) {
-            if (Integer.parseInt(discount.getMax_qty()) > maxQty) {
+            if (Integer.parseInt(discount.getMax_qty()) >= maxQty) {
                 maxQty = Integer.parseInt(discount.getMax_qty());
                 discountMax = discount;
             }

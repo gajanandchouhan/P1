@@ -102,18 +102,19 @@
                                 android:visibility="visible">
 
                                 <ImageView
-                                    android:layout_width="39dp"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_40sdp"
                                     android:src="@drawable/view_offer" />
 
                                 <TextView
+                                    android:id="@+id/tv_viewoffer"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
                                     android:maxLines="2"
                                     android:text="View Offer"
                                     android:textColor="@color/colorWhite"
-                                    android:textSize="@dimen/_6sdp" />
+                                    android:textSize="@dimen/_5sdp" />
                             </RelativeLayout>
                         </LinearLayout>
 

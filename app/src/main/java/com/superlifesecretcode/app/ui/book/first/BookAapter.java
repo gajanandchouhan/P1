@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
@@ -28,7 +29,7 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
     private final List<BookBean> list;
     private Context mContext;
     FirstBookActivity.BookSelectedListener bookSelectedListener;
-
+    LanguageResponseData languageResponseData;
 
     public BookAapter(List<BookBean> list, Context mContext, FirstBookActivity.BookSelectedListener bookSelectedListener) {
         this.list = list;
@@ -43,10 +44,12 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
+        languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
         holder.discount_recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         holder.discount_recyclerview.setAdapter(new DiscountAapter(list.get(position).getDiscount(), mContext));
         holder.textview_book_name.setText(list.get(position).getName());
         holder.textview_auther_name.setText(list.get(position).getAuthor_name());
+        holder.tv_viewoffer.setText(languageResponseData.getView_offer());
         try {
             holder.textview_bookprice.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", list.get(position).getPrice()));
         } catch (Exception e) {
@@ -113,7 +116,7 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
         TextView textview_book_name;
         TextView textview_auther_name;
         TextView textview_book_descrption;
-        TextView textview_bookprice;
+        TextView textview_bookprice , tv_viewoffer;
         LinearLayout linear_select;
         //LinearLayout linear_discount;
         RecyclerView discount_recyclerview;
@@ -131,6 +134,7 @@ public class BookAapter extends RecyclerView.Adapter<BookAapter.ItemViewHolder> 
             // linear_discount = itemView.findViewById(R.id.linear_discount);
             discount_recyclerview = itemView.findViewById(R.id.discount_recyclerview);
             offer_layout = itemView.findViewById(R.id.offer_linearlayout);
+            tv_viewoffer = itemView.findViewById(R.id.tv_viewoffer);
         }
 
 

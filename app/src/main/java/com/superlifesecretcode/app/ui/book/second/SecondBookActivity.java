@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
@@ -21,6 +22,7 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.third.ThirsBookActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -164,7 +166,9 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                                     bookArrayList.get(p).setIs_discounted(true);
                                     break;
                                 }
-                            } else {
+                            }
+
+                            else {
                                 com.superlifesecretcode.app.ui.book.first.Discount maxQty = getMaxQty(bookArrayList.get(p).getDiscount());
                                 if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
                                     if (maxQty.getDiscount_type().equals("1")) {
@@ -253,6 +257,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             }
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -261,14 +266,17 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             finish();
         }
     }
+
     private TextWatcher onTextChangedListener() {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 edittext_enteramount.removeTextChangedListener(this);
@@ -292,11 +300,13 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             }
         };
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "1");
     }
+
     private void setUpConversion() {
         conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
@@ -321,7 +331,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> param = new HashMap<>();
         param.put("book_type", SuperLifeSecretPreferences.getInstance().getString("book_type"));
-        secondBookPresenter.getDeliveryCharges(param,headers);
+        secondBookPresenter.getDeliveryCharges(param, headers);
     }
 
     private void getDeliveryBuySentence() {
@@ -332,7 +342,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
 
     public void getBookAmount() {
 
-        double AMOUNT_ENTERED = Double.parseDouble(edittext_enteramount.getText().toString().replace(",",""));
+        double AMOUNT_ENTERED = Double.parseDouble(edittext_enteramount.getText().toString().replace(",", ""));
         Log.e("AMOUNT_ENTERED", "" + AMOUNT_ENTERED);
         Log.e("bookArrayList SIZE", "" + bookArrayList.size());
         double AMOUNT_TOTAL = 0.0;
@@ -344,7 +354,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         }
         Log.e("AMOUNT_TOTAL", "" + AMOUNT_TOTAL);
 
-        if (AMOUNT_ENTERED > AMOUNT_TOTAL) {
+        if (AMOUNT_ENTERED >= AMOUNT_TOTAL) {
             DIVID_REMAINDER = AMOUNT_ENTERED % AMOUNT_TOTAL;
             increased_quantity = (int) (AMOUNT_ENTERED / AMOUNT_TOTAL);
             for (int p = 0; p < bookArrayList.size(); p++) {
@@ -355,7 +365,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             REMAINING_AMOUNT = DIVID_REMAINDER;
             Log.e("DIVID_REMAINDER", "" + DIVID_REMAINDER);
         } else {
-            Toast.makeText(this, "amount is insufficient!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + conversionData.getInsufficient_funds(), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -399,9 +409,27 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                             break;
                         }
                     } else {
-                        bookArrayList.get(p).setDiscount_applied(0);
-                        bookArrayList.get(p).setIs_discounted(false);
-                        bookArrayList.get(p).setPrice_after_discount(book_price);
+                        com.superlifesecretcode.app.ui.book.first.Discount maxQty = getMaxQty(bookArrayList.get(p).getDiscount());
+                        if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
+                            if (maxQty.getDiscount_type().equals("1")) {
+                                double no = maxQty.getDiscount_amount();
+                                double discount = ((book_price * no) / 100);
+                                bookArrayList.get(p).setDiscount_applied(discount);
+                                bookArrayList.get(p).setIs_discounted(true);
+                                bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                break;
+                            } else {
+                                double discount = maxQty.getDiscount_amount();
+                                bookArrayList.get(p).setDiscount_applied(discount);
+                                bookArrayList.get(p).setPrice_after_discount(book_price - discount);
+                                bookArrayList.get(p).setIs_discounted(true);
+                                break;
+                            }
+                        } else {
+                            bookArrayList.get(p).setDiscount_applied(0);
+                            bookArrayList.get(p).setIs_discounted(false);
+                            bookArrayList.get(p).setPrice_after_discount(book_price);
+                        }
                     }
                 }
             } else {
@@ -444,7 +472,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         }
         int maxQty = Integer.parseInt(discountArrayList.get(0).getMax_qty());
         for (com.superlifesecretcode.app.ui.book.first.Discount discount : discountArrayList) {
-            if (Integer.parseInt(discount.getMax_qty()) > maxQty) {
+            if (Integer.parseInt(discount.getMax_qty()) >= maxQty) {
                 maxQty = Integer.parseInt(discount.getMax_qty());
                 discountMax = discount;
             }

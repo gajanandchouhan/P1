@@ -54,11 +54,11 @@ public class BookAapterDetail extends RecyclerView.Adapter<BookAapterDetail.Item
         }
         //        double price_with_discount = 0.0;
 //        price_with_discount = ( Double.parseDouble(list.get(position).getBook_price()) + list.get(position).getDiscount());
-        //Double total_cut = ((Double.parseDouble(list.get(position).getBook_price())+list.get(position).getDiscount()) * Double.parseDouble(list.get(position).getBook_quantity()));
+        Double total_cut = (Double.parseDouble(list.get(position).getBook_price()) * Double.parseDouble(list.get(position).getBook_quantity()));
         try {
-            holder.textview_total_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",Double.parseDouble(list.get(position).getBook_price())));
+            holder.textview_total_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",total_cut));
         }catch (Exception e){
-            holder.textview_total_cut.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+Double.parseDouble(list.get(position).getBook_price()));
+            holder.textview_total_cut.setText(""+ SuperLifeSecretPreferences.getInstance().getString("book_currency")+" "+total_cut);
         }
         if (list.get(position).getDiscount()==0 || list.get(position).getDiscount()==0.0) {
             holder.textview_price_quantity_cut.setVisibility(View.GONE);

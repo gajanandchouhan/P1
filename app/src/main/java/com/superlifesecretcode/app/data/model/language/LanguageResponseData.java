@@ -332,7 +332,15 @@ public class LanguageResponseData {
     private String in;
     private String total_points;
     private String on_purchased;
+    private String view_offer;
 
+    public String getView_offer() {
+        return view_offer;
+    }
+
+    public void setView_offer(String view_offer) {
+        this.view_offer = view_offer;
+    }
 
     public String getOn_purchased() {
         return on_purchased;

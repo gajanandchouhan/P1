@@ -90,7 +90,6 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         receipt_list = new ArrayList<>();
         languageResponseData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
-        total_amont = SuperLifeSecretPreferences.getInstance().getString("total_amount");
         textview_payment = findViewById(R.id.textview_payment);
         textview_attachmentline = findViewById(R.id.textview_attachmentline);
         edittext_enteramount = findViewById(R.id.edittext_enteramount);
@@ -100,10 +99,13 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         textview_total_price = findViewById(R.id.textview_total_price);
         payment_date_heading = findViewById(R.id.payment_date_heading);
         payment_type_heading = findViewById(R.id.payment_type_heading);
+        total_amont = SuperLifeSecretPreferences.getInstance().getString("total_amount");
+        delivery_charges = Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
+        double grandtotal = delivery_charges + Double.parseDouble(total_amont);
         try {
-            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", grandtotal));
         } catch (Exception e) {
-            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal);
         }
         //textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
         textView_title = findViewById(R.id.textView_title);
@@ -318,11 +320,17 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             payment_date_heading.setText(languageResponseData.getPayment_date());
             tv_payment_type.setText("-" + languageResponseData.getSelect() + "-");
             tv_payment_date.setText("-" + languageResponseData.getSelect() + "-");
+            double grandtotal = delivery_charges + Double.parseDouble(total_amont);
+//            try {
+//                textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", grandtotal));
+//            } catch (Exception e) {
+//                textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal);
+//            }
             try {
-                textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)) + " " + languageResponseData.getOne_following_account());
+                textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", grandtotal) + " " + languageResponseData.getOne_following_account());
                 // textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
             } catch (Exception e) {
-                textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont + " " + languageResponseData.getOne_following_account());
+                textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal + " " + languageResponseData.getOne_following_account());
             }
             edittext_enteramount.setHint(languageResponseData.getPlease_attach_file());
         }
@@ -414,7 +422,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             Intent i = new Intent(FifthBookActivity.this, SixthBookActivity.class);
             // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
-            Toast.makeText(this, "" + bankBean.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "" + bankBean.getMessage(), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "" + bankBean.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -644,13 +652,21 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         ArrayList<BookBean> selectBookList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
         double total_cut_amount = 0.0;
         double discount_cut = 0.0;
+        double total_amount = 0.0;
         for (int i = 0 ; i < selectBookList.size() ; i++){
             total_cut_amount = total_cut_amount + (selectBookList.get(i).getPrice()*selectBookList.get(i).getQuantity());
+            total_amount = total_amount + (selectBookList.get(i).getPrice_after_discount()*selectBookList.get(i).getQuantity());
             discount_cut = discount_cut + selectBookList.get(i).getDiscount_applied();
         }
-        if (discount_cut==0.0)
+        double saved_amount = Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("total_amount"));
+        if (total_cut_amount == saved_amount){
             grand_total_first_cut.setVisibility(View.GONE);
-        else grand_total_first_cut.setVisibility(View.VISIBLE);
+        }else {
+            grand_total_first_cut.setVisibility(View.VISIBLE);
+        }
+//        if (discount_cut==0.0)
+//            grand_total_first_cut.setVisibility(View.GONE);
+//        else grand_total_first_cut.setVisibility(View.VISIBLE);
         grand_total_first_cut.setPaintFlags(grand_total_first_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         grand_total_first_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", total_cut_amount));
         try {

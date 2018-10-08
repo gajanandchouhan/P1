@@ -311,9 +311,27 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
                                 break;
                             }
                         } else {
-                            booksList.get(p).setDiscount_applied(0);
-                            booksList.get(p).setIs_discounted(false);
-                            booksList.get(p).setPrice_after_discount(book_price);
+                            Discount maxQty = getMaxQty(booksList.get(p).getDiscount());
+                            if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
+                                if (maxQty.getDiscount_type().equals("1")) {
+                                    double no = maxQty.getDiscount_amount();
+                                    double discount = ((book_price * no) / 100);
+                                    booksList.get(p).setDiscount_applied(discount);
+                                    booksList.get(p).setIs_discounted(true);
+                                    booksList.get(p).setPrice_after_discount(book_price - discount);
+                                    break;
+                                } else {
+                                    double discount = maxQty.getDiscount_amount();
+                                    booksList.get(p).setDiscount_applied(discount);
+                                    booksList.get(p).setPrice_after_discount(book_price - discount);
+                                    booksList.get(p).setIs_discounted(true);
+                                    break;
+                                }
+                            } else {
+                                booksList.get(p).setDiscount_applied(0);
+                                booksList.get(p).setIs_discounted(false);
+                                booksList.get(p).setPrice_after_discount(book_price);
+                            }
                         }
                     }
                 } else {
@@ -347,7 +365,7 @@ public class FirstBookActivity extends BaseActivity implements FirstBookView {
         }
         int maxQty = Integer.parseInt(discountArrayList.get(0).getMax_qty());
         for (Discount discount : discountArrayList) {
-            if (Integer.parseInt(discount.getMax_qty()) > maxQty) {
+            if (Integer.parseInt(discount.getMax_qty()) >= maxQty) {
                 maxQty = Integer.parseInt(discount.getMax_qty());
                 discountMax = discount;
             }

@@ -236,8 +236,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
                         list.get(position).setIs_discounted(true);
                         break;
                     }
-                }
-                else {
+                } else {
                     Discount maxQty = getMaxQty(discountArrayList);
                     if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
                         if (maxQty.getDiscount_type().equals("1")) {

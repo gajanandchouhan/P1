@@ -57,12 +57,20 @@ public class DialogBookAapter extends RecyclerView.Adapter<DialogBookAapter.Item
         }catch (Exception e){
             holder.textview_total_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_cut);
         }
-        if (list.get(position).isIs_discounted()) {
-            holder.textview_price_quantity_cut.setVisibility(View.VISIBLE);
-            holder.textview_total_cut.setVisibility(View.VISIBLE);
-        } else {
+//        if (list.get(position).isIs_discounted()) {
+//            holder.textview_price_quantity_cut.setVisibility(View.VISIBLE);
+//            holder.textview_total_cut.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.textview_price_quantity_cut.setVisibility(View.GONE);
+//            holder.textview_total_cut.setVisibility(View.GONE);
+//        }
+        if (list.get(position).getPrice()==list.get(position).getPrice_after_discount()){
             holder.textview_price_quantity_cut.setVisibility(View.GONE);
             holder.textview_total_cut.setVisibility(View.GONE);
+            //holder.textview_bookprice_cut.setVisibility(View.GONE);
+        }else {
+            holder.textview_price_quantity_cut.setVisibility(View.VISIBLE);
+            holder.textview_total_cut.setVisibility(View.VISIBLE);
         }
         holder.textview_total_cut.setPaintFlags(holder.textview_total_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.textview_price_quantity_cut.setPaintFlags(holder.textview_price_quantity_cut.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

@@ -599,7 +599,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void handleMainCategoryClicked(AllMenuResponseData data) {
-        Toast.makeText(this, "dfs", Toast.LENGTH_SHORT).show();
         if (data.getAlert() != null && data.getAlert().equalsIgnoreCase("1")) {
             AlertModel alertModel = new AlertModel();
             alertModel.setCount(Integer.parseInt(data.getAlert_count()));
