@@ -138,7 +138,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             @Override
             public void onClick(View v) {
                 if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
-                    if (print_by_bookquantity == false) {
+                    if (!print_by_bookquantity) {
                         CommonUtils.showSnakeBar(SecondBookActivity.this, conversionData.getSelect_option());
                         return;
                     }
@@ -166,9 +166,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                                     bookArrayList.get(p).setIs_discounted(true);
                                     break;
                                 }
-                            }
-
-                            else {
+                            } else {
                                 com.superlifesecretcode.app.ui.book.first.Discount maxQty = getMaxQty(bookArrayList.get(p).getDiscount());
                                 if (maxQty != null && book_quantity > Integer.parseInt(maxQty.getMax_qty())) {
                                     if (maxQty.getDiscount_type().equals("1")) {
@@ -210,8 +208,8 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                 } else {
                     if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
                         if (!edittext_enteramount.getText().toString().equals("")) {
-                            getBookAmount();
-                            if (TOTAL_AMOUNT != 0.0) {
+                            boolean bookAmount = getBookAmount();
+                            if (TOTAL_AMOUNT != 0.0&&bookAmount) {
                                 Intent intent = new Intent(SecondBookActivity.this, ThirsBookActivity.class);
                                 intent.putExtra("selected_booklist", bookArrayList);
                                 for (int p = 0; p < bookArrayList.size(); p++) {
@@ -282,6 +280,9 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                 edittext_enteramount.removeTextChangedListener(this);
                 try {
                     String originalString = s.toString();
+                    if (originalString.isEmpty()) {
+                        return;
+                    }
                     Long longval;
                     if (originalString.contains(",")) {
                         originalString = originalString.replaceAll(",", "");
@@ -340,7 +341,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
         secondBookPresenter.getDeliveryDescription(headers);
     }
 
-    public void getBookAmount() {
+    public boolean getBookAmount() {
 
         double AMOUNT_ENTERED = Double.parseDouble(edittext_enteramount.getText().toString().replace(",", ""));
         Log.e("AMOUNT_ENTERED", "" + AMOUNT_ENTERED);
@@ -366,7 +367,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             Log.e("DIVID_REMAINDER", "" + DIVID_REMAINDER);
         } else {
             Toast.makeText(this, "" + conversionData.getInsufficient_funds(), Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
         double NEXT_REMAINDER = 0.0;
@@ -436,6 +437,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
                 bookArrayList.get(p).setPrice_after_discount(bookArrayList.get(p).getPrice());
             }
         }
+        return true;
     }
 
     @Override
