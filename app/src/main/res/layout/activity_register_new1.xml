@@ -148,6 +148,7 @@
             android:id="@+id/social_linear"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
@@ -201,10 +202,11 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_above="@+id/social_linear"
+            android:layout_below="@+id/layout_signup"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="bottom">
+           >
 
             <LinearLayout
                 android:id="@+id/ll_login"

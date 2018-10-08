@@ -153,12 +153,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mDrawerLayout.bringChildToFront(drawerView);
                 mDrawerLayout.requestLayout();
             }
+
             @Override
             public void onDrawerOpened(View drawerView) {
             }
+
             @Override
             public void onDrawerClosed(View drawerView) {
             }
+
             @Override
             public void onDrawerStateChanged(int newState) {
             }
@@ -248,11 +251,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void getMainCategories() {
 
-        if (userDetailResponseData.getCountry() == null || userDetailResponseData.getCountry().equals("null") || userDetailResponseData.getCountry().isEmpty()
-                || userDetailResponseData.getCity() == null || userDetailResponseData.getCity().equals("null") || userDetailResponseData.getCity().isEmpty()
-                || userDetailResponseData.getState() == null || userDetailResponseData.getState().equals("null") || userDetailResponseData.getState().isEmpty()) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("update", true);
+        if (isProfileNotComplete()) {
+            CommonUtils.showAlert(this, conversionData.getProfile_update_msg(), conversionData.getUpdate(), null, new AlertDialog.OnClickListner() {
+                @Override
+                public void onPositiveClick() {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("update", true);
 //            Bundle  bundle3 = getIntent().getBundleExtra("bundle");
 //            if (bundle3!=null){
 //                boolean islogin = bundle3.getBoolean("isFromLogin");
@@ -260,14 +264,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //                    bundle.putBoolean("isFromLogin", true);
 //                }
 //            }
-            CommonUtils.startActivity(this, ProfileActivity.class, bundle, false);
-            finish();
+                    CommonUtils.startActivity(MainActivity.this, ProfileActivity.class, bundle, false);
+                    finish();
+
+                }
+
+                @Override
+                public void onNegativeClick() {
+
+                }
+            });
+
+
         } else {
             HashMap<String, String> body = new HashMap<>();
             body.put("country_id", userDetailResponseData.getCountry());
             body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
             presenter.getHomeCategories(body);
         }
+    }
+
+    private boolean isProfileNotComplete() {
+        return userDetailResponseData.getCountry() == null || userDetailResponseData.getCountry().equals("null") || userDetailResponseData.getCountry().isEmpty()
+                || userDetailResponseData.getCity() == null || userDetailResponseData.getCity().equals("null") || userDetailResponseData.getCity().isEmpty()
+                || userDetailResponseData.getState() == null || userDetailResponseData.getState().equals("null") || userDetailResponseData.getState().isEmpty() || userDetailResponseData.getUsername() == null
+                || userDetailResponseData.getUsername() == null || userDetailResponseData.getUsername().isEmpty() || userDetailResponseData.getUsername().equals("null")
+                || userDetailResponseData.getMobile() == null || userDetailResponseData.getMobile().isEmpty() || userDetailResponseData.getMobile().equals("null")
+                || userDetailResponseData.getEmail() == null || userDetailResponseData.getEmail().isEmpty() || userDetailResponseData.getEmail().equals("null")
+                || userDetailResponseData.getPhone_code() == null || userDetailResponseData.getPhone_code().isEmpty() || userDetailResponseData.getPhone_code().equals("null")
+                || userDetailResponseData.getGender() == null || userDetailResponseData.getGender().isEmpty() || userDetailResponseData.getGender().equals("null");
     }
 
     private void getAnnouementCount() {
@@ -491,6 +516,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
     }
+
     @Override
     public void setBanners(List<BannerModel> banners) {
         if (banners != null) {

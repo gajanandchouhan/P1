@@ -333,6 +333,15 @@ public class LanguageResponseData {
     private String total_points;
     private String on_purchased;
     private String view_offer;
+    private String profile_update_msg;
+
+    public String getProfile_update_msg() {
+        return profile_update_msg;
+    }
+
+    public void setProfile_update_msg(String profile_update_msg) {
+        this.profile_update_msg = profile_update_msg;
+    }
 
     public String getView_offer() {
         return view_offer;
