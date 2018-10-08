@@ -42,7 +42,7 @@
                         android:fontFamily="@font/bold"
                         android:gravity="center_horizontal"
                         android:text="Order Detail"
-                        android:textColor="@color/color_black"
+                        android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
@@ -314,7 +314,7 @@
                         android:fontFamily="@font/bold"
                         android:gravity="center_horizontal"
                         android:text="Payment Detail"
-                        android:textColor="@color/color_black"
+                        android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
 
@@ -543,7 +543,7 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="No"
-                                android:textColor="@color/color_black"
+                                android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_14sdp"
                                 android:textStyle="bold" />
 
@@ -557,7 +557,7 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="Yes"
-                                android:textColor="@color/color_white"
+                                android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/_14sdp"
                                 android:textStyle="bold" />
                         </LinearLayout>

@@ -275,7 +275,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
                 printing_status = 1;
-                textview_print_for_own.setTextColor(getResources().getColor(R.color.color_black));
+                textview_print_for_own.setTextColor(getResources().getColor(R.color.colorBlack));
                 textview_print_on_behalf.setTextColor(getResources().getColor(R.color.gray_color));
                 view_printforown.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.transparent));
@@ -300,7 +300,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
                 printing_status = 2;
                 textview_print_for_own.setTextColor(getResources().getColor(R.color.gray_color));
-                textview_print_on_behalf.setTextColor(getResources().getColor(R.color.color_black));
+                textview_print_on_behalf.setTextColor(getResources().getColor(R.color.colorBlack));
                 view_printforown.setBackgroundColor(getResources().getColor(R.color.transparent));
                 view_printfbehalf.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 recyclerview_address.setVisibility(View.GONE);
@@ -337,7 +337,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "1");
                 tv_ordertype.setText(conversionData.getDesignated());
-                tv_ordertype.setTextColor(getResources().getColor(R.color.color_black));
+                tv_ordertype.setTextColor(getResources().getColor(R.color.colorBlack));
                 linear_ordertype.setVisibility(View.GONE);
                 linear_address.setVisibility(View.VISIBLE);
                 add_address_Layout.setVisibility(View.GONE);
@@ -359,7 +359,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "2");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "2");
                 tv_ordertype.setText(conversionData.getDistribute());
-                tv_ordertype.setTextColor(getResources().getColor(R.color.color_black));
+                tv_ordertype.setTextColor(getResources().getColor(R.color.colorBlack));
                 linear_ordertype.setVisibility(View.GONE);
                 linear_address.setVisibility(View.GONE);
                 add_address_Layout.setVisibility(View.GONE);

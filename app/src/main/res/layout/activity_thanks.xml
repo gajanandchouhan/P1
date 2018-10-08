@@ -26,7 +26,7 @@
             android:fontFamily="@font/bold"
             android:gravity="center_horizontal"
             android:text="Thank You"
-            android:textColor="@color/color_black"
+            android:textColor="@color/colorBlack"
             android:textSize="@dimen/_15sdp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:fontFamily="@font/reguler"
             android:gravity="center"
             android:text="Your subscription done successfully, We will notify you soon."
-            android:textColor="@color/color_black"
+            android:textColor="@color/colorBlack"
             android:textSize="@dimen/_12sdp" />
     </LinearLayout>
 </RelativeLayout>

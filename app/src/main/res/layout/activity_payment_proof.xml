@@ -34,7 +34,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/reguler"
-                    android:textColor="@color/color_black"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_10sdp" />
 
 
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/reguler"
-                    android:textColor="@color/color_black"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_12sdp" />
 
                 <EditText
@@ -182,7 +182,7 @@
                             android:background="@color/colorPrimary"
                             android:gravity="center"
                             android:text="+"
-                            android:textColor="@color/color_white"
+                            android:textColor="@color/colorWhite"
                             android:textSize="@dimen/_25sdp"
                             android:textStyle="bold"
                             android:visibility="gone" />

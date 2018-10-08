@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.AlertModel;
@@ -49,6 +49,7 @@ import com.superlifesecretcode.app.util.ImageLoadUtils;
 import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -414,10 +415,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
-        if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_CHAT)) {
+     /*   if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_CHAT)) {
             createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
             return;
-        }
+        }*/
 
         if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_SETTING)) {
             CommonUtils.startActivity(this, CustomizeBarActivity.class);

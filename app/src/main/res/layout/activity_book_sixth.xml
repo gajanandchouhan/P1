@@ -62,7 +62,7 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="2"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
@@ -86,7 +86,7 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="3"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
@@ -110,7 +110,7 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="4"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
@@ -134,7 +134,7 @@
                         android:background="@drawable/redcircle_greenborder"
                         android:gravity="center"
                         android:text="5"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14sdp" />
 
                     <LinearLayout
@@ -151,7 +151,7 @@
                     android:background="@drawable/redcircle_greenborder"
                     android:gravity="center"
                     android:text="6"
-                    android:textColor="@color/color_white"
+                    android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
@@ -177,7 +177,7 @@
                     android:fontFamily="@font/bold"
                     android:gravity="center_horizontal"
                     android:text="Thank You"
-                    android:textColor="@color/color_black"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_15sdp" />
 
                 <TextView
@@ -191,7 +191,7 @@
                     android:fontFamily="@font/reguler"
                     android:gravity="center"
                     android:text="Your order has been successfully added to your account."
-                    android:textColor="@color/color_black"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
         </LinearLayout>
