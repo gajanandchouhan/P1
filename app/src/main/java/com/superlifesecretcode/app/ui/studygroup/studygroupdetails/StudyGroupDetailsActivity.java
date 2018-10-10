@@ -55,7 +55,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
 
     @Override
     protected void initializeView() {
-       // activity = this;
+        // activity = this;
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         studyGroupDetails = (StudyGroupDetails) getIntent().getBundleExtra("bundle").getSerializable("data");
@@ -67,6 +67,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
         imageView = findViewById(R.id.image_view_group);
         textViewExpiry = findViewById(R.id.text_view_expiry);
         buttonSubscribe.setOnClickListener(this);
+        findViewById(R.id.text_view_reason).setOnClickListener(this);
         list = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
@@ -79,7 +80,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             HashMap<String, String> params = new HashMap<>();
             params.put("study_group_id", studyGroupDetails.getGroup_id());
-            Log.e("getGroup_id",""+studyGroupDetails.getGroup_id());
+            Log.e("getGroup_id", "" + studyGroupDetails.getGroup_id());
 
             presenter.getGroupItems(params, headers);
             adapter.setSubscirptionStatus(studyGroupDetails.getSubcription_status());
@@ -108,7 +109,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
                 buttonSubscribe.setText(conversionData.getSubscribed());
                 textViewReason.setVisibility(View.GONE);
                 textViewExpiry.setVisibility(View.VISIBLE);
-                textViewExpiry.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd, MMM, yy", studyGroupDetails.getExpiry_date(), false, null));
+                textViewExpiry.setText(String.format("%s: %s", conversionData.getExpire_on(), CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd, MMM, yyyy", studyGroupDetails.getExpiry_date(), false, null)));
                 break;
             case ConstantLib.STATUS_GROUP_PENDING:
                 buttonSubscribe.setText(conversionData.getPending());
@@ -118,7 +119,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
                 buttonSubscribe.setText(conversionData.getRenew());
                 textViewReason.setVisibility(View.GONE);
                 textViewExpiry.setVisibility(View.VISIBLE);
-                textViewExpiry.setText(conversionData.getExpire_on());
+                textViewExpiry.setText(String.format("%s: %s", conversionData.getExpire_on(), CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd, MMM, yyyy", studyGroupDetails.getExpiry_date(), false, null)));
                 break;
             case ConstantLib.STATUS_GROUP_REJECTED:
                 buttonSubscribe.setText(conversionData.getSubscribe());
@@ -195,6 +196,19 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
                 }
                 openPlanSelectionActivity();
                 break;
+            case R.id.text_view_reason:
+                CommonUtils.showAlert(this, studyGroupDetails.getReason(), SuperLifeSecretPreferences.getInstance().getConversionData().getOk(), null, new AlertDialog.OnClickListner() {
+                    @Override
+                    public void onPositiveClick() {
+
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+                });
+                break;
         }
     }
 
@@ -239,7 +253,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
     @Override
     protected void onResume() {
         super.onResume();
-        if ( StudyGroupActivity.shouldRefresh == true){
+        if (StudyGroupActivity.shouldRefresh == true) {
             finish();
         }
     }

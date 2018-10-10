@@ -70,6 +70,8 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder1.textViewDesc.setText(shareListResponseData.getContent());
             holder1.textViewCountryName.setText(shareListResponseData.getCountryName());
             holder1.textViewStatus.setText(shareListResponseData.getStatus().equals("2") ? languageResponseData.getRejected() : languageResponseData.getPublished());
+            holder1.textViewLike.setText(String.format("%s " + languageResponseData.getLikes(), shareListResponseData.getLiked_by()));
+            holder1.imageViewLike.setSelected(shareListResponseData.getLiked_by_user().equalsIgnoreCase("1"));
             ImageLoadUtils.loadImage(shareListResponseData.getUser_image(), holder1.imageView);
             if (shareListResponseData.getSharing_files() != null && shareListResponseData.getSharing_files().size() > 0) {
                 holder1.pager.setVisibility(View.VISIBLE);
@@ -98,7 +100,8 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView textViewStatus;
         TextView textViewDesc;
         ImageView imageView;
-
+        ImageView imageViewLike;
+        TextView textViewLike;
         public ItemViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -110,6 +113,8 @@ public class SubmitListAapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             textViewDesc = itemView.findViewById(R.id.textView_desc);
             textViewName = itemView.findViewById(R.id.textView_name);
             imageView = itemView.findViewById(R.id.imageView_user);
+            imageViewLike = itemView.findViewById(R.id.imageView_like);
+            textViewLike = itemView.findViewById(R.id.textView_like_count);
             pager.getLayoutParams().height = pagerHeight;
             pager.getLayoutParams().width = screenWidth;
         }

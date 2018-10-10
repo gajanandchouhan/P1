@@ -29,18 +29,24 @@ import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.adapter.BannerPagerAdapter;
 import com.superlifesecretcode.app.ui.adapter.MainListAdapter;
 import com.superlifesecretcode.app.ui.base.BaseActivity;
+import com.superlifesecretcode.app.ui.book.first.BookBean;
+import com.superlifesecretcode.app.ui.book.first.FirstBookActivity;
+import com.superlifesecretcode.app.ui.book.myorder_book.OrderBookActivity;
 import com.superlifesecretcode.app.ui.countryactivities.CountryAcitvitiesActivity;
 import com.superlifesecretcode.app.ui.customizebar.CustomizeBarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.InterestedEventCalendarActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.kpi_summery.KpiActivity;
+import com.superlifesecretcode.app.ui.myannouncement.MyAnnouncementActivity;
+import com.superlifesecretcode.app.ui.mycountryactivities.MyCountryActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.notification.NotificationActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.profile.ProfileActivity;
 import com.superlifesecretcode.app.ui.sharing_latest.LatestActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
+import com.superlifesecretcode.app.ui.studygroup.StudyGroupActivity;
 import com.superlifesecretcode.app.ui.subcategory.SubCategoryActivity;
 import com.superlifesecretcode.app.ui.webview.WebViewActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
@@ -708,6 +714,174 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     bundle2.putString("title", SuperLifeSecretPreferences.getInstance().getConversionData().getOnsite());
                     bundle2.putBoolean("isStudyGroup", false);
                     CommonUtils.startActivity(this, CountryAcitvitiesActivity.class, bundle2, false);
+                    break;
+                case ConstantLib.TYPE_BUY_BOOK:
+                    final Bundle bundle3 = new Bundle();
+                    CommonUtils.book_stake = false;
+                    if (SuperLifeSecretPreferences.getInstance().getString("book_type") == null || SuperLifeSecretPreferences.getInstance().getString("book_type").equals("")) {
+                        SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                        SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
+                        SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                        SuperLifeSecretPreferences.getInstance().putString("book_print_status", "1");
+                        SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                        SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                        CommonUtils.startActivity(this, FirstBookActivity.class, bundle3, false);
+                    } else {
+                        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
+
+                            SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                            SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                            SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
+                            SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                            SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                            SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+                            CommonUtils.startActivity(this, FirstBookActivity.class, bundle3, false);
+
+//                            if (SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("0") || SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("1")){
+//                                SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+//                                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
+//                                SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+//                                SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+//                                SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+//                                CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
+//                                return;
+//                            }
+//                            LanguageResponseData languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
+//                            String message = languageResponseData.getAre_you_sure_clear_buy();
+//                            CommonUtils.showAlert(mContext, message, languageResponseData.getOk(), languageResponseData.getCancel(), new AlertDialog.OnClickListner() {
+//                                @Override
+//                                public void onPositiveClick() {
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_type", "1");
+//                                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+//                                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+//                                    SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+//                                    CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle3, false);
+//                                }
+//
+//                                @Override
+//                                public void onNegativeClick() {
+//                                }
+//                            });
+
+                        } else {
+                            SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                            CommonUtils.startActivity(this, FirstBookActivity.class, bundle3, false);
+                        }
+                    }
+                    break;
+
+                case ConstantLib.TYPE_PRINT_BOOK:
+                    final Bundle bundle4 = new Bundle();
+                    CommonUtils.book_stake = false;
+                    SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                    if (SuperLifeSecretPreferences.getInstance().getString("book_type") == null || SuperLifeSecretPreferences.getInstance().getString("book_type").equals("")) {
+                        SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                        SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
+                        SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                        SuperLifeSecretPreferences.getInstance().putString("book_print_status", "2");
+                        SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                        SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                        CommonUtils.startActivity(this, FirstBookActivity.class, bundle4, false);
+                    } else {
+                        if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
+                            SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                            SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+                            SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
+                            SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                            SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+                            SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+                            SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+                            CommonUtils.startActivity(this, FirstBookActivity.class, bundle4, false);
+
+//                            if (SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("0") || SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no").equals("1")) {
+//                                SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+//                                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
+//                                SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+//                                SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+//                                SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+//                                SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+//                                CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
+//                                return;
+//                            }
+//                            LanguageResponseData languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
+//                            String message = languageResponseData.getAre_you_sure_clear_print();
+//                            CommonUtils.showAlert(mContext, message, languageResponseData.getOk(), languageResponseData.getCancel(), new AlertDialog.OnClickListner() {
+//                                @Override
+//                                public void onPositiveClick() {
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_title", list.get(position).getTitle());
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "0");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_type", "2");
+//                                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+//                                    SuperLifeSecretPreferences.getInstance().setSelectedBooksList(new ArrayList<BookBean>());
+//                                    SuperLifeSecretPreferences.getInstance().putString("total_amount", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_address", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_full_name", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_mobile", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_email", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_state", "");
+//                                    SuperLifeSecretPreferences.getInstance().putString("book_city", "");
+//                                    CommonUtils.startActivity((AppCompatActivity) mContext, FirstBookActivity.class, bundle4, false);
+//                                }
+//
+//                                @Override
+//                                public void onNegativeClick() {
+//                                }
+//                            });
+                        } else {
+                            SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                            CommonUtils.startActivity(this, FirstBookActivity.class, bundle4, false);
+                        }
+                    }
+                    break;
+
+                case ConstantLib.TYPE_MY_ANNOUNCEMENT:
+                    CommonUtils.startActivity(this, MyAnnouncementActivity.class);
+                    break;
+                case ConstantLib.TYPE_MY_COUNTRY_ACTIVITIES:
+                    CommonUtils.startActivity(this, MyCountryActivity.class);
+                    break;
+
+                case ConstantLib.TYPE_MY_ORDER:
+
+                    Bundle bundle5 = new Bundle();
+                    SuperLifeSecretPreferences.getInstance().putString("book_title", tag.getTitle());
+                    SuperLifeSecretPreferences.getInstance().setSelectedBooks(new ArrayList<String>());
+                    CommonUtils.startActivity(this, OrderBookActivity.class, bundle5, false);
+                    break;
+                case ConstantLib.TYPE_LEARNING_STUDY_GROUP:
+                    CommonUtils.startActivity(this, StudyGroupActivity.class);
                     break;
             }
         }

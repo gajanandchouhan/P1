@@ -100,13 +100,13 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         }
         if (from_submit) {
             textViewStatus.setVisibility(View.VISIBLE);
-            findViewById(R.id.devider).setVisibility(View.GONE);
-            layoutLikeShare.setVisibility(View.GONE);
+            /*findViewById(R.id.devider).setVisibility(View.GONE);
+            layoutLikeShare.setVisibility(View.GONE);*/
             textViewStatus.setText(data.getStatus().equals("2") ? "Rejected" : "Published");
         } else {
             textViewStatus.setVisibility(View.GONE);
-            findViewById(R.id.devider).setVisibility(View.VISIBLE);
-            layoutLikeShare.setVisibility(View.VISIBLE);
+          /*  findViewById(R.id.devider).setVisibility(View.VISIBLE);
+            layoutLikeShare.setVisibility(View.VISIBLE);*/
         }
 
         textViewName.setText(data.getUsername());
@@ -164,6 +164,8 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
                         } else {
                             shareImage(sharing_files.get(pager.getCurrentItem()).getFile());
                         }
+                    } else {
+                        CommonUtils.shareContent(this, sharing_files.get(pager.getCurrentItem()).getFile());
                     }
                 } else {
                     CommonUtils.shareContent(this, data.getContent());
@@ -219,7 +221,7 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    public void setShareListData(List<ShareListResponseData> listData,String next) {
+    public void setShareListData(List<ShareListResponseData> listData, String next) {
 
     }
 

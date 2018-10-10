@@ -80,6 +80,11 @@ public class HorizontalImageAapter extends RecyclerView.Adapter<HorizontalImageA
                 } else if (o instanceof MyCountryActivityResponseData.ImageData) {
                     ((AddCountryActivityActivity) mContext).deleteImage(getAdapterPosition());
                 } else {
+                    if (mContext instanceof AddAnnouncementActivity){
+                        ((AddAnnouncementActivity) mContext).deleteLocalImage(list.get(getAdapterPosition()));
+                    }else if (mContext instanceof AddCountryActivityActivity){
+                        ((AddCountryActivityActivity) mContext).deleteLocalImage(list.get(getAdapterPosition()));
+                    }
                     list.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                 }

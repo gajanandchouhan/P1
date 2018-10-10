@@ -534,6 +534,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         grand_total_first = dialog.findViewById(R.id.grand_total_first);
 
         tv_are_you_sure.setText(languageResponseData.getAre_you_sure_continue());
+        tv_delivery_address.setText(languageResponseData.getDelivery_address());
         tv_bankname.setText(languageResponseData.getBank_name());
         tv_accountno.setText(languageResponseData.getAccount_number());
         tv_order_detail_dialog.setText(languageResponseData.getOrder_detail());

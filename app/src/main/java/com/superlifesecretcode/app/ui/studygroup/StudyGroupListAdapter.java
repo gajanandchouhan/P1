@@ -16,6 +16,7 @@ import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.studygroups.StudyGroupDetails;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.studygroup.studygroupdetails.StudyGroupDetailsActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -112,13 +113,28 @@ public class StudyGroupListAdapter extends RecyclerView.Adapter<StudyGroupListAd
             imageView = itemView.findViewById(R.id.image_view_group);
             layoutStatus = itemView.findViewById(R.id.layout_status);
             itemView.setOnClickListener(this);
+            textViewReason.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("data", list.get(getAdapterPosition()));
-            CommonUtils.startActivity((AppCompatActivity) mContext, StudyGroupDetailsActivity.class, bundle, false);
+            if (v.getId() == R.id.text_view_reason) {
+                CommonUtils.showAlert(mContext, list.get(getAdapterPosition()).getReason(), SuperLifeSecretPreferences.getInstance().getConversionData().getOk(), null, new AlertDialog.OnClickListner() {
+                    @Override
+                    public void onPositiveClick() {
+
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+
+                    }
+                });
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", list.get(getAdapterPosition()));
+                CommonUtils.startActivity((AppCompatActivity) mContext, StudyGroupDetailsActivity.class, bundle, false);
+            }
         }
     }
 }

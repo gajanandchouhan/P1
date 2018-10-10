@@ -51,12 +51,13 @@ public class MyAnnouncementActivity extends BaseActivity implements View.OnClick
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         setUpToolbar();
         ImageView viewById = findViewById(R.id.imageView_profile);
-        viewById.getLayoutParams().height = 100;
-        viewById.getLayoutParams().width = 100;
+        viewById.getLayoutParams().height = (int) getResources().getDimension(R.dimen._25sdp);
+        viewById.getLayoutParams().width = (int) getResources().getDimension(R.dimen._25sdp);
         viewById.setVisibility(View.VISIBLE);
         viewById.setImageResource(R.drawable.add_plus_btn);
         viewById.setBackground(ContextCompat.getDrawable(this, R.drawable.circle_count_bg));
-        viewById.setPadding(20, 20, 20, 20);
+        int dimension = (int) getResources().getDimension(R.dimen._5sdp);
+        viewById.setPadding(dimension, dimension, dimension, dimension);
         viewById.setOnClickListener(this);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

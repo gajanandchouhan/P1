@@ -77,8 +77,8 @@ public interface ConstantLib {
     String STATUS_GROUP_NEW = "0";
     String STATUS_GROUP_SUBSCRIBED = "1";
     String STATUS_GROUP_PENDING = "2";
-    String STATUS_GROUP_EXPIRED = "3";
-    String STATUS_GROUP_REJECTED = "4";
+    String STATUS_GROUP_EXPIRED = "4";
+    String STATUS_GROUP_REJECTED = "3";
 
     String TYPE_AUDIO_ITEM = "1";
     String TYPE_VIDEO_ITEM = "2";

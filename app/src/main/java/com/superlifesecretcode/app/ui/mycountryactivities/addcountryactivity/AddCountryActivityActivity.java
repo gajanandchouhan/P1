@@ -707,4 +707,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     }
 
 
+    public void deleteLocalImage(Object image) {
+        imageList.remove(image);
+    }
 }

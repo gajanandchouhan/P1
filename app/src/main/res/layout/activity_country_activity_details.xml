@@ -70,6 +70,11 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/reguler"
                     android:text="City,State"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginRight="@dimen/_2sdp"
+                    android:layout_toLeftOf="@+id/textView_time"
+                    android:layout_toStartOf="@+id/textView_time"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_11sdp" />
 

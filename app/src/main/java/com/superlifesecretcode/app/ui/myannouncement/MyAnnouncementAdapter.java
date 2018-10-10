@@ -140,7 +140,7 @@ public class MyAnnouncementAdapter extends RecyclerView.Adapter<MyAnnouncementAd
     }
 
     private void showReasonAlert(String reason) {
-        CommonUtils.showAlert(mContext, reason, "OK", null, new AlertDialog.OnClickListner() {
+        CommonUtils.showAlert(mContext, reason, SuperLifeSecretPreferences.getInstance().getConversionData().getOk(), null, new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +74,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private String gender;
     private String city = "";
     TextView tv_done;
+    LinearLayout top_linear;
 
     @Override
     protected int getContentView() {
@@ -83,7 +85,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     protected void initializeView() {
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
-        setUpToolbar("Profile");
+        setUpToolbar(conversionData.getProfile());
         isUpdate = getIntent().getBundleExtra("bundle").getBoolean("update");
         editTextName = findViewById(R.id.edi_text_name);
         editTextMobileNumber = findViewById(R.id.edi_text_phone);
@@ -109,6 +111,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         textViewStarCity = findViewById(R.id.textView_country);
         textViewStarState = findViewById(R.id.textView_state);
         textViewEmailLabel = findViewById(R.id.textView_email_label);
+        top_linear = findViewById(R.id.top_linear);
         textViewGender.setOnClickListener(this);
         textViewLanguage.setOnClickListener(this);
         imageViewUser.setOnClickListener(this);
@@ -130,7 +133,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         langauageList.add(ConstantLib.STRING_SIMPLIFIED);
         setUpLocalConversion();
         setUpUi();
-       // enableDisableView(true);
+        // enableDisableView(true);
     }
 
     private void setUpLocalConversion() {
@@ -155,6 +158,13 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         editTextEmail.setHint(conversionData.getEmail());
         buttonCustomize.setText(conversionData.getCustmize_bar());
         textViewCityLabel.setText(conversionData.getCity());
+        textViewCity.setHint(conversionData.getCity());
+        tv_done.setText(conversionData.getDone());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void setUpUi() {
@@ -167,6 +177,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     int id = getResources().getIdentifier("flag_" + countryCode, "drawable", getPackageName());
                     imageViewFlag.setImageResource(id);
                     textViewDialCode.setText(locationData.getPhone_code());
+                    dialCode = locationData.getPhone_code();
                 }
             } catch (NullPointerException e) {
 
@@ -185,6 +196,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
             gender = userDetailResponseData.getGender();
             city = userDetailResponseData.getCity();
+            stateId = userDetailResponseData.getState();
+            countryId = userDetailResponseData.getCountry();
+
             editTextName.setText(userDetailResponseData.getUsername());
             textViewName.setText(userDetailResponseData.getUsername());
             editTextMobileNumber.setText(userDetailResponseData.getMobile());
@@ -192,21 +206,27 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             if (userDetailResponseData.getCountryName() != null && !userDetailResponseData.getCountryName().isEmpty() && !userDetailResponseData.getCountryName().equals("null")) {
                 textViewCountry.setText(userDetailResponseData.getCountryName());
             } else {
-                if (locationData != null)
+                if (locationData != null) {
                     textViewCountry.setText(locationData.getCountryName());
+                    countryId = locationData.getCountry();
+                }
             }
 
             if (userDetailResponseData.getStateName() != null && !userDetailResponseData.getStateName().isEmpty() && !userDetailResponseData.getStateName().equals("null")) {
                 textViewState.setText(userDetailResponseData.getStateName());
             } else {
-                if (locationData != null)
+                if (locationData != null) {
                     textViewState.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getStateName());
+                    stateId = locationData.getState();
+                }
             }
             if (userDetailResponseData.getCityName() != null && !userDetailResponseData.getCityName().isEmpty() && !userDetailResponseData.getCityName().equals("null")) {
                 textViewCity.setText(userDetailResponseData.getCityName());
             } else {
-                if (locationData != null)
+                if (locationData != null) {
+                    city = locationData.getCity();
                     textViewCity.setText(SuperLifeSecretPreferences.getInstance().getLocationData().getCityName());
+                }
             }
 
          /*   if (userDetailResponseData.getCityName().equals("") || userDetailResponseData.getCityName().equals("null") || userDetailResponseData.getCityName() == null || userDetailResponseData.getCityName().equals(null)) {
@@ -227,16 +247,15 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             //Toast.makeText(this, "second gender   "+userDetailResponseData.getGender(), Toast.LENGTH_SHORT).show();
             Log.e("after", textViewGender.getText().toString());
 
-            if (userDetailResponseData.getCountry() != null || !userDetailResponseData.getCountry().equals("")) {
+           /* if (userDetailResponseData.getCountry() != null || !userDetailResponseData.getCountry().equals("")) {
                 countryId = userDetailResponseData.getCountry();
             } else {
                 if (locationData != null)
                     countryId = SuperLifeSecretPreferences.getInstance().getLocationData().getCountry();
                 //Toast.makeText(this, "getInstance"+countryId, Toast.LENGTH_SHORT).show();
-            }
+            }*/
 
             //Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-            stateId = userDetailResponseData.getState();
             editTextEmail.setText(userDetailResponseData.getEmail());
             languageId = SuperLifeSecretPreferences.getInstance().getLanguageId();
             currentLanguag = getLanguage(languageId);
@@ -264,7 +283,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView textViewTitle = findViewById(R.id.textView_title);
-        tv_done= findViewById(R.id.tv_done);
+        tv_done = findViewById(R.id.tv_done);
         tv_done.setVisibility(View.VISIBLE);
 //        imageViewProfile = findViewById(R.id.imageView_profile);
 //        imageViewProfile.setVisibility(View.VISIBLE);
@@ -510,6 +529,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     public void setConversionContent(LanguageResponseData data) {
         conversionData = data;
         setUpLocalConversion();
+        setUpToolbar(conversionData.getProfile());
     }
 
 

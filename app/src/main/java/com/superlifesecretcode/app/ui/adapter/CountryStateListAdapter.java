@@ -16,6 +16,7 @@ import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.ui.picker.CountryPicker;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
+import com.superlifesecretcode.app.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class CountryStateListAdapter extends RecyclerView.Adapter<CountryStateLi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CommonUtils.hideKeyboard(mContext);
                 pickerListner.onPick(filterList.get(position));
             }
         });

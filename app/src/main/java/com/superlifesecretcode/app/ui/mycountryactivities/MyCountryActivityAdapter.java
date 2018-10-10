@@ -134,7 +134,7 @@ public class MyCountryActivityAdapter extends RecyclerView.Adapter<MyCountryActi
     }
 
     private void showReasonAlert(String reason) {
-        CommonUtils.showAlert(mContext, reason, "OK", null, new AlertDialog.OnClickListner() {
+        CommonUtils.showAlert(mContext, reason, SuperLifeSecretPreferences.getInstance().getConversionData().getOk(), null, new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
 

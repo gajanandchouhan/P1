@@ -12,6 +12,15 @@ public class StudyGroupDetails implements Serializable {
     private String subcription_status;
     private String approval_date;
     private String expiry_date;
+    private String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public String getGroup_id() {
         return group_id;

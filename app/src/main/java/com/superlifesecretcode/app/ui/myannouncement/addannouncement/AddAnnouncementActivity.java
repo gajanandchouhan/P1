@@ -131,7 +131,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         announcmentType = "1";
         textViewAnnounType.setText(conversionData.getEvent_activity());
         setUpConversion();
-        countryId=userData.getCountry();
+        countryId = userData.getCountry();
         textViewViewCountry.setText(userData.getCountryName());
         if (data != null) {
             setUpUi();
@@ -538,5 +538,9 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
             params.put("id", image.getId());
             presenter.deleteAnnouncementImage(params, headers);
         }
+    }
+
+    public void deleteLocalImage(Object image) {
+        imageList.remove(image);
     }
 }
