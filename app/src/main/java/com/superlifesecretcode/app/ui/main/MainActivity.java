@@ -446,10 +446,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
-     /*   if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_CHAT)) {
+        if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_CHAT)) {
             createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
             return;
-        }*/
+        }
 
         if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_SETTING)) {
             CommonUtils.startActivity(this, CustomizeBarActivity.class);

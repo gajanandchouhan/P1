@@ -86,5 +86,6 @@ public interface ConstantLib {
     String TYPE_TEXT = "4";
 
 
+    String MAP_KEY = "AIzaSyALFgUrdpNgTeM1pxqEY_T9pGyITjM0F8k";
 }
 

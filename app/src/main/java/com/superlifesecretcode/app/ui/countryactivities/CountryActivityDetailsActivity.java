@@ -256,7 +256,7 @@ public class CountryActivityDetailsActivity extends BaseActivity implements View
                     }
                 }
             });
-            String url = "http://maps.google.com/maps/api/staticmap?markers=color:blue%7C" + countryActivityInfoModel.getLatitude() + "," + countryActivityInfoModel.getLongitude() + "&zoom=13&size=640x116&sensor=true";
+            String url = "http://maps.google.com/maps/api/staticmap?markers=color:blue%7C" + countryActivityInfoModel.getLatitude() + "," + countryActivityInfoModel.getLongitude() + "&zoom=13&size=640x116&sensor=true&key=AIzaSyALFgUrdpNgTeM1pxqEY_T9pGyITjM0F8k";
             ImageLoadUtils.loadImage(url, imageViewMap);
             imageViewShare.setOnClickListener(new View.OnClickListener() {
                 @Override
