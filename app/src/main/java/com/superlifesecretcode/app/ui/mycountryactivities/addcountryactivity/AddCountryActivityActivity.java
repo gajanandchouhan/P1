@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,6 +99,7 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
     int PLACE_PICKER_REQUEST = 1;
     private String lat;
     private String lon;
+    private List<String> removedImage=new ArrayList<>();
 
     @Override
     protected int getContentView() {
@@ -606,7 +608,12 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         builder.addFormDataPart("activity_location_lat", lat);
         builder.addFormDataPart("activity_location_long", lon);
         builder.addFormDataPart("activity_map_location", textViewLocation.getText().toString());
-
+        if (removedImage.size() > 0) {
+            String join = TextUtils.join(",", removedImage);
+            builder.addFormDataPart("remove_images", join);
+        } else {
+            builder.addFormDataPart("remove_images", "");
+        }
         for (int i = 0; i < imageList.size(); i++) {
             try {
                 if (imageList.get(i) != null) {
@@ -630,11 +637,14 @@ public class AddCountryActivityActivity extends BaseActivity implements AddCount
         Object o = remoteImageList.get(position);
         if (o instanceof MyCountryActivityResponseData.ImageData) {
             MyCountryActivityResponseData.ImageData image = (MyCountryActivityResponseData.ImageData) o;
-            Map<String, String> headers = new HashMap<>();
+           /* Map<String, String> headers = new HashMap<>();
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             HashMap<String, String> params = new HashMap<>();
             params.put("id", image.getId());
-            presenter.deleleteCountryActivityImage(params, headers);
+            presenter.deleleteCountryActivityImage(params, headers);*/
+            removedImage.add(image.getId());
+            remoteImageList.remove(position);
+            submitAapter.notifyItemRemoved(position);
         }
     }
 

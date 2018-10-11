@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/default_placeholder" />
 <!--
         <TextView

@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,6 +81,7 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
     TextInputLayout venueInputLayout, inputLayoutName, inputLayoutDesc, inputLayout;
     MyAnnouncementResponseData data;
     private int position;
+    private List<String> removedImage = new ArrayList<>();
 
 
     @Override
@@ -496,6 +498,12 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         builder.addFormDataPart("announcement_name", name);
         builder.addFormDataPart("announcement_description", desc);
         builder.addFormDataPart("announcement_country", countryId);
+        if (removedImage.size() > 0) {
+            String join = TextUtils.join(",", removedImage);
+            builder.addFormDataPart("remove_images", join);
+        } else {
+            builder.addFormDataPart("remove_images", "");
+        }
         builder.addFormDataPart("announcement_id", data != null ? data.getAnnouncement_id() : "");
         if (announcmentType.equals("1")) {
             builder.addFormDataPart("announcement_date", fromDate);
@@ -532,11 +540,14 @@ public class AddAnnouncementActivity extends BaseActivity implements AddAnnounce
         Object o = remoteImageList.get(position);
         if (o instanceof MyAnnouncementResponseData.ImageData) {
             MyAnnouncementResponseData.ImageData image = (MyAnnouncementResponseData.ImageData) o;
-            Map<String, String> headers = new HashMap<>();
+         /*   Map<String, String> headers = new HashMap<>();
             headers.put("Authorization", "Bearer " + userData.getApi_token());
             HashMap<String, String> params = new HashMap<>();
             params.put("id", image.getId());
-            presenter.deleteAnnouncementImage(params, headers);
+            presenter.deleteAnnouncementImage(params, headers);*/
+            removedImage.add(image.getId());
+            remoteImageList.remove(position);
+            submitAapter.notifyItemRemoved(position);
         }
     }
 
