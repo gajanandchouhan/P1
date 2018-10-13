@@ -148,6 +148,8 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
                     if (userDetailResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.setUserData(userDetailResponseModel.getData());
                         CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getProfile_updated());
+                    }else{
+                     CommonUtils.showSnakeBar(mContext,userDetailResponseModel.getMessage());
                     }
 
                 } else {
