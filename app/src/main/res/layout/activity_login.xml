@@ -71,7 +71,7 @@
                     android:paddingBottom="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:text="Forgot Password?"
-                    android:textColor="@color/colorLightBlack"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_11sdp" />
 
             </RelativeLayout>
@@ -117,9 +117,9 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/reguler"
                     android:text=" Sign Up"
-                    android:textColor="@color/colorLightBlack"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_13sdp"
-                    android:visibility="gone" />
+                    />
 
             </LinearLayout>
         </LinearLayout>

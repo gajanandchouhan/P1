@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             editTextPassword.setHint(conversionData.getPassword());
             buttonLogin.setText(conversionData.getSigin_in_cotinue());
             textViewSignup.setText(conversionData.getSignup());
-            textViewDontHaveAnAccount.setText(String.format("%s ", conversionData.getNo_account_signup()));
+            textViewDontHaveAnAccount.setText(String.format("%s ", conversionData.getDont_have_acnt()));
             eneterMobileNo = conversionData.getEnter_mobile_number();
             enterValidEmail = conversionData.getEnter_valid_email();
             enterPassword = conversionData.getEnter_password();

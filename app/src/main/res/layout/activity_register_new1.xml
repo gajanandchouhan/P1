@@ -235,10 +235,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/bold"
+                    android:fontFamily="@font/reguler"
                     android:letterSpacing="0.01"
                     android:text=" Sign In to Continue"
-                    android:textColor="@color/colorLightBlack"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_13sdp" />
 
             </LinearLayout>

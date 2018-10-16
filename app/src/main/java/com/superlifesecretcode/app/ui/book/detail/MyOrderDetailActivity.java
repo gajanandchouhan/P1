@@ -280,7 +280,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                     if (price_total_cut==Double.parseDouble(newsResponseModel.getData().getTotal_amount())){
                         total_cut.setVisibility(View.GONE);
                     }else {
-                        total_cut.setVisibility(View.VISIBLE);
+                        total_cut.setVisibility(View.GONE);
                     }
                     try {
                         total_cut.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f",price_total_cut));
