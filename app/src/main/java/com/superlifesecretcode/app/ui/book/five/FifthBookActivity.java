@@ -132,7 +132,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-        fifthBookPresenter.getBankList(headers);
+        fifthBookPresenter.getBankList(headers,SuperLifeSecretPreferences.getInstance().getString("book_type"));
 
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
@@ -27,6 +28,7 @@ import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.ui.picker.CountryStatePicker;
 import com.superlifesecretcode.app.util.CommonUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +67,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     LinearLayout linear_other_person;
     TextView textview_other_person_name, textview_other_person_mobile;
     EditText edittext_other_person_name, edittext_otehr_person_mobile;
-    String no="";
+    String no = "";
+    private TextView textViewDeliveryAtDest;
 
     @Override
     protected int getContentView() {
@@ -108,6 +111,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textview_city = findViewById(R.id.textview_city);
         textview_pincode = findViewById(R.id.textview_pincode);
         textview_designated_location = findViewById(R.id.textview_designated_location);
+        textViewDeliveryAtDest = findViewById(R.id.textview_delivery_at_dest);
         textview_other_destribution = findViewById(R.id.textview_other_destribution);
         linear_address = findViewById(R.id.linear_address);
         add_address_Layout = findViewById(R.id.add_address_Layout);
@@ -178,7 +182,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         edittext_city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stateId != null || !stateId.equals(""))
+                if (stateId != null || !stateId.isEmpty())
                     getCity();
                 else
                     CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getSelect_state());
@@ -238,6 +242,26 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("1")) {
                     if (recyclerview_address.getVisibility() == View.VISIBLE) {
                         CommonUtils.showSnakeBar(ForthBookActivity.this, conversionData.getPlease_enter_address());
+                        return;
+                    }
+                }
+                if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("3")) {
+                    if (stateId == null || stateId.isEmpty()) {
+                        CommonUtils.showToast(ForthBookActivity.this, conversionData.getSelect_state());
+                        return;
+                    }
+                    String address = edittext_deliveryaddress.getText().toString().trim();
+                    if (address.isEmpty()) {
+                        CommonUtils.showToast(ForthBookActivity.this, conversionData.getPlease_enter_address());
+                        return;
+                    }
+                    String postCode = edittext_postcode.getText().toString().trim();
+                    if (postCode.isEmpty()) {
+                        CommonUtils.showToast(ForthBookActivity.this, conversionData.getPlease_enter_postcode());
+                        return;
+                    }
+                    if (city_id == null || city_id.isEmpty()) {
+                        CommonUtils.showToast(ForthBookActivity.this, conversionData.getSelect_state());
                         return;
                     }
                 }
@@ -367,6 +391,29 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             }
         });
 
+        textViewDeliveryAtDest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("delivery_type_text", "" + conversionData.getDelivery_at_destination());
+                SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
+                SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "3");
+                tv_ordertype.setText(conversionData.getDelivery_at_destination());
+                tv_ordertype.setTextColor(getResources().getColor(R.color.colorBlack));
+                linear_ordertype.setVisibility(View.GONE);
+                linear_address.setVisibility(View.GONE);
+                add_address_Layout.setVisibility(View.VISIBLE);
+                recyclerview_address.setVisibility(View.VISIBLE);
+               /* if (oldAddressList.size() == 0) {
+                    textview_noaddressfound.setVisibility(View.VISIBLE);
+                } else {
+                    textview_noaddressfound.setVisibility(View.GONE);
+                }*/
+            }
+        });
+        stateId = userData.getState();
+        edittext_state.setText(userData.getStateName());
+        city_id = userData.getCity();
+        edittext_city.setText(userData.getCityName());
         tv_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -438,9 +485,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             no = number;
             int permissionCheck = ContextCompat.checkSelfPermission(ForthBookActivity.this, Manifest.permission.CALL_PHONE);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(ForthBookActivity.this, new String[]{Manifest.permission.CALL_PHONE},1);
+                ActivityCompat.requestPermissions(ForthBookActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
             } else {
-                startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+no)));
+                startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:" + no)));
             }
         }
     }
@@ -541,6 +588,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             textview_other_person_mobile.setText(conversionData.getOther_mobile());
             edittext_other_person_name.setHint(conversionData.getEnter_other_person());
             edittext_otehr_person_mobile.setHint(conversionData.getEnter_other_mobile());
+            textViewDeliveryAtDest.setText(conversionData.getDelivery_at_destination());
         }
     }
 

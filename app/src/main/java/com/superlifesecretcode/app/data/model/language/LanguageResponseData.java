@@ -334,6 +334,15 @@ public class LanguageResponseData {
     private String on_purchased;
     private String view_offer;
     private String profile_update_msg;
+    private String delivery_at_destination;
+
+    public String getDelivery_at_destination() {
+        return delivery_at_destination;
+    }
+
+    public void setDelivery_at_destination(String delivery_at_destination) {
+        this.delivery_at_destination = delivery_at_destination;
+    }
 
     public String getProfile_update_msg() {
         return profile_update_msg;

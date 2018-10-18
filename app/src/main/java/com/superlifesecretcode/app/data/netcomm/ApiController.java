@@ -503,7 +503,7 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<StoreBean>(handler));
                 break;
             case REQ_GET_BANKLIST_BOOK_FIFTH:
-                Observable<BankBean> bankObservable = apiInterface.getBankList(headers);
+                Observable<BankBean> bankObservable = apiInterface.getBankList(headers,countryId);
                 bankObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BankBean>(handler));

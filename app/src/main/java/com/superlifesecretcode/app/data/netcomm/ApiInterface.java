@@ -297,7 +297,7 @@ public interface ApiInterface {
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("accounts")
-    Observable<BankBean> getBankList(@HeaderMap Map<String, String> headers);
+    Observable<BankBean> getBankList(@HeaderMap Map<String, String> headers, @Query("type") String type);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("bookOrder")

@@ -32,7 +32,7 @@ public class FifthBookPresenter extends BasePresenter<FifthBookView> {
     }
 
 
-    public void getBankList(Map<String, String> headers) {
+    public void getBankList(Map<String, String> headers, String type) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -61,7 +61,7 @@ public class FifthBookPresenter extends BasePresenter<FifthBookView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        },headers,"","");
+        },headers,type,"");  // type (countryId as query parameter)
     }
 
     public void bookOrder(RequestBody params, Map<String, String> headers) {
