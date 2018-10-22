@@ -13,4 +13,7 @@ public interface ForthBookView extends BaseView{
     void setStateData(List<CountryResponseData> data);
     void setCities(List<CountryResponseData> data);
 
+    void setDeliveryCost(String delivery_charges);
+
+    void showNoDeliveryMessage(String message);
 }

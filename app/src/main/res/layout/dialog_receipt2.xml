@@ -422,6 +422,104 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layout_city"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_20sdp"
+                                android:layout_marginRight="@dimen/_20sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/tv_dialog_city"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/reguler"
+                                    android:gravity="left"
+                                    android:text="City:"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/_10sdp" />
+
+                                <TextView
+                                    android:id="@+id/dialog_city"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/reguler"
+                                    android:gravity="right"
+                                    android:text=""
+                                    android:textColor="@color/red_bg"
+                                    android:textSize="@dimen/_10sdp" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/layout_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_20sdp"
+                                android:layout_marginRight="@dimen/_20sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/tv_dialog_state"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/reguler"
+                                    android:gravity="left"
+                                    android:text="City:"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/_10sdp" />
+
+                                <TextView
+                                    android:id="@+id/dialog_state"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/reguler"
+                                    android:gravity="right"
+                                    android:text=""
+                                    android:textColor="@color/red_bg"
+                                    android:textSize="@dimen/_10sdp" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/layout_pin_code"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_20sdp"
+                                android:layout_marginRight="@dimen/_20sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/tv_dialog_pin_code"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/reguler"
+                                    android:gravity="left"
+                                    android:text="City:"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/_10sdp" />
+
+                                <TextView
+                                    android:id="@+id/dialog_pin_code"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/reguler"
+                                    android:gravity="right"
+                                    android:text=""
+                                    android:textColor="@color/red_bg"
+                                    android:textSize="@dimen/_10sdp" />
+                            </LinearLayout>
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_20sdp"

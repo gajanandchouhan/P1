@@ -427,11 +427,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             editTextMobileNumber.setError(conversionData.getEnter_mobile_number());
             return;
         }
-        if (email.isEmpty()) {
+      /*  if (email.isEmpty()) {
             editTextEmail.setError(conversionData.getEnter_email());
             return;
         }
-        if (!CommonUtils.isValidEmail(email)) {
+        */
+        if (!email.isEmpty()&&!CommonUtils.isValidEmail(email)) {
             editTextEmail.setError(conversionData.getEnter_valid_email());
             return;
         }

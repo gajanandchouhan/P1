@@ -8,6 +8,7 @@ import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityDetailResponseModel;
+import com.superlifesecretcode.app.data.model.deliverycost.DeliveryCostReponseModel;
 import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
@@ -385,5 +386,10 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("getlikeShareDetails")
     Observable<KPI> getKpiData(@HeaderMap Map<String, String> headers);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("calculateDeliveryCharges")
+    Observable<DeliveryCostReponseModel> calculateDeliveryCharges(@PartMap() Map<String, RequestBody> params, @HeaderMap Map<String, String> header);
 
 }

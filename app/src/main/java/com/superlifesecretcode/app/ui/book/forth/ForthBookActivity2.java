@@ -702,6 +702,16 @@ public class ForthBookActivity2 extends BaseActivity implements ForthBookView {
         countryStatePicker.show();
     }
 
+    @Override
+    public void setDeliveryCost(String delivery_charges) {
+
+    }
+
+    @Override
+    public void showNoDeliveryMessage(String message) {
+
+    }
+
     private void setUpConversion() {
         conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
@@ -739,4 +749,5 @@ public class ForthBookActivity2 extends BaseActivity implements ForthBookView {
             edittext_otehr_person_mobile.setHint(conversionData.getEnter_other_mobile());
         }
     }
+
 }

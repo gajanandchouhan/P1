@@ -4,13 +4,13 @@ import android.content.Context;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
+import com.superlifesecretcode.app.data.model.deliverycost.DeliveryCostReponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
 import com.superlifesecretcode.app.data.netcomm.RequestType;
 import com.superlifesecretcode.app.data.netcomm.ResponseHandler;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.base.BasePresenter;
-import com.superlifesecretcode.app.ui.book.first.BookList;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
@@ -155,5 +155,36 @@ public class ForthBookPresneter extends BasePresenter<ForthBookView> {
             }
         }, requestBody);
     }
+    public void getDeliveryCharges(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_CALCULATE_DELIVERY_COST, new ResponseHandler<DeliveryCostReponseModel>() {
+            @Override
+            public void onResponse(DeliveryCostReponseModel categoryResponseModel) {
+                view.hideProgress();
+                if (categoryResponseModel != null) {
+                    if (categoryResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS))
+                        view.setDeliveryCost(categoryResponseModel.getDelivery_charges());
+                    else {
+                        view.showNoDeliveryMessage(categoryResponseModel.getMessage());
+                        //CommonUtils.showSnakeBar(mContext, categoryResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
 
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
 }

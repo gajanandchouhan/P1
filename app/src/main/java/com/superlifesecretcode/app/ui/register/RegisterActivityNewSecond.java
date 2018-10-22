@@ -186,11 +186,11 @@ public class RegisterActivityNewSecond extends BaseActivity implements View.OnCl
                 CommonUtils.showSnakeBar(this, selectGender);
                 return;
             }
-            if (email.isEmpty()) {
+          /*  if (email.isEmpty()) {
                 editTextEmail.setError(enterEmail);
                 return;
-            }
-            if (!CommonUtils.isValidEmail(email)) {
+            }*/
+            if (!email.isEmpty()&&!CommonUtils.isValidEmail(email)) {
                 editTextEmail.setError(enterValidEmail);
                 return;
             }

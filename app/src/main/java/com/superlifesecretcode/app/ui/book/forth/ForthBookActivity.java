@@ -69,6 +69,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     EditText edittext_other_person_name, edittext_otehr_person_mobile;
     String no = "";
     private TextView textViewDeliveryAtDest;
+    private int qty;
 
     @Override
     protected int getContentView() {
@@ -264,6 +265,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                         CommonUtils.showToast(ForthBookActivity.this, conversionData.getSelect_state());
                         return;
                     }
+
+                    getDeliveryCharges();
+                    return;
                 }
                 SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
                 SuperLifeSecretPreferences.getInstance().putString("book_full_name", fullname);
@@ -281,9 +285,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
 
         SuperLifeSecretPreferences.getInstance().putString("order_for_text", "" + conversionData.getPrinting_own());
         ArrayList<BookBean> bookBeanArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
-        int qualtity = 0;
+
         for (int i = 0; i < bookBeanArrayList.size(); i++) {
-            qualtity = bookBeanArrayList.get(i).getQuantity();
+            qty = qty + bookBeanArrayList.get(i).getQuantity();
         }
         SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
         SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
@@ -394,6 +398,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textViewDeliveryAtDest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SuperLifeSecretPreferences.getInstance().putString("final_dialog_email", "");
+                SuperLifeSecretPreferences.getInstance().putString("final_dialog_phone", "");
                 SuperLifeSecretPreferences.getInstance().putString("delivery_type_text", "" + conversionData.getDelivery_at_destination());
                 SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
                 SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "3");
@@ -550,6 +556,48 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         countryStatePicker.show();
     }
 
+    @Override
+    public void setDeliveryCost(String delivery_charges) {
+        String contact_number = edittext_contact_number.getText().toString();
+        String email = edittext_emailid.getText().toString();
+        String fullname = edittext_fullname.getText().toString();
+        String other_person_name = edittext_other_person_name.getText().toString();
+        String other_person_contactno = edittext_otehr_person_mobile.getText().toString();
+        SuperLifeSecretPreferences.getInstance().putString("delivery_charges_destination", "" + delivery_charges);
+
+        SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
+        SuperLifeSecretPreferences.getInstance().putString("book_full_name", fullname);
+        SuperLifeSecretPreferences.getInstance().putString("book_mobile", contact_number);
+        SuperLifeSecretPreferences.getInstance().putString("book_email", email);
+        SuperLifeSecretPreferences.getInstance().putString("book_state", stateId);
+        SuperLifeSecretPreferences.getInstance().putString("book_city", city_id);
+        SuperLifeSecretPreferences.getInstance().putString("book_pin_code", edittext_postcode.getText().toString());
+        SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "4");
+        SuperLifeSecretPreferences.getInstance().putString("other_person_name", other_person_name);
+        SuperLifeSecretPreferences.getInstance().putString("other_person_contact", other_person_contactno);
+
+        SuperLifeSecretPreferences.getInstance().putString("city_name", edittext_city.getText().toString());
+        SuperLifeSecretPreferences.getInstance().putString("state_name", edittext_state.getText().toString());
+        CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);
+    }
+
+    @Override
+    public void showNoDeliveryMessage(String message) {
+
+        CommonUtils.showAlert(this, message, conversionData.getOk(), null, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
+
+    }
+
     private void setUpConversion() {
         conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
@@ -614,5 +662,15 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             default:
                 break;
         }
+    }
+
+    private void getDeliveryCharges() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> param = new HashMap<>();
+        param.put("state_id", stateId);
+        param.put("amount", total_amont);
+        param.put("qty", String.valueOf(qty));
+        forthBookPresneter.getDeliveryCharges(param, headers);
     }
 }

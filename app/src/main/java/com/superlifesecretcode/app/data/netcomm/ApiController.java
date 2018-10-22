@@ -11,6 +11,7 @@ import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityDetailResponseModel;
+import com.superlifesecretcode.app.data.model.deliverycost.DeliveryCostReponseModel;
 import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
@@ -411,6 +412,12 @@ public class ApiController implements RequestType {
                     deliverychargesObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<Delivery>(handler));
+                    break;
+                case REQ_CALCULATE_DELIVERY_COST:
+                    Observable<DeliveryCostReponseModel> calcualteCostObservable = apiInterface.calculateDeliveryCharges(stringMultipartParamsParams,header);
+                    calcualteCostObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<DeliveryCostReponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

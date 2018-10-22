@@ -296,7 +296,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 || userDetailResponseData.getState() == null || userDetailResponseData.getState().equals("null") || userDetailResponseData.getState().isEmpty() || userDetailResponseData.getUsername() == null
                 || userDetailResponseData.getUsername() == null || userDetailResponseData.getUsername().isEmpty() || userDetailResponseData.getUsername().equals("null")
                 || userDetailResponseData.getMobile() == null || userDetailResponseData.getMobile().isEmpty() || userDetailResponseData.getMobile().equals("null")
-                || userDetailResponseData.getEmail() == null || userDetailResponseData.getEmail().isEmpty() || userDetailResponseData.getEmail().equals("null")
+                /*|| userDetailResponseData.getEmail() == null || userDetailResponseData.getEmail().isEmpty() || userDetailResponseData.getEmail().equals("null")*/
                 || userDetailResponseData.getPhone_code() == null || userDetailResponseData.getPhone_code().isEmpty() || userDetailResponseData.getPhone_code().equals("null")
                 || userDetailResponseData.getGender() == null || userDetailResponseData.getGender().isEmpty() || userDetailResponseData.getGender().equals("null");
     }
