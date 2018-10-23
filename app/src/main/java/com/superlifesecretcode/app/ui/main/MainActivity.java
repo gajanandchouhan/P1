@@ -1,6 +1,8 @@
 package com.superlifesecretcode.app.ui.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -10,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -85,6 +89,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     LinearLayout tab1, tab2, tab3, tab4;
     ImageView imageView1, imageView2, imageView3, imageView4;
     private TextView textViewTitle;
+    private ImageView viewSummeryKPI;
+    private Animation myAnim;
 
     @Override
     protected void onPause() {
@@ -137,7 +143,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         View viewNotifcation = findViewById(R.id.imageView_notification);
         viewNotifcation.setVisibility(View.VISIBLE);
         viewNotifcation.setOnClickListener(this);
-        View viewSummeryKPI = findViewById(R.id.imageView_summery);
+        viewSummeryKPI = findViewById(R.id.imageView_summery);
         viewSummeryKPI.setVisibility(View.VISIBLE);
         viewSummeryKPI.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -510,6 +516,42 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         getAnnouementCount();
         drawerAdapter.notifyDataSetChanged();
         mainAdapter.notifyDataSetChanged();
+        myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+        viewSummeryKPI.startAnimation(myAnim);
+        myAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                viewSummeryKPI.setColorFilter(Color.argb(255, 255, 255, 255)); // White Tint
+                viewSummeryKPI.animate().rotation(180);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+    class MyBounceInterpolator implements android.view.animation.Interpolator {
+        private double mAmplitude = 1;
+        private double mFrequency = 10;
+
+        MyBounceInterpolator(double amplitude, double frequency) {
+            mAmplitude = amplitude;
+            mFrequency = frequency;
+        }
+
+        public float getInterpolation(float time) {
+            return (float) (-1 * Math.pow(Math.E, -time / mAmplitude) *
+                    Math.cos(mFrequency * time) + 1);
+        }
     }
 
     @Override
