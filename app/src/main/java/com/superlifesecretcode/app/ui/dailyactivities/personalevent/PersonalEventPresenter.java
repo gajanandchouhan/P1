@@ -138,5 +138,39 @@ class PersonalEventPresenter extends BasePresenter<PersonalEventView> {
             }
         }, params, headers);
     }
+
+    public void updateCompleteStatus(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            view.onStatusFailed();
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.UPDATE_COMPLETE_STATUS, new ResponseHandler<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel baseResponseModel) {
+                view.hideProgress();
+                if (baseResponseModel != null) {
+                    if (baseResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.onCompleteStatusUpdateSuccess();
+                    } else {
+                        CommonUtils.showToast(mContext, baseResponseModel.getMessage());
+                    }
+
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+
+            }
+        }, params, headers);
+    }
 }
 

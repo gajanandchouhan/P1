@@ -17,4 +17,6 @@ interface PersonalEventView extends BaseView{
     void onRemoveSuccess();
 
     void noData();
+
+    void onCompleteStatusUpdateSuccess();
 }

@@ -49,6 +49,8 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     private String status;
     private Date date;
     private Event event;
+    private int updateStatusPos;
+    private String updateCompleteStatus;
 
     @Override
     protected int getContentView() {
@@ -258,5 +260,27 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onCompleteStatusUpdateSuccess() {
+        object.setCompleted_status(updateCompleteStatus);
+        adapter.notifyDataSetChanged();
+    }
 
+
+    public void updateCompleteStatus(int position) {
+        this.updateStatusPos = position;
+        event = eventList.get(position);
+        this.object = (PersonalEventResponseData) eventList.get(position).getData();
+        if (object.getCompleted_status().equalsIgnoreCase("1")) {
+            this.updateCompleteStatus = "0";
+        } else {
+            this.updateCompleteStatus = "1";
+        }
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", object.getActivity_id());
+        params.put("status", updateCompleteStatus);
+        presenter.updateCompleteStatus(params, headers);
+    }
 }

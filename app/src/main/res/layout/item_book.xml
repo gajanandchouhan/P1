@@ -75,6 +75,7 @@
 
                 <TextView
                     android:id="@+id/textview_total_cut"
+                    android:layout_gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -85,6 +86,7 @@
 
                 <TextView
                     android:id="@+id/textview_total"
+                    android:layout_gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/bold"

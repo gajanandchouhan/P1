@@ -70,4 +70,5 @@ public interface RequestType {
     byte REQ_GET_DELIVERY_BUY_DESCRIPTION = 60;
     byte REQ_GET_KPI_SUMMERY = 61;
     byte REQ_CALCULATE_DELIVERY_COST = 62;
+    byte UPDATE_COMPLETE_STATUS = 63;
 }

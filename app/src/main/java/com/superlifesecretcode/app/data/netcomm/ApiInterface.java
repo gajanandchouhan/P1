@@ -317,7 +317,7 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("myOrderDetail")
     Observable<DetailBean> orderDetail(@PartMap() Map<String, RequestBody> partMap,
-                                                         @HeaderMap Map<String, String> headers);
+                                       @HeaderMap Map<String, String> headers);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("addAnnouncement")
@@ -331,13 +331,14 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("deleteAnnouncement")
     Observable<BaseResponseModel> deleteAnnouncement(@PartMap() Map<String, RequestBody> partMap,
-                                     @HeaderMap Map<String, String> headers);
+                                                     @HeaderMap Map<String, String> headers);
 
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("removeAnnouncementImage")
     Observable<BaseResponseModel> removeAnnouncementImage(@PartMap() Map<String, RequestBody> partMap,
-                                                     @HeaderMap Map<String, String> headers);
+                                                          @HeaderMap Map<String, String> headers);
+
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("announcementAddRequest")
     Observable<BaseResponseModel> sendReq(@HeaderMap Map<String, String> headers);
@@ -354,12 +355,13 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("removeActivityImage")
     Observable<BaseResponseModel> removeActivityImage(@PartMap() Map<String, RequestBody> partMap,
-                                                          @HeaderMap Map<String, String> headers);
+                                                      @HeaderMap Map<String, String> headers);
+
     @Multipart
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("deleteActivity")
     Observable<BaseResponseModel> deleteActivity(@PartMap() Map<String, RequestBody> partMap,
-                                                     @HeaderMap Map<String, String> headers);
+                                                 @HeaderMap Map<String, String> headers);
 
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @GET("getStudyGroups")
@@ -392,4 +394,8 @@ public interface ApiInterface {
     @POST("calculateDeliveryCharges")
     Observable<DeliveryCostReponseModel> calculateDeliveryCharges(@PartMap() Map<String, RequestBody> params, @HeaderMap Map<String, String> header);
 
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("doneActivity")
+    Observable<BaseResponseModel> updateCompleteStatus(@PartMap() Map<String, RequestBody> stringMultipartParamsParams, @HeaderMap Map<String, String> header);
 }

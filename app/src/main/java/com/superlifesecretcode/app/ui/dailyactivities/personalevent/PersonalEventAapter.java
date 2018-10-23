@@ -8,6 +8,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -43,8 +44,10 @@ public class PersonalEventAapter extends RecyclerView.Adapter<PersonalEventAapte
         Event event = list.get(position);
         PersonalEventResponseData data = (PersonalEventResponseData) event.getData();
         holder.textViewTitle.setText(data.getTitle());
-        holder.textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm","hh:mm a",data.getActivity_time(),false,null));
+        holder.textViewTime.setText(CommonUtils.getformattedDateFromString("HH:mm", "hh:mm a", data.getActivity_time(), false, null));
         holder.switchCompat.setChecked(data.getStatus().equals("1"));
+        holder.radioButton.setChecked(data.getCompleted_status().equalsIgnoreCase("1"));
+
     }
 
     @Override
@@ -56,6 +59,7 @@ public class PersonalEventAapter extends RecyclerView.Adapter<PersonalEventAapte
         TextView textViewTime;
         TextView textViewTitle;
         SwitchCompat switchCompat;
+        RadioButton radioButton;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -63,16 +67,21 @@ public class PersonalEventAapter extends RecyclerView.Adapter<PersonalEventAapte
             textViewTitle = itemView.findViewById(R.id.textView_title);
             textViewTime = itemView.findViewById(R.id.textView_time);
             switchCompat = itemView.findViewById(R.id.switch_reminder);
+            radioButton = itemView.findViewById(R.id.button_status);
+            radioButton.setText(coversionData.getDone());
             itemView.findViewById(R.id.imageView_remove).setOnClickListener(this);
             switchCompat.setOnClickListener(this);
+            radioButton.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.switch_reminder) {
                 ((PersonalEventCalendarActivity) mContext).updateState(getAdapterPosition());
-            } else  if (v.getId() == R.id.imageView_remove) {
+            } else if (v.getId() == R.id.imageView_remove) {
                 ((PersonalEventCalendarActivity) mContext).removeActivity(getAdapterPosition());
+            } else if (v.getId() == R.id.button_status) {
+                ((PersonalEventCalendarActivity) mContext).updateCompleteStatus(getAdapterPosition());
             } else {
                 PersonalEventResponseData data = (PersonalEventResponseData) list.get(getAdapterPosition()).getData();
                 Bundle bundle = new Bundle();

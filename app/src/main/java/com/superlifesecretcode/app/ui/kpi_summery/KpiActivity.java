@@ -53,10 +53,6 @@ public class KpiActivity extends BaseActivity implements KpiView {
     protected void initializeView() {
         languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
-        Map<String, String> header = new HashMap<>();
-        header.put("Authorization", "Bearer " + userData.getApi_token());
-        kpiPresenter.getKpiSummeryData(header);
-
         relative_news = findViewById(R.id.relative_news);
         relative_event = findViewById(R.id.relative_event);
         raletive_dailyactivity = findViewById(R.id.raletive_dailyactivity);
@@ -161,6 +157,14 @@ public class KpiActivity extends BaseActivity implements KpiView {
     protected void initializePresenter() {
         kpiPresenter = new KpiPresenter(this);
         kpiPresenter.setView(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Map<String, String> header = new HashMap<>();
+        header.put("Authorization", "Bearer " + userData.getApi_token());
+        kpiPresenter.getKpiSummeryData(header);
     }
 
     @Override

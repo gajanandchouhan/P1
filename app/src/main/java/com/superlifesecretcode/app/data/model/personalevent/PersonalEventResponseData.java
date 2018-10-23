@@ -18,6 +18,15 @@ public class PersonalEventResponseData implements Serializable {
     private String type_id;
     private String username;
     private String typeName;
+    private String completed_status;
+
+    public String getCompleted_status() {
+        return completed_status;
+    }
+
+    public void setCompleted_status(String completed_status) {
+        this.completed_status = completed_status;
+    }
 
     public String getActivity_id() {
         return activity_id;

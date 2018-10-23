@@ -419,6 +419,13 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<DeliveryCostReponseModel>(handler));
                     break;
+
+                case UPDATE_COMPLETE_STATUS:
+                    Observable<BaseResponseModel> compleStatusObservable = apiInterface.updateCompleteStatus(stringMultipartParamsParams,header);
+                    compleStatusObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -79,7 +79,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     @Override
     protected void onResume() {
         super.onResume();
-        if (CommonUtils.book_stake == true) {
+        if (CommonUtils.book_stake) {
             finish();
         }
     }
@@ -262,7 +262,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                         return;
                     }
                     if (city_id == null || city_id.isEmpty()) {
-                        CommonUtils.showToast(ForthBookActivity.this, conversionData.getSelect_state());
+                        CommonUtils.showToast(ForthBookActivity.this, conversionData.getSelect_city());
                         return;
                     }
 
@@ -532,10 +532,10 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             @Override
             public void onPick(CountryResponseData country) {
                 edittext_state.setText(country.getName());
-//                if (!country.getId().equalsIgnoreCase(city)) {
-//                    city = "";
-//                    textViewCity.setText("");
-//                }
+                if (!country.getId().equalsIgnoreCase(city_id)) {
+                    city_id = "";
+                    edittext_city.setText("");
+                }
                 countryStatePicker.dismiss();
                 stateId = country.getId();
             }
