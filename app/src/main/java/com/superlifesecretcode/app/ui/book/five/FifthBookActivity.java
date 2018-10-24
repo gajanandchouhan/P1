@@ -5,11 +5,20 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 import android.view.View;
 import android.view.Window;
 import android.widget.DatePicker;
@@ -71,6 +80,7 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
     TextView payment_date_heading, payment_type_heading, textView_title;
     private LanguageResponseData languageResponseData;
     double delivery_charges = 0.0;
+    TextView textview_sub_total, textview_sub_total_price, textview_delivery, textview_delivery_price;
 
     @Override
     protected int getContentView() {
@@ -100,11 +110,26 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
         textview_total_price = findViewById(R.id.textview_total_price);
         payment_date_heading = findViewById(R.id.payment_date_heading);
         payment_type_heading = findViewById(R.id.payment_type_heading);
+        textview_sub_total = findViewById(R.id.textview_sub_total);
+        textview_sub_total_price = findViewById(R.id.textview_sub_total_price);
+        textview_delivery = findViewById(R.id.textview_delivery_charges);
+        textview_delivery_price = findViewById(R.id.textview_delivery_charges_price);
         total_amont = SuperLifeSecretPreferences.getInstance().getString("total_amount");
-        if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("3")) {
-            delivery_charges = Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges_destination"));
-        } else {
+        // if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("3")) {
+        delivery_charges = Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges_destination"));
+         /*else {
             delivery_charges = Double.parseDouble(SuperLifeSecretPreferences.getInstance().getString("delivery_charges"));
+        }*/
+        try {
+            textview_sub_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
+        } catch (Exception e) {
+            textview_sub_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + Double.parseDouble(total_amont));
+        }
+
+        try {
+            textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", delivery_charges));
+        } catch (Exception e) {
+            textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + delivery_charges);
         }
         double grandtotal = delivery_charges + Double.parseDouble(total_amont);
         try {
@@ -327,6 +352,8 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             payment_date_heading.setText(languageResponseData.getPayment_date());
             tv_payment_type.setText("-" + languageResponseData.getSelect() + "-");
             tv_payment_date.setText("-" + languageResponseData.getSelect() + "-");
+            textview_sub_total.setText(languageResponseData.getSubtotal());
+            textview_delivery.setText(languageResponseData.getDelivery_charges());
             double grandtotal = delivery_charges + Double.parseDouble(total_amont);
 //            try {
 //                textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", grandtotal));
@@ -336,10 +363,43 @@ public class FifthBookActivity extends BaseActivity implements FifthBookView {
             try {
                 textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", grandtotal) + " " + languageResponseData.getOne_following_account());
                 // textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
+                String s = textview_payment.getText().toString();
+                final SpannableStringBuilder sb = new SpannableStringBuilder(s);
+
+// Span to set text color to some RGB value
+                final ForegroundColorSpan fcs = new ForegroundColorSpan(ContextCompat.getColor(this,R.color.red));
+
+// Span to make text bold
+                //final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
+                final TypefaceSpan bss = new CustomTypeFaceSpan("", ResourcesCompat.getFont(this, R.font.bold));
+
+// Set the text color for first 4 characters
+                sb.setSpan(bss, languageResponseData.getPlease_pay().length(), s.indexOf(languageResponseData.getOne_following_account()), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+// make them also bold
+                sb.setSpan(fcs, languageResponseData.getPlease_pay().length(), s.indexOf(languageResponseData.getOne_following_account()), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+                textview_payment.setText(sb);
             } catch (Exception e) {
                 textview_payment.setText("" + languageResponseData.getPlease_pay() + " " + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + grandtotal + " " + languageResponseData.getOne_following_account());
             }
             edittext_enteramount.setHint(languageResponseData.getPlease_attach_file());
+        }
+    }
+
+    private class CustomTypeFaceSpan extends TypefaceSpan {
+
+        private final Typeface typeface;
+
+        public CustomTypeFaceSpan(String family, Typeface typeface) {
+            super(family);
+            this.typeface = typeface;
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            ds.setTypeface(typeface);
         }
     }
 

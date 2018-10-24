@@ -423,6 +423,7 @@
                             android:background="@drawable/round_border"
                             android:orientation="vertical"
                             android:visibility="gone">
+
                             <TextView
                                 android:id="@+id/textview_delivery_at_dest"
                                 android:layout_width="match_parent"
@@ -439,6 +440,7 @@
                                 android:layout_height="@dimen/_1sdp"
                                 android:background="@color/colorPrimary"
                                 android:visibility="visible" />
+
                             <TextView
                                 android:id="@+id/textview_designated_location"
                                 android:layout_width="match_parent"
@@ -464,8 +466,6 @@
                                 android:text="Let Other to Distribute the Books"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_10sdp" />
-
-
 
 
                         </LinearLayout>
@@ -626,8 +626,8 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:background="@drawable/edittext_round"
                             android:fontFamily="@font/reguler"
-                            android:hint="Enter Address"
                             android:gravity="start"
+                            android:hint="Enter Address"
                             android:inputType="textMultiLine"
                             android:maxLines="3"
                             android:minLines="3"
@@ -704,6 +704,72 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:paddingLeft="@dimen/_23sdp"
+        android:paddingRight="@dimen/_23sdp"
+        android:background="#eee9e9"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textview_sub_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/textview_sub_total_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:gravity="end"
+            android:textColor="@color/red_bg"
+            android:textSize="@dimen/_13sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:paddingLeft="@dimen/_23sdp"
+        android:paddingRight="@dimen/_23sdp"
+        android:background="#eee9e9"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textview_delivery_charges"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/textview_delivery_charges_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:gravity="end"
+            android:textColor="@color/red_bg"
+            android:textSize="@dimen/_13sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:paddingLeft="@dimen/_23sdp"
+        android:paddingRight="@dimen/_23sdp"
         android:background="#eee9e9"
         android:orientation="horizontal">
 
@@ -713,10 +779,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bold"
-            android:gravity="center"
-            android:padding="@dimen/_8sdp"
+            android:gravity="start"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_13sdp" />
 
         <TextView
             android:id="@+id/textview_total_price"
@@ -724,10 +789,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bold"
-            android:gravity="center"
-            android:padding="@dimen/_10sdp"
+            android:gravity="end"
             android:textColor="@color/red_bg"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_13sdp" />
 
     </LinearLayout>
 

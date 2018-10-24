@@ -449,10 +449,10 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
     @Override
     public void getDeliveryCharges(Delivery categoryResponseModel) {
         //getDeliveryBuySentence();
-        deliveryDataArrayList.clear();
-        deliveryDataArrayList.addAll(categoryResponseModel.getData().getDelivery_charges());
+       // deliveryDataArrayList.clear();
+        //deliveryDataArrayList.addAll(categoryResponseModel.getData().getDelivery_charges());
         SuperLifeSecretPreferences.getInstance().setDeliveryChargesList(deliveryDataArrayList);
-        deliveryAapter.notifyDataSetChanged();
+        //deliveryAapter.notifyDataSetChanged();
         discountArrayList.clear();
         discountArrayList.addAll(categoryResponseModel.getData().getDiscounts());
         discountAapter.notifyDataSetChanged();

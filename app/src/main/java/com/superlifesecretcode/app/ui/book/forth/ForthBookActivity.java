@@ -53,6 +53,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     private UserDetailResponseData userData;
     ImageView back_image;
     TextView textview_total, textview_total_price, textview_next;
+    TextView textview_sub_total, textview_sub_total_price, textview_delivery, textview_delivery_price;
     TextView textview_noaddressfound;
     String total_amont;
     int printing_status = 1;
@@ -70,6 +71,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     String no = "";
     private TextView textViewDeliveryAtDest;
     private int qty;
+    boolean moveToNext = true;
+    private String message;
 
     @Override
     protected int getContentView() {
@@ -121,6 +124,10 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         back_image = findViewById(R.id.back_image);
         textview_total = findViewById(R.id.textview_total);
         textview_total_price = findViewById(R.id.textview_total_price);
+        textview_sub_total = findViewById(R.id.textview_sub_total);
+        textview_sub_total_price = findViewById(R.id.textview_sub_total_price);
+        textview_delivery = findViewById(R.id.textview_delivery_charges);
+        textview_delivery_price = findViewById(R.id.textview_delivery_charges_price);
         textview_next = findViewById(R.id.textview_next);
         textview_noaddressfound = findViewById(R.id.textview_noaddressfound);
         edittext_contact_number = findViewById(R.id.edittext_contact_number);
@@ -154,10 +161,11 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         edittext_emailid.setText(userData.getEmail());
         edittext_contact_number.setText(userData.getMobile());
         try {
-            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
+            textview_sub_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(total_amont)));
         } catch (Exception e) {
-            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
+            textview_sub_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + total_amont);
         }
+        moveToNext = true;
         setUpConversion();
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +255,10 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                     }
                 }
                 if (SuperLifeSecretPreferences.getInstance().getString("book_designated_type").equals("3")) {
+                    if (!moveToNext) {
+                        showNoDeliveryMessage(message);
+                        return;
+                    }
                     if (stateId == null || stateId.isEmpty()) {
                         CommonUtils.showToast(ForthBookActivity.this, conversionData.getSelect_state());
                         return;
@@ -266,9 +278,10 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                         return;
                     }
 
-                    getDeliveryCharges();
-                    return;
+                    //  getDeliveryCharges();
+                    //return;
                 }
+
                 SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
                 SuperLifeSecretPreferences.getInstance().putString("book_full_name", fullname);
                 SuperLifeSecretPreferences.getInstance().putString("book_mobile", contact_number);
@@ -375,6 +388,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 } else {
                     textview_noaddressfound.setVisibility(View.GONE);
                 }
+                moveToNext = true;
+                resetTotal();
             }
         });
 
@@ -392,6 +407,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 linear_address.setVisibility(View.GONE);
                 add_address_Layout.setVisibility(View.GONE);
                 textview_noaddressfound.setVisibility(View.GONE);
+                moveToNext = true;
+                resetTotal();
             }
         });
 
@@ -409,6 +426,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 linear_address.setVisibility(View.GONE);
                 add_address_Layout.setVisibility(View.VISIBLE);
                 recyclerview_address.setVisibility(View.VISIBLE);
+                getDeliveryCharges();
                /* if (oldAddressList.size() == 0) {
                     textview_noaddressfound.setVisibility(View.VISIBLE);
                 } else {
@@ -442,9 +460,43 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         String stack2 = SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no");
         if (stack2 != null) {
             if (Integer.parseInt(stack2) >= 4) {
+                String delivery_charges_destination = SuperLifeSecretPreferences.getInstance().getString("delivery_charges_destination");
+                if (delivery_charges_destination != null && !delivery_charges_destination.isEmpty()) {
+                    try {
+                        textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", 0.00));
+                    } catch (Exception e) {
+                        textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + 0.00);
+                    }
+
+                    double totalCost = Double.parseDouble(total_amont) + 0.00;
+                    try {
+                        textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", totalCost));
+                    } catch (Exception e) {
+                        textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + totalCost);
+                    }
+                }
                 CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);
+            } else {
+                resetTotal();
             }
+        } else {
+            resetTotal();
         }
+    }
+
+    private void resetTotal() {
+        try {
+            textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", 0.0));
+        } catch (Exception e) {
+            textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + 0.00);
+        }
+        double totalCost = Double.parseDouble(total_amont) + 0.00;
+        try {
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", totalCost));
+        } catch (Exception e) {
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + totalCost);
+        }
+        SuperLifeSecretPreferences.getInstance().putString("delivery_charges_destination", "0");
     }
 
     public void showAlert() {
@@ -538,6 +590,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 }
                 countryStatePicker.dismiss();
                 stateId = country.getId();
+                getDeliveryCharges();
             }
         }, data);
         countryStatePicker.show();
@@ -558,14 +611,27 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
 
     @Override
     public void setDeliveryCost(String delivery_charges) {
-        String contact_number = edittext_contact_number.getText().toString();
+        moveToNext = true;
+        try {
+            textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", Double.parseDouble(delivery_charges)));
+        } catch (Exception e) {
+            textview_delivery_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + delivery_charges);
+        }
+
+        double totalCost = Double.parseDouble(total_amont) + Double.parseDouble(delivery_charges);
+        try {
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + String.format(Locale.getDefault(), "%,.2f", totalCost));
+        } catch (Exception e) {
+            textview_total_price.setText("" + SuperLifeSecretPreferences.getInstance().getString("book_currency") + " " + totalCost);
+        }
+      /*  String contact_number = edittext_contact_number.getText().toString();
         String email = edittext_emailid.getText().toString();
         String fullname = edittext_fullname.getText().toString();
         String other_person_name = edittext_other_person_name.getText().toString();
-        String other_person_contactno = edittext_otehr_person_mobile.getText().toString();
+        String other_person_contactno = edittext_otehr_person_mobile.getText().toString();*/
         SuperLifeSecretPreferences.getInstance().putString("delivery_charges_destination", "" + delivery_charges);
 
-        SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
+      /*  SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
         SuperLifeSecretPreferences.getInstance().putString("book_full_name", fullname);
         SuperLifeSecretPreferences.getInstance().putString("book_mobile", contact_number);
         SuperLifeSecretPreferences.getInstance().putString("book_email", email);
@@ -578,12 +644,13 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
 
         SuperLifeSecretPreferences.getInstance().putString("city_name", edittext_city.getText().toString());
         SuperLifeSecretPreferences.getInstance().putString("state_name", edittext_state.getText().toString());
-        CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);
+        CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);*/
     }
 
     @Override
     public void showNoDeliveryMessage(String message) {
-
+        moveToNext = false;
+        this.message = message;
         CommonUtils.showAlert(this, message, conversionData.getOk(), null, new AlertDialog.OnClickListner() {
             @Override
             public void onPositiveClick() {
@@ -631,7 +698,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             edittext_postcode.setHint(conversionData.getEnter_postcode());
             edittext_state.setHint(conversionData.getSelect_state());
             edittext_city.setHint(conversionData.getSelect_city());
-
+            textview_sub_total.setText(conversionData.getSubtotal());
+            textview_delivery.setText(conversionData.getDelivery_charges());
             textview_other_person_name.setText(conversionData.getOther_person());
             textview_other_person_mobile.setText(conversionData.getOther_mobile());
             edittext_other_person_name.setHint(conversionData.getEnter_other_person());
@@ -665,6 +733,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     }
 
     private void getDeliveryCharges() {
+        if (stateId == null || stateId.isEmpty()) {
+            return;
+        }
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> param = new HashMap<>();
