@@ -105,9 +105,9 @@ public class CommonUtils {
         activity.startActivity(new Intent(activity, clazz));
     }
 
-    public static Spanned getColorfulText(KpiActivity kpiActivity, String s, Color colorId ) {
-        String send = "<font color="+ colorId+">" +s+" </font> ";
-        return  Html.fromHtml(send);
+    public static Spanned getColorfulText(KpiActivity kpiActivity, String s, Color colorId) {
+        String send = "<font color=" + colorId + ">" + s + " </font> ";
+        return Html.fromHtml(send);
     }
 
     public static void startActivity(AppCompatActivity activity, Class c, Bundle bundle, boolean clearTop) {
@@ -553,5 +553,13 @@ public class CommonUtils {
         }
         return "";
 
+    }
+
+
+    public static String getCurrentDateFormatted() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat(ConstantLib.OUTPUT_DATE_FORMATE, Locale.getDefault());
+        String formattedDate = df.format(c);
+        return formattedDate;
     }
 }

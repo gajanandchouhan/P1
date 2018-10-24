@@ -654,6 +654,7 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="@drawable/edittext_round"
+                            android:digits="1234567890"
                             android:fontFamily="@font/reguler"
                             android:hint="Enter Postcode"
                             android:inputType="number"
@@ -704,10 +705,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:paddingLeft="@dimen/_23sdp"
-        android:paddingRight="@dimen/_23sdp"
         android:background="#eee9e9"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/_23sdp"
+        android:paddingRight="@dimen/_23sdp">
 
         <TextView
             android:id="@+id/textview_sub_total"
@@ -736,10 +737,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:paddingLeft="@dimen/_23sdp"
-        android:paddingRight="@dimen/_23sdp"
         android:background="#eee9e9"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/_23sdp"
+        android:paddingRight="@dimen/_23sdp">
 
         <TextView
             android:id="@+id/textview_delivery_charges"
@@ -768,10 +769,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:paddingLeft="@dimen/_23sdp"
-        android:paddingRight="@dimen/_23sdp"
         android:background="#eee9e9"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/_23sdp"
+        android:paddingRight="@dimen/_23sdp">
 
         <TextView
             android:id="@+id/textview_total"

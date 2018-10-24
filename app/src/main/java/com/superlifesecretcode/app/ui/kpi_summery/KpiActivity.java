@@ -20,6 +20,7 @@ import com.superlifesecretcode.app.ui.news.NewsActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,8 +43,9 @@ public class KpiActivity extends BaseActivity implements KpiView {
     ArrayList<StudySharingBean> studylist;
     ArrayList<StudySharingBean> onSiteSharing;
     RelativeLayout relative_news, relative_event, raletive_dailyactivity, relative_sharing;
-    ImageView iv_sharing , back_image;
+    ImageView iv_sharing, back_image;
     String send;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_kpi;
@@ -170,18 +172,18 @@ public class KpiActivity extends BaseActivity implements KpiView {
     @Override
     public void getKpiSummeryData(KPI kpi) {
 
-        if (kpi.getData().getCountry_activities().getStudy_groups().size()==0){
+        if (kpi.getData().getCountry_activities().getStudy_groups().size() == 0) {
             tv_study_group.setVisibility(View.GONE);
             recyclerview_stydy_group.setVisibility(View.GONE);
-        }else {
+        } else {
             tv_study_group.setVisibility(View.VISIBLE);
             recyclerview_stydy_group.setVisibility(View.VISIBLE);
         }
 
-        if (kpi.getData().getCountry_activities().getOn_site_sharing().size()==0){
+        if (kpi.getData().getCountry_activities().getOn_site_sharing().size() == 0) {
             tv_onsite_sharing.setVisibility(View.GONE);
             recyclerview_onsitesharing.setVisibility(View.GONE);
-        }else {
+        } else {
             tv_onsite_sharing.setVisibility(View.VISIBLE);
             recyclerview_onsitesharing.setVisibility(View.VISIBLE);
         }
@@ -193,8 +195,15 @@ public class KpiActivity extends BaseActivity implements KpiView {
         onSiteSharing.clear();
         onSiteSharing.addAll(kpi.getData().getCountry_activities().getOn_site_sharing());
         summeryAapter2.notifyDataSetChanged();
+        String languageId = SuperLifeSecretPreferences.getInstance().getLanguageId();
+        if (languageId.equals(ConstantLib.LANGUAGE_ENGLISH)) {
+            send = userData.getUsername()+" has earned " + kpi.getData().getDaily_activities().getPoints() + " point(s) as of "+CommonUtils.getCurrentDateFormatted();
+        } else if (languageId.equals(ConstantLib.LANGUAGE_TRADITIONAL)) {
+            send = userData.getUsername()+" 截至在這個日期 " +CommonUtils.getCurrentDateFormatted()+" 已獲得 "+kpi.getData().getDaily_activities().getPoints()+"分了";
+        } else if (languageId.equals(ConstantLib.LANGUAGE_SIMPLIFIED)) {
+            send = userData.getUsername()+" 截至在这个日期 " +CommonUtils.getCurrentDateFormatted()+" 已获得 "+kpi.getData().getDaily_activities().getPoints()+"分了";
+        }
 
-        send = "I have earned "+ kpi.getData().getDaily_activities().getPoints()+" ";
 
         tv_totalpoint_count.setText(kpi.getData().getDaily_activities().getPoints());
         tv_done_count.setText(kpi.getData().getDaily_activities().getCompleted());
