@@ -556,9 +556,9 @@ public class CommonUtils {
     }
 
 
-    public static String getCurrentDateFormatted() {
+    public static String getCurrentDateFormatted(Locale locale) {
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat(ConstantLib.OUTPUT_DATE_FORMATE, Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("dd/MMMM, yyyy", locale);
         String formattedDate = df.format(c);
         return formattedDate;
     }

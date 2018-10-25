@@ -24,6 +24,7 @@ import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class KpiActivity extends BaseActivity implements KpiView {
@@ -197,11 +198,11 @@ public class KpiActivity extends BaseActivity implements KpiView {
         summeryAapter2.notifyDataSetChanged();
         String languageId = SuperLifeSecretPreferences.getInstance().getLanguageId();
         if (languageId.equals(ConstantLib.LANGUAGE_ENGLISH)) {
-            send = userData.getUsername()+" has earned " + kpi.getData().getDaily_activities().getPoints() + " point(s) as of "+CommonUtils.getCurrentDateFormatted();
+            send = userData.getUsername() + " has earned " + kpi.getData().getDaily_activities().getPoints() + " point(s) as of " + CommonUtils.getCurrentDateFormatted(Locale.getDefault());
         } else if (languageId.equals(ConstantLib.LANGUAGE_TRADITIONAL)) {
-            send = userData.getUsername()+" 截至在這個日期 " +CommonUtils.getCurrentDateFormatted()+" 已獲得 "+kpi.getData().getDaily_activities().getPoints()+"分了";
+            send = userData.getUsername() + " 截至在這個日期 " + CommonUtils.getCurrentDateFormatted(Locale.TRADITIONAL_CHINESE) + " 已獲得 " + kpi.getData().getDaily_activities().getPoints() + "分了";
         } else if (languageId.equals(ConstantLib.LANGUAGE_SIMPLIFIED)) {
-            send = userData.getUsername()+" 截至在这个日期 " +CommonUtils.getCurrentDateFormatted()+" 已获得 "+kpi.getData().getDaily_activities().getPoints()+"分了";
+            send = userData.getUsername() + " 截至在这个日期 " + CommonUtils.getCurrentDateFormatted(Locale.SIMPLIFIED_CHINESE) + " 已获得 " + kpi.getData().getDaily_activities().getPoints() + "分了";
         }
 
 

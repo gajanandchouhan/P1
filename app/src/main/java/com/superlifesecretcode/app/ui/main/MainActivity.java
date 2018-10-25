@@ -64,6 +64,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
@@ -91,10 +94,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private TextView textViewTitle;
     private ImageView viewSummeryKPI;
     private Animation myAnim;
+    private Timer timer;
+    private Handler handler;
+    int[] rainbow;
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     @Override
@@ -104,6 +113,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void initializeView() {
+        rainbow = getResources().getIntArray(R.array.rainbow);
         userDetailResponseData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
         setUpToolbar();
@@ -528,15 +538,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                viewSummeryKPI.setColorFilter(Color.argb(255, 255, 255, 255)); // White Tint
-                viewSummeryKPI.animate().rotation(180);
+                viewSummeryKPI.setColorFilter(getRandomColor()); // White Tint
+                viewSummeryKPI.animate().rotation(viewSummeryKPI.getRotation() + 360).setDuration(2000);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                viewSummeryKPI.startAnimation(myAnim);
             }
         });
+
+        handler = new Handler();
+        timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @SuppressWarnings("unchecked")
+                    public void run() {
+                        try {
+                            viewSummeryKPI.startAnimation(myAnim);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 10000);
     }
 
     class MyBounceInterpolator implements android.view.animation.Interpolator {
@@ -929,5 +959,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-
+    public int getRandomColor() {
+        int randomAndroidColor = rainbow[new Random().nextInt(rainbow.length)];
+        return randomAndroidColor;
+    }
 }

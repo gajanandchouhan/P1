@@ -200,7 +200,7 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
                     countryStatePicker.dismiss();
                     isLoadMore = false;
                     nextPage = 1;
-                    getAllLatestShare(0);
+                    getAllLatestShare(nextPage);
                 }
             }, data);
             countryStatePicker.show();
