@@ -68,13 +68,13 @@
                     android:id="@+id/textView_city_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/reguler"
-                    android:text="City,State"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginRight="@dimen/_2sdp"
                     android:layout_toLeftOf="@+id/textView_time"
                     android:layout_toStartOf="@+id/textView_time"
+                    android:fontFamily="@font/reguler"
+                    android:text="City,State"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_11sdp" />
 
@@ -103,9 +103,9 @@
                 android:id="@+id/textView_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autoLink="all"
                 android:fontFamily="@font/reguler"
                 android:text="Description"
-                android:autoLink="all"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/_13sdp" />
 
@@ -152,6 +152,7 @@
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/imageView_contact"
                     android:layout_toRightOf="@+id/imageView_contact"
+                    android:autoLink="all"
                     android:ellipsize="end"
                     android:fontFamily="@font/bold"
                     android:text="Name"
@@ -180,6 +181,7 @@
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/imageView_email"
                     android:layout_toRightOf="@+id/imageView_email"
+                    android:autoLink="all"
                     android:ellipsize="end"
                     android:fontFamily="@font/reguler"
                     android:text="xyz@mailinator.com"
@@ -221,9 +223,9 @@
 
             <ImageView
                 android:id="@+id/imageView_map"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_80sdp" />
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_10sdp" />
 
             <RelativeLayout
                 android:id="@+id/button_interested"

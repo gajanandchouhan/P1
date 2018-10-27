@@ -260,7 +260,7 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
     protected void onResume() {
         super.onResume();
         bookArrayList = SuperLifeSecretPreferences.getInstance().getSelectedBooksList();
-        if (CommonUtils.book_stake == true) {
+        if (CommonUtils.book_stake) {
             finish();
         }
     }
@@ -315,8 +315,8 @@ public class SecondBookActivity extends BaseActivity implements SecondBookView {
             textview_next.setText(conversionData.getNext());
 //            select_book = conversionData.getSelect_book();
             enter_amount = conversionData.getEnter_amount();
-            textview_totalamount.setText(conversionData.getEnter_amount());
-            edittext_enteramount.setHint(conversionData.getEnter_amount());
+            textview_totalamount.setText(conversionData.getAmount());
+            edittext_enteramount.setHint(conversionData.getAmount());
             textview_delivery_charges.setText(conversionData.getDelivery_charges());
             if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("2")) {
                 textview_printbybookquality.setText(conversionData.getPrint_by_quantity());
