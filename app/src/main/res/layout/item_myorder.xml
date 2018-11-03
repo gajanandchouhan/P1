@@ -121,15 +121,33 @@
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_10sdp" />
 
-                            <TextView
-                                android:id="@+id/textview_status"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/reguler"
-                                android:text="$32"
-                                android:textColor="@color/red_bg"
-                                android:textSize="@dimen/_10sdp"
-                                android:textStyle="bold" />
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textview_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/reguler"
+                                    android:text="$32"
+                                    android:textColor="@color/red_bg"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/text_view_reason"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_2sdp"
+                                    android:background="@drawable/circle_count_bg"
+                                    android:fontFamily="@font/reguler"
+                                    android:gravity="center"
+                                    android:text="@string/que"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:visibility="gone" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <TextView
@@ -137,10 +155,10 @@
                             android:layout_width="@dimen/_70sdp"
                             android:layout_height="wrap_content"
                             android:background="@color/red_bg"
-                            android:paddingBottom="@dimen/_2sdp"
                             android:paddingLeft="@dimen/_8sdp"
-                            android:paddingRight="@dimen/_8sdp"
                             android:paddingTop="@dimen/_2sdp"
+                            android:paddingRight="@dimen/_8sdp"
+                            android:paddingBottom="@dimen/_2sdp"
                             android:text="View Detail"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/_10sdp" />

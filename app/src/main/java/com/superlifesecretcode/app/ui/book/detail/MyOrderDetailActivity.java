@@ -32,6 +32,7 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.book.five.BigReceiptAapter;
 import com.superlifesecretcode.app.ui.book.five.FifthBookActivity;
 import com.superlifesecretcode.app.ui.book.forth.ForthBookActivity;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
@@ -64,6 +65,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
     TextView tv_bank_name, bank_name, tv_account_no, account_no;
     TextView tv_payment_mode, payment_mode, tv_payment_date, payment_date;
     TextView tv_email, email, tv_contactno, contacno, total_cut;
+    private TextView textViewReason;
+    private String reason;
 
     @Override
     protected int getContentView() {
@@ -128,6 +131,8 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
         other_person_name_dialog = findViewById(R.id.other_person_name_dialog);
         tv_other_person_mobile_dialog = findViewById(R.id.tv_other_person_mobile_dialog);
         other_person_mobile_dialog = findViewById(R.id.other_person_mobile_dialog);
+        textViewReason = findViewById(R.id.text_view_reason);
+
 
         bookArrayList = new ArrayList<>();
         receipts = new ArrayList<>();
@@ -146,6 +151,29 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        textViewReason.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (reason != null)
+                    showReasonAlert(reason);
+
+            }
+        });
+    }
+
+    private void showReasonAlert(String reason) {
+        CommonUtils.showAlert(this, reason, SuperLifeSecretPreferences.getInstance().getConversionData().getOk(), null, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
             }
         });
     }
@@ -183,6 +211,7 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
             bookAapterDetail.notifyDataSetChanged();
             if (newsResponseModel != null) {
                 OrderBean orderBean = newsResponseModel.getData().getOrder();
+                reason = newsResponseModel.getData().getReason();
                 if (orderBean != null) {
                     order_id.setText(orderBean.getOrder_code());
                     if (orderBean.getDelevery_type().equals("1")) {
@@ -223,10 +252,13 @@ public class MyOrderDetailActivity extends BaseActivity implements MyOrderDetail
                         linear_other_person_mobile.setVisibility(View.GONE);
                     }
                     if (orderBean.getOrder_status().equals("1")) {
+                        textViewReason.setVisibility(View.GONE);
                         order_status.setText(conversionData.getPending());
                     } else if (orderBean.getOrder_status().equals("2")) {
                         order_status.setText(conversionData.getSuccess());
+                        textViewReason.setVisibility(View.GONE);
                     } else {
+                        textViewReason.setVisibility(View.VISIBLE);
                         order_status.setText(conversionData.getDeclined());
                     }
                     bank_name.setText(orderBean.getBank_name());

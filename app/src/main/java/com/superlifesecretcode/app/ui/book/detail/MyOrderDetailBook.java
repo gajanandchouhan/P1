@@ -8,6 +8,15 @@ public class MyOrderDetailBook{
     ArrayList<Book> books;
     String total_amount;
     ArrayList<Receipt> receipts;
+    private String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public OrderBean getOrder() {
         return order;

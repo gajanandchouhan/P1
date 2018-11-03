@@ -608,6 +608,18 @@
                             android:text=""
                             android:textColor="@color/red_bg"
                             android:textSize="@dimen/_10sdp" />
+                        <TextView
+                            android:id="@+id/text_view_reason"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_2sdp"
+                            android:background="@drawable/circle_count_bg"
+                            android:fontFamily="@font/reguler"
+                            android:gravity="center"
+                            android:text="@string/que"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_11sdp"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
@@ -49,10 +50,19 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
 
         holder.textview_orderid.setText(orderArrayList.get(position).getOrder_code());
         if (orderArrayList.get(position).getOrder_status().equals("1")){
+            holder.textViewReason.setVisibility(View.GONE);
             holder.textview_status.setText(languageResponseData.getPending());
+            holder.textViewReason.setVisibility(View.GONE);
         }else if (orderArrayList.get(position).getOrder_status().equals("2")){
             holder.textview_status.setText(languageResponseData.getSuccess());
         }else {
+            holder.textViewReason.setVisibility(View.VISIBLE);
+            holder.textViewReason.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showReasonAlert(orderArrayList.get(position).getReason());
+                }
+            });
             holder.textview_status.setText(languageResponseData.getDeclined());
         }
         holder.textview_date.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_TIME_FORMATE, "dd MMMM, yyyy hh:mm a", orderArrayList.get(position).getOrder_date() + " " + orderArrayList.get(position).getOrder_time(), true, "utc"));
@@ -70,6 +80,22 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
                 bookListener.onClickDetail(orderArrayList.get(position).getOrder_id());
             }
         });
+
+
+    }
+
+    private void showReasonAlert(String reason) {
+        CommonUtils.showAlert(orderBookActivity, reason, SuperLifeSecretPreferences.getInstance().getConversionData().getOk(), null, new AlertDialog.OnClickListner() {
+            @Override
+            public void onPositiveClick() {
+
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
     }
 
     @Override
@@ -80,7 +106,7 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView textview_orderid , textview_amount , textview_date , textview_status , textview_detail;
-        TextView order_id , amount , date , status;
+        TextView order_id , amount , date , status,textViewReason;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -89,6 +115,7 @@ public class OrderBookAdapter extends RecyclerView.Adapter<OrderBookAdapter.Item
             textview_date = itemView.findViewById(R.id.textview_date);
             textview_status = itemView.findViewById(R.id.textview_status);
             textview_detail = itemView.findViewById(R.id.textview_detail);
+            textViewReason = itemView.findViewById(R.id.text_view_reason);
 
             order_id = itemView.findViewById(R.id.order_id);
             amount = itemView.findViewById(R.id.amount);

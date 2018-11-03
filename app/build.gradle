@@ -62,7 +62,7 @@ android {
         }
         staging {
             buildConfigField "String", 'BASE_URL', '"http://52.24.209.230/api/"'
-            buildConfigField "boolean", 'showLog', 'false'
+            buildConfigField "boolean", 'showLog', 'true'
         }
     }
 }

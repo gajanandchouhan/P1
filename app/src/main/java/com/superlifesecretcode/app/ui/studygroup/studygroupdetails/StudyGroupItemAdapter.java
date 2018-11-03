@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.ui.studygroup.studygroupdetails;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -108,8 +110,16 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
                     CommonUtils.startActivity((AppCompatActivity) mContext, AudioPlayerActivity.class, bundle, false);
                 } else if (studyGroupItemData.getItem_type_id().equals(ConstantLib.TYPE_VIDEO_ITEM)) {
                     bundle.putString("video", studyGroupItemData.getItem_url());
-
-                    if (Patterns.WEB_URL.matcher(studyGroupItemData.getItem_url()).matches()) {
+                    if (isValidUrl(studyGroupItemData.getItem_url())){
+                        bundle.putString("title", studyGroupItemData.getItem_title());
+                        bundle.putBoolean("is_link", true);
+                        bundle.putString("url", studyGroupItemData.getItem_url());
+                        bundle.putString("content", studyGroupItemData.getItem_html_text());
+                        CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
+                    }else{
+                        CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
+                    }
+                  /*  if (Patterns..matcher(studyGroupItemData.getItem_url()).matches()) {
                         CommonUtils.startActivity((AppCompatActivity) mContext, VideoPlayerActivity.class, bundle, false);
                     }else {
                         bundle.putString("title", studyGroupItemData.getItem_title());
@@ -117,7 +127,7 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
                         bundle.putString("url", studyGroupItemData.getItem_url());
                         bundle.putString("content", studyGroupItemData.getItem_html_text());
                         CommonUtils.startActivity((AppCompatActivity) mContext, WebViewActivity.class, bundle, false);
-                    }
+                    }*/
                 } else {
                     bundle.putString("title", studyGroupItemData.getItem_title());
                     bundle.putBoolean("is_link", studyGroupItemData.getItem_type_id().equalsIgnoreCase(ConstantLib.TYPE_WEB_LINK));
@@ -129,5 +139,24 @@ public class StudyGroupItemAdapter extends RecyclerView.Adapter<StudyGroupItemAd
                 ((StudyGroupDetailsActivity) mContext).showAlertSubscriptionStatus();
             }
         }
+    }
+    private boolean isValidUrl(String url) {
+
+        if (url == null) {
+            return false;
+        }
+        if (URLUtil.isValidUrl(url)) {
+            // Check host of url if youtube exists
+            Uri uri = Uri.parse(url);
+            if ("www.youtube.com".equals(uri.getHost())) {
+                return true;
+            }
+            // Other way You can check into url also like
+            //if (url.startsWith("https://www.youtube.com/")) {
+            //return true;
+            //}
+        }
+        // In other any case
+        return false;
     }
 }

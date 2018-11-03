@@ -3,6 +3,15 @@ package com.superlifesecretcode.app.ui.book.myorder_book;
 public class Order {
 
     String order_id, order_code, book_type, order_for, total_amount, order_date, order_time, order_status;
+    String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public String getOrder_id() {
         return order_id;
