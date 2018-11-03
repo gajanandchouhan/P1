@@ -17,7 +17,15 @@ public class BookBean implements Serializable{
     ArrayList<Discount> discount;
     boolean expand_collapase = false;
     boolean is_discounted = false;
+    private String include_delivery_charges;
 
+    public String getInclude_delivery_charges() {
+        return include_delivery_charges;
+    }
+
+    public void setInclude_delivery_charges(String include_delivery_charges) {
+        this.include_delivery_charges = include_delivery_charges;
+    }
 
     public boolean isIs_discounted() {
         return is_discounted;

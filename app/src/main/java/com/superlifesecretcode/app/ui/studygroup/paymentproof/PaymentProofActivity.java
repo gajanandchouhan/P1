@@ -181,7 +181,7 @@ public class PaymentProofActivity extends BaseActivity implements PaymentProofVi
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-        paymentProfPresenter.getBankList(headers);
+        paymentProfPresenter.getBankList(headers,"3");
 
 
         textview_back.setOnClickListener(new View.OnClickListener() {

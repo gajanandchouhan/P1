@@ -31,7 +31,7 @@ public class PaymentProfPresenter extends BasePresenter<PaymentProofView> {
     }
 
 
-    public void getBankList(Map<String, String> headers) {
+    public void getBankList(Map<String, String> headers,String type) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -60,7 +60,7 @@ public class PaymentProfPresenter extends BasePresenter<PaymentProofView> {
                 CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
 
             }
-        },headers,"","");
+        },headers,type,"");
     }
 
     public void subscribePlan(RequestBody finalRequestBody, Map<String, String> headers) {

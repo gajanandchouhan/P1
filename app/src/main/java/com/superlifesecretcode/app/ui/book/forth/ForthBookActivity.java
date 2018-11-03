@@ -73,6 +73,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
     private int qty;
     boolean moveToNext = true;
     private String message;
+    private double totalCostForDelivery;
 
     @Override
     protected int getContentView() {
@@ -301,6 +302,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
 
         for (int i = 0; i < bookBeanArrayList.size(); i++) {
             qty = qty + bookBeanArrayList.get(i).getQuantity();
+            if (bookBeanArrayList.get(i).getInclude_delivery_charges()!=null&&bookBeanArrayList.get(i).getInclude_delivery_charges().equals("1")){
+                totalCostForDelivery=totalCostForDelivery+(bookBeanArrayList.get(i).getPrice_after_discount()*qty);
+            }
         }
         SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
         SuperLifeSecretPreferences.getInstance().putString("book_designated_type", "");
@@ -740,7 +744,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         HashMap<String, String> param = new HashMap<>();
         param.put("state_id", stateId);
-        param.put("amount", total_amont);
+        param.put("amount", String.valueOf(totalCostForDelivery));
         param.put("qty", String.valueOf(qty));
         forthBookPresneter.getDeliveryCharges(param, headers);
     }
