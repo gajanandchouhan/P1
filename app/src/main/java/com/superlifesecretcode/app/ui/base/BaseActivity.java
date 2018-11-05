@@ -10,28 +10,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.inscripts.interfaces.Callbacks;
-import com.inscripts.interfaces.LaunchCallbacks;
-import com.superlifesecretcode.app.R;
-import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
-import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.picker.AlertDialog;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.MyLocationManager;
 import com.superlifesecretcode.app.util.PermissionConstant;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cometchat.inscripts.com.cometchatcore.coresdk.CometChat;
-import utils.CCNotificationHelper;
 
 /**
  * Created by Divya on 21-02-2018.
@@ -166,7 +153,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     protected abstract void initializePresenter();
 
-    protected void createCometChatUser(String name, final String uid) {
+    /*protected void createCometChatUser(String name, final String uid) {
         CometChat cometChatInstance = SuperLifeSecretCodeApp.getCometChatInstance();
         if (cometChatInstance == null) {
             CommonUtils.showToast(this, getString(R.string.server_error));
@@ -279,7 +266,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
                 Log.v("COMET CHAT", "onLogout");
             }
         });
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
