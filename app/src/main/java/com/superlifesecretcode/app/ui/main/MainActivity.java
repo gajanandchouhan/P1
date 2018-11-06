@@ -154,7 +154,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         viewNotifcation.setVisibility(View.VISIBLE);
         viewNotifcation.setOnClickListener(this);
         viewSummeryKPI = findViewById(R.id.imageView_summery);
-        viewSummeryKPI.setVisibility(View.VISIBLE);
+        viewSummeryKPI.setVisibility(View.GONE);
         viewSummeryKPI.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
