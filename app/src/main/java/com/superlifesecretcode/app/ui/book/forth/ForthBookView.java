@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.book.forth;
 
+import com.superlifesecretcode.app.data.model.collectiontypes.CollectionTypeData;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.ui.base.BaseView;
 
@@ -16,4 +17,6 @@ public interface ForthBookView extends BaseView{
     void setDeliveryCost(String delivery_charges);
 
     void showNoDeliveryMessage(String message);
+
+    void setCollectionTypes(List<CollectionTypeData> data);
 }

@@ -5,6 +5,7 @@ import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
 import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
+import com.superlifesecretcode.app.data.model.collectiontypes.CollectionTypeResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityDetailResponseModel;
@@ -398,4 +399,9 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("doneActivity")
     Observable<BaseResponseModel> updateCompleteStatus(@PartMap() Map<String, RequestBody> stringMultipartParamsParams, @HeaderMap Map<String, String> header);
+
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @GET("collections")
+    Observable<CollectionTypeResponseModel> getCollectionTypes(@HeaderMap Map<String, String> headers);
+
 }

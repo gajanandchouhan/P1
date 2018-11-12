@@ -8,6 +8,7 @@ import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
 import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
+import com.superlifesecretcode.app.data.model.collectiontypes.CollectionTypeResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivitiesResponseModel;
 import com.superlifesecretcode.app.data.model.countryactivities.CountryActivityDetailResponseModel;
@@ -547,6 +548,13 @@ public class ApiController implements RequestType {
                 getkpisummeryObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<KPI>(handler));
+                break;
+
+            case REQ_GET_COLLECTION_TYPES:
+                Observable<CollectionTypeResponseModel> collectionTypeObservable = apiInterface.getCollectionTypes(headers);
+                collectionTypeObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CollectionTypeResponseModel>(handler));
                 break;
         }
 

@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.book.forth;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.collectiontypes.CollectionTypeResponseModel;
 import com.superlifesecretcode.app.data.model.country.CountryResponseModel;
 import com.superlifesecretcode.app.data.model.deliverycost.DeliveryCostReponseModel;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
@@ -155,6 +156,7 @@ public class ForthBookPresneter extends BasePresenter<ForthBookView> {
             }
         }, requestBody);
     }
+
     public void getDeliveryCharges(HashMap<String, String> params, Map<String, String> headers) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
@@ -186,5 +188,36 @@ public class ForthBookPresneter extends BasePresenter<ForthBookView> {
 
             }
         }, params, headers);
+    }
+
+
+    public void getCollectionTypes(Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_COLLECTION_TYPES, new ResponseHandler<CollectionTypeResponseModel>() {
+            @Override
+            public void onResponse(CollectionTypeResponseModel collectionTypeResponseModel) {
+                view.hideProgress();
+                if (collectionTypeResponseModel != null) {
+                    if (collectionTypeResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS))
+                        view.setCollectionTypes(collectionTypeResponseModel.getData());
+                    else {
+                        CommonUtils.showSnakeBar(mContext, collectionTypeResponseModel.getMessage());
+                    }
+                } else {
+                    CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                }
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+            }
+        }, headers, null, null);
     }
 }

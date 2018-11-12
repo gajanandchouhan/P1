@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.collectiontypes.CollectionTypeData;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -102,7 +103,6 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
         forthBookPresneter.getOldAddresses(headers);
-
         linear_print_for_own = findViewById(R.id.linear_print_for_own);
         linear_print_onBehalf = findViewById(R.id.linear_print_onBehalf);
         textview_print_for_own = findViewById(R.id.textview_print_for_own);
@@ -302,8 +302,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
 
         for (int i = 0; i < bookBeanArrayList.size(); i++) {
             qty = qty + bookBeanArrayList.get(i).getQuantity();
-            if (bookBeanArrayList.get(i).getInclude_delivery_charges()!=null&&bookBeanArrayList.get(i).getInclude_delivery_charges().equals("1")){
-                totalCostForDelivery=totalCostForDelivery+(bookBeanArrayList.get(i).getPrice_after_discount()*qty);
+            if (bookBeanArrayList.get(i).getInclude_delivery_charges() != null && bookBeanArrayList.get(i).getInclude_delivery_charges().equals("1")) {
+                totalCostForDelivery = totalCostForDelivery + (bookBeanArrayList.get(i).getPrice_after_discount() * qty);
             }
         }
         SuperLifeSecretPreferences.getInstance().putString("status_old_store_address", "0");
@@ -486,6 +486,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         } else {
             resetTotal();
         }
+        textview_designated_location.setVisibility(View.GONE);
+        textViewDeliveryAtDest.setVisibility(View.GONE);
+        textview_other_destribution.setVisibility(View.GONE);
     }
 
     private void resetTotal() {
@@ -580,6 +583,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         } else {
             textview_noaddressfound.setVisibility(View.GONE);
         }
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + userData.getApi_token());
+        forthBookPresneter.getCollectionTypes(headers);
     }
 
     @Override
@@ -667,6 +673,58 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             }
         });
 
+    }
+
+    @Override
+    public void setCollectionTypes(List<CollectionTypeData> data) {
+        if (data != null && data.size() > 0) {
+            if (data.size() == 3) {
+                textview_designated_location.setVisibility(View.VISIBLE);
+                textViewDeliveryAtDest.setVisibility(View.VISIBLE);
+                textview_other_destribution.setVisibility(View.VISIBLE);
+                for (CollectionTypeData datum : data) {
+                    if (datum.getTag() == 1) {
+                        textview_designated_location.setText(datum.getTitle());
+                    } else if (datum.getTag() == 2) {
+                        textview_other_destribution.setText(datum.getTitle());
+                    } else if (datum.getTag() == 3) {
+                        textViewDeliveryAtDest.setText(datum.getTitle());
+                    }
+                }
+
+            } else if (data.size() == 2) {
+                for (CollectionTypeData datum : data) {
+                    if (datum.getTag() == 1) {
+                        textview_designated_location.setVisibility(View.VISIBLE);
+                        textview_designated_location.setText(datum.getTitle());
+                    } else if (datum.getTag() == 2) {
+                        textview_other_destribution.setVisibility(View.VISIBLE);
+                        textview_other_destribution.setText(datum.getTitle());
+                    } else if (datum.getTag() == 3) {
+                        textViewDeliveryAtDest.setVisibility(View.VISIBLE);
+                        textViewDeliveryAtDest.setText(datum.getTitle());
+                    }
+                }
+            }
+            else if (data.size() == 1) {
+                for (CollectionTypeData datum : data) {
+                    if (datum.getTag() == 1) {
+                        textview_designated_location.setVisibility(View.VISIBLE);
+                        textview_designated_location.setText(datum.getTitle());
+                    } else if (datum.getTag() == 2) {
+                        textview_other_destribution.setVisibility(View.VISIBLE);
+                        textview_other_destribution.setText(datum.getTitle());
+                    } else if (datum.getTag() == 3) {
+                        textViewDeliveryAtDest.setVisibility(View.VISIBLE);
+                        textViewDeliveryAtDest.setText(datum.getTitle());
+                    }
+                }
+            }
+        } else {
+            textview_designated_location.setVisibility(View.GONE);
+            textViewDeliveryAtDest.setVisibility(View.GONE);
+            textview_other_destribution.setVisibility(View.GONE);
+        }
     }
 
     private void setUpConversion() {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
+import com.superlifesecretcode.app.data.model.collectiontypes.CollectionTypeData;
 import com.superlifesecretcode.app.data.model.country.CountryResponseData;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
@@ -709,6 +710,11 @@ public class ForthBookActivity2 extends BaseActivity implements ForthBookView {
 
     @Override
     public void showNoDeliveryMessage(String message) {
+
+    }
+
+    @Override
+    public void setCollectionTypes(List<CollectionTypeData> data) {
 
     }
 
