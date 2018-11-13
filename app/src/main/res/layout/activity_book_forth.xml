@@ -420,6 +420,7 @@
                             android:layout_below="@+id/tv_ordertype"
                             android:layout_marginBottom="@dimen/_20sdp"
                             android:layout_marginTop="-28dp"
+                            android:paddingTop="@dimen/_22sdp"
                             android:background="@drawable/round_border"
                             android:orientation="vertical"
                             android:visibility="gone">
@@ -428,14 +429,14 @@
                                 android:id="@+id/textview_delivery_at_dest"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_22sdp"
                                 android:fontFamily="@font/reguler"
                                 android:padding="@dimen/_10sdp"
                                 android:text="Delivery at destination location"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_10sdp" />
 
-                            <LinearLayout
+                            <View
+                                android:id="@+id/divider_dest"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_1sdp"
                                 android:background="@color/colorPrimary"
@@ -451,7 +452,8 @@
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_10sdp" />
 
-                            <LinearLayout
+                            <View
+                                android:id="@+id/divider_desig"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_1sdp"
                                 android:background="@color/colorPrimary"

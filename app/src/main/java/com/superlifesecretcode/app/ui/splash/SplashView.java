@@ -1,5 +1,6 @@
 package com.superlifesecretcode.app.ui.splash;
 
+import com.superlifesecretcode.app.data.model.BaseResponseModel;
 import com.superlifesecretcode.app.ui.base.BaseView;
 
 /**
@@ -8,4 +9,6 @@ import com.superlifesecretcode.app.ui.base.BaseView;
 
 public interface SplashView extends BaseView {
     void navigateToNextScreen();
+
+    void validateVersion(BaseResponseModel baseResponseModel);
 }

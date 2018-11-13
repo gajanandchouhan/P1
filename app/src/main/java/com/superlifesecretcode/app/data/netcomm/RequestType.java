@@ -71,5 +71,6 @@ public interface RequestType {
     byte REQ_GET_KPI_SUMMERY = 61;
     byte REQ_CALCULATE_DELIVERY_COST = 62;
     byte UPDATE_COMPLETE_STATUS = 63;
-    byte REQ_GET_COLLECTION_TYPES=64;
+    byte REQ_GET_COLLECTION_TYPES = 64;
+    byte REQ_VALIDATE_VERSION = 65;
 }

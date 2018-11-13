@@ -8,6 +8,15 @@ public class BaseResponseModel {
     private String status;
     private String message;
     private String already_joined;
+    private String validate;
+
+    public void setValidate(String validate) {
+        this.validate = validate;
+    }
+
+    public String getValidate() {
+        return validate;
+    }
 
     public String getAlready_joined() {
         return already_joined;

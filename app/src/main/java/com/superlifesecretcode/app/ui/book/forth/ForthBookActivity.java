@@ -489,6 +489,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textview_designated_location.setVisibility(View.GONE);
         textViewDeliveryAtDest.setVisibility(View.GONE);
         textview_other_destribution.setVisibility(View.GONE);
+        findViewById(R.id.divider_desig).setVisibility(View.GONE);
+        findViewById(R.id.divider_dest).setVisibility(View.GONE);
     }
 
     private void resetTotal() {
@@ -682,6 +684,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 textview_designated_location.setVisibility(View.VISIBLE);
                 textViewDeliveryAtDest.setVisibility(View.VISIBLE);
                 textview_other_destribution.setVisibility(View.VISIBLE);
+                findViewById(R.id.divider_desig).setVisibility(View.VISIBLE);
+                findViewById(R.id.divider_dest).setVisibility(View.VISIBLE);
                 for (CollectionTypeData datum : data) {
                     if (datum.getTag() == 1) {
                         textview_designated_location.setText(datum.getTitle());
@@ -695,9 +699,11 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
             } else if (data.size() == 2) {
                 for (CollectionTypeData datum : data) {
                     if (datum.getTag() == 1) {
+                        findViewById(R.id.divider_desig).setVisibility(View.VISIBLE);
                         textview_designated_location.setVisibility(View.VISIBLE);
                         textview_designated_location.setText(datum.getTitle());
                     } else if (datum.getTag() == 2) {
+                        findViewById(R.id.divider_dest).setVisibility(View.VISIBLE);
                         textview_other_destribution.setVisibility(View.VISIBLE);
                         textview_other_destribution.setText(datum.getTitle());
                     } else if (datum.getTag() == 3) {

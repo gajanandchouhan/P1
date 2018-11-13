@@ -404,4 +404,8 @@ public interface ApiInterface {
     @GET("collections")
     Observable<CollectionTypeResponseModel> getCollectionTypes(@HeaderMap Map<String, String> headers);
 
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("validateAppVersion")
+    Observable<BaseResponseModel> validateAppversion(@PartMap() Map<String, RequestBody> params);
 }

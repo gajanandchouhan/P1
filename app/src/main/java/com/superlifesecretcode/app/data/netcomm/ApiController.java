@@ -173,7 +173,12 @@ public class ApiController implements RequestType {
                         .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                 break;
 
-
+            case REQ_VALIDATE_VERSION:
+                Observable<BaseResponseModel> validateObservable = apiInterface.validateAppversion(requestParams);
+                validateObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                break;
         }
     }
 

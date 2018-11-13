@@ -557,7 +557,7 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
                                         String dialcode = "";
                                         if (countryCode != null && countryList != null) {
                                             for (int i = 0; i < countryList.size(); i++) {
-                                                if (country_code.equals(countryList.get(i).getCountrycode())) {
+                                                if (country_code.equalsIgnoreCase(countryList.get(i).getCountrycode())) {
                                                     CommonUtils.showLog("location2", "Code is :" + country_code);
                                                     textViewCountry.setText("" + countryList.get(i).getName());
                                                     countryId = countryList.get(i).getId();
@@ -568,7 +568,7 @@ public class RegisterActivityNewFirst extends BaseActivity implements View.OnCli
 
                                                     for (int j = 0; j < Country.getAllCountries().size(); j++) {
                                                         {
-                                                            if (countryList.get(i).getName().equals(Country.getAllCountries().get(j).getName())) {
+                                                            if (countryList.get(i).getName().equalsIgnoreCase(Country.getAllCountries().get(j).getName())) {
                                                                 imageViewFlag.setImageResource(Country.getAllCountries().get(j).getFlag());
                                                                 return;
                                                             }
