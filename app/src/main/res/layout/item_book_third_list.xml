@@ -39,9 +39,10 @@
                     android:id="@+id/textview_book_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxWidth="@dimen/_160sdp"
                     android:layout_marginTop="-2dp"
                     android:fontFamily="@font/bold"
-                    android:text="Book Name"
+                    android:text=""
                     android:textColor="@color/colorLightBlack"
                     android:textSize="@dimen/_14sdp" />
 
@@ -107,10 +108,11 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_12sdp" />
 
-                <LinearLayout
+                <View
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_1sdp"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/edittext_quantity"
                     android:background="@color/colorPrimary"/>
 

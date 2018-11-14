@@ -290,7 +290,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 SuperLifeSecretPreferences.getInstance().putString("book_state", stateId);
                 SuperLifeSecretPreferences.getInstance().putString("book_city", city_id);
                 SuperLifeSecretPreferences.getInstance().putString("book_pin_code", edittext_postcode.getText().toString());
-                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "4");
+                SuperLifeSecretPreferences.getInstance().putString("book_stake_page_no", "3");
                 SuperLifeSecretPreferences.getInstance().putString("other_person_name", other_person_name);
                 SuperLifeSecretPreferences.getInstance().putString("other_person_contact", other_person_contactno);
                 CommonUtils.startActivity(ForthBookActivity.this, FifthBookActivity.class);

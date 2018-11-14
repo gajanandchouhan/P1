@@ -200,7 +200,7 @@ public class ThirsBookActivity extends BaseActivity {
         });
         String stack = SuperLifeSecretPreferences.getInstance().getString("book_stake_page_no");
         if (stack != null) {
-            if (Integer.parseInt(stack) > 3) {
+            if (Integer.parseInt(stack) >= 3) {
                 CommonUtils.startActivity(ThirsBookActivity.this, ForthBookActivity.class);
             }
         }
