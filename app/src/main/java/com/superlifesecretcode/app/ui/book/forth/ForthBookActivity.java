@@ -645,7 +645,8 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         String other_person_name = edittext_other_person_name.getText().toString();
         String other_person_contactno = edittext_otehr_person_mobile.getText().toString();*/
         SuperLifeSecretPreferences.getInstance().putString("delivery_charges_destination", "" + delivery_charges);
-
+        SuperLifeSecretPreferences.getInstance().putString("city_name", edittext_city.getText().toString());
+        SuperLifeSecretPreferences.getInstance().putString("state_name", edittext_state.getText().toString());
       /*  SuperLifeSecretPreferences.getInstance().putString("book_address", edittext_deliveryaddress.getText().toString());
         SuperLifeSecretPreferences.getInstance().putString("book_full_name", fullname);
         SuperLifeSecretPreferences.getInstance().putString("book_mobile", contact_number);
