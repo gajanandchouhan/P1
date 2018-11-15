@@ -179,6 +179,13 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<BaseResponseModel>(handler));
                 break;
+
+            case REQ_GET_STATE_DELIVERY:
+                Observable<CountryResponseModel> stateDeliveryObservable = apiInterface.getStateDelivery(requestParams);
+                stateDeliveryObservable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResponseObserver<CountryResponseModel>(handler));
+                break;
         }
     }
 

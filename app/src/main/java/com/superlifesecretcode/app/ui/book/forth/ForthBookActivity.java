@@ -131,6 +131,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         textview_delivery_price = findViewById(R.id.textview_delivery_charges_price);
         textview_next = findViewById(R.id.textview_next);
         textview_noaddressfound = findViewById(R.id.textview_noaddressfound);
+        textview_noaddressfound.setVisibility(View.GONE);
         edittext_contact_number = findViewById(R.id.edittext_contact_number);
         edittext_fullname = findViewById(R.id.edittext_fullname);
         textview_contact_number = findViewById(R.id.textview_contact_number);
@@ -438,10 +439,10 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                 }*/
             }
         });
-        stateId = userData.getState();
-        edittext_state.setText(userData.getStateName());
-        city_id = userData.getCity();
-        edittext_city.setText(userData.getCityName());
+        //  stateId = userData.getState();
+        //edittext_state.setText(userData.getStateName());
+        //city_id = userData.getCity();
+        //edittext_city.setText(userData.getCityName());
         tv_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -581,7 +582,9 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         oldAddressList.addAll(categoryResponseModel.getData());
         addressAapter.notifyDataSetChanged();
         if (oldAddressList.size() == 0) {
-            textview_noaddressfound.setVisibility(View.VISIBLE);
+            String book_designated_type = SuperLifeSecretPreferences.getInstance().getString("book_designated_type");
+            if (book_designated_type != null && book_designated_type.equalsIgnoreCase("1"))
+                textview_noaddressfound.setVisibility(View.VISIBLE);
         } else {
             textview_noaddressfound.setVisibility(View.GONE);
         }
@@ -711,8 +714,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
                         textViewDeliveryAtDest.setText(datum.getTitle());
                     }
                 }
-            }
-            else if (data.size() == 1) {
+            } else if (data.size() == 1) {
                 for (CollectionTypeData datum : data) {
                     if (datum.getTag() == 1) {
                         textview_designated_location.setVisibility(View.VISIBLE);

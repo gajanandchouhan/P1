@@ -103,7 +103,7 @@ public class ForthBookPresneter extends BasePresenter<ForthBookView> {
         }
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.call(mContext, RequestType.REQ_GET_STATE, new ResponseHandler<CountryResponseModel>() {
+        apiController.call(mContext, RequestType.REQ_GET_STATE_DELIVERY, new ResponseHandler<CountryResponseModel>() {
             @Override
             public void onResponse(CountryResponseModel countryResponseModel) {
                 view.hideProgress();

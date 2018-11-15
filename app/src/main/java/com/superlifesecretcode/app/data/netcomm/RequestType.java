@@ -73,4 +73,5 @@ public interface RequestType {
     byte UPDATE_COMPLETE_STATUS = 63;
     byte REQ_GET_COLLECTION_TYPES = 64;
     byte REQ_VALIDATE_VERSION = 65;
+    byte REQ_GET_STATE_DELIVERY = 66;
 }

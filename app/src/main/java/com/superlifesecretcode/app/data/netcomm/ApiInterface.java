@@ -408,4 +408,9 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("validateAppVersion")
     Observable<BaseResponseModel> validateAppversion(@PartMap() Map<String, RequestBody> params);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("getStatesDeleivery")
+    Observable<CountryResponseModel> getStateDelivery(@PartMap() Map<String, RequestBody> params);
 }
