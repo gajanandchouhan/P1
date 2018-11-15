@@ -49,7 +49,7 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
         buttonNegative = findViewById(R.id.button_negative);
         textViewMessage = findViewById(R.id.textView_message);
         TextView textViewTitle = findViewById(R.id.textView_title);
-        textViewTitle.setText(SuperLifeSecretPreferences.getInstance().getConversionData().getRichest_life());
+        textViewTitle.setText(SuperLifeSecretPreferences.getInstance().getConversionData()!=null?SuperLifeSecretPreferences.getInstance().getConversionData().getRichest_life():"Richest Life");
         layoutPositiveNegative = findViewById(R.id.layout_positive_negative);
         buttonNeutral = findViewById(R.id.button_neutral);
         buttonPositive.setOnClickListener(this);
