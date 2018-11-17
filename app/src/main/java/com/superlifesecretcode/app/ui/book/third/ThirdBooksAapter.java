@@ -21,6 +21,7 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.ui.book.first.BookBean;
 import com.superlifesecretcode.app.ui.book.first.Discount;
+import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
             holder.textview_bookprice_cut.setVisibility(View.GONE);
         }
         holder.edittext_quantity.setTag(position);
+        ImageLoadUtils.loadImage(list.get(position).getImage(),holder.imageViewBook,R.drawable.book_yellow);
 //        holder.edittext_quantity.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -158,6 +160,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
         TextView textview_book_name;
         TextView textview_bookprice, textview_bookprice_cut;
         EditText edittext_quantity;
+        ImageView imageViewBook;
         private Timer timer = new Timer();
         private final long DELAY = 500; // milliseconds
 
@@ -167,6 +170,7 @@ public class ThirdBooksAapter extends RecyclerView.Adapter<ThirdBooksAapter.Item
             textview_book_name = itemView.findViewById(R.id.textview_book_name);
             textview_bookprice = itemView.findViewById(R.id.textview_bookprice);
             textview_bookprice_cut = itemView.findViewById(R.id.textview_bookprice_cut);
+            imageViewBook=itemView.findViewById(R.id.book);
             edittext_quantity = itemView.findViewById(R.id.edittext_quantity);
             edittext_quantity.addTextChangedListener(this);
         }

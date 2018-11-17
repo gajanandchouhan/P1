@@ -64,7 +64,7 @@
                             android:fontFamily="@font/bold"
                             android:text="John Carter"
                             android:textColor="@android:color/holo_red_dark"
-                            android:textSize="@dimen/_13sdp" />
+                            android:textSize="@dimen/_14sdp" />
 
                         <TextView
                             android:id="@+id/textView_date_time"
@@ -104,7 +104,7 @@
                     android:fontFamily="@font/reguler"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis accumsan lorem, sit amet euismod mi placerat nec. Etiam pharetra condimentum risus at volutpat. Vivamus id nunc magna. Fusce pretium sollicitudin turpis, in tincidunt magna posuere vel. Integer at turpis ultricies, viverra metus eu, rhoncus lacus. Maecenas nisl velit, tempus a gravida laoreet, consectetur non sem. Duis id consequat arcu. Phasellus id dapibus elit. Sed porta accumsan velit, congue pretium metus fringilla sit amet. Phasellus sit amet suscipit massa. Suspendisse tristique mauris id volutpat elementum. Integer vehicula magna et purus porta, aliquet faucibus nulla tincidunt. Nulla augue lorem, fringilla at dictum sit amet, imperdiet sollicitudin diam."
                     android:textColor="@color/colorLightBlack"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_15sdp" />
 
 
                 <View
