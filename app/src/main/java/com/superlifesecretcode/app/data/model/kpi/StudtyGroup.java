@@ -1,13 +1,13 @@
-package com.superlifesecretcode.app.ui.kpi_summery;
+package com.superlifesecretcode.app.data.model.kpi;
 
-public class OnSiteSharing {
+public class StudtyGroup {
 
     private String activity_id;
     private String activity_title;
     private String activity_description;
     private String activity_image;
 
-    public OnSiteSharing(String activity_id, String activity_title, String activity_description, String activity_image) {
+    public StudtyGroup(String activity_id, String activity_title, String activity_description, String activity_image) {
         this.activity_id = activity_id;
         this.activity_title = activity_title;
         this.activity_description = activity_description;
@@ -29,5 +29,4 @@ public class OnSiteSharing {
     public String getActivity_image() {
         return activity_image;
     }
-
 }

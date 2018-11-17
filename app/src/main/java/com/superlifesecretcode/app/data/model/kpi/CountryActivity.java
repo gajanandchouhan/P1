@@ -1,4 +1,4 @@
-package com.superlifesecretcode.app.ui.kpi_summery;
+package com.superlifesecretcode.app.data.model.kpi;
 
 import java.util.ArrayList;
 

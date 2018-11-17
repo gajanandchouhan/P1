@@ -1,6 +1,7 @@
 package com.superlifesecretcode.app.ui.kpi_summery;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -10,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.kpi.KPI;
+import com.superlifesecretcode.app.data.model.kpi.StudySharingBean;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
@@ -17,7 +20,6 @@ import com.superlifesecretcode.app.ui.base.BaseActivity;
 import com.superlifesecretcode.app.ui.dailyactivities.personalevent.PersonalEventCalendarActivity;
 import com.superlifesecretcode.app.ui.events.EventActivity;
 import com.superlifesecretcode.app.ui.news.NewsActivity;
-import com.superlifesecretcode.app.ui.sharing_submit.SubmitActivity;
 import com.superlifesecretcode.app.ui.sharing_submit.SubmitListActivity;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
@@ -46,6 +48,7 @@ public class KpiActivity extends BaseActivity implements KpiView {
     RelativeLayout relative_news, relative_event, raletive_dailyactivity, relative_sharing;
     ImageView iv_sharing, back_image;
     String send;
+    TextView tvTitle;
 
     @Override
     protected int getContentView() {
@@ -62,6 +65,7 @@ public class KpiActivity extends BaseActivity implements KpiView {
         relative_sharing = findViewById(R.id.relative_sharing);
         tv_totalpoint = findViewById(R.id.tv_totalpoint);
         tv_totalpoint_count = findViewById(R.id.tv_totalpoint_count);
+        tvTitle=findViewById(R.id.textView_title);
         tv_myannouncement = findViewById(R.id.tv_myannouncement);
         tv_news = findViewById(R.id.tv_news);
         tv_activity = findViewById(R.id.tv_activity);
@@ -154,6 +158,7 @@ public class KpiActivity extends BaseActivity implements KpiView {
                 finish();
             }
         });
+        tvTitle.setText(languageResponseData.getSummary());
     }
 
     @Override
@@ -172,7 +177,10 @@ public class KpiActivity extends BaseActivity implements KpiView {
 
     @Override
     public void getKpiSummeryData(KPI kpi) {
-
+        String colorCode = kpi.getData().getColor_code();
+        if (colorCode != null && !colorCode.isEmpty()) {
+            findViewById(R.id.bg_point).setBackgroundColor(Color.parseColor(colorCode));
+        }
         if (kpi.getData().getCountry_activities().getStudy_groups().size() == 0) {
             tv_study_group.setVisibility(View.GONE);
             recyclerview_stydy_group.setVisibility(View.GONE);
@@ -198,7 +206,7 @@ public class KpiActivity extends BaseActivity implements KpiView {
         summeryAapter2.notifyDataSetChanged();
         String languageId = SuperLifeSecretPreferences.getInstance().getLanguageId();
         if (languageId.equals(ConstantLib.LANGUAGE_ENGLISH)) {
-            send = userData.getUsername() + " has earned " + kpi.getData().getDaily_activities().getPoints() + " point(s) as of " + CommonUtils.getCurrentDateFormatted(Locale.getDefault());
+            send = userData.getUsername() + " has earned " + kpi.getData().getTotalPoints() + " point(s) as of " + CommonUtils.getCurrentDateFormatted(Locale.getDefault());
         } else if (languageId.equals(ConstantLib.LANGUAGE_TRADITIONAL)) {
             send = userData.getUsername() + " 截至在這個日期 " + CommonUtils.getCurrentDateFormatted(Locale.TRADITIONAL_CHINESE) + " 已獲得 " + kpi.getData().getDaily_activities().getPoints() + "分了";
         } else if (languageId.equals(ConstantLib.LANGUAGE_SIMPLIFIED)) {
@@ -206,11 +214,11 @@ public class KpiActivity extends BaseActivity implements KpiView {
         }
 
 
-        tv_totalpoint_count.setText(kpi.getData().getDaily_activities().getPoints());
+        tv_totalpoint_count.setText(kpi.getData().getTotalPoints());
         tv_done_count.setText(kpi.getData().getDaily_activities().getCompleted());
         String stringUnwantedcount = "<font color=#D3382B>" + kpi.getData().getDaily_activities().getIncompleted() + "</font>" + " <font color=#000000>" + languageResponseData.getMore_to_go() + " </font>";
         tv_activity_header_count.setText(Html.fromHtml(stringUnwantedcount));
-        tv_totalpoint_count.setText(kpi.getData().getDaily_activities().getPoints());
+        tv_totalpoint_count.setText(kpi.getData().getTotalPoints());
         tv_unreadnewscount.setText(kpi.getData().getAnnouncements().getUnreadNews());
         tv_postcount.setText(kpi.getData().getSharings().getTotal_sharings());
         tv_unattented_header_count.setText(kpi.getData().getAnnouncements().getUnreadEvents());

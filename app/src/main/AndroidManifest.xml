@@ -303,6 +303,8 @@
         <activity
             android:name=".ui.kpi_summery.KpiActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.kpi_summery.PointDetailsActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

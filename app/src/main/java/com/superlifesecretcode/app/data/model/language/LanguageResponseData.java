@@ -338,6 +338,15 @@ public class LanguageResponseData {
 
     private String discount_off;
     private String books_with;
+    private String summary;
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     public String getDiscount_off() {
         return discount_off;

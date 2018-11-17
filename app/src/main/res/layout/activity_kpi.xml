@@ -18,6 +18,7 @@
             <include layout="@layout/toolbar2" />
 
             <RelativeLayout
+                android:id="@+id/bg_point"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
                 android:background="@color/colorPrimary"

@@ -35,7 +35,7 @@ import com.superlifesecretcode.app.ui.book.forth.StoreBean;
 import com.superlifesecretcode.app.ui.book.myorder_book.MyOrderBean;
 import com.superlifesecretcode.app.ui.book.second.Delivery;
 import com.superlifesecretcode.app.ui.book.second.DeliveryDescription;
-import com.superlifesecretcode.app.ui.kpi_summery.KPI;
+import com.superlifesecretcode.app.data.model.kpi.KPI;
 
 import java.util.Map;
 

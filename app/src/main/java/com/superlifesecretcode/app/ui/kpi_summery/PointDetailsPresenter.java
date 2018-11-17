@@ -15,11 +15,11 @@ import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.Map;
 
-public class KpiPresenter extends BasePresenter<KpiView> {
+public class PointDetailsPresenter extends BasePresenter<KpiView> {
 
     KpiView view;
 
-    public KpiPresenter(Context mContext) {
+    public PointDetailsPresenter(Context mContext) {
         super(mContext);
     }
 

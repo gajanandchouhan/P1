@@ -1,4 +1,4 @@
-package com.superlifesecretcode.app.ui.kpi_summery;
+package com.superlifesecretcode.app.data.model.kpi;
 
 public class KpiBean {
 
@@ -6,6 +6,24 @@ public class KpiBean {
     Sharing sharings;
     CountryActivity country_activities;
     DailyActivities daily_activities;
+    String totalPoints;
+    String color_code;
+
+    public String getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(String totalPoints) {
+        this.totalPoints = totalPoints;
+    }
+
+    public String getColor_code() {
+        return color_code;
+    }
+
+    public void setColor_code(String color_code) {
+        this.color_code = color_code;
+    }
 
     public KpiBean(Announcement announcements, Sharing sharings, CountryActivity country_activities, DailyActivities daily_activities) {
         this.announcements = announcements;
