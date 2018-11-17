@@ -18,6 +18,8 @@ import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -29,6 +31,7 @@ public class DiscountAapter extends RecyclerView.Adapter<DiscountAapter.ItemView
     public DiscountAapter(List<Discount> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
+        languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
     }
 
     @Override
@@ -38,7 +41,6 @@ public class DiscountAapter extends RecyclerView.Adapter<DiscountAapter.ItemView
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
-        languageResponseData = SuperLifeSecretPreferences.getInstance().getConversionData();
         if(list!=null){
             if (list.get(position).getDiscount_type()!=null){
                 if (list.get(position).getDiscount_type().equals("1")){
@@ -49,7 +51,7 @@ public class DiscountAapter extends RecyclerView.Adapter<DiscountAapter.ItemView
             }
         }
 //        String s = languageResponseData.g
-        holder.tv_discont_sentence.setText(languageResponseData.getOn_purchased()+" "+list.get(position).getMin_qty()+"-"+list.get(position).getMax_qty());
+        holder.tv_discont_sentence.setText(String.format("%s-%s %s", list.get(position).getMin_qty(), list.get(position).getMax_qty(), languageResponseData.getBooks_with()));
     }
 
     @Override
@@ -61,12 +63,15 @@ public class DiscountAapter extends RecyclerView.Adapter<DiscountAapter.ItemView
 
         TextView tv_percentage;
         TextView tv_discont_sentence;
+        TextView tv_discont_lbl;
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             tv_percentage = itemView.findViewById(R.id.tv_percentage);
             tv_discont_sentence = itemView.findViewById(R.id.tv_discont_sentence);
+            tv_discont_lbl=itemView.findViewById(R.id.tv_discount_lbl);
+            tv_discont_lbl.setText(languageResponseData.getDiscount_off());
         }
 
         @Override

@@ -243,7 +243,11 @@ public class LatestDetailsActivity extends BaseActivity implements View.OnClickL
         data.setLiked_by_user(like);
         textViewLike.setText(String.format("%s Likes", data.getLiked_by()));
         imageViewLike.setSelected(data.getLiked_by_user().equalsIgnoreCase("1"));
-        LatestActivity.isUpdated = true;
+        if (!from_submit) {
+            LatestActivity.isUpdated = true;
+            LatestActivity.liked = like;
+            LatestActivity.likedCOunt = data.getLiked_by();
+        }
     }
 
     @Override

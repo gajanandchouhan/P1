@@ -36,6 +36,8 @@ import java.util.Map;
 public class LatestActivity extends BaseActivity implements ShareListView, View.OnClickListener {
 
 
+    public static String liked;
+    public static String likedCOunt;
     private LatestAapter latestAapter;
     private UserDetailResponseData userData;
     private LanguageResponseData conversionData;
@@ -50,6 +52,7 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
     private boolean isLoadMore = false;
     private RecyclerView recyclerView;
     private int nextPage;
+    private int clickedPos;
 
     @Override
     protected int getContentView() {
@@ -101,8 +104,11 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
         if (isUpdated) {
             isUpdated = false;
             isLoadMore = false;
-            nextPage = 1;
-            getAllLatestShare(nextPage);
+            shareList.get(clickedPos).setLiked_by_user(liked);
+            shareList.get(clickedPos).setLiked_by(likedCOunt);
+            latestAapter.notifyItemChanged(clickedPos);
+           /* nextPage = 1;
+            getAllLatestShare(nextPage);*/
         }
     }
 
@@ -243,5 +249,9 @@ public class LatestActivity extends BaseActivity implements ShareListView, View.
                 presenter.getCountry();
                 break;
         }
+    }
+
+    public void setClickedPosition(int adapterPosition) {
+        clickedPos=adapterPosition;
     }
 }

@@ -193,6 +193,7 @@ public class LatestAapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("share", list.get(getAdapterPosition()));
                 bundle.putBoolean("from_submit", false);
+                ((LatestActivity) mContext).setClickedPosition(getAdapterPosition());
                 CommonUtils.startActivity((AppCompatActivity) mContext, LatestDetailsActivity.class, bundle, false);
             }
         }

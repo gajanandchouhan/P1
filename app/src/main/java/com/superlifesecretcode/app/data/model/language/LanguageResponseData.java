@@ -336,6 +336,25 @@ public class LanguageResponseData {
     private String profile_update_msg;
     private String delivery_at_destination;
 
+    private String discount_off;
+    private String books_with;
+
+    public String getDiscount_off() {
+        return discount_off;
+    }
+
+    public void setDiscount_off(String discount_off) {
+        this.discount_off = discount_off;
+    }
+
+    public String getBooks_with() {
+        return books_with;
+    }
+
+    public void setBooks_with(String books_with) {
+        this.books_with = books_with;
+    }
+
     public String getDelivery_at_destination() {
         return delivery_at_destination;
     }
