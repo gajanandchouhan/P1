@@ -21,7 +21,7 @@ android {
         }
     }
 
-    dexOptions {
+   /* dexOptions {
         javaMaxHeapSize "2048M"
     }
 
@@ -36,7 +36,7 @@ android {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
-    }
+    }*/
 
     buildTypes {
         release {

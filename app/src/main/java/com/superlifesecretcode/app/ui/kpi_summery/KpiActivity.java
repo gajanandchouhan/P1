@@ -159,6 +159,12 @@ public class KpiActivity extends BaseActivity implements KpiView {
             }
         });
         tvTitle.setText(languageResponseData.getSummary());
+        findViewById(R.id.bg_point).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtils.startActivity(KpiActivity.this,PointDetailsActivity.class);
+            }
+        });
     }
 
     @Override

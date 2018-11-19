@@ -33,7 +33,11 @@ public class DateRangePicker extends Dialog implements View.OnClickListener {
     private String id = "";
     private TextView textViewFromDate, textViewToDate;
     private TextView textViewLabelStartDate, textViewLabelEndDate;
+    private boolean showForTask = false;
 
+    public void setShowForTask(boolean showForTask) {
+        this.showForTask = showForTask;
+    }
 
     public DateRangePicker(@NonNull Context context) {
         super(context);
@@ -89,14 +93,20 @@ public class DateRangePicker extends Dialog implements View.OnClickListener {
                     textViewToDate.setText("");
                     toDate = null;
                 }
-                showDatePicker(textViewFromDate, 1, fromDate == null ? System.currentTimeMillis() - 1000 : CommonUtils.getDateInMilis(fromDate));
+                if (showForTask)
+                    showDatePicker(textViewFromDate, 1, System.currentTimeMillis() - 1000);
+                else
+                    showDatePicker(textViewFromDate, 1, fromDate == null ? System.currentTimeMillis() - 1000 : CommonUtils.getDateInMilis(fromDate));
                 break;
             case R.id.textView_end_date:
                 if (fromDate == null) {
                     CommonUtils.showToast(context, "Please select start date.");
                     return;
                 }
-                showDatePicker(textViewToDate, 2, CommonUtils.getDateInMilis(fromDate));
+                if (showForTask) {
+                    showDatePicker(textViewToDate, 2, System.currentTimeMillis() - 1000);
+                } else
+                    showDatePicker(textViewToDate, 2, CommonUtils.getDateInMilis(fromDate));
                 break;
         }
     }
@@ -107,16 +117,42 @@ public class DateRangePicker extends Dialog implements View.OnClickListener {
     }
 
     private void showDatePicker(final TextView textView, final int type, long minDate) {
-        CommonUtils.showDatePicker(context, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                if (type == 1) {
-                    fromDate = CommonUtils.getAppendedDate(i, i1, i2);
-                } else {
-                    toDate = CommonUtils.getAppendedDate(i, i1, i2);
-                }
-                textView.setText(CommonUtils.getFromatttedDate(i, i1, i2));
+        if (showForTask) {
+            if (type == 2) {
+                CommonUtils.showDatePickerWithMinAndMax(context, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
+                            toDate = CommonUtils.getAppendedDate(i, i1, i2);
+                        textView.setText(CommonUtils.getFromatttedDate(i, i1, i2));
+                    }
+                }, minDate,CommonUtils.getDateInMilis(fromDate));
+            } else {
+                CommonUtils.showDatePickerWithMax(context, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        if (type == 1) {
+                            fromDate = CommonUtils.getAppendedDate(i, i1, i2);
+                        } else {
+                            toDate = CommonUtils.getAppendedDate(i, i1, i2);
+                        }
+                        textView.setText(CommonUtils.getFromatttedDate(i, i1, i2));
+                    }
+                }, minDate);
             }
-        }, minDate);
+        } else {
+            CommonUtils.showDatePicker(context, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                    if (type == 1) {
+                        fromDate = CommonUtils.getAppendedDate(i, i1, i2);
+                    } else {
+                        toDate = CommonUtils.getAppendedDate(i, i1, i2);
+                    }
+                    textView.setText(CommonUtils.getFromatttedDate(i, i1, i2));
+                }
+            }, minDate);
+        }
+
     }
 }
