@@ -740,7 +740,7 @@ public class ForthBookActivity extends BaseActivity implements ForthBookView {
         conversionData = SuperLifeSecretCodeApp.getInstance().getConversionData();
         if (conversionData != null) {
             textview_back.setText(conversionData.getBack());
-            textview_next.setText(conversionData.getContinuee());
+            textview_next.setText(conversionData.getNext());
             if (SuperLifeSecretPreferences.getInstance().getString("book_type").equals("1")) {
                 textview_print_for_own.setText(conversionData.getBuying_own());
                 textview_print_on_behalf.setText(conversionData.getBuying_behalf());
