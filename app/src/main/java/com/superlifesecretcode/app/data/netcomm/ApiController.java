@@ -16,6 +16,7 @@ import com.superlifesecretcode.app.data.model.deliverycost.DeliveryCostReponseMo
 import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
+import com.superlifesecretcode.app.data.model.kpi.ActivityPointResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
 import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseModel;
@@ -438,6 +439,12 @@ public class ApiController implements RequestType {
                     compleStatusObservable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<BaseResponseModel>(handler));
+                    break;
+                case REQ_GET_POINT_DETAILS:
+                    Observable<ActivityPointResponseModel> pointDetailObservable = apiInterface.getPointDetails(stringMultipartParamsParams,header);
+                    pointDetailObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<ActivityPointResponseModel>(handler));
                     break;
             }
         } catch (Exception e) {

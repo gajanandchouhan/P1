@@ -13,6 +13,8 @@ import com.superlifesecretcode.app.data.model.kpi.PointDetailsModel;
 import com.superlifesecretcode.app.data.model.kpi.StudySharingBean;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
+import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.superlifesecretcode.app.util.ImageLoadUtils;
 
 import java.util.List;
@@ -47,7 +49,7 @@ public class PointDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ItemDateViewHolder) {
             ItemDateViewHolder dateViewHolder = (ItemDateViewHolder) holder;
-            dateViewHolder.textViewDate.setText(list.get(position).getDate());
+            dateViewHolder.textViewDate.setText(CommonUtils.getformattedDateFromString(ConstantLib.INPUT_DATE_ONLY_FORMATE,ConstantLib.OUTPUT_DATE_FORMATE,list.get(position).getDate(),false,null));
         } else if (holder instanceof ItemViewHolder) {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.textViewTitle.setText(list.get(position).getTaskDetails().getTitle());

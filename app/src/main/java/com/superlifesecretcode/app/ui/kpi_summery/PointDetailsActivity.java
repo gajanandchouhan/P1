@@ -61,38 +61,19 @@ public class PointDetailsActivity extends BaseActivity implements KpiView, View.
         list = new ArrayList<>();
         adapter = new PointDetailAdapter(list, this);
         recyclerView.setAdapter(adapter);
+        getPointSummary("","");
 //        recyclerView.addItemDecoration(new SpacesItemDecoration(10));
-        List<TaskDetails> list = new ArrayList<>();
-        list.add(new TaskDetails("Activity 1", "10", "15-11-2018"));
-        list.add(new TaskDetails("Activity 2", "10", "15-11-2018"));
-        list.add(new TaskDetails("Activity 3", "10", "15-11-2018"));
-        list.add(new TaskDetails("Activity 1", "10", "16-11-2018"));
-        list.add(new TaskDetails("Activity 2", "0", "16-11-2018"));
-        list.add(new TaskDetails("Activity 3", "10", "16-11-2018"));
-        list.add(new TaskDetails("Activity 1", "10", "17-11-2018"));
-        list.add(new TaskDetails("Activity 2", "10", "17-11-2018"));
-        list.add(new TaskDetails("Activity 3", "10", "17-11-2018"));
-        list.add(new TaskDetails("Activity 1", "10", "18-11-2018"));
-        list.add(new TaskDetails("Activity 2", "10", "18-11-2018"));
-        list.add(new TaskDetails("Activity 3", "0", "18-11-2018"));
-        String dateTemp = "";
-        List<PointDetailsModel> pointDetailsModelList = new ArrayList<>();
-        for (TaskDetails taskDetails : list) {
-            if (!taskDetails.getDate().equalsIgnoreCase(dateTemp)) {
-                pointDetailsModelList.add(new PointDetailsModel(taskDetails.getDate(), true, taskDetails));
-            }
-            pointDetailsModelList.add(new PointDetailsModel(taskDetails.getDate(), false, taskDetails));
-            dateTemp = taskDetails.getDate();
-        }
-        this.list.addAll(pointDetailsModelList);
-        adapter.notifyDataSetChanged();
+
 
     }
 
-    private void getAllLatestShare(int index) {
+    private void getPointSummary(String startDate, String endDate) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + userData.getApi_token());
-        //presenter.getKpiSummeryData(headers, countryId, isLoadMore, String.valueOf(index));
+        Map<String, String> params = new HashMap<>();
+        params.put("start", startDate);
+        params.put("end", endDate);
+        presenter.getPointSummary(headers, params);
     }
 
     private void setUpToolbar() {
@@ -127,6 +108,25 @@ public class PointDetailsActivity extends BaseActivity implements KpiView, View.
     }
 
     @Override
+    public void setPointList(List<TaskDetails> taskDetailsList,String sharingPoints) {
+        if (taskDetailsList != null && taskDetailsList.size() > 0) {
+            this.list.clear();
+            this.list.add(new PointDetailsModel(null,false,new TaskDetails(conversionData.getSharing(),sharingPoints,null)));
+            String dateTemp = "";
+            List<PointDetailsModel> pointDetailsModelList = new ArrayList<>();
+            for (TaskDetails taskDetails : taskDetailsList) {
+                if (!taskDetails.getDate().equalsIgnoreCase(dateTemp)) {
+                    pointDetailsModelList.add(new PointDetailsModel(taskDetails.getDate(), true, taskDetails));
+                }
+                pointDetailsModelList.add(new PointDetailsModel(taskDetails.getDate(), false, taskDetails));
+                dateTemp = taskDetails.getDate();
+            }
+            this.list.addAll(pointDetailsModelList);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.imageView_profile) {
             showDateRnagePicker();
@@ -143,6 +143,7 @@ public class PointDetailsActivity extends BaseActivity implements KpiView, View.
                 public void onDateRnageSelected(String startDate, String endDate) {
                     CommonUtils.showLog("DATE", startDate + ", " + endDate);
                     rangePicker.dismiss();
+                    getPointSummary(startDate,endDate);
                 }
             });
         }

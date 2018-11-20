@@ -13,6 +13,7 @@ import com.superlifesecretcode.app.data.model.deliverycost.DeliveryCostReponseMo
 import com.superlifesecretcode.app.data.model.disclosure.DisclosureResponseModel;
 import com.superlifesecretcode.app.data.model.events.EventResponseModel;
 import com.superlifesecretcode.app.data.model.interesetdevent.InterestedEventResponseModel;
+import com.superlifesecretcode.app.data.model.kpi.ActivityPointResponseModel;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseModel;
 import com.superlifesecretcode.app.data.model.myannoucement.MyAnnoucmenntResponseModel;
 import com.superlifesecretcode.app.data.model.mycountryactivities.MyCountryActivityResponseModel;
@@ -413,4 +414,9 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("getStatesDeleivery")
     Observable<CountryResponseModel> getStateDelivery(@PartMap() Map<String, RequestBody> params);
+
+    @Multipart
+    @Headers({"username:richestLifeAdmin", "password:123456"})
+    @POST("dailyActivityList")
+    Observable<ActivityPointResponseModel> getPointDetails(@PartMap() Map<String, RequestBody> stringMultipartParamsParams, @HeaderMap Map<String, String> header);
 }

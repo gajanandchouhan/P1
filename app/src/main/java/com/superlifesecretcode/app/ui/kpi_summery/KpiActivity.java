@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.superlifesecretcode.app.R;
 import com.superlifesecretcode.app.data.model.kpi.KPI;
 import com.superlifesecretcode.app.data.model.kpi.StudySharingBean;
+import com.superlifesecretcode.app.data.model.kpi.TaskDetails;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.model.userdetails.UserDetailResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
@@ -26,6 +27,7 @@ import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -233,5 +235,10 @@ public class KpiActivity extends BaseActivity implements KpiView {
         //<font color=#D3382B>abc </font>
         tv_your_sharing.setText(Html.fromHtml(your_liked));
         //tv_sharing.setText(""+ CommonUtils.getColorfulText(this,"abc", Color.valueOf(R.color.red)));
+    }
+
+    @Override
+    public void setPointList(List<TaskDetails> taskDetails,String sharingPoints) {
+
     }
 }

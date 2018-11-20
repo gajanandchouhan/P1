@@ -1,15 +1,14 @@
 package com.superlifesecretcode.app.data.model.kpi;
 
 public class TaskDetails {
-
     private String title;
     private String point;
-    private String date;
+    private String activity_date;
 
-    public TaskDetails(String title, String point,String date) {
+    public TaskDetails(String title, String point,String activity_date) {
         this.title = title;
         this.point = point;
-        this.date=date;
+        this.activity_date=activity_date;
     }
 
     public String getTitle() {
@@ -21,6 +20,6 @@ public class TaskDetails {
     }
 
     public String getDate() {
-        return date;
+        return activity_date;
     }
 }

@@ -74,4 +74,5 @@ public interface RequestType {
     byte REQ_GET_COLLECTION_TYPES = 64;
     byte REQ_VALIDATE_VERSION = 65;
     byte REQ_GET_STATE_DELIVERY = 66;
+    byte REQ_GET_POINT_DETAILS=67;
 }

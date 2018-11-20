@@ -3,6 +3,7 @@ package com.superlifesecretcode.app.ui.kpi_summery;
 import android.content.Context;
 
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.data.model.kpi.ActivityPointResponseModel;
 import com.superlifesecretcode.app.data.model.kpi.KPI;
 import com.superlifesecretcode.app.data.netcomm.ApiController;
 import com.superlifesecretcode.app.data.netcomm.CheckNetworkState;
@@ -28,7 +29,7 @@ public class PointDetailsPresenter extends BasePresenter<KpiView> {
         this.view = view;
     }
 
-    public void getKpiSummeryData(Map<String, String> headers) {
+    public void getPointSummary(Map<String, String> headers,Map<String,String> params) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
             return;
@@ -36,16 +37,16 @@ public class PointDetailsPresenter extends BasePresenter<KpiView> {
 
         view.showProgress();
         ApiController apiController = ApiController.getInstance();
-        apiController.callGetWithHeader(mContext, RequestType.REQ_GET_KPI_SUMMERY, new ResponseHandler<KPI>() {
+        apiController.callWithHeader(mContext, RequestType.REQ_GET_POINT_DETAILS, new ResponseHandler<ActivityPointResponseModel>() {
             @Override
-            public void onResponse(KPI shareListResponseModel) {
+            public void onResponse(ActivityPointResponseModel activityPointResponseModel) {
 
                 view.hideProgress();
-                if (shareListResponseModel != null) {
-                    if (shareListResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
-                        view.getKpiSummeryData(shareListResponseModel);
+                if (activityPointResponseModel != null) {
+                    if (activityPointResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
+                        view.setPointList(activityPointResponseModel.getTaskDetails(),activityPointResponseModel.getSharing_point());
                     } else
-                        CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getNo_sharing());
+                        CommonUtils.showToast(mContext, activityPointResponseModel.getMessage());
                 } else {
                     CommonUtils.showToast(mContext,mContext.getString(R.string.server_error));
                     //CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
@@ -58,6 +59,6 @@ public class PointDetailsPresenter extends BasePresenter<KpiView> {
                 CommonUtils.showToast(mContext,mContext.getString(R.string.server_error));
                 //CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
             }
-        }, headers,"","");
+        }, params,headers);
     }
 }
