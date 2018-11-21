@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -959,8 +960,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
+    private int index = 0;
+
     public int getRandomColor() {
-        int randomAndroidColor = rainbow[new Random().nextInt(rainbow.length)];
+        int randomAndroidColor = rainbow[index];
+        if (index < rainbow.length - 1)
+            index++;
+        else {
+            index=0;
+        }
         return randomAndroidColor;
     }
 }

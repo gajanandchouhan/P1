@@ -17,7 +17,7 @@
     <color name="transparent">#00000000</color>
     <color name="red">#D3382B</color>
 
-    <color name="bright_pink">#FF007F</color>
+   <!-- <color name="bright_pink">#FF007F</color>
     <color name="red2">#FF0000</color>
     <color name="orange">#FF7F00</color>
     <color name="yellow">#FFFF00</color>
@@ -28,21 +28,17 @@
     <color name="azure">#007FFF</color>
     <color name="blue">#0000FF</color>
     <color name="violet">#7F00FF</color>
-    <color name="magenta">#FF00FF</color>
+    <color name="magenta">#FF00FF</color>-->
 
     <array name="rainbow">
-        <item>@color/bright_pink</item>
-        <item>@color/red2</item>
-        <item>@color/orange</item>
-        <item>@color/yellow</item>
-        <item>@color/chartreuse</item>
-        <item>@color/green</item>
-        <item>@color/spring_green</item>
-        <item>@color/cyan</item>
-        <item>@color/azure</item>
-        <item>@color/blue</item>
-        <item>@color/violet</item>
-        <item>@color/magenta</item>
+        <item>#ff80c0</item>
+        <item>#b6e11e</item>
+        <item>#ffff00</item>
+        <item>#00ff40</item>
+        <item>#ff0000</item>
+        <item>#808080</item>
+        <item>#0000ff</item>
+        <item>#760f0f</item>
     </array>
 
 </resources>
