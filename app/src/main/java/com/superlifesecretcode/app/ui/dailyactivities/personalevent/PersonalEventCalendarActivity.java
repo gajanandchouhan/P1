@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.superlifesecretcode.app.ui.dailyactivities.interestedevent.Interested
 import com.superlifesecretcode.app.util.AlarmUtility;
 import com.superlifesecretcode.app.util.CommonUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +53,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     private Event event;
     private int updateStatusPos;
     private String updateCompleteStatus;
+    private Date todayDate;
 
     @Override
     protected int getContentView() {
@@ -61,6 +64,12 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     protected void initializeView() {
         userData = SuperLifeSecretPreferences.getInstance().getUserData();
         conversionData = SuperLifeSecretPreferences.getInstance().getConversionData();
+        String full = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        try {
+            todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(full);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         compactCalendarView = findViewById(R.id.compactcalendar_view);
         final ImageView imageViewPre = findViewById(R.id.imageView_previous);
         final ImageView imageViewNext = findViewById(R.id.imageView_next);
@@ -95,6 +104,9 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     CompactCalendarView.CompactCalendarViewListener listener = new CompactCalendarView.CompactCalendarViewListener() {
         @Override
         public void onDayClick(Date dateClicked) {
+            if (dateClicked.before(todayDate)) {
+            } else {
+            }
             date = dateClicked;
             textViewDay.setText(dateFormatForDay.format(dateClicked));
             List<Event> events = compactCalendarView.getEvents(dateClicked);
@@ -190,6 +202,14 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     }
 
     private void setAlarm(PersonalEventResponseData interestedEventResponseData) {
+        try {
+            Date parse = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(interestedEventResponseData.getActivity_date());
+            if (parse.before(todayDate)) {
+                return;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         AlarmUtility.getInstance(this).setAlarm(Integer.parseInt(interestedEventResponseData.getActivity_id()), "RichestLifeReminder", "" + interestedEventResponseData.getTitle(), CommonUtils.getTimeInMilis(interestedEventResponseData.getActivity_date() + " " + interestedEventResponseData.getActivity_time()) - (Long.parseLong(interestedEventResponseData.getRemind_before()) * 1000 * 60), interestedEventResponseData.getTypeName() != null && !interestedEventResponseData.getTypeName().isEmpty());
     }
 
@@ -281,6 +301,7 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
         HashMap<String, String> params = new HashMap<>();
         params.put("id", object.getActivity_id());
         params.put("status", updateCompleteStatus);
+        params.put("date", object.getActivity_date());
         presenter.updateCompleteStatus(params, headers);
     }
 }

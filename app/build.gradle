@@ -21,22 +21,22 @@ android {
         }
     }
 
-   /* dexOptions {
-        javaMaxHeapSize "2048M"
-    }
+    /* dexOptions {
+         javaMaxHeapSize "2048M"
+     }
 
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
-    }*/
+     packagingOptions {
+         exclude 'META-INF/DEPENDENCIES.txt'
+         exclude 'META-INF/LICENSE.txt'
+         exclude 'META-INF/NOTICE.txt'
+         exclude 'META-INF/NOTICE'
+         exclude 'META-INF/LICENSE'
+         exclude 'META-INF/DEPENDENCIES'
+         exclude 'META-INF/notice.txt'
+         exclude 'META-INF/license.txt'
+         exclude 'META-INF/dependencies.txt'
+         exclude 'META-INF/LGPL2.1'
+     }*/
 
     buildTypes {
         release {
@@ -55,14 +55,16 @@ android {
     flavorDimensions "SERVER_TYPE"
     productFlavors {//http://dev.tekzee.com/dining_hour/
         development {
-
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "RichestLifeTestingApp"
             buildConfigField "String", 'BASE_URL', '"http://dev.tekzee.in/richestlife/api/"'
 //            buildConfigField "String", 'BASE_URL', '"http://13.250.249.116/richestlife/api/"'
             buildConfigField "boolean", 'showLog', 'true'
         }
         staging {
+            resValue "string", "app_name", "超級生命密碼夢想舞臺"
             buildConfigField "String", 'BASE_URL', '"http://52.24.209.230/api/"'
-            buildConfigField "boolean", 'showLog', 'true'
+            buildConfigField "boolean", 'showLog', 'false'
         }
     }
 }

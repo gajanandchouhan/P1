@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">超級生命密碼夢想舞臺</string>
+    <!--<string name="app_name">超級生命密碼夢想舞臺</string>-->
     <string name="loading_text">Loading…</string>
     <string name="facebook_app_id">907727359385638</string>
     <string name="fb_login_protocol_scheme">fb907727359385638</string>
