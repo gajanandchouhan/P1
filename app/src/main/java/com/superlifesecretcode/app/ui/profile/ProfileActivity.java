@@ -432,7 +432,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             return;
         }
         */
-        if (!email.isEmpty()&&!CommonUtils.isValidEmail(email)) {
+        if (!email.isEmpty() && !CommonUtils.isValidEmail(email)) {
             editTextEmail.setError(conversionData.getEnter_valid_email());
             return;
         }
@@ -632,6 +632,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             SuperLifeSecretPreferences.getInstance().setLanguageId(languageId);
             MainActivity.LANGAUE_CHANGED = lanuguageChanged;
             MainActivity.PROFILE_UPDATED = true;
+            if (SuperLifeSecretPreferences.getInstance().getCometChaUserId().equalsIgnoreCase(userDetailResponseData.getUser_id())) {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("UID", userDetailResponseData.getUser_id());
+                params.put("name", userDetailResponseData.getUsername());
+                params.put("avatarURL", userDetailResponseData.getImage());
+                params.put("profileURL", userDetailResponseData.getImage());
+                params.put("role", "");
+                Map<String, String> headers = new HashMap<>();
+                headers.put("api-key", ConstantLib.COMET_CHAT_KEY);
+                presenter.upateCometUser(params, headers);
+            }
             if (isUpdate) {
                 CommonUtils.startActivity(this, MainActivity.class);
             }
@@ -650,6 +661,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             }
         }, data);
         countryStatePicker.show();
+    }
+
+    @Override
+    public void onCometComplete() {
+
     }
 
     @Override

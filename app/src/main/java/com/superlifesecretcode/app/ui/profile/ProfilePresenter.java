@@ -15,6 +15,8 @@ import com.superlifesecretcode.app.ui.base.BasePresenter;
 import com.superlifesecretcode.app.util.CommonUtils;
 import com.superlifesecretcode.app.util.ConstantLib;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,8 +150,8 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
                     if (userDetailResponseModel.getStatus().equalsIgnoreCase(ConstantLib.RESPONSE_SUCCESS)) {
                         view.setUserData(userDetailResponseModel.getData());
                         CommonUtils.showToast(mContext, SuperLifeSecretPreferences.getInstance().getConversionData().getProfile_updated());
-                    }else{
-                     CommonUtils.showSnakeBar(mContext,userDetailResponseModel.getMessage());
+                    } else {
+                        CommonUtils.showSnakeBar(mContext, userDetailResponseModel.getMessage());
                     }
 
                 } else {
@@ -166,6 +168,7 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
             }
         }, params, files, headers);
     }
+
     public void getCities(HashMap requestBody) {
         if (!CheckNetworkState.isOnline(mContext)) {
             CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
@@ -196,5 +199,29 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
 
             }
         }, requestBody);
+    }
+
+
+    public void upateCometUser(HashMap<String, String> params, Map<String, String> headers) {
+        if (!CheckNetworkState.isOnline(mContext)) {
+            CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.no_internet));
+            return;
+        }
+        view.showProgress();
+        ApiController apiController = ApiController.getInstance();
+        apiController.callWithHeader(mContext, RequestType.REQ_UPDATE_COMET_USER, new ResponseHandler<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                view.hideProgress();
+                view.onCometComplete();
+            }
+
+            @Override
+            public void onError() {
+                view.hideProgress();
+                CommonUtils.showSnakeBar(mContext, mContext.getString(R.string.server_error));
+                view.onCometComplete();
+            }
+        }, params, headers);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.devbrackets.android.exomedia.ExoMedia;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
@@ -15,13 +16,17 @@ import com.google.android.exoplayer2.upstream.cache.CacheDataSource;
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory;
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
+import com.inscripts.interfaces.Callbacks;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.player.manager.PlaylistManager;
 import com.twitter.sdk.android.core.Twitter;
 
+import org.json.JSONObject;
+
 import java.io.File;
 
+import cometchat.inscripts.com.cometchatcore.coresdk.CometChat;
 import okhttp3.OkHttpClient;
 
 /**
@@ -31,9 +36,6 @@ import okhttp3.OkHttpClient;
 public class SuperLifeSecretCodeApp extends Application {
     static SuperLifeSecretCodeApp instance;
     private LanguageResponseData conversionData;
-    private String licenseKey = "COMETCHAT-UY0G8-4PGBJ-VQ3CL-7JUTT";
-    private String apiKey = "51462x2c751943dc1b06a7c7ec3aad70f1def8";
-  //  private static CometChat cometChatInstance;
     private PlaylistManager playlistManager;
 
     @Override
@@ -42,18 +44,7 @@ public class SuperLifeSecretCodeApp extends Application {
         instance = this;
         Twitter.initialize(this);
 
-       /* final CometChat cometChat = CometChat.getInstance(this);
-        cometChat.initializeCometChat("", licenseKey, apiKey, true, new Callbacks() {
-            @Override
-            public void successCallback(JSONObject jsonObject) {
-                cometChatInstance = cometChat;
-            }
 
-            @Override
-            public void failCallback(JSONObject jsonObject) {
-
-            }
-        });*/
         playlistManager = new PlaylistManager(this);
         configureExoMedia();
     }
@@ -71,9 +62,6 @@ public class SuperLifeSecretCodeApp extends Application {
         return instance;
     }
 
-    /*public static CometChat getCometChatInstance() {
-        return cometChatInstance;
-    }*/
 
 
     @Override

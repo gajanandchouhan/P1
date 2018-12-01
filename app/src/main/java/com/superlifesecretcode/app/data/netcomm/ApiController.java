@@ -41,6 +41,9 @@ import com.superlifesecretcode.app.ui.book.second.Delivery;
 import com.superlifesecretcode.app.ui.book.second.DeliveryDescription;
 import com.superlifesecretcode.app.data.model.kpi.KPI;
 import com.superlifesecretcode.app.util.CommonUtils;
+import com.superlifesecretcode.app.util.ConstantLib;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -187,6 +190,7 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
+
         }
     }
 
@@ -446,6 +450,12 @@ public class ApiController implements RequestType {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new ResponseObserver<ActivityPointResponseModel>(handler));
                     break;
+                case REQ_UPDATE_COMET_USER:
+                    Observable<JSONObject> updateCometUsrObservable = apiInterface.updateCometChatUser(ConstantLib.COMET_CHAT_USER_UPDATE_URL,stringMultipartParamsParams,header);
+                    updateCometUsrObservable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ResponseObserver<JSONObject>(handler));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -478,6 +488,7 @@ public class ApiController implements RequestType {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ResponseObserver<CountryResponseModel>(handler));
                 break;
+
 
 
         }

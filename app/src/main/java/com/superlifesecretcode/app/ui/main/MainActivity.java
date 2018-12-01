@@ -1,6 +1,5 @@
 package com.superlifesecretcode.app.ui.main;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -19,7 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.inscripts.interfaces.Callbacks;
+import com.inscripts.interfaces.LaunchCallbacks;
 import com.superlifesecretcode.app.R;
+import com.superlifesecretcode.app.SuperLifeSecretCodeApp;
 import com.superlifesecretcode.app.custom.AutoScrollViewPager;
 import com.superlifesecretcode.app.data.model.AlertModel;
 import com.superlifesecretcode.app.data.model.DrawerItem;
@@ -61,13 +64,18 @@ import com.superlifesecretcode.app.util.ItemClickListner;
 import com.superlifesecretcode.app.util.SpacesItemDecoration;
 import com.superlifesecretcode.app.util.SpacesItemDecorationGridLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cometchat.inscripts.com.cometchatcore.coresdk.CometChat;
+import utils.CCNotificationHelper;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, MainView {
     public static boolean LANGAUE_CHANGED;
@@ -98,7 +106,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Timer timer;
     private Handler handler;
     int[] rainbow;
-
+    private CometChat cometChatInstance;
     @Override
     protected void onPause() {
         super.onPause();
@@ -201,6 +209,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
         presenter.getConversion(body);
         setUpBottomBar2();
+        final CometChat cometChat = CometChat.getInstance(this);
+        cometChat.initializeCometChat("",ConstantLib.COMET_CHAT_LICENSE, ConstantLib.COMET_CHAT_KEY, true, new Callbacks() {
+
+            @Override
+            public void successCallback(JSONObject jsonObject) {
+                cometChatInstance = cometChat;
+            }
+
+            @Override
+            public void failCallback(JSONObject jsonObject) {
+                Log.v("COMETCHAT", "Failure : "+jsonObject.toString());
+
+            }
+        });
     }
 
     private void setUpBottomBar2() {
@@ -464,7 +486,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
         if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_CHAT)) {
-            //createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
+            createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
             return;
         }
 
@@ -971,4 +993,119 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         return randomAndroidColor;
     }
+
+
+
+    protected void createCometChatUser(String name, final String uid) {
+        if (cometChatInstance == null) {
+            CommonUtils.showToast(this, getString(R.string.server_error));
+            return;
+        }
+        String cometChaUserId = SuperLifeSecretPreferences.getInstance().getCometChaUserId();
+        if (cometChaUserId != null && !cometChaUserId.isEmpty()) {
+            launch(cometChatInstance);
+            return;
+        }
+        showProgress();
+        cometChatInstance.createUser(this, uid, name, userDetailResponseData.getImage()!=null?userDetailResponseData.getImage():"", userDetailResponseData.getImage()!=null?userDetailResponseData.getImage():"", "", new Callbacks() {
+            @Override
+            public void successCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "Register Success :" + jsonObject.toString());
+                JSONObject success = jsonObject.optJSONObject("success");
+                login(uid);
+
+            }
+
+            @Override
+            public void failCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "Register Failed :" + jsonObject.toString());
+                login(uid);
+            }
+        });
+    }
+
+    private void login(final String uid) {
+        if (cometChatInstance == null)
+            return;
+        cometChatInstance.loginWithUID(this, uid, new Callbacks() {
+            @Override
+            public void successCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "Login Success :" + jsonObject.toString());
+                SuperLifeSecretPreferences.getInstance().setCometChatUserId(uid);
+                launch(cometChatInstance);
+                hideProgress();
+            }
+
+            @Override
+            public void failCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "Login Failed :" + jsonObject.toString());
+                hideProgress();
+            }
+        });
+
+    }
+
+
+    private void launch(CometChat cometChat) {
+        boolean isFullScrenn = true;
+        cometChat.launchCometChat(this, isFullScrenn, new LaunchCallbacks() {
+            @Override
+            public void successCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "Success " + jsonObject.toString());
+            }
+
+            @Override
+            public void failCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "Failed " + jsonObject.toString());
+            }
+
+            @Override
+            public void userInfoCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "UserInfo " + jsonObject.toString());
+                try {
+                    FirebaseMessaging.getInstance().subscribeToTopic(jsonObject.getString("push_channel"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                //To enable the notification for announcements
+                try {
+                    FirebaseMessaging.getInstance().subscribeToTopic(jsonObject.getString("push_an_channel"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void chatroomInfoCallback(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "Chat Roo Info " + jsonObject.toString());
+                try {
+                    CCNotificationHelper.subscribe(true, jsonObject.getString("push_channel"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMessageReceive(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "On Message " + jsonObject.toString());
+            }
+
+            @Override
+            public void error(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "On Error " + jsonObject.toString());
+            }
+
+            @Override
+            public void onWindowClose(JSONObject jsonObject) {
+                Log.v("COMET CHAT", "onWindowClose" + jsonObject.toString());
+            }
+
+            @Override
+            public void onLogout() {
+                Log.v("COMET CHAT", "onLogout");
+            }
+        });
+    }
+
 }

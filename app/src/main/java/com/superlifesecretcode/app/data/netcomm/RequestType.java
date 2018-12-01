@@ -75,4 +75,5 @@ public interface RequestType {
     byte REQ_VALIDATE_VERSION = 65;
     byte REQ_GET_STATE_DELIVERY = 66;
     byte REQ_GET_POINT_DETAILS=67;
+    byte REQ_UPDATE_COMET_USER=68;
 }

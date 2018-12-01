@@ -62,9 +62,6 @@ public interface ConstantLib {
     String WORNG_CODE_ENTERED = "You entered a wrong password reset code.";
 
 
-    String COMETCHAT_LICENSE_KEY = "COMETCHAT-UY0G8-4PGBJ-VQ3CL-7JUTT";
-    String COMET_CHAT_API_KEY = "51462x2c751943dc1b06a7c7ec3aad70f1def8";
-
     String PERMISSION_DEFAULT = "0";
     String PERMISSION_ALLOWED = "1";
     String PERMISSION_PENDING = "2";
@@ -87,5 +84,9 @@ public interface ConstantLib {
 
 
     String MAP_KEY = "AIzaSyBWU8mpmXz_N2UwlpWGGUSec6bPoxkwPNc";
+
+    String COMET_CHAT_KEY = "51462x2c751943dc1b06a7c7ec3aad70f1def8";
+    String COMET_CHAT_LICENSE = "COMETCHAT-TA2TD-7AE7Y-X0XF8-EOXM6";
+    String COMET_CHAT_USER_UPDATE_URL = "https://api.cometondemand.net/api/v2/updateUser";
 }
 

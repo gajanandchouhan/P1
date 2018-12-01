@@ -25,6 +25,8 @@ import com.superlifesecretcode.app.util.ConstantLib;
 
 import java.util.Map;
 
+import utils.CCNotificationHelper;
+
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
 
@@ -41,7 +43,7 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         if (remoteMessage.getData().size() > 0) {
-            if (remoteMessage.getData().get("notification_type")!=null){
+            if (remoteMessage.getData().get("notification_type") != null) {
                 Intent intent = new Intent(this, FCMReceiver.class);
                 intent.putExtra("title", remoteMessage.getData().get("title"));
                 intent.putExtra("body", remoteMessage.getData().get("body"));
@@ -57,8 +59,8 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
                 }
 //            sendNotification(remoteMessage.getData());
                 Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            }else{
-//                CCNotificationHelper.processCCNotificationData(this, remoteMessage, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+            } else {
+                CCNotificationHelper.processCCNotificationData(this, remoteMessage, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
             }
 
         }
@@ -95,7 +97,7 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            notificationBuilder.setColor(ContextCompat.getColor(this,R.color.colorPrimary));
+            notificationBuilder.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
         } else {
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);

@@ -20,4 +20,6 @@ interface ProfileView extends LanguageView {
     void setUserData(UserDetailResponseData data);
 
     void setCities(List<CountryResponseData> data);
+
+    void onCometComplete();
 }

@@ -2,6 +2,7 @@ package com.superlifesecretcode.app.data.netcomm;
 
 
 import com.superlifesecretcode.app.data.model.BaseResponseModel;
+import com.superlifesecretcode.app.data.model.CometChatUpdateUserResponse;
 import com.superlifesecretcode.app.data.model.allmenu.AllMenuResponseModel;
 import com.superlifesecretcode.app.data.model.banner.BannerResponseModel;
 import com.superlifesecretcode.app.data.model.category.CategoryResponseModel;
@@ -38,6 +39,8 @@ import com.superlifesecretcode.app.ui.book.second.Delivery;
 import com.superlifesecretcode.app.ui.book.second.DeliveryDescription;
 import com.superlifesecretcode.app.data.model.kpi.KPI;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -52,6 +55,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by JAIN COMPUTERS on 11/18/2017.
@@ -419,4 +423,8 @@ public interface ApiInterface {
     @Headers({"username:richestLifeAdmin", "password:123456"})
     @POST("dailyActivityList")
     Observable<ActivityPointResponseModel> getPointDetails(@PartMap() Map<String, RequestBody> stringMultipartParamsParams, @HeaderMap Map<String, String> header);
+
+    @Multipart
+    @POST
+    Observable<JSONObject> updateCometChatUser(@Url String url,@PartMap() Map<String, RequestBody> stringMultipartParamsParams, @HeaderMap Map<String, String> header);
 }

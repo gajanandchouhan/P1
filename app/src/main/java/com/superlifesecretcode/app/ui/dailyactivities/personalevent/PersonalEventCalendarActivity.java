@@ -25,6 +25,8 @@ import com.superlifesecretcode.app.util.CommonUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -104,14 +106,17 @@ public class PersonalEventCalendarActivity extends BaseActivity implements View.
     CompactCalendarView.CompactCalendarViewListener listener = new CompactCalendarView.CompactCalendarViewListener() {
         @Override
         public void onDayClick(Date dateClicked) {
-            if (dateClicked.before(todayDate)) {
-            } else {
-            }
             date = dateClicked;
             textViewDay.setText(dateFormatForDay.format(dateClicked));
             List<Event> events = compactCalendarView.getEvents(dateClicked);
             eventList.clear();
             eventList.addAll(events);
+            Collections.sort(eventList, new Comparator<Event>() {
+                @Override
+                public int compare(Event o1, Event o2) {
+                    return ((PersonalEventResponseData) o1.getData()).getActivity_id().compareTo(((PersonalEventResponseData) o2.getData()).getActivity_id());
+                }
+            });
             adapter.notifyDataSetChanged();
         }
 
