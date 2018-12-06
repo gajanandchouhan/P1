@@ -77,6 +77,12 @@ public class AudioPlayerActivity extends AppCompatActivity implements PlaylistLi
     }
 
     @Override
+    protected void onDestroy() {
+        playlistManager.invokeStop();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         playlistManager = ((SuperLifeSecretCodeApp) getApplicationContext()).getPlaylistManager();
