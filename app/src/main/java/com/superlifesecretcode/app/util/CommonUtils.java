@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -534,9 +535,10 @@ public class CommonUtils {
     public static String getDuration(String url) {
         try {
             MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-            retriever.setDataSource(url);
+            retriever.setDataSource(url,new HashMap<String, String>());
             String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
             long millis = Long.parseLong(time);
+            retriever.release();
             if (millis > 60 * 1000 * 60) {
                 return String.format(Locale.getDefault(), "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
                         TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
@@ -548,8 +550,9 @@ public class CommonUtils {
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
             }
 
-        } catch (Exception e) {
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "";
 
