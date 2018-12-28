@@ -333,6 +333,18 @@ public class CommonUtils {
         return getformattedDateFromString("yyyy-MM-dd", "yyyy-MM-dd", stringBuilder.toString(), false, null);
     }
 
+    public static String getLanguageCode(String languageId) {
+        switch (languageId){
+            case ConstantLib.LANGUAGE_SIMPLIFIED:
+                return "zs";
+            case ConstantLib.LANGUAGE_TRADITIONAL:
+                return "zt";
+            case ConstantLib.LANGUAGE_ENGLISH:
+                return "en";
+        }
+        return "en";
+    }
+
     public interface ClickListner {
         void onPositiveClick();
 

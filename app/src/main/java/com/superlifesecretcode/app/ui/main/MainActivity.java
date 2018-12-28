@@ -107,6 +107,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Handler handler;
     int[] rainbow;
     private CometChat cometChatInstance;
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -209,20 +210,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         body.put("language_id", SuperLifeSecretPreferences.getInstance().getLanguageId());
         presenter.getConversion(body);
         setUpBottomBar2();
-        final CometChat cometChat = CometChat.getInstance(this);
-        cometChat.initializeCometChat("",ConstantLib.COMET_CHAT_LICENSE, ConstantLib.COMET_CHAT_KEY, true, new Callbacks() {
 
-            @Override
-            public void successCallback(JSONObject jsonObject) {
-                cometChatInstance = cometChat;
-            }
-
-            @Override
-            public void failCallback(JSONObject jsonObject) {
-                Log.v("COMETCHAT", "Failure : "+jsonObject.toString());
-
-            }
-        });
     }
 
     private void setUpBottomBar2() {
@@ -486,6 +474,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     public void openNextScreen(int clickedPostion, int position, String title, String parentId, String color) {
         if (list.get(clickedPostion).getType().equals(ConstantLib.MAIN_MENU_CHAT)) {
+            cometChatInstance = SuperLifeSecretCodeApp.getInstance().getCometChatInstance();
+            cometChatInstance.setLanguage(CommonUtils.getLanguageCode(SuperLifeSecretPreferences.getInstance().getLanguageId()));
             createCometChatUser(userDetailResponseData.getUsername(), userDetailResponseData.getUser_id());
             return;
         }
@@ -989,11 +979,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (index < rainbow.length - 1)
             index++;
         else {
-            index=0;
+            index = 0;
         }
         return randomAndroidColor;
     }
-
 
 
     protected void createCometChatUser(String name, final String uid) {
@@ -1007,7 +996,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             return;
         }
         showProgress();
-        cometChatInstance.createUser(this, uid, name, userDetailResponseData.getImage()!=null?userDetailResponseData.getImage():"", userDetailResponseData.getImage()!=null?userDetailResponseData.getImage():"", "", new Callbacks() {
+        cometChatInstance.createUser(this, uid, name, userDetailResponseData.getImage() != null ? userDetailResponseData.getImage() : "", userDetailResponseData.getImage() != null ? userDetailResponseData.getImage() : "", "", new Callbacks() {
             @Override
             public void successCallback(JSONObject jsonObject) {
                 Log.v("COMET CHAT", "Register Success :" + jsonObject.toString());

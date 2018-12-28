@@ -161,7 +161,7 @@ public class StudyGroupDetailsActivity extends BaseActivity implements StudyGrou
             list.clear();
             list.addAll(data);
             adapter.notifyDataSetChanged();
-            setDuration();
+            //setDuration();
         }
     }
 

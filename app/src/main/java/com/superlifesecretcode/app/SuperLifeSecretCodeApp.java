@@ -20,6 +20,7 @@ import com.inscripts.interfaces.Callbacks;
 import com.superlifesecretcode.app.data.model.language.LanguageResponseData;
 import com.superlifesecretcode.app.data.persistance.SuperLifeSecretPreferences;
 import com.superlifesecretcode.app.player.manager.PlaylistManager;
+import com.superlifesecretcode.app.util.ConstantLib;
 import com.twitter.sdk.android.core.Twitter;
 
 import org.json.JSONObject;
@@ -37,13 +38,28 @@ public class SuperLifeSecretCodeApp extends Application {
     static SuperLifeSecretCodeApp instance;
     private LanguageResponseData conversionData;
     private PlaylistManager playlistManager;
+    private CometChat cometChatInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         Twitter.initialize(this);
+        final CometChat cometChat = CometChat.getInstance(this);
+        cometChat.setLanguage("zs");
+        cometChat.initializeCometChat("",ConstantLib.COMET_CHAT_LICENSE, ConstantLib.COMET_CHAT_KEY, true, new Callbacks() {
 
+            @Override
+            public void successCallback(JSONObject jsonObject) {
+                cometChatInstance = cometChat;
+            }
+
+            @Override
+            public void failCallback(JSONObject jsonObject) {
+                Log.v("COMETCHAT", "Failure : "+jsonObject.toString());
+
+            }
+        });
 
         playlistManager = new PlaylistManager(this);
         configureExoMedia();
@@ -92,5 +108,9 @@ public class SuperLifeSecretCodeApp extends Application {
                 return instance;
             }
         });
+    }
+
+    public CometChat getCometChatInstance() {
+        return cometChatInstance;
     }
 }

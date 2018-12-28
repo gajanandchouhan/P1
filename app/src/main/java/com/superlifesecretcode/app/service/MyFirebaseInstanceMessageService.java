@@ -60,7 +60,7 @@ public class MyFirebaseInstanceMessageService extends FirebaseMessagingService {
 //            sendNotification(remoteMessage.getData());
                 Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             } else {
-                CCNotificationHelper.processCCNotificationData(this, remoteMessage, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+                CCNotificationHelper.processCCNotificationData(this,remoteMessage,false, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
             }
 
         }

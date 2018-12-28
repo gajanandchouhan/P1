@@ -6,8 +6,8 @@ android {
         applicationId "com.superlifesecretcode.app"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 17
-        versionName "1.4.81"
+        versionCode 18
+        versionName "1.4.82"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -107,8 +107,8 @@ dependencies {
     //    compile 'com.github.sundeepk:compact-calendar-view:2.0.2.3' //calendar
     implementation project(':calendarmodule')
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
-    implementation 'com.inscripts:CometChat:7.14.+'
-    implementation 'com.inscripts:CometChatUI:7.14.+'
+    implementation 'com.inscripts:CometChat:7.26.0'
+    implementation 'com.inscripts:CometChatUI:7.26.0'
     //implementation project(':cometchatui')
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
     implementation 'com.android.support:multidex:1.0.3'
